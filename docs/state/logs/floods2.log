@@ -6,3 +6,14 @@ Flood in Indonesia 1104146 | error: HTTP Error 502: Bad Gateway | None -> None |
 Flood in Maldives 1104155 | read failed: "Unable to synchronously open object (object 'frequencyA' doesn't exist)" | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
 Flood in India 1104154 | error: HTTP Error 502: Bad Gateway | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
 Flood in Democratic Republic of Congo 1104166 | read failed: "Unable to synchronously open object (object 'frequencyA' doesn't exist)" | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Ecuador 1104167 | read failed: unsupported projection EPSG 3031 | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Indonesia 1104168 | error: HTTP Error 502: Bad Gateway | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Cambodia 1104174 | error: HTTP Error 502: Bad Gateway | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Philippines 1104176 | error: HTTP Error 502: Bad Gateway | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Japan 1104182 | error: HTTP Error 502: Bad Gateway | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Malaysia 1104184 | error: HTTP Error 502: Bad Gateway | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Uganda 1104185 | read failed: "Unable to synchronously open object (object 'frequencyA' doesn't exist)" | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in El Salvador 1104189 | no NISAR pass before and after | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Cote d&#039;Ivoire 1104194 | no NISAR pass before and after | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Guatemala 1104188 | error: HTTP Error 502: Bad Gateway | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Nigeria 1104186 | mapped | 2026-09-12 -> 2026-09-24 | new water 0.0 km2 | brighter 0.08 | S2 100 % cloud, IoU None

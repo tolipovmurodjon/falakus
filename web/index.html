@@ -67,7 +67,7 @@ body.touring #brand .opts{display:none}
 #pticks{position:absolute;left:0;right:0;bottom:0;height:8px}
 #pticks i{position:absolute;bottom:0;width:2px;height:8px;background:var(--ink3);border-radius:1px;transform:translateX(-1px)}
 #pticks i.on{background:var(--mint);height:10px}
-#pinfo{grid-column:1/-1;font:400 12.5px/1.45 var(--sans,system-ui);color:var(--ink);display:grid;gap:4px}#pinfo:empty{display:none}#pinfo .k{font:600 15px var(--mono);color:var(--ink)}#pinfo .d{font:500 11.5px var(--mono);color:var(--ink3)}#pinfo .up{color:#2E9650}#pinfo .dn{color:#C2410C}#pinfo .learn{font-size:11.5px;color:var(--ink2);border-top:1px dashed rgba(120,130,150,.35);padding-top:4px}
+#pinfo{grid-column:1/-1;font:400 12.5px/1.45 var(--sans,system-ui);color:var(--ink);display:grid;gap:4px}#pinfo:empty{display:none}#pinfo .k{font:600 15px var(--mono);color:var(--ink)}#pinfo .d{font:500 11.5px var(--mono);color:var(--ink3)}#pinfo .up{color:#2E9650}#pinfo .dn{color:#C2410C}#pinfo .learn{font-size:11.5px;color:var(--ink2)}#pinfo .learn summary{cursor:pointer;color:var(--ink3);font:500 11px var(--mono)}
 #plegend{font:400 10.5px/1.4 var(--mono);color:var(--ink2);grid-column:1/-1;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
 #plegend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:-1px}
 .maplibregl-popup-content{border-radius:14px;padding:12px 14px;font:400 12.5px/1.45 var(--sans);color:var(--ink);max-width:340px}
@@ -374,10 +374,13 @@ function passInfo(i){const el=$("pinfo");if(!el)return;const f=dance.frames[i];l
  const P=dance.wr&&dance.wr.passes;
  if(P&&f){const k=P.findIndex(p=>p.date===f.date);const p=P[k],q=k>0?P[k-1]:null;
   if(p){const dw=q?p.water_km2-q.water_km2:null,dr=q&&p.rvi_crop!=null&&q.rvi_crop!=null?p.rvi_crop-q.rvi_crop:null;
-   const big=P.reduce((a,b)=>b.water_km2>a.water_km2?b:a,P[0]);
+   const big=P.reduce((a,b)=>b.water_km2>a.water_km2?b:a,P[0]),crops=/fergana/.test(f.stop||"");
+   if(crops){const stage=p.rvi_crop>0.78?"fields full of plants":p.rvi_crop>0.68?"plants thinning, harvest starting":"mostly bare fields after harvest";
+    h+=`<div><span class="k">RVI ${p.rvi_crop.toFixed(2)}</span> crop index on this pass${dr!=null?` · <span class="${dr>=0?"up":"dn"}">${dr>=0?"+":""}${dr.toFixed(2)} since ${q.date.slice(5)}</span>`:""} · ${stage}</div>`;el.innerHTML=h+learnTog();return}
    h+=`<div><span class="k">${p.water_km2.toFixed(1)} km²</span> open water on this pass${dw!=null?` · <span class="${dw>=0?"up":"dn"}">${dw>=0?"+":""}${dw.toFixed(1)} km² since ${q.date.slice(5)}</span>`:""}${p.s2_water_km2!=null?` · photo check ${p.s2_water_km2.toFixed(1)} km²${p.iou!=null?`, overlap IoU ${p.iou.toFixed(2)}`:""}`:" · no clear photo this week (clouds): radar only"}</div>`;
-   if(p.rvi_crop!=null)h+=`<div class="d">crop index RVI ${p.rvi_crop.toFixed(2)}${dr!=null?` (${dr>=0?"+":""}${dr.toFixed(2)})`:""} · ${p.rvi_crop>0.78?"fields full of plants":p.rvi_crop>0.68?"plants thinning (harvest starting)":"mostly bare fields after harvest"} · water ${Math.round(p.water_km2/big.water_km2*100)} % of this season's biggest (${big.date.slice(5)})</div>`}}
- h+=`<div class="learn">${LEARN[typeof band!=="undefined"&&LEARN[band]?band:"rgb"]}</div>`;el.innerHTML=h}
+   if(false)h+=`<div class="d">crop index RVI ${p.rvi_crop.toFixed(2)}${dr!=null?` (${dr>=0?"+":""}${dr.toFixed(2)})`:""} · ${p.rvi_crop>0.78?"fields full of plants":p.rvi_crop>0.68?"plants thinning (harvest starting)":"mostly bare fields after harvest"} · water ${Math.round(p.water_km2/big.water_km2*100)} % of this season's biggest (${big.date.slice(5)})</div>`}}
+ el.innerHTML=h+learnTog()}
+function learnTog(){const t=LEARN[typeof band!=="undefined"&&LEARN[band]?band:"rgb"];return `<details class="learn"><summary>What do the colours mean?</summary>${t}</details>`}
 function setMeta(t){const m=$("pmeta");if(m)m.textContent=t}
 async function startDance(lon,lat,label,stopId){hideFlood();
  const tok=++dance.token;stopPlay();dance.ll=[lon,lat];if(!stopId&&map.getZoom()<8.5)map.flyTo({center:[lon,lat],zoom:9,essential:false});
@@ -838,7 +841,7 @@ let cmp=null,cmpKind="hh";
 function cmpImgUrl(side){return side.img||sci(side.st,side.d,cmpKind)}
 async function cmpDraw(){if(!cmp)return;const cv=$("swipeimg"),L=cmp.slide.L;if(!cv)return;const W=map.getCanvas().clientWidth,H=map.getCanvas().clientHeight;cv.width=W;cv.height=H;
  const im=cmp.imgL&&cmp.imgL.src.endsWith(cmpImgUrl(L))?cmp.imgL:new Image();if(im!==cmp.imgL){im.src=cmpImgUrl(L);cmp.imgL=im;await im.decode().catch(()=>{})}
- const b=cmp.bbox,tl=map.project([b[0],b[3]]),br=map.project([b[2],b[1]]),ctx=cv.getContext("2d");ctx.clearRect(0,0,W,H);ctx.drawImage(im,tl.x,tl.y,br.x-tl.x,br.y-tl.y)}
+ const b=cmp.bbox,tl=map.project([b[0],b[3]]),br=map.project([b[2],b[1]]),ctx=cv.getContext("2d");ctx.imageSmoothingEnabled=false;ctx.clearRect(0,0,W,H);ctx.drawImage(im,tl.x,tl.y,br.x-tl.x,br.y-tl.y)}
 function cmpApply(){if(!cmp)return;const W=map.getCanvas().clientWidth,x=swipeX*W;$("sbar").style.left=x+"px";$("stagL").style.left=Math.max(8,x-230)+"px";$("stagR").style.left=(x+12)+"px";
  $("stagL").textContent=cmp.slide.L.lab;$("stagR").textContent=cmp.slide.R.lab;$("swipeimg").style.clipPath=`inset(0 ${W-x}px 0 0)`}
 function cmpBox(b){const d={type:"FeatureCollection",features:b?[{type:"Feature",geometry:{type:"LineString",coordinates:[[b[0],b[1]],[b[2],b[1]],[b[2],b[3]],[b[0],b[3]],[b[0],b[1]]]},properties:{}}]:[]};
@@ -847,11 +850,12 @@ function cmpClearRight(){["cmpR","cmpO","cmpS2"].forEach(id=>{if(map.getLayer(id
 async function cmpRight(){const R=cmp.slide.R,b=cmp.bbox,coords=[[b[0],b[3]],[b[2],b[3]],[b[2],b[1]],[b[0],b[1]]];cmpClearRight();
  if(R.layer==="nisar"){map.setPaintProperty("nisar","raster-opacity",0.95);return}
  if(R.s2){const q=`w=${b[0]}&s=${b[1]}&e=${b[2]}&n=${b[3]}&start=${R.s2[0]}&end=${R.s2[1]}&clearest=${R.s2[2]}`;const j=await (await fetch("/api/s2.json?"+q)).json();if(!cmp||cmp.slide.R!==R||!j.tiles)return;
-  map.addSource("cmpS2",{type:"raster",tiles:j.tiles,tileSize:256,bounds:b,attribution:j.attribution});map.addLayer({id:"cmpS2",type:"raster",source:"cmpS2"},"labels");
-  const sc=(j.scenes||[]).map(x=>`${fmtDate(x.date)} ${x.cloud_pct} % cloud`).join(" · ");$("cmpsrc").textContent=`Photo: ${j.attribution}. Scenes: ${sc}. `+$("cmpsrc").dataset.base;return}
+  if(j.box)map.addSource("cmpS2",{type:"image",url:j.box.url,coordinates:coords});else map.addSource("cmpS2",{type:"raster",tiles:j.tiles,tileSize:256,bounds:b,attribution:j.attribution});
+  map.addLayer({id:"cmpS2",type:"raster",source:"cmpS2",paint:{"raster-fade-duration":0}},"labels");
+  const sc=j.box?`${fmtDate(j.box.date)}: ${j.box.box_cloud_pct!=null?j.box.box_cloud_pct+" % cloud inside the yellow box, ":""}${j.box.scene_cloud_pct} % in the whole 110 km scene`:(j.scenes||[]).map(x=>`${fmtDate(x.date)} ${x.cloud_pct} % cloud`).join(" · ");$("cmpsrc").textContent=`Photo: ${j.attribution}. Scenes: ${sc}. `+$("cmpsrc").dataset.base;return}
  map.addSource("cmpR",{type:"image",url:cmpImgUrl(R),coordinates:coords});map.addLayer({id:"cmpR",type:"raster",source:"cmpR",paint:{"raster-fade-duration":0,"raster-resampling":"nearest"}},"labels");
  if(R.over){map.addSource("cmpO",{type:"image",url:R.over,coordinates:coords});map.addLayer({id:"cmpO",type:"raster",source:"cmpO"},"labels")}}
-async function openCase(id,k=0){const c=CASES[id];map.getLayer("flood")&&map.setLayoutProperty("flood","visibility","none");endDance();if(typeof closeFree==="function"&&fc)closeFree();
+async function openCase(id,k=0){const c=CASES[id];map.setMaxZoom(14.5);if(map.getZoom()>14.5)map.setZoom(14.5);map.getLayer("flood")&&map.setLayoutProperty("flood","visibility","none");endDance();if(typeof closeFree==="function"&&fc)closeFree();
  if(!c.bbox&&c.sci){const j=await (await fetch(`/science/${c.sci}/frames.json`)).json();c.bbox=j.bbox}
  if(!cmp||cmp.id!==id)cmpKind=c.slides[k].colourDefault||"hh";$("tour").hidden=true;document.body.classList.remove("touring");document.body.classList.add("comparing");
  if(!c.bbox&&c.motion){const j=await (await fetch(`/motion/${c.motion}/info.json`)).json();c.bbox=j.bbox}
@@ -873,7 +877,7 @@ async function openCase(id,k=0){const c=CASES[id];map.getLayer("flood")&&map.set
  let cv=$("swipeimg");if(!cv){cv=document.createElement("canvas");cv.id="swipeimg";cv.style.cssText="position:absolute;inset:0;width:100%;height:100%;pointer-events:none";$("swipe").prepend(cv)}
  $("swipe").hidden=false;swipeX=0.5;cmp.imgL=null;await cmpRight();cmpBox(cmp.slide.bbox&&c.bbox?c.bbox:null);
  map.once("moveend",()=>{const W=map.getCanvas().clientWidth,b=cmp.bbox,cx=(map.project([b[0],b[3]]).x+map.project([b[2],b[1]]).x)/2;swipeX=Math.min(.9,Math.max(.1,cx/W));cmpDraw();cmpApply()});cmpDraw();cmpApply()}
-function closeCase(){cmp=null;cmpClearRight();cmpBox(null);$("cmp").hidden=true;$("swipe").hidden=true;document.body.classList.remove("comparing");document.querySelectorAll(".case").forEach(b=>b.classList.remove("on"));
+function closeCase(){map.setMaxZoom(22);cmp=null;cmpClearRight();cmpBox(null);$("cmp").hidden=true;$("swipe").hidden=true;document.body.classList.remove("comparing");document.querySelectorAll(".case").forEach(b=>b.classList.remove("on"));
  map.setPaintProperty("nisar","raster-opacity",radarOp(radarOpacity));if(map.getLayer("sci"))map.setLayoutProperty("sci","visibility","visible")}
 document.querySelectorAll(".case[data-c]").forEach(b=>b.onclick=()=>{closeFree();cmp&&cmp.id===b.dataset.c?closeCase():openCase(b.dataset.c)});
 $("cmpx").onclick=closeCase;
@@ -984,7 +988,7 @@ async function openFloods(){closeCase();if(fc)closeFree();let L=[];try{L=await (
  const old=$("fclose").onclick;$("fclose").onclick=()=>{old&&old();map.getLayer("flood")&&map.setLayoutProperty("flood","visibility","none")}}
 $("x-floods").onclick=openFloods;
 
-map.on("zoomend",()=>{if(dance.on&&map.getZoom()>=14.4)setMeta("Radar detail ends here: each NISAR pixel is 20 m × 20 m (about 2 houses). Zoom out to see more; the photo underneath is about 1 m.")});
+map.on("zoomend",()=>{if(cmp&&map.getZoom()>=14.4&&$("cmpchip"))$("cmpchip").textContent="Radar detail ends here: 1 pixel = 20 × 20 m";if(dance.on&&map.getZoom()>=14.4)setMeta("Radar detail ends here: each NISAR pixel is 20 m × 20 m (about 2 houses). Zoom out to see more; the photo underneath is about 1 m.")});
 const closeExplore=()=>{const e=$("explore");if(e&&!e.hidden){e.hidden=true;$("b-explore").setAttribute("aria-expanded","false");$("b-explore").textContent="Explore the world ▾"}};
 $("explore").addEventListener("click",e=>{if(e.target.closest("button"))setTimeout(closeExplore,0)});
 document.addEventListener("click",e=>{if(!e.target.closest("#cases"))closeExplore()});

@@ -488,7 +488,25 @@ def sentinel2_photo(w, s, e, n, start, end, clearest):
     r = urllib.request.Request("https://planetarycomputer.microsoft.com/api/stac/v1/search", data=json.dumps(body).encode(),
                                headers={"Content-Type": "application/json"}, method="POST")
     with urllib.request.urlopen(r, timeout=60) as resp:
-        scenes = sorted({(f["properties"]["datetime"][:10], round(f["properties"]["eo:cloud_cover"])) for f in json.load(resp)["features"]})
+        feats = json.load(resp)["features"]
+    scenes = sorted({(f["properties"]["datetime"][:10], round(f["properties"]["eo:cloud_cover"])) for f in feats})
+    # one scene that covers the whole box, cut to exactly the box (so the photo never spills past the radar)
+    full = [f for f in feats if f["bbox"][0] <= w and f["bbox"][1] <= s and f["bbox"][2] >= e and f["bbox"][3] >= n] or feats
+    box = None
+    if full:
+        pick = min(full, key=lambda f: f["properties"]["eo:cloud_cover"]) if clearest else max(full, key=lambda f: f["properties"]["datetime"])
+        base = f"https://planetarycomputer.microsoft.com/api/data/v1/item/bbox/{w},{s},{e},{n}"
+        box = {"url": f"{base}.png?collection=sentinel-2-l2a&item={pick['id']}&assets=visual&nodata=0&max_size=1400",
+               "date": pick["properties"]["datetime"][:10], "scene_cloud_pct": round(pick["properties"]["eo:cloud_cover"])}
+        try:  # cloud inside the box itself, from the scene classification layer (8, 9, 10 = cloud, 3 = cloud shadow)
+            import io as _io
+            import numpy as _np
+            with urllib.request.urlopen(f"{base}.npy?collection=sentinel-2-l2a&item={pick['id']}&assets=SCL&max_size=200", timeout=60) as rr:
+                scl = _np.load(_io.BytesIO(rr.read()))[0]
+            v = scl[scl > 0]
+            box["box_cloud_pct"] = round(float(_np.isin(v, [3, 8, 9, 10]).mean() * 100)) if v.size else None
+        except Exception:
+            pass
     req = {"collections": ["sentinel-2-l2a"], "filter-lang": "cql2-json", "filter": {"op": "and", "args": [when, where]},
            "sortby": [{"field": "eo:cloud_cover", "direction": "asc"}] if clearest else [{"field": "datetime", "direction": "desc"}]}
     r = urllib.request.Request("https://planetarycomputer.microsoft.com/api/data/v1/mosaic/register",
@@ -497,7 +515,7 @@ def sentinel2_photo(w, s, e, n, start, end, clearest):
         mid = json.load(resp)["id"]
     tile = (f"https://planetarycomputer.microsoft.com/api/data/v1/mosaic/{mid}/tiles/WebMercatorQuad/{{z}}/{{x}}/{{y}}@1x"
             "?collection=sentinel-2-l2a&assets=visual&nodata=0&format=png")
-    S2[key] = {"tiles": [tile], "scenes": [{"date": d, "cloud_pct": c} for d, c in scenes], "start": start, "end": end, "clearest": clearest,
+    S2[key] = {"tiles": [tile], "box": box, "scenes": [{"date": d, "cloud_pct": c} for d, c in scenes], "start": start, "end": end, "clearest": clearest,
                "attribution": "Sentinel-2 L2A (Copernicus, ESA) via Microsoft Planetary Computer"}
     return S2[key]
 
