@@ -29,3 +29,8 @@ Each line: what · why · the option not taken.
 - Measured: fixed-rule class map calls 40 % of Tashkent's WorldCover buildings "plants" (Fergana 72 %); ML 81 % right. Cause: walls turned away from the radar depolarize (high HV like leaves).
 - Done now: science layer default = measured radar (not the guess); guess labelled with its error; world preview labelled "approx. placement" with the measured offsets.
 - Next: register each preview frame against geocoded Sentinel-1 RTC (same physics, exact grid) and store a per-frame shift; Central Asia frames first. Not taken: hiding the world map (it is the only global NISAR layer).
+
+## 15 Nov 00:00-01:00
+- Water rule = filtered HH < T, T fit on one pass, tested on held-out passes, inside WorldCover water + 1 km. Not taken: HH and HV thresholds (HV at the noise floor over water, IoU ~0); tuning T on all passes (circular).
+- Andijan story box moved to the real reservoir (andijan_res). The old box text is wrong and must be rewritten before the demo.
+- 0.5 m validation of the ship detector shown as-is (5/12 confirmed). Not taken: hiding the weak score.

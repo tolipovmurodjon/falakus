@@ -18,32 +18,35 @@ The water starts in the Andijan reservoir, is used by the Fergana fields, and en
 | # | part | what we say | screen |
 |---|---|---|---|
 | 1 | Hook (0-10 s) | Half the valley's water flows out of one reservoir, Andijan. For months a year, clouds hide it from camera satellites. | Sentinel-2 photo, 🟡 % cloudy days |
-| 2 | Twist (10-25 s) | NISAR sends its own 24 cm pulse. Calm water is a mirror, so it goes black. We measured the reservoir every 12 days: 🟡 to 🟡 km². | drag photo ⇆ radar |
+| 2 | Twist (10-25 s) | NISAR sends its own 24 cm pulse. Calm water is a mirror, so it goes black. NISAR watched the Andijan reservoir drain from 50 to 19 km² between July and October, the same trend as the cloud-free photos (r = 0.83). | drag photo ⇆ radar |
 | 3 | Follow the water (25-40 s) | Downstream, the Fergana fields drink it. The cross-polarized echo (HV) rises as crops grow and drops at harvest. | heartbeat chart, field RVI 🟡 |
 | 4 | Where it ends (40-50 s) | At the end of the river is the Aral Sea. Canada's 1997 radar shows open sea; NISAR in 2026 finds at most 0.93 km² of water in a 1,600 km² box. | 1997 ⇆ 2026 drag |
-| 5 | Proof + close (50-60 s) | Every number is checked: our radar water matches Sentinel-2 on clear days at IoU 🟡. Falakus lets water managers watch through any cloud. | proof badge, repo link |
+| 5 | Proof + close (50-60 s) | Every number is checked: on passes our rule never saw, the radar water map overlaps Sentinel-2 at IoU 0.58, and we show where it over-counts. Falakus lets water managers watch through any cloud. | proof badge, repo link |
 
 Deck: 7 slides, one per speech part plus "the challenge" and "who acts". Build with `python tools/build_pitch.py`, then check with `python D:/30_library/taste/templates/slides-eye-run/render.py docs/deck/pitch.html` (that template lives on Murodjon's laptop).
 
 ---
 
-## 2. Status (honest, 15 Nov ~00:00)
+## 2. Status (honest, 15 Nov ~01:00)
 
 | part | state |
 |---|---|
 | Calibrated NISAR reader (HDF5 box reads, no full downloads) | ✅ `tools/gcov_science.py` |
-| Water + RVI pipeline with the Sentinel-2 check | 🔧 `tools/water_road.py`: running on the real Andijan reservoir |
-| **Bug found by the check** | ❌ the old "Andijan" box sat WEST of the reservoir. The "1.5-19 km² reservoir water" shown before was wrong; it is being re-measured over the reservoir (73.13 E, 40.77 N) |
+| **Andijan reservoir water vs Sentinel-2** | ✅ `tools/water_road.py andijan_res`: NISAR **50 → 19 km²** (Jul → Oct) vs Sentinel-2 **40 → 17 km²**; areas agree **r = 0.83** (R² 0.69, 8 passes); map overlap on held-out passes **IoU 0.49-0.71, median 0.58**; radar counts **~8.6 km² too much water**, likely smooth mud left as the lake drains (not yet verified) |
+| How the water rule works | filtered HH < −16.75 dB, learned on ONE pass (20 Jun) and tested on the 7 later passes it never saw; only inside the lake basin (ESA WorldCover water + 1 km, like NASA's OPERA water product). HV is not used: over calm water it sits at NISAR's noise floor (~−23 dB) |
+| **Old bug, fixed** | the first "Andijan" box sat WEST of the reservoir. Its "1.5-19 km² reservoir water" was wrong; the real reservoir is box `andijan_res` (73.135 E, 40.765 N, 18 km) |
+| Fergana fields, Aral through the same check | ⏳ next |
 | Aral 1997 (RADARSAT-1) vs 2026 (NISAR) | ✅ in the app (Compare → Aral) |
-| Before/after swipe, compare anywhere | ✅ |
-| World map placement | ⚠️ off by 0.5-4 km. Fix in progress: `tools/fetch_kml_boxes.py` (600 of 16,691 boxes fetched, resumable) |
-| Judge score (fresh agent, playing the app in Chrome) | 6.0 / 10 (round 3). Lowest: Validity 4, Presentation 5 |
+| 0.5 m check of the 10 m ship detector | ✅ Radar finds → Bosphorus. ICEYE 0.5 m image, taken 5 h after the Sentinel-1 pass: **5 of 12** of our dots sit on a ship you can see, 1 on a breakwater (false), 6 on empty water (probably ships that moved on), 5 small boats missed |
+| Before/after swipe, compare anywhere (any layer on either side) | ✅ |
+| Fixed-rule land classes | ⚠️ call 40 % of Tashkent's buildings "plants" (walls turned away from the radar). Now opt-in, with that error printed; the map shows the measured radar by default |
+| World map placement | ⚠️ off by 0.5-4 km. Fix: NASA's own `_LATLON.kml` box per preview (`tools/fetch_kml_boxes.py`, 600 of 16,691 fetched, resumable; the server already uses them) |
+| Judge score (fresh agent, playing the app) | 6.0 / 10 (round 3). Fixed since: wrong Panama metre count removed, physics wording, anomaly method stated |
+| Still open from the judge | case → tour freeze; phone layout; trim the Sentinel-2 photo to the radar box with cloud % inside the box; draw the analysis box |
 | Single story screen | ⏳ next |
 | 30 s video, public link | ⏳ (the public link needs Murodjon's yes) |
 
-Full log of decisions: `docs/state/DECISIONS.md` · rounds: `docs/state/overnight.md` · plan: `docs/state/PLAN.md`.
-
----
+Full decision log: `docs/state/DECISIONS.md`. Rounds: `docs/state/overnight.md`. Plan: `docs/state/PLAN.md`.
 
 ## 3. Run it on your machine
 
