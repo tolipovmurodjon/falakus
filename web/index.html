@@ -762,7 +762,7 @@ const CASES={
 
 const AJ=[73.02795,40.68392,73.24205,40.84608];
 CASES.andijan={title:"1 · Source: the Andijan reservoir, the valley's water tank",bbox:AJ,slides:[
-  {tab:"Radar | photo, 18-19 Oct",colour:true,chart:"andijan",L:{st:"andijan_res",d:"2026-10-18",lab:"NISAR radar · 18 Oct"},R:{s2:["2026-10-19","2026-10-19",0],lab:"Sentinel-2 photo · 19 Oct"},
+  {tab:"Radar | photo, October",colour:true,chart:"andijan",L:{st:"andijan_res",d:"2026-10-18",lab:"NISAR radar · 18 Oct"},R:{s2:["2026-10-12","2026-10-26",1],lab:"Sentinel-2 photo · clearest, mid-Oct"},
    n:"50 → 19 km²",s:"of open water seen by NISAR from mid-July to early October, as the reservoir was drawn down for the cotton fields. Cloud-free Sentinel-2 photos show the same fall (40 → 17 km²); the two curves move together, r = 0.83.",
    why:"Calm water is a mirror for the 24 cm pulse, so the lake is the darkest thing in the radar picture, through cloud or at night. We learned the darkness cut-off (HH < −16.75 dB) on ONE pass and checked it on 7 passes it never saw: map overlap with the photos IoU 0.49–0.71 (median 0.58).",
    src:"Radar: NASA-ISRO NISAR GCOV gamma0, calibrated dB (provisional), Lee-filtered, 40 m analysis grid. Check: ESA Sentinel-2 L2A NDWI water on clear days; possible-water zone from ESA WorldCover. tools/water_road.py."},
@@ -915,7 +915,7 @@ async function openHires(){const j=await (await fetch("/hires/bosphorus_anchorag
 $("b-explore").onclick=()=>{const e=$("explore");e.hidden=!e.hidden;$("b-explore").setAttribute("aria-expanded",String(!e.hidden));$("b-explore").textContent=e.hidden?"Explore the world ▾":"Explore the world ▴"};
 $("x-tour").onclick=()=>{closeCase();if(fc)closeFree();$("b-tour")?$("b-tour").click():null};
 $("x-finds").onclick=()=>{closeCase();if(fc)closeFree();openFinds()};
-const FIRST_VISIT=!location.hash;map.once("idle",()=>{if(FIRST_VISIT&&!cmp){const i=$("intro");if(i)i.hidden=true;openCase("andijan")}});
+const FIRST_VISIT=!location.hash||location.hash==="#2.4/40/64";const firstOpen=()=>setTimeout(()=>{if(FIRST_VISIT&&!cmp&&!fc){const i=$("intro");if(i)i.hidden=true;openCase("andijan")}},1200);if(map.isStyleLoaded())firstOpen();else map.once("load",firstOpen);
 /* data layers */
 let EV=[],evCat="All",pop=null;
 map.on("load",()=>{
