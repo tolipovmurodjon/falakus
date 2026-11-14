@@ -1,0 +1,426 @@
+<title>NISAR Field Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;800&display=swap">
+<style>
+/* Layout: 1200x675 slide stage, Eye Run look: pale page, soft mint + blue light, white glass, mint mono numbers */
+@font-face{font-family:"Departure Mono";src:url("{{FONT}}") format("woff2");font-display:swap}
+:root{
+  --page:#F2F4F8; --ink:#0F1630; --ink-2:#4B5470; --ink-3:#8A92AA; --line:#E6E9F1;
+  --mint:#1C7E69; --mint-s:rgba(28,126,105,.10);
+  --amber:#B45309; --amber-s:rgba(180,83,9,.10);
+  --blue:#2563EB; --blue-s:rgba(37,99,235,.09);
+  --violet:#7C3AED; --violet-s:rgba(124,58,237,.09);
+  --sans:"Inter Tight",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"Departure Mono",ui-monospace,"Cascadia Mono",Consolas,monospace;
+  --r:28px; color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;overflow:hidden;color:var(--ink);font:400 17px/1.5 var(--sans);-webkit-font-smoothing:antialiased;
+  background:radial-gradient(1100px 620px at 12% -8%,#D9F0E6 0%,transparent 62%),radial-gradient(900px 560px at 92% 2%,#DDE6FB 0%,transparent 58%),radial-gradient(800px 500px at 60% 115%,#E1F2EC 0%,transparent 60%),var(--page)}
+.stage{position:fixed;left:50%;top:50%;width:1200px;height:675px;transform-origin:center}
+.glass{position:relative;border-radius:var(--r);background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.9);
+  box-shadow:0 1px 1px rgba(15,22,48,.04),0 10px 28px -14px rgba(15,22,48,.22),inset 0 1px 0 rgba(255,255,255,.95);
+  -webkit-backdrop-filter:blur(22px) saturate(1.35);backdrop-filter:blur(22px) saturate(1.35);overflow:hidden}
+.glass::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(145deg,rgba(255,255,255,.55) 0%,rgba(255,255,255,0) 42%)}
+.glass>*{position:relative}
+.mint-card{background:linear-gradient(150deg,#1C7E69 0%,#23A06C 100%);border-color:rgba(255,255,255,.35);color:#fff;box-shadow:0 18px 36px -16px rgba(28,126,105,.55),inset 0 1px 0 rgba(255,255,255,.35)}
+.mint-card::before{background:linear-gradient(145deg,rgba(255,255,255,.22) 0%,rgba(255,255,255,0) 45%)}
+.slide{position:absolute;inset:0;padding:40px 52px 96px;opacity:0;visibility:hidden;transform:translateX(18px);transition:opacity .4s ease,transform .45s cubic-bezier(.23,1,.32,1),visibility 0s .4s}
+.slide.on{opacity:1;visibility:visible;transform:none;transition:opacity .4s ease,transform .45s cubic-bezier(.23,1,.32,1)}
+.slide.back{transform:translateX(-18px)}
+@media (prefers-reduced-motion:reduce){.slide,.slide.on{transition:opacity .15s;transform:none}}
+.eyebrow{font:400 12px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);margin:0}
+h1,h2,h3{font-family:var(--sans);margin:0;text-wrap:balance}
+h1{font-weight:800;font-size:40px;line-height:1.05;letter-spacing:-.03em}
+h2{font-weight:800;font-size:36px;line-height:1.08;letter-spacing:-.025em}
+h3{font-weight:800;font-size:19px;line-height:1.25;letter-spacing:-.012em}
+p{margin:0}
+.muted{color:var(--ink-2)}
+.kpi{border-radius:18px;background:rgba(255,255,255,.66);border:1px solid rgba(255,255,255,.9);box-shadow:0 8px 22px -16px rgba(15,22,48,.3),inset 0 1px 0 rgba(255,255,255,.95);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);padding:12px 14px;min-height:94px}
+.kpi b{display:block;font:400 22px/1 var(--mono);letter-spacing:-.03em;color:var(--mint)}
+.kpi span{display:block;font:400 11px/1.4 var(--mono);color:var(--ink-2);margin-top:8px}
+.kpi.warn b{color:var(--amber)}
+.chip{display:inline-flex;align-items:center;gap:7px;font:400 10.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:999px;background:var(--s-soft,var(--mint-s));color:var(--s,var(--mint));white-space:nowrap}
+.chip::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--s,var(--mint))}
+.c-amber{--s:var(--amber);--s-soft:var(--amber-s)}.c-blue{--s:var(--blue);--s-soft:var(--blue-s)}.c-violet{--s:var(--violet);--s-soft:var(--violet-s)}
+.lab{font:400 11px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0 0 8px}
+.ul{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+.ul li{position:relative;padding-left:22px;font-size:14.5px;line-height:1.45}
+.ul li::before{content:"";position:absolute;left:3px;top:.55em;width:8px;height:8px;border-radius:50%;background:var(--mint)}
+.ul.amber li::before{background:var(--amber)}
+.raw{font:400 12.5px/1.55 var(--mono);background:rgba(15,22,48,.045);border-radius:14px;padding:14px 16px;color:var(--ink);white-space:pre;overflow:hidden}
+.raw .hl{color:var(--amber)}.raw .mi{color:var(--mint)}.raw .bl{color:var(--blue)}.raw .vi{color:var(--violet)}
+.find{display:grid;grid-template-columns:1fr 1fr;gap:14px;position:absolute;left:52px;right:52px;top:150px;height:440px}
+.find>.glass{padding:22px 24px;display:grid;align-content:start;gap:10px}
+.dock{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);display:flex;align-items:center;gap:12px;padding:7px 9px;border-radius:999px;z-index:5}
+.dock button{all:unset;cursor:pointer;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:var(--ink);transition:background .2s}
+.dock button:hover{background:rgba(15,22,48,.05)}
+.dots{display:flex;gap:6px;align-items:center}
+.dots button{all:unset;cursor:pointer;width:7px;height:7px;border-radius:99px;background:rgba(15,22,48,.16);transition:width .3s cubic-bezier(.23,1,.32,1),background .3s}
+.dots button.on{width:22px;background:var(--mint)}
+.count{font:400 12px/1 var(--mono);color:var(--ink-2);min-width:50px;text-align:center}
+button:focus-visible{outline:2px solid var(--mint);outline-offset:2px}
+.idea{padding:11px 14px;border-radius:18px;display:grid;grid-template-columns:30px 1fr;gap:8px;align-items:start}
+.idea b{font:400 13px/1.3 var(--mono);color:var(--mint)}
+.idea h4{margin:0;font-weight:600;font-size:14.5px;line-height:1.3}
+.idea p{font-size:12.5px;line-height:1.4;color:var(--ink-2);margin-top:3px}
+table{border-collapse:collapse;width:100%}
+th,td{text-align:left;padding:6px 9px;border-bottom:1px solid var(--line);font-size:12.5px;line-height:1.35;vertical-align:top}
+th{font:400 10.5px/1.4 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+td b{font-weight:600}
+.tight th,.tight td{padding:4px 8px;font-size:12px}.tight .chip{padding:4px 8px}
+.pic{border-radius:16px;background:#0b0f1c;display:block;width:100%;height:100%;object-fit:contain}
+.cap{font:400 10.5px/1.4 var(--mono);color:var(--ink-3);letter-spacing:.04em}
+.tbtn{all:unset;cursor:pointer;font:400 11px/1 var(--mono);letter-spacing:.06em;padding:8px 12px;border-radius:999px;background:rgba(15,22,48,.05);color:var(--ink-2)}
+.tbtn.on{background:var(--mint);color:#fff}
+input[type=range]{width:100%;accent-color:#1C7E69}
+.qa{padding:14px 16px;border-radius:18px;display:grid;gap:6px}
+.qa .ans{font-size:13px;color:var(--mint);line-height:1.45}
+</style>
+
+<main class="stage" id="stage" aria-roledescription="slide deck"></main>
+
+<script>
+const IMG={hero:"{{HERO}}",hh:"{{HH}}",hv:"{{HV}}",gunw:"{{GUNW}}",goff:"{{GOFF}}"};
+const SERIES={
+ aral_east:{name:"Aral · north frame",data:{{S_ARAL_EAST}},note:"Frame 45-48°N, 58-62°E. Watch the dark water in the middle change shape from June to October. Dark = smooth water, the flash bounces away like a mirror. Same track, same look angle, so the change is real."},
+ aral_west:{name:"Aral · west + Ustyurt",data:{{S_ARAL_WEST}},note:"The first date (19 Jun) is a broken frame with stripes: a bad acquisition. The green wash is HV at its noise floor over the dry seabed, not plants. A pro throws both out before measuring."},
+ rogun:{name:"Rogun dam · Tajikistan",data:{{S_ROGUN}},note:"Steep mountains: slopes facing the satellite go bright, slopes facing away go dark. The first two dates are partial frames. The reservoir needs the full-resolution file to measure."},
+ qosh:{name:"Qosh Tepa canal · Afghanistan",data:{{S_QOSH}},note:"Desert north, river valley and farms south. The canal is a thin line, too small for this preview. The full file has 10-20 m pixels, enough to see it."},
+ fergana:{name:"Fergana valley · Uzbekistan",data:{{S_FERGANA}},note:"Farmland and mountains. At preview size the fields look stable; the cotton season shows up as HV rising then falling in the full-resolution pixels."}
+};
+const UR=[[18,-156,94],[9,-81,94],[21,-156,82],[36,-87,72],[30,-87,68],[6,-78,66],[63,-147,66],[33,93,63],[51,-177,63],[18,84,62],[30,93,58],[30,87,58],[30,84,56],[33,84,56],[21,87,54],[30,-84,54],[9,-78,52],[33,87,52],[24,87,52],[24,90,48],[30,105,48],[18,87,48],[24,84,46],[12,99,44],[-9,123,44],[-9,120,44],[18,78,44],[30,96,42],[3,-78,42],[27,87,42],[33,-90,42],[24,81,42],[33,-84,40],[57,-153,40],[39,-87,40],[18,96,38],[24,96,38],[36,96,38],[63,-150,38],[39,93,36]];
+const LAND={{LAND}};
+
+const S=[];
+const F=(n,t)=>`<p class="eyebrow">${n}</p><h2 style="margin-top:10px">${t}</h2>`;
+
+/* 1 cover */
+S.push(`
+ <div style="position:absolute;left:56px;top:54px;width:560px;display:grid;gap:18px">
+  <p class="eyebrow">NASA Space Apps 2026 · Dancing with the SARs · team brief · 14 Nov</p>
+  <h1>NISAR sees through clouds, dust and night. Here is what that really looks like.</h1>
+  <p class="muted" style="font-size:16px;max-width:46ch">Every picture in this deck is a real NISAR file pulled from NASA's archive today. Every number comes from a live catalog query, not from memory.</p>
+ </div>
+ <div class="glass" style="position:absolute;left:56px;top:352px;width:560px;height:236px;padding:16px 18px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;align-content:start">
+  <div class="kpi"><b>163,672</b><span>radar brightness files (GCOV)</span></div>
+  <div class="kpi"><b>36</b><span>NISAR product types in the archive</span></div>
+  <div class="kpi"><b>28</b><span>dates over Tashkent, 20 Jun → 20 Oct</span></div>
+  <div class="kpi"><b>0.5-5.7 GB</b><span>per file · we cut a box</span></div>
+  <div class="kpi"><b>6,789</b><span>urgent disaster files, to 13 Nov</span></div>
+  <div class="kpi warn"><b>Sun 23:59</b><span>submission closes</span></div>
+ </div>
+ <figure class="glass" style="position:absolute;left:650px;top:54px;width:500px;height:526px;margin:0;padding:12px;display:grid;grid-template-rows:1fr auto;gap:8px">
+  <img class="pic" src="${IMG.hero}" alt="NISAR radar picture of the desert east of the Aral Sea">
+  <figcaption class="cap">NISAR GCOV · 20 Oct 2026 · east of the Aral, 45-48°N. Pink = strong HH (towns, rough ground). Thin line at the bottom = Syr Darya. Green band on the left = look-angle effect, not a change.</figcaption>
+ </figure>
+`);
+
+/* 2 what we have */
+S.push(`${F("01 · first, the good news","Everything we need is real, free and already over Uzbekistan")}
+ <div style="position:absolute;left:52px;right:52px;top:150px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+  ${[["Data is public","NISAR L-band went public on 20 Jul 2026 for every pass since 17 Jun 2026. The first validated files appeared on 21 Oct."],
+     ["Dense over us","Tashkent 57 files, Samarkand 55, Aral 138 in four months. About one look every 4-5 days, because tracks overlap."],
+     ["Previews are free","Every file has ready PNG previews (HH, HV, colour). No login. This whole deck was built from them."],
+     ["Recipes exist","ASF's NISAR Cookbook has notebooks for search, open, time series and change detection. We copy, not invent."],
+     ["You have accounts","Earthdata Login unlocks the full .h5 files. A free account, already done."],
+     ["You already got it","Dielectric, dB and speckle are clear. HH vs HV and slope correction are the next two slides."]].map(([t,d],i)=>`
+   <div class="glass" style="padding:20px 22px;height:204px;display:grid;align-content:start;gap:8px"><p style="font:400 12px/1 var(--mono);color:var(--mint)">0${i+1}</p><h3>${t}</h3><p class="muted" style="font-size:14px;line-height:1.5">${d}</p></div>`).join("")}
+ </div>
+`);
+
+/* 3 how radar sees */
+S.push(`${F("02 · how radar sees","A camera that brings its own flash, and looks sideways")}
+ <div class="glass" style="position:absolute;left:52px;top:150px;width:690px;height:440px;padding:0">
+  <svg viewBox="0 0 690 440" width="690" height="440" aria-label="Radar beam hitting water, field, forest and town">
+   <defs><marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#1C7E69"/></marker>
+   <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#B45309"/></marker></defs>
+   <g transform="translate(96,40)"><rect x="-22" y="-10" width="44" height="20" rx="4" fill="#0F1630"/><rect x="-60" y="-4" width="34" height="8" fill="#2563EB"/><rect x="26" y="-4" width="34" height="8" fill="#2563EB"/></g>
+   <text x="140" y="44" font-family="Departure Mono,monospace" font-size="11" fill="#4B5470">NISAR · 747 km up</text>
+   <path d="M96 52 L170 330" stroke="#1C7E69" stroke-width="2" marker-end="url(#a1)"/>
+   <path d="M96 52 L330 330" stroke="#1C7E69" stroke-width="2" marker-end="url(#a1)"/>
+   <path d="M96 52 L480 330" stroke="#1C7E69" stroke-width="2" marker-end="url(#a1)"/>
+   <path d="M96 52 L620 330" stroke="#1C7E69" stroke-width="2" marker-end="url(#a1)"/>
+   <rect x="0" y="340" width="690" height="100" fill="#EEF1F6"/>
+   <rect x="110" y="336" width="130" height="8" rx="3" fill="#7FA7E6"/>
+   <path d="M175 336 L290 200" stroke="#B45309" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#a2)"/>
+   ${[0,1,2,3,4,5,6].map(i=>`<path d="M${268+i*18} 340 l${(i%3)*3-3} -10" stroke="#8A6D3B" stroke-width="2"/>`).join("")}
+   <path d="M330 333 L80 120" stroke="#1C7E69" stroke-width="1.4" opacity=".55" marker-end="url(#a1)"/>
+   ${[0,1,2].map(i=>`<g transform="translate(${430+i*34},300)"><rect x="-2" y="10" width="4" height="30" fill="#6B4F2A"/><circle cx="0" cy="0" r="16" fill="#2E8B57"/></g>`).join("")}
+   <path d="M470 300 L95 105" stroke="#7C3AED" stroke-width="2" marker-end="url(#a1)"/>
+   <rect x="580" y="282" width="34" height="58" fill="#4B5470"/><rect x="616" y="300" width="28" height="40" fill="#8A92AA"/>
+   <path d="M600 338 L110 92" stroke="#0F1630" stroke-width="3" marker-end="url(#a1)"/>
+   ${[["WATER",175,"mirror, bounces away","dark"],["FIELD",330,"rough, some comes back","medium"],["FOREST / CROPS",480,"tumbles in leaves","HV high"],["TOWN",612,"wall + ground corner","very bright"]].map(([t,x,d,v])=>`<text x="${x}" y="372" text-anchor="middle" font-family="Departure Mono,monospace" font-size="11" fill="#0F1630">${t}</text><text x="${x}" y="390" text-anchor="middle" font-family="Inter Tight,sans-serif" font-size="12" fill="#4B5470">${d}</text><text x="${x}" y="410" text-anchor="middle" font-family="Departure Mono,monospace" font-size="12" fill="#1C7E69">${v}</text>`).join("")}
+  </svg>
+ </div>
+ <div class="glass" style="position:absolute;left:760px;right:52px;top:150px;height:440px;padding:20px 22px;display:grid;align-content:start;gap:10px">
+  <p class="lab">the 5 facts</p>
+  <ul class="ul">
+   <li><b>Active:</b> it sends its own radio pulse, so night, cloud and dust do not matter.</li>
+   <li><b>L-band, about 24 cm waves:</b> they pass leaves and hit branches and soil.</li>
+   <li><b>Sideways look:</b> slopes facing it look fake bright, slopes facing away fake dark. RTC removes that.</li>
+   <li><b>HH:</b> sent flat, back flat. <b>HV:</b> sent flat, back on its edge, only after bouncing inside plants.</li>
+   <li><b>Every 12 days</b> the same orbit repeats; a 240 km wide strip each pass.</li>
+  </ul>
+ </div>
+`);
+
+/* 4 HH vs HV */
+S.push(`${F("03 · HH vs HV, real pixels","Same place, same second, two different stories")}
+ <div style="position:absolute;left:52px;top:150px;width:660px;height:440px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+  <figure class="glass" style="margin:0;padding:10px;display:grid;grid-template-rows:1fr auto;gap:6px"><img class="pic" src="${IMG.hh}" alt="HH channel, Aral west coast"><figcaption class="cap"><b style="color:var(--mint)">HH</b> · 17 Oct 2026 · Aral west basin + Ustyurt edge</figcaption></figure>
+  <figure class="glass" style="margin:0;padding:10px;display:grid;grid-template-rows:1fr auto;gap:6px"><img class="pic" src="${IMG.hv}" alt="HV channel, same frame"><figcaption class="cap"><b style="color:var(--violet)">HV</b> · same frame, same second</figcaption></figure>
+ </div>
+ <div class="glass" style="position:absolute;left:730px;right:52px;top:150px;height:440px;padding:20px 22px;display:grid;align-content:start;gap:10px">
+  <p class="lab">what you see</p>
+  <ul class="ul"><li><b>HH</b> draws the coastline, cliffs and the old seabed patterns. Smooth wet ground and water are dark.</li><li><b>HV</b> is almost empty. The dry seabed has no plants, so almost nothing comes back tilted.</li></ul>
+  <p class="lab" style="margin-top:6px">the expert trap</p>
+  <ul class="ul amber"><li>The bright vertical stripes in HV are the instrument's own <b>noise floor</b>, not vegetation. When the real signal is tiny, you see the radar's hiss.</li><li>Rule: before calling HV "plants", check it is well above the noise level the file reports.</li></ul>
+  <p class="lab" style="margin-top:6px">frisbee picture</p>
+  <p style="font-size:14px">Throw a frisbee flat at a wall: it comes back flat (HH). Throw it into a bush: it comes out tumbling on its edge (HV).</p>
+ </div>
+`);
+
+/* 5 product family */
+const P=[["GCOV","163,672","0.5-5.7 GB","Radar brightness, slope-corrected, on a map grid. 10-20 m pixels.","Water, floods, crops, forest loss, towns","Main"],
+["GUNW","94,150","0.8-1.3 GB","Interferogram: how far the ground moved toward or away between two passes. 80 m pixels.","Earthquakes, sinking ground, landslides, volcanoes","Stretch"],
+["GOFF","27,717","~1.1 GB","Pixel offsets: how far each patch slid sideways between two dates.","Glacier flow, big quake shifts","Stretch"],
+["SME2","103,943","~24 MB","Soil moisture, already computed by NASA. Small files.","Irrigation, drought, wet after rain","Easy win"],
+["UR_L2","6,789","~2 GB","Urgent response: the same products, ordered for disasters.","Where NASA pointed NISAR on purpose","Map layer"],
+["GSLC","162,907","~3 GB","Raw complex pixels with phase, on a map grid. For experts.","Make your own interferograms","Skip"]];
+S.push(`${F("04 · the data family","36 product types. These 6 matter to us.")}
+ <div class="glass" style="position:absolute;left:52px;right:52px;top:150px;height:400px;padding:10px 20px">
+  <table><thead><tr><th style="width:80px">Product</th><th style="width:90px">Files</th><th style="width:100px">One file</th><th>What it is, in plain words</th><th style="width:250px">What it shows</th><th style="width:90px">For us</th></tr></thead><tbody>
+  ${P.map(([p,n,s,w,u,f])=>`<tr><td><b style="font-family:var(--mono);font-weight:400">${p}</b></td><td style="font-family:var(--mono);color:var(--mint)">${n}</td><td style="font-family:var(--mono)">${s}</td><td>${w}</td><td class="muted">${u}</td><td><span class="chip ${f==="Skip"?"c-amber":f==="Stretch"?"c-blue":""}">${f}</span></td></tr>`).join("")}
+  </tbody></table>
+ </div>
+ <p style="position:absolute;left:56px;right:56px;top:564px;font-size:13.5px" class="muted">Helpers in the same archive: <b>NISAR_WATERMASK</b> (known water), <b>NISAR_DEM</b> (heights for slope correction), <b>NISAR_VWC</b> (vegetation water). Most files are <b>provisional</b> = a public beta, partly checked. <b>14,768</b> GCOV files are already <b>validated</b> (21 Oct → 11 Nov).</p>
+`);
+
+/* 6 filename */
+S.push(`${F("05 · read a filename","The name tells you where, when and how, before you download")}
+ <div class="glass" style="position:absolute;left:52px;right:52px;top:150px;height:440px;padding:24px 28px;display:grid;align-content:start;gap:16px">
+  <div class="raw" style="font-size:13.5px;white-space:normal;word-break:break-all">NISAR_<span class="mi">L2</span>_<span class="mi">PR</span>_<span class="mi">GCOV</span>_<span class="bl">033</span>_<span class="bl">113</span>_<span class="hl">A</span>_<span class="bl">025</span>_<span class="vi">2005</span>_<span class="vi">DHDH</span>_A_<span class="hl">20261020T004238</span>_<span class="hl">20261020T004313</span>_P05023_N_F_J_001.h5</div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+   ${[["L2 · PR · GCOV","mint","Level 2 (on a map), regular production (UR = urgent), product type."],["033 · 113 · 025","blue","Cycle 33, track 113, frame 25. Same track + frame = same look angle = fair comparison."],["A","amber","Ascending: flying north. D = descending, flying south. Never mix them in one time series."],["2005","violet","Bandwidth: 20 MHz main (20 m pixels) + 5 MHz side (80 m). 4005 = 10 m pixels."],["DHDH","violet","Dual-pol, H sent: HH and HV, on both bands. SHSH = HH only. Quad = all four."],["20261020T004238","amber","Start time in UTC: 20 Oct 2026, 00:42:38. Uzbekistan = UTC+5."],["P05023 N F J 001","ink","Processing tags: software version and flags. The product spec PDF lists them."],["one file, many parts","mint",".h5 data, previews (.png), map outline (.kml), a QA report (.pdf) and QA numbers (.csv)."]].map(([k,c,d])=>`<div class="kpi" style="padding:12px 14px"><b style="font-size:15px;color:var(--${c==="ink"?"ink-2":c})">${k}</b><span style="font-size:11.5px;color:var(--ink);font-family:var(--sans)">${d}</span></div>`).join("")}
+  </div>
+  <p class="muted" style="font-size:14px">Read the QA report first: it tells you if a frame is partial or bad before you spend an hour on it.</p>
+ </div>
+`);
+
+/* 7 flipbook */
+S.push(`${F("06 · the dance","Scrub through four months of real radar")}
+ <div class="glass" style="position:absolute;left:52px;top:150px;width:520px;height:440px;padding:12px;display:grid;grid-template-rows:1fr auto;gap:8px">
+  <img id="fb-img" class="pic" alt="NISAR preview for the selected date">
+  <div style="display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:0 6px 4px">
+   <button class="tbtn" id="fb-play" aria-label="Play the time series">Play</button>
+   <input type="range" id="fb-range" min="0" max="7" value="0" aria-label="Date">
+   <span id="fb-date" style="font:400 14px/1 var(--mono);color:var(--mint);min-width:96px;text-align:right"></span>
+  </div>
+ </div>
+ <div class="glass" style="position:absolute;left:590px;right:52px;top:150px;height:440px;padding:18px 20px;display:grid;align-content:start;gap:12px">
+  <p class="lab">pick a place</p>
+  <div id="fb-tabs" style="display:flex;flex-wrap:wrap;gap:6px"></div>
+  <div id="fb-strip" style="display:grid;grid-template-columns:repeat(8,1fr);gap:5px"></div>
+  <p id="fb-note" style="font-size:14.5px;line-height:1.5"></p>
+  <p class="cap">Previews are small (about 200 px). The real app uses the full .h5 files: 10-20 m pixels, one value per pixel per date, in dB.</p>
+ </div>
+`);
+
+/* 8 interferogram */
+S.push(`${F("07 · ground motion · GUNW","Colour bands = distance. Most of these bands are air.")}
+ <div class="find">
+  <figure class="glass" style="margin:0;padding:10px;display:grid;grid-template-rows:1fr auto;gap:6px"><img class="pic" src="${IMG.gunw}" alt="Unwrapped interferogram preview over Tashkent region" style="background:#fff"><figcaption class="cap">GUNW · Tashkent + Fergana, 39-42°N · pair starting 20 Jun 2026 · 80 m pixels</figcaption></figure>
+  <div class="glass"><p class="lab">how to read it</p>
+   <ul class="ul"><li>Two passes, same orbit. Compare the wave's timing. If the ground came closer, the echo returns a tiny bit earlier.</li><li>NISAR's wave is about 24 cm. The echo travels there and back, so one full colour cycle ≈ <b>12 cm</b> of motion along the beam.</li></ul>
+   <p class="lab" style="margin-top:4px">the expert trap</p>
+   <ul class="ul amber"><li>Wide smooth bands over 100 km are mostly <b>water vapour and the ionosphere</b> slowing the wave, not the ground. The file has an ionosphere layer, but it is not applied by default.</li><li>Noisy speckle in the south = mountains and snow: the two passes no longer match.</li></ul>
+   <p class="lab" style="margin-top:4px">about "mm"</p>
+   <p style="font-size:14px">Pixels are 10-80 m, not mm. Motion is cm per pair; mm per year needs many pairs over a long time. With 4 months, show cm events: a quake, a landslide, a lava flow.</p>
+  </div>
+ </div>
+`);
+
+/* 9 offsets */
+S.push(`${F("08 · sliding ground · GOFF","Arrows show how far each patch moved between two dates")}
+ <div class="find">
+  <figure class="glass" style="margin:0;padding:10px;display:grid;grid-template-rows:1fr auto;gap:6px"><img class="pic" src="${IMG.goff}" alt="Pixel offset preview over the Pamir" style="background:#fff"><figcaption class="cap">GOFF · Pamir, near Fedchenko glacier · pair starting 20 Jun 2026</figcaption></figure>
+  <div class="glass"><p class="lab">how to read it</p>
+   <ul class="ul"><li>The computer matches small patches in two images, like matching puzzle pieces, and draws an arrow from old to new spot.</li><li>A glacier flows tens of cm per day, so between passes its arrows grow longer than the rock around it.</li></ul>
+   <p class="lab" style="margin-top:4px">the expert trap</p>
+   <ul class="ul amber"><li>Here every arrow points the same way across the whole frame. That is a whole-picture shift (orbit, timing), not ice.</li><li>Fix: subtract the shift of the rock that cannot move. What is left is the glacier.</li><li>The purple band at the top = no valid matches.</li></ul>
+   <p class="lab" style="margin-top:4px">why it matters to us</p>
+   <p style="font-size:14px">The Pamir and Tien Shan glaciers feed the Amu Darya and Syr Darya. Their summer melt is the start of Uzbekistan's water.</p>
+  </div>
+ </div>
+`);
+
+/* 10 traps */
+S.push(`${F("09 · five ways radar fools beginners","Judges score validity. Name the trap before they do.")}
+ <div style="position:absolute;left:52px;right:52px;top:150px;display:grid;grid-template-columns:repeat(5,1fr);gap:12px">
+  ${[["Noise floor","HV stripes over desert look like a signal. They are the radar's own hiss.","Mask pixels below the noise level."],
+     ["Look-angle band","One edge of every frame is brighter. The beam hits the ground at a different angle there.","Compare one pixel with itself over time, same track."],
+     ["Mixed tracks","Ascending and descending look at slopes from opposite sides. A mix fakes a change.","Never mix A and D in one series."],
+     ["Air in the phase","Water vapour bends the wave and paints wide colour bands.","Use many pairs; apply the ionosphere layer."],
+     ["Bad or partial frames","19 Jun at the Aral is striped; 20 Jun at Rogun covers only a strip.","Read the QA report; drop the frame."]].map(([t,d,f],i)=>`
+   <div class="glass" style="padding:18px;height:420px;display:grid;grid-template-rows:auto auto 1fr auto;gap:10px"><p style="font:400 22px/1 var(--mono);color:var(--amber)">0${i+1}</p><h3>${t}</h3><p class="muted" style="font-size:14px;line-height:1.5">${d}</p><div style="border-top:1px solid var(--line);padding-top:10px"><p class="lab" style="margin:0 0 4px">the fix</p><p style="font-size:13.5px;font-weight:600">${f}</p></div></div>`).join("")}
+ </div>
+`);
+
+/* 11 audit */
+const A=[["Flood, lakes, reservoir area","CAN","GCOV: water is dark in HH. Reservoir height is not NISAR: NASA's SWOT satellite measures it."],
+["Aral shoreline","CAN","GCOV every few days, through dust storms. Landsat gives 1984-2026 for the long story."],
+["Farming, crop cycle","CAN","HV rises as cotton grows, drops at harvest. Jun-Oct is the cotton season, inside our data."],
+["Soil moisture, drought","CAN","SME2 is ready-made, 24 MB files."],
+["Forest loss, wildfire scars","CAN","HV drops when the canopy is gone. Uzbekistan has little forest; good for the world map."],
+["Volcano, lava","CAN","NASA already showed Krasheninnikov lava, Dec 2025 → Aug 2026."],
+["Earthquake","IF","Only if a quake hit inside the data window and coverage. Check the USGS list first."],
+["Glacier flow, snowmelt","HARD","GOFF + mountains + slope traps. Wet snow goes dark: melt is visible."],
+["Ground sinking","HARD","Needs many pairs over a long time; we have months."],
+["Sea level","NO","NISAR maps land. Sea height = SWOT and altimeters."],
+["Tsunami, tornado","NO","Over in minutes; NISAR repeats every 12 days. Only the damage after, if an event exists."],
+["War damage","SKIP","Hard to validate, political for an international jury."]];
+S.push(`${F("10 · audit of our list","What NISAR can really show")}
+ <div class="glass" style="position:absolute;left:52px;top:142px;width:760px;height:450px;padding:6px 16px">
+  <table class="tight"><thead><tr><th style="width:190px">Idea</th><th style="width:70px">Verdict</th><th>Why</th></tr></thead><tbody>
+  ${A.map(([t,v,d])=>`<tr><td><b>${t}</b></td><td><span class="chip ${v==="CAN"?"":v==="IF"||v==="HARD"?"c-blue":"c-amber"}">${v}</span></td><td class="muted" style="font-size:11.5px">${d}</td></tr>`).join("")}
+  </tbody></table>
+ </div>
+ <div class="glass" style="position:absolute;left:830px;right:52px;top:142px;height:450px;padding:18px 20px;display:grid;align-content:start;gap:10px">
+  <p class="lab">two fixes to our story</p>
+  <ul class="ul amber"><li><b>Rogun</b> is on the Vakhsh, which feeds the <b>Amu Darya</b>. Downstream it affects Uzbekistan and Turkmenistan, not Pakistan. Pakistan's water is the Indus.</li><li><b>Qosh Tepa</b> takes water from the Amu Darya in Afghanistan. Same river, same story.</li></ul>
+  <p class="lab" style="margin-top:6px">one river, one story</p>
+  <p style="font-size:14px">Glacier (Pamir) → Rogun reservoir → Qosh Tepa canal → Uzbek fields → Aral shore. Every stop is a NISAR product we have.</p>
+ </div>
+`);
+
+/* 12 world */
+S.push(`${F("11 · the whole world, done right","A world door, then deep stories where it matters")}
+ <div class="glass" style="position:absolute;left:52px;top:150px;width:760px;height:440px;padding:10px">
+  <svg id="world" viewBox="0 0 740 370" width="740" height="370" aria-label="World map of NISAR urgent response hotspots"></svg>
+  <p class="cap" style="padding:2px 8px">Dots = where NASA ordered NISAR urgent-response files, 17 Jun → 13 Nov 2026. Size = files (36-94 per 3° box). Top 40 boxes of 6,789 files. Mint = Central Asia, our story.</p>
+ </div>
+ <div class="glass" style="position:absolute;left:830px;right:52px;top:150px;height:440px;padding:18px 20px;display:grid;align-content:start;gap:10px">
+  <p class="lab">why not every pixel on earth</p>
+  <p style="font-size:14px">163,672 brightness files × about 1.5 GB ≈ <b style="font-family:var(--mono);font-weight:400;color:var(--amber)">250 TB</b>. No team downloads that in 36 h.</p>
+  <p class="lab" style="margin-top:4px">what a pro does</p>
+  <ul class="ul"><li><b>World layer:</b> every pass outline + these disaster hotspots, from the catalog. Cheap, global, live.</li><li><b>Deep stories:</b> 3-4 places, full pixels, numbers checked against optical photos.</li><li>Clusters here: Hawaii, Panama-Colombia, US south-east, Alaska, Tibet, eastern India-Bangladesh, Sichuan, Indonesia.</li></ul>
+ </div>
+`);
+
+/* 13 the app */
+S.push(`${F("12 · the app, as a judge sees it","Thirty seconds, five taps, one river")}
+ <div style="position:absolute;left:52px;right:52px;top:150px;display:grid;grid-template-columns:repeat(5,1fr);gap:12px">
+  ${[["Globe","The world spins with NISAR's passes. Disaster hotspots pulse.","catalog footprints + UR"],["Central Asia","Tap Uzbekistan. The camera flies along the Amu Darya from the Pamir.","GCOV mosaic"],["Rogun + Qosh Tepa","Reservoir water area grows; the new canal fills. One number each.","GCOV water mask"],["Fields","Fergana cotton: HV rises, then drops at harvest. Tap a field for its curve.","GCOV HV/HH"],["Aral","Slider June → October. The shore moves. Compare with a cloudy optical day.","GCOV + Sentinel-2"]].map(([t,d,s],i)=>`
+   <div class="glass" style="padding:18px;height:300px;display:grid;grid-template-rows:auto auto 1fr auto;gap:10px"><p style="font:400 22px/1 var(--mono);color:var(--mint)">0${i+1}</p><h3>${t}</h3><p class="muted" style="font-size:14px;line-height:1.5">${d}</p><p class="cap" style="border-top:1px solid var(--line);padding-top:8px">${s}</p></div>`).join("")}
+ </div>
+ <div class="glass mint-card" style="position:absolute;left:52px;right:52px;top:466px;height:124px;padding:20px 26px;display:grid;grid-template-columns:1.2fr 1fr;gap:24px;align-items:center">
+  <div><p style="font:400 11px/1 var(--mono);letter-spacing:.16em;opacity:.85">THE ONE QUESTION ON THE TITLE SCREEN</p><p style="font-size:24px;font-weight:800;letter-spacing:-.02em;margin-top:8px">Where did Central Asia's water go this summer?</p></div>
+  <p style="font-size:14.5px;opacity:.92">Impact: 5 countries share two rivers. Relevance: every stop is NISAR. Creativity: one water drop, glacier to sea. Validity: each number checked. Presentation: a 30-second flight.</p>
+ </div>
+`);
+
+/* 14 top 10 */
+const I=[["One question, one river","The whole app answers: where did Central Asia's water go this summer?"],
+["Globe as the door","World map of passes + disaster hotspots, then fly into the Amu Darya."],
+["Cloud-proof moment","Show a day Sentinel-2 is blind (cloud, dust) and NISAR sees clearly."],
+["Tap any pixel","Its 4-month curve in dB, with a one-line physics reason under it."],
+["A number per stop","Rogun water area, canal fill, cotton harvest week, Aral shore change."],
+["Second witness","Every number checked against Sentinel-2 or WorldCover, agreement % shown."],
+["NISAR + SWOT","NISAR gives reservoir area, NASA's SWOT gives height: together, volume."],
+["40 years in 5 seconds","Landsat Aral shorelines 1984 → 2026 as rings; NISAR is the newest ring."],
+["Trap badges","The app marks noise floor, bad frames and mixed tracks, so no one misreads."],
+["Re-run it","Open notebooks + Uzbek and English. A judge can repeat every number."]];
+S.push(`${F("13 · top 10 upgrades","What turns a viewer into a winner")}
+ <div style="position:absolute;left:52px;right:52px;top:150px;display:grid;grid-template-columns:repeat(2,1fr);gap:10px">
+ ${I.map(([h,p],k)=>`<div class="idea glass"><b>${String(k+1).padStart(2,"0")}</b><div><h4>${h}</h4><p>${p}</p></div></div>`).join("")}</div>
+ <p class="muted" style="position:absolute;left:56px;right:56px;top:566px;font-size:13.5px">ML comes after the story works: a crop-type model from HV curves, and a radar water mask trained on clear Sentinel-2 days. Both need a score on places they never saw.</p>
+`);
+
+/* 15 plan */
+const R=[["Sat 14-17","Data proof",["3 full .h5 files cut to boxes: Aral, Rogun, Fergana","Our own dB map + one pixel curve","Pick 3-4 stops, lock the question"],"our first map from our own code"],
+["Sat 17-24","Pipeline + skeleton",["Stack Jun-Oct per stop, same track","Water masks, HV curves, change maps","Globe + fly-to + slider on real tiles"],"app opens with real tiles"],
+["Sun 9-18","Stories + checks",["Number per stop, Sentinel-2 check","Tap-pixel curves, trap badges","Uzbek + English text"],"every claim has an agreement %"],
+["Sun 18-22","Freeze + ship",["30 s video, project page text","AI-use note, data list","Submit by 22:00, test links in private"],"submitted, 2 h buffer"]];
+S.push(`${F("14 · the plan","36 hours, four blocks, one proof each")}
+ <div style="position:absolute;left:52px;right:52px;top:150px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+ ${R.map(([w,t,l,p])=>`<div class="glass" style="padding:18px;height:330px;display:grid;grid-template-rows:auto auto 1fr auto;gap:10px">
+  <b style="font:400 19px/1 var(--mono);color:var(--mint)">${w}</b><h3>${t}</h3><ul class="ul">${l.map(x=>`<li style="font-size:13.5px">${x}</li>`).join("")}</ul>
+  <div style="border-top:1px solid var(--line);padding-top:10px"><p class="lab" style="margin:0 0 4px">proof</p><p style="font-size:13.5px;font-weight:600">${p}</p></div></div>`).join("")}</div>
+ <div class="glass" style="position:absolute;left:52px;right:52px;top:496px;height:94px;padding:14px 22px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;align-items:center">
+  ${[["Science lead","channels, traps, checks"],["Pipeline","download, stack, masks, tiles"],["App","globe, slider, pixel chart"],["Story","video, page, Uzbek text"]].map(([r,d])=>`<div><p class="lab" style="margin:0 0 2px">${r}</p><p style="font-size:13.5px">${d}</p></div>`).join("")}
+ </div>
+`);
+
+/* 16 quiz + next */
+const Q=[["A cotton field is harvested. Which drops more, HH or HV?","HV. The tumbling bounce inside leaves and stems is gone. HH changes less, and a ploughed rough field can even get brighter in HH."],
+["A rice paddy is flooded before the plants grow. Bright or dark in HH?","Dark. Calm water is a mirror and sends the flash away. Later, plants standing in water make a corner (stem + water) and it turns very bright."],
+["A teammate mixes ascending and descending dates in one Aral series to get more points. What breaks?","Slopes and dunes are lit from opposite sides, so brightness jumps between dates with no real change. Keep one track and frame per series."]];
+S.push(`${F("15 · your turn","Three questions where the gut answer is the trap")}
+ <div style="position:absolute;left:52px;top:150px;width:620px;display:grid;gap:10px">
+  ${Q.map(([q,a],i)=>`<div class="qa glass"><div style="display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:start"><span style="font:400 14px/1.3 var(--mono);color:var(--mint)">0${i+1}</span><b style="font-size:14.5px;font-weight:600">${q}</b><button class="tbtn" data-q="${i}">Show</button></div><p class="ans" id="ans${i}" hidden>${a}</p></div>`).join("")}
+ </div>
+ <div class="glass mint-card" style="position:absolute;left:692px;right:52px;top:150px;height:440px;padding:24px">
+  <p style="font:400 11px/1 var(--mono);letter-spacing:.16em;opacity:.85">THE MESSAGE TO SEND NEXT</p>
+  <p id="pr" style="font-size:15.5px;line-height:1.6;margin-top:14px">Go with "Where did Central Asia's water go this summer?". Stops: Rogun, Qosh Tepa, Fergana fields, Aral. World globe with NISAR passes and urgent-response hotspots as the door. Start the data proof now: download the full GCOV files for the 4 stops, make our own dB maps and one pixel curve each, and set up the repo and the app skeleton.</p>
+  <button id="copy" style="all:unset;cursor:pointer;margin-top:16px;font:400 12px/1 var(--mono);color:#fff;padding:10px 16px;border-radius:999px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35)">Copy message</button><span id="copied" style="font:400 12px/1 var(--mono);margin-left:10px;opacity:.85"></span>
+ </div>
+`);
+
+const stage=document.getElementById("stage");
+stage.innerHTML=S.map((s,i)=>`<section class="slide" id="s${i+1}" aria-label="Slide ${i+1} of ${S.length}">${s}</section>`).join("")+
+ `<nav class="dock glass" aria-label="Slides"><button id="prev" aria-label="Previous slide"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+  <div class="dots">${S.map((_,i)=>`<button aria-label="Slide ${i+1}"></button>`).join("")}</div><span class="count" id="count"></span>
+  <button id="next" aria-label="Next slide"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button></nav>`;
+
+/* flipbook */
+let fbKey="aral_east",fbI=0,fbTimer=null;
+const fbImg=document.getElementById("fb-img"),fbR=document.getElementById("fb-range"),fbD=document.getElementById("fb-date");
+function fbShow(i){const d=SERIES[fbKey].data;fbI=(i+d.length)%d.length;fbImg.src=d[fbI][1];fbR.value=fbI;fbD.textContent=d[fbI][0];
+ [...document.querySelectorAll("#fb-strip img")].forEach((im,k)=>im.style.outline=k===fbI?"2px solid #1C7E69":"none")}
+function fbSet(k){fbKey=k;const d=SERIES[k].data;fbR.max=d.length-1;
+ document.getElementById("fb-strip").innerHTML=d.map(([t,u],j)=>`<img src="${u}" alt="${t}" title="${t}" data-j="${j}" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:6px;background:#0b0f1c;cursor:pointer;outline-offset:1px">`).join("");
+ document.querySelectorAll("#fb-strip img").forEach(im=>im.onclick=()=>fbShow(+im.dataset.j));
+ document.getElementById("fb-note").textContent=SERIES[k].note;
+ document.querySelectorAll("#fb-tabs button").forEach(b=>b.classList.toggle("on",b.dataset.k===k));fbShow(0)}
+document.getElementById("fb-tabs").innerHTML=Object.entries(SERIES).map(([k,v])=>`<button class="tbtn" data-k="${k}">${v.name}</button>`).join("");
+document.querySelectorAll("#fb-tabs button").forEach(b=>b.onclick=()=>fbSet(b.dataset.k));
+fbR.oninput=()=>fbShow(+fbR.value);
+document.getElementById("fb-play").onclick=e=>{if(fbTimer){clearInterval(fbTimer);fbTimer=null;e.target.textContent="Play";return}
+ e.target.textContent="Pause";fbTimer=setInterval(()=>fbShow(fbI+1),700)};
+fbSet("aral_east");
+
+/* world map: tiny topojson decoder + equirectangular projection */
+(function(){const svg=document.getElementById("world");const W=740,H=370;
+ const px=(lo,la)=>[(lo+180)/360*W,(90-la)/180*H];
+ const t=LAND.transform,arcs=LAND.arcs.map(a=>{let x=0,y=0;return a.map(([dx,dy])=>{x+=dx;y+=dy;return [x*t.scale[0]+t.translate[0],y*t.scale[1]+t.translate[1]]})});
+ const ring=r=>{let pts=[];r.forEach(i=>{let a=i<0?arcs[~i].slice().reverse():arcs[i];pts=pts.concat(pts.length?a.slice(1):a)});
+  let d="";let prev=null;pts.forEach(([lo,la])=>{const [x,y]=px(lo,la);d+=(prev!==null&&Math.abs(lo-prev)>180?"M":(d?"L":"M"))+x.toFixed(1)+" "+y.toFixed(1);prev=lo});return d+"Z"};
+ let land="";const g=LAND.objects.land;(g.geometries||[g]).forEach(geo=>{const polys=geo.type==="Polygon"?[geo.arcs]:geo.arcs;polys.forEach(p=>p.forEach(r=>land+=ring(r)))});
+ let grat="";for(let lo=-150;lo<=150;lo+=30){const [x]=px(lo,0);grat+=`M${x} 0V${H}`}for(let la=-60;la<=60;la+=30){const [,y]=px(0,la);grat+=`M0 ${y}H${W}`}
+ const dots=UR.map(([la,lo,n])=>{const [x,y]=px(lo,la);return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${(3+n/14).toFixed(1)}" fill="#B45309" fill-opacity=".38" stroke="#B45309" stroke-width="1"/>`}).join("");
+ const ca=[[45.2,59.5,"Aral"],[38.7,69.8,"Rogun"],[36.9,66.6,"Qosh Tepa"],[40.6,71.8,"Fergana"]].map(([la,lo,n])=>{const [x,y]=px(lo,la);return `<circle cx="${x}" cy="${y}" r="4.5" fill="#1C7E69"/>`}).join("");
+ const [cx,cy]=px(64,40);
+ svg.innerHTML=`<rect width="${W}" height="${H}" rx="12" fill="#EEF2F8"/><path d="${grat}" stroke="#D9DFEA" stroke-width=".6"/><path d="${land}" fill="#FFFFFF" stroke="#C9D1DF" stroke-width=".6"/>${dots}${ca}<text x="${cx-46}" y="${cy-14}" font-family="Departure Mono,monospace" font-size="10" fill="#1C7E69">CENTRAL ASIA</text>`})();
+
+/* quiz + copy */
+document.querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>{const a=document.getElementById("ans"+b.dataset.q);a.hidden=!a.hidden;b.textContent=a.hidden?"Show":"Hide"});
+document.getElementById("copy").onclick=async()=>{const m=document.getElementById("copied"),t=document.getElementById("pr").textContent;
+ try{await navigator.clipboard.writeText(t);m.textContent="Copied"}catch(e){const r=document.createRange();r.selectNodeContents(document.getElementById("pr"));const s=getSelection();s.removeAllRanges();s.addRange(r);m.textContent="Selected, press Ctrl+C"}};
+
+let cur=-1;const SL=[...document.querySelectorAll(".slide")],DT=[...document.querySelectorAll(".dots button")];
+function go(i,quiet){i=Math.max(0,Math.min(SL.length-1,i));if(i===cur)return;
+ SL.forEach((s,k)=>{s.classList.toggle("on",k===i);s.classList.toggle("back",k<i)});DT.forEach((d,k)=>d.classList.toggle("on",k===i));
+ document.getElementById("count").textContent=`${i+1} / ${SL.length}`;cur=i;if(!quiet)try{history.replaceState(null,"","#s"+(i+1))}catch(e){}}
+document.getElementById("prev").onclick=()=>go(cur-1);document.getElementById("next").onclick=()=>go(cur+1);
+DT.forEach((d,k)=>d.onclick=()=>go(k));
+addEventListener("keydown",e=>{if(e.target.tagName==="INPUT")return;const k=e.key;if(k==="ArrowRight"||k==="PageDown"||k===" "){e.preventDefault();go(cur+1)}else if(k==="ArrowLeft"||k==="PageUp"){e.preventDefault();go(cur-1)}else if(k==="Home")go(0);else if(k==="End")go(SL.length-1)});
+let wl=0;addEventListener("wheel",e=>{const t=Date.now(),d=Math.abs(e.deltaY)>Math.abs(e.deltaX)?e.deltaY:e.deltaX;if(t-wl<750||Math.abs(d)<24)return;wl=t;go(cur+(d>0?1:-1))},{passive:true});
+let px0=null,py0=null;addEventListener("pointerdown",e=>{if(e.target.closest("input,button"))return;px0=e.clientX;py0=e.clientY});
+addEventListener("pointerup",e=>{if(px0===null)return;const dx=e.clientX-px0,dy=e.clientY-py0;px0=null;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy))go(cur+(dx<0?1:-1))});
+function fromHash(){const m=/^#s(\d+)$/.exec(location.hash);go(m?+m[1]-1:0,true)}
+addEventListener("hashchange",fromHash);
+function fit(){const s=Math.min(innerWidth/1200,innerHeight/675);stage.style.transform=`translate(-50%,-50%) scale(${s})`}
+addEventListener("resize",fit);fit();fromHash();
+</script>

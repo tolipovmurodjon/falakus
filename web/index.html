@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Falakus NISAR Live</title>
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.0.0/dist/maplibre-gl.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;800&display=swap">
+<style>
+:root{--ink:#0F1630;--ink2:#4B5470;--ink3:#8A92AA;--line:#E6E9F1;--mint:#1C7E69;--mint2:#23A06C;--mint-s:rgba(28,126,105,.12);--amber:#B45309;
+ --glass:rgba(255,255,255,.84);--sans:"Inter Tight",system-ui,"Segoe UI",sans-serif;--mono:ui-monospace,"Cascadia Mono",Consolas,monospace}
+*{box-sizing:border-box}[hidden]{display:none!important}html,body{margin:0;height:100%;font:400 14px/1.45 var(--sans);color:var(--ink);background:#0b0f1c;overflow:hidden}
+#map{position:fixed;inset:0}
+.panel{position:absolute;z-index:3;background:var(--glass);-webkit-backdrop-filter:blur(18px) saturate(1.3);backdrop-filter:blur(18px) saturate(1.3);
+ border:1px solid rgba(255,255,255,.9);border-radius:20px;box-shadow:0 12px 30px -14px rgba(15,22,48,.45)}
+.eyebrow{font:400 10.5px/1.4 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink2);margin:0}
+h1,h2,h3{margin:0;letter-spacing:-.02em;text-wrap:balance}
+.tog{all:unset;cursor:pointer;font:500 12px/1 var(--sans);padding:8px 11px;border-radius:999px;background:rgba(15,22,48,.06);color:var(--ink2);white-space:nowrap}
+.tog.on{background:var(--mint);color:#fff}
+.tog:focus-visible,.btn:focus-visible,.ev:focus-visible{outline:2px solid var(--mint);outline-offset:2px}
+.btn{all:unset;cursor:pointer;font:600 13.5px/1 var(--sans);padding:12px 16px;border-radius:999px;background:linear-gradient(150deg,#1C7E69,#23A06C);color:#fff;box-shadow:0 10px 22px -12px rgba(28,126,105,.8);text-align:center}
+.btn.ghost{background:rgba(15,22,48,.06);color:var(--ink);box-shadow:none}
+.row{display:flex;align-items:center;gap:6px;margin-top:9px;flex-wrap:wrap}
+input[type=range]{accent-color:#1C7E69}
+#brand{left:14px;top:14px;padding:14px 16px;width:340px}
+#brand h1{font-size:19px;font-weight:800;margin-top:2px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px}
+.stats div{background:rgba(255,255,255,.75);border-radius:12px;padding:7px 9px}
+.stats b{display:block;font:500 14px/1.1 var(--mono);color:var(--mint);white-space:nowrap}
+.stats span{font:400 9.5px/1.25 var(--mono);color:var(--ink2);display:block}
+#howto{left:14px;bottom:28px;padding:12px 14px;width:340px;font-size:12.5px;color:var(--ink2)}
+#howto summary{cursor:pointer;font:600 13px/1.3 var(--sans);color:var(--ink);list-style:none}
+#howto summary::-webkit-details-marker{display:none}
+#howto ul{margin:8px 0 0;padding:0;list-style:none;display:grid;gap:5px}
+#howto i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:7px;vertical-align:-1px}
+#zoomnote{margin-top:8px;font:400 11px/1.4 var(--mono);color:var(--mint)}
+#events{left:14px;top:300px;bottom:28px;width:340px;z-index:5;display:flex;flex-direction:column;overflow:hidden}
+#events header{padding:14px 16px 8px}
+#evfilter{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+#evlist{overflow:auto;padding:4px 10px 12px;flex:1}
+.ev{all:unset;display:grid;grid-template-columns:10px 1fr;gap:10px;padding:9px 8px;border-radius:12px;cursor:pointer;width:100%;box-sizing:border-box}
+.ev:hover{background:rgba(15,22,48,.05)}
+.ev .dot{width:10px;height:10px;border-radius:50%;margin-top:4px}
+.ev b{font-weight:600;font-size:13px;display:block}
+.ev span{font:400 11px/1.4 var(--mono);color:var(--ink3)}
+#intro{left:50%;top:50%;transform:translate(-50%,-50%);width:min(560px,calc(100% - 32px));padding:24px 26px;z-index:6}
+#intro h2{font-size:26px;font-weight:800;margin:6px 0 10px}
+#intro ul{margin:0 0 16px;padding:0;list-style:none;display:grid;gap:8px}
+#intro li{display:grid;grid-template-columns:22px 1fr;gap:8px;font-size:14px}
+#intro li b{font:500 12px/1.6 var(--mono);color:var(--mint)}
+#dock{position:absolute;left:370px;right:420px;bottom:28px;z-index:4;display:grid;gap:8px}
+#tour{right:60px;top:14px;bottom:28px;width:350px;padding:16px 18px;overflow:auto;z-index:4}
+body.touring #brand .opts{display:none}
+#tour .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+#tour h3{font-size:22px;font-weight:800;margin:4px 0 8px;line-height:1.15}
+#tour .grid{display:grid;grid-template-columns:1fr;gap:10px;font-size:13.5px;line-height:1.5;margin-top:4px}
+#tour .grid p{margin:0}
+#tour .lab{font:400 10px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);display:block}
+#tour .nav{display:flex;gap:6px;align-items:center}
+.chip{display:inline-flex;align-items:center;gap:6px;font:400 10.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:6px 9px;border-radius:999px;background:var(--mint-s);color:var(--mint)}
+#player{position:relative;inset:auto;padding:10px 14px;display:grid;grid-template-columns:auto auto 1fr auto;gap:12px;align-items:center}
+#pdate{font:500 20px/1 var(--mono);color:var(--mint);min-width:118px}
+#pmeta{font:400 10.5px/1.35 var(--mono);color:var(--ink2)}
+#ptrack{position:relative;height:28px}
+#ptrack input{position:absolute;inset:6px 0 auto;width:100%}
+#pticks{position:absolute;left:0;right:0;bottom:0;height:8px}
+#pticks i{position:absolute;bottom:0;width:2px;height:8px;background:var(--ink3);border-radius:1px;transform:translateX(-1px)}
+#pticks i.on{background:var(--mint);height:10px}
+#plegend{font:400 10.5px/1.4 var(--mono);color:var(--ink2);grid-column:1/-1;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+#plegend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+.maplibregl-popup-content{border-radius:14px;padding:12px 14px;font:400 12.5px/1.45 var(--sans);color:var(--ink);max-width:300px}
+.pop b{font-weight:600}.pop .m{font:400 11px/1.4 var(--mono);color:var(--ink2)}
+.pop a{color:var(--mint)}.pop .btn{margin-top:8px;padding:9px 12px;font-size:12.5px;display:inline-block}
+#toast{position:absolute;left:50%;top:16px;transform:translateX(-50%);z-index:7;padding:10px 14px;font:500 12.5px/1.3 var(--sans)}
+@media (max-width:1100px){#dock{left:14px;right:14px}#tour{top:auto;bottom:120px;left:14px;right:14px;width:auto;max-height:40vh}#events{display:none}#howto{display:none}}
+@media (max-width:640px){#brand{left:8px;right:8px;top:8px;width:auto;padding:10px 12px}#brand .stats,#brand .opts{display:none}#brand h1{font-size:16px}
+ #dock{left:8px;right:8px;bottom:12px}#tour{left:8px;right:8px;bottom:104px;max-height:38vh}#player{grid-template-columns:auto 1fr;gap:8px}#pdate{font-size:16px;min-width:0}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+#swipe{position:absolute;inset:0;z-index:2;pointer-events:none}
+#swipe .bar{position:absolute;top:0;bottom:0;width:3px;background:#fff;box-shadow:0 0 0 1px rgba(15,22,48,.3);pointer-events:auto;cursor:ew-resize}
+#swipe .knob{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:38px;height:38px;border-radius:50%;background:#fff;box-shadow:0 6px 18px -6px rgba(15,22,48,.6);display:grid;place-items:center;font:600 13px/1 var(--sans);color:var(--ink)}
+#swipe .tag{position:absolute;top:70px;font:500 11px/1 var(--mono);background:rgba(15,22,48,.75);color:#fff;padding:6px 9px;border-radius:999px}
+</style>
+</head>
+<body>
+<div id="map" aria-label="World map with NISAR radar"></div>
+<div id="swipe" hidden><div class="bar" id="sbar"><div class="knob">⇆</div></div><span class="tag" id="stagL">before</span><span class="tag" id="stagR">after</span></div>
+
+<section id="brand" class="panel" aria-label="Map controls">
+ <p class="eyebrow">NASA-ISRO NISAR · L-band radar · GCOV</p>
+ <h1>Dancing with the SARs</h1>
+ <div class="stats">
+  <div><b id="st-frames">16,691</b><span>frames on the map</span></div>
+  <div><b id="st-window">6-17 Oct</b><span>one 12-day cycle</span></div>
+  <div><b id="st-tb">33.9 TB</b><span>of NASA source files</span></div>
+ </div>
+ <div class="row"><button class="btn" id="b-tour">Start the 10-stop tour</button><button class="tog" id="b-intro">What is this?</button></div>
+ <div class="opts">
+  <div class="row"><button class="tog on" id="t-radar" aria-pressed="true">Radar</button><input type="range" id="op" min="0" max="100" value="90" aria-label="Radar opacity" style="width:110px"><button class="tog" id="t-frames" aria-pressed="false">Pass outlines</button></div>
+  <div class="row"><span class="eyebrow" style="margin-right:2px">Base</span><button class="tog on" id="b-sat">Photo</button><button class="tog" id="b-s2">Sentinel-2</button><button class="tog" id="b-light">Map</button><button class="tog" id="t-events">Event list</button><button class="tog" id="t-globe">Globe</button></div>
+ </div>
+</section>
+
+<details id="howto" class="panel">
+ <summary>How to read the radar (30 s)</summary>
+ <ul>
+  <li><i style="background:#f0f0f0;border:1px solid #ccc"></i>white = towns: walls + ground send the pulse straight back</li>
+  <li><i style="background:#d070d0"></i>pink = strong HH: rough or wet ground, rocks</li>
+  <li><i style="background:#60d060"></i>green = more HV: plants tumble the pulse (also noise over very dark ground)</li>
+  <li><i style="background:#101010"></i>black = calm water or smooth sand: the pulse bounces away</li>
+  <li><i style="background:linear-gradient(90deg,#fff,#555)"></i>bright and dark sides of mountains = slope geometry, not change</li>
+ </ul>
+ <div id="zoomnote"></div>
+ <p class="eyebrow" style="margin-top:8px;text-transform:none;letter-spacing:0">Colours are NASA's preview rendering of provisional NISAR data, not calibrated decibels.</p>
+</details>
+
+<section id="events" class="panel" aria-label="NASA EONET events" hidden>
+ <header>
+  <p class="eyebrow">NASA EONET · natural events</p>
+  <h2 style="font-size:16px;font-weight:800;margin-top:4px">Sep → Nov 2026</h2>
+  <div id="evfilter"></div>
+ </header>
+ <div id="evlist"><p class="eyebrow" style="padding:8px">Loading events…</p></div>
+</section>
+
+<section id="tour" class="panel" hidden aria-live="polite"></section>
+<div id="dock">
+ <section id="player" class="panel" hidden aria-label="Time player">
+  <button class="tog on" id="pplay" aria-label="Play or pause">Play</button>
+  <span id="pdate">—</span>
+  <div id="ptrack"><input type="range" id="prange" min="0" max="0" value="0" aria-label="Pass date"><div id="pticks"></div></div>
+  <div style="display:flex;gap:6px;align-items:center"><span id="pband"><button class="tog on" data-b="rgb" title="NASA colour composite">NASA</button><button class="tog" data-b="hh" title="HH only: water dark, cities bright">HH</button><button class="tog" data-b="hv" title="HV only: plants bright">HV</button></span><button class="tog" id="pswipe" aria-pressed="false">Before | after</button><button class="tog" id="pchange" aria-pressed="false">Change map</button><button class="tog" id="pclose" aria-label="Close the time player">✕</button></div>
+  <div id="plegend"><span id="pmeta"></span></div>
+ </section>
+</div>
+
+<section id="intro" class="panel" hidden aria-label="Introduction">
+ <p class="eyebrow">NASA Space Apps 2026 · Dancing with the SARs</p>
+ <h2>Earth, seen by a radar that ignores clouds and night</h2>
+ <ul>
+  <li><b>01</b><span>The map shows <b>every NISAR radar pass of one 12-day cycle</b> (6-17 Oct 2026): 16,691 frames, the whole world.</span></li>
+  <li><b>02</b><span>Tap any place, or an event, to <b>play every pass there</b> since NISAR began. That is the surface "dancing" over time.</span></li>
+  <li><b>03</b><span>The tour visits 10 places, from <b>Uzbekistan</b> to the Amazon, and says what changes, why, and which radar channel shows it.</span></li>
+ </ul>
+ <div class="row"><button class="btn" id="i-tour">Start the 10-stop tour</button><button class="btn ghost" id="i-close">Explore the world</button></div>
+</section>
+<div id="toast" class="panel" hidden></div>
+
+<script src="https://unpkg.com/maplibre-gl@5.0.0/dist/maplibre-gl.js"></script>
+<script src="stops.js"></script>
+<script>
+const $=id=>document.getElementById(id);
+const CAT={"Wildfires":"#E4572E","Floods":"#2563EB","Severe Storms":"#7C3AED","Volcanoes":"#B45309","Earthquakes":"#0F1630","Sea and Lake Ice":"#0EA5E9","Landslides":"#8B5E34","Drought":"#CA8A04","Dust and Haze":"#A16207","Snow":"#64748B"};
+const BLANK="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==";
+const Q=[[0,1],[1,1],[1,0],[0,0]];
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function tog(btn,on){btn.classList.toggle("on",on);btn.setAttribute("aria-pressed",on)}
+
+const map=new maplibregl.Map({container:"map",hash:true,attributionControl:{compact:true},center:[64,40],zoom:2.4,maxZoom:12,
+ style:{version:8,sources:{
+  sat:{type:"raster",tiles:["https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"],tileSize:256,maxzoom:18,attribution:"Photo © Esri, Maxar, Earthstar Geographics"},
+  s2:{type:"raster",tiles:["https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/g/{z}/{y}/{x}.jpg"],tileSize:256,maxzoom:15,attribution:"Sentinel-2 cloudless 2023 by EOX (Copernicus Sentinel data 2023)"},
+  light:{type:"raster",tiles:["https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}"],tileSize:256,maxzoom:16,attribution:"Map © Esri, HERE, Garmin"},
+  labels:{type:"raster",tiles:["https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}"],tileSize:256,maxzoom:18},
+  nisar:{type:"raster",tiles:[location.origin+"/tiles/{z}/{x}/{y}.webp?v=5"],tileSize:256,maxzoom:12,attribution:"Radar: NASA-ISRO NISAR GCOV (provisional), ASF DAAC"},
+  danceA:{type:"image",url:BLANK,coordinates:Q},danceB:{type:"image",url:BLANK,coordinates:Q},diff:{type:"image",url:BLANK,coordinates:Q}},
+ layers:[{id:"sat",type:"raster",source:"sat"},{id:"s2",type:"raster",source:"s2",layout:{visibility:"none"}},{id:"light",type:"raster",source:"light",layout:{visibility:"none"}},
+  {id:"nisar",type:"raster",source:"nisar",paint:{"raster-opacity":0.9,"raster-fade-duration":150}},
+  {id:"danceA",type:"raster",source:"danceA",paint:{"raster-opacity":0,"raster-opacity-transition":{duration:650},"raster-fade-duration":0}},
+  {id:"danceB",type:"raster",source:"danceB",paint:{"raster-opacity":0,"raster-opacity-transition":{duration:650},"raster-fade-duration":0}},
+  {id:"diff",type:"raster",source:"diff",paint:{"raster-opacity":0,"raster-opacity-transition":{duration:400}}},
+  {id:"labels",type:"raster",source:"labels"}]}});
+map.addControl(new maplibregl.NavigationControl({visualizePitch:true}),"top-right");map.addControl(new maplibregl.GeolocateControl({trackUserLocation:false}),"top-right");map.addControl(new maplibregl.FullscreenControl(),"top-right");
+map.addControl(new maplibregl.ScaleControl({unit:"metric"}),"bottom-right");
+const vis=(id,on)=>map.getLayer(id)&&map.setLayoutProperty(id,"visibility",on?"visible":"none");
+let radarOpacity=0.9;
+
+$("op").oninput=e=>{radarOpacity=e.target.value/100;if(!dance.on)map.setPaintProperty("nisar","raster-opacity",radarOpacity)};
+$("t-radar").onclick=e=>{const on=!e.currentTarget.classList.contains("on");tog(e.currentTarget,on);vis("nisar",on)};
+$("t-frames").onclick=e=>{const on=!e.currentTarget.classList.contains("on");tog(e.currentTarget,on);vis("frames-line",on)};
+$("t-events").onclick=e=>{const on=!e.currentTarget.classList.contains("on");tog(e.currentTarget,on);$("events").hidden=!on};
+function base(k){[["sat","b-sat"],["s2","b-s2"],["light","b-light"]].forEach(([l,b])=>{vis(l,l===k);tog($(b),l===k)})}
+$("b-sat").onclick=()=>base("sat");$("b-s2").onclick=()=>base("s2");$("b-light").onclick=()=>base("light");
+function setGlobe(on){try{map.setProjection({type:on?"globe":"mercator"});tog($("t-globe"),on)}catch(err){console.warn(err)}}
+$("t-globe").onclick=()=>setGlobe(!$("t-globe").classList.contains("on"));
+function zoomNote(){const z=map.getZoom();$("zoomnote").textContent=z<6.5?`Zoom ${z.toFixed(1)} · world mosaic of small NISAR previews (~3 km pixels)`:`Zoom ${z.toFixed(1)} · full NISAR previews streamed from NASA (~150 m pixels)`}
+map.on("zoomend",zoomNote);
+
+function intro(show){$("intro").hidden=!show}
+$("b-intro").onclick=()=>intro(true);$("i-close").onclick=()=>{intro(false);try{localStorage.setItem("seen","1")}catch(e){}};
+$("i-tour").onclick=()=>{intro(false);tourGo(0)};$("b-tour").onclick=()=>tourGo(0);
+try{if(!localStorage.getItem("seen")&&!location.hash.includes("/"))intro(true)}catch(e){intro(true)}
+
+/* time player ("the dance") */
+const dance={on:false,frames:[],i:0,playing:false,front:"danceA",timer:null,token:0,change:false,track:""};
+let band="rgb";const frameUrl=f=>`/api/frame/${f.c}/${f.id}.webp${band==="rgb"?"":"?band="+band}`;
+const coords=b=>[[b[0],b[3]],[b[2],b[3]],[b[2],b[1]],[b[0],b[1]]];
+function setMeta(t){const m=$("pmeta");if(m)m.textContent=t}
+async function startDance(lon,lat,label){
+ const tok=++dance.token;stopPlay();
+ $("player").hidden=false;$("pdate").textContent="Loading…";setMeta(`Finding every NISAR pass over ${label||"this spot"}…`);
+ let s;try{s=await (await fetch(`/api/series.json?lon=${lon.toFixed(3)}&lat=${lat.toFixed(3)}`)).json()}catch(e){s={frames:[]}}
+ if(tok!==dance.token)return;
+ if(!s.frames||!s.frames.length){$("pdate").textContent="No passes";setMeta("NISAR has no public pass here yet (open ocean is not imaged).");return}
+ dance.frames=s.frames;dance.on=true;dance.i=0;dance.track=s.track||"";
+ $("prange").max=s.frames.length-1;$("prange").value=0;
+ drawTicks();
+ map.setPaintProperty("nisar","raster-opacity",0.12);
+ let loaded=0;
+ const imgs=s.frames.map(f=>{const im=new Image();im.onload=()=>{loaded++;if(tok===dance.token&&!dance.playing)setMeta(`${dance.frames.length} passes · track ${dance.track.replace(/_/g," ")} · loaded ${loaded}`)};
+  im.onerror=()=>{if(tok!==dance.token)return;const k=dance.frames.indexOf(f);if(k>=0){dance.frames.splice(k,1);$("prange").max=Math.max(0,dance.frames.length-1);drawTicks();if(dance.i>=dance.frames.length)dance.i=0}};im.src=frameUrl(f);return im});
+ dance.imgs=imgs;
+ await Promise.any(imgs.map(im=>new Promise((ok,no)=>{if(im.complete&&im.naturalWidth)ok();else{im.addEventListener("load",ok);im.addEventListener("error",no)}}))).catch(()=>{});
+ if(tok===dance.token&&!dance.frames.length){$("pdate").textContent="No usable passes";setMeta("NASA previews for this spot are missing or partial.");return}
+ if(tok!==dance.token)return;
+ show(0);
+ setTimeout(()=>{if(tok===dance.token)play()},900);
+}
+function drawTicks(){const n=dance.frames.length;$("pticks").innerHTML=dance.frames.map((f,k)=>`<i title="${f.date}" style="left:${n>1?k/(n-1)*100:0}%"></i>`).join("")}
+function show(i){
+ const f=dance.frames[i];if(!f)return;dance.i=i;$("prange").value=i;
+ const back=dance.front==="danceA"?"danceB":"danceA";
+ map.getSource(back).updateImage({url:frameUrl(f),coordinates:coords(f.bbox)});
+ map.setPaintProperty(back,"raster-opacity",0.95);map.setPaintProperty(dance.front,"raster-opacity",0);dance.front=back;
+ $("pdate").textContent=new Date(f.date+"T00:00Z").toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric",timeZone:"UTC"});
+ const pol=f.pol==="DHDH"?"HH + HV":f.pol==="SHSH"?"HH only":f.pol;
+ setMeta(`pass ${i+1} of ${dance.frames.length} · ${f.time} UTC · ${pol} · track ${dance.track.replace(/_/g," ")} · ${f.c.includes("PROVISIONAL")?"provisional":f.c.includes("BETA")?"beta":"validated"}`);
+ [...$("pticks").children].forEach((t,k)=>t.classList.toggle("on",k===i));
+ if(dance.change)showChange();
+}
+function play(){if(!dance.on)return;dance.playing=true;$("pplay").textContent="Pause";tog($("pplay"),true);clearInterval(dance.timer);
+ dance.timer=setInterval(()=>show((dance.i+1)%dance.frames.length),1400)}
+function stopPlay(){dance.playing=false;clearInterval(dance.timer);$("pplay").textContent="Play";tog($("pplay"),false)}
+$("pplay").onclick=()=>dance.playing?stopPlay():play();
+$("prange").oninput=e=>{stopPlay();show(+e.target.value)};
+function legend(extra){const meta=$("pmeta")?$("pmeta").textContent:"";$("plegend").innerHTML=(extra||"")+`<span id="pmeta">${esc(meta)}</span>`}
+function showChange(){const a=dance.frames[0],b=dance.frames[dance.i];
+ if(!a||!b||a===b){map.setPaintProperty("diff","raster-opacity",0);legend(`<span>Pick a later pass to compare with ${a?a.date:"the first pass"}</span>`);return}
+ map.getSource("diff").updateImage({url:`/api/diff/${a.c}/${a.id}/${b.c}/${b.id}.webp`,coordinates:coords(a.bbox)});map.setPaintProperty("diff","raster-opacity",0.9);
+ legend(`<span><i style="background:#ff5028"></i>brighter than on ${a.date}</span><span><i style="background:#2878ff"></i>darker than on ${a.date}</span><span>from NASA previews, not calibrated dB</span>`)}
+$("pchange").onclick=e=>{dance.change=!dance.change;tog(e.currentTarget,dance.change);if(dance.change){stopPlay();if(dance.i===0&&dance.frames.length>1)show(dance.frames.length-1);else showChange()}else{map.setPaintProperty("diff","raster-opacity",0);legend("")}};
+function endDance(){if(typeof swipeStop==="function")swipeStop();dance.token++;stopPlay();dance.on=false;$("player").hidden=true;["danceA","danceB","diff"].forEach(l=>map.setPaintProperty(l,"raster-opacity",0));map.setPaintProperty("nisar","raster-opacity",radarOpacity);dance.change=false;tog($("pchange"),false);legend("")}
+document.querySelectorAll("#pband button").forEach(b=>b.onclick=()=>{band=b.dataset.b;document.querySelectorAll("#pband button").forEach(x=>tog(x,x===b));if(dance.on){dance.frames.forEach(f=>{const im=new Image();im.src=frameUrl(f)});show(dance.i)}});
+$("pclose").onclick=()=>{endDance();$("tour").hidden=true};
+
+/* tour */
+let tourI=-1;
+function tourGo(i){tourI=(i+STOPS.length)%STOPS.length;const s=STOPS[tourI];intro(false);document.body.classList.add("touring");
+ $("tour").hidden=false;
+ $("tour").innerHTML=`<div class="top"><span class="chip">${tourI+1} / ${STOPS.length} · ${esc(s.kind)}</span><div class="nav"><button class="tog" id="tprev" aria-label="Previous stop">‹ Back</button><button class="tog on" id="tnext">Next ›</button><button class="tog" id="tclose" aria-label="Close the tour">✕</button></div></div>
+  <p class="eyebrow" style="margin-top:8px">${esc(s.place)}</p><h3>${esc(s.title)}</h3>
+  <div class="grid"><p><span class="lab">What you see</span>${esc(s.what)}</p><p><span class="lab">Why it changes</span>${esc(s.driver)}</p>
+  <p><span class="lab">Which radar channel</span>${esc(s.pol)}</p><p><span class="lab">Honest limit</span>${esc(s.limit)}</p></div>
+  <div id="intel" style="margin-top:12px"><p class="eyebrow">Measured from the radar</p><p style="font-size:12.5px;color:var(--ink3)">Measuring every pass…</p></div>
+  ${s.event?`<p style="margin:8px 0 0;font-size:12px">Source: <a href="${s.event.url}" target="_blank" rel="noopener" style="color:var(--mint)">${esc(s.event.name)}</a></p>`:""}`;
+ $("tprev").onclick=()=>tourGo(tourI-1);$("tnext").onclick=()=>tourGo(tourI+1);$("tclose").onclick=()=>{$("tour").hidden=true;document.body.classList.remove("touring");endDance()};
+ endDance();$("player").hidden=false;$("pdate").textContent="Flying…";
+ map.flyTo({center:[s.lon,s.lat],zoom:s.zoom,speed:1.4,curve:1.5,essential:true});
+ map.once("moveend",()=>startDance(s.lon,s.lat,s.place));
+ loadIntel(s);
+}
+
+
+/* intel: numbers per pass + one sentence */
+function fmtDate(d){return new Date(d+"T00:00Z").toLocaleDateString("en-GB",{day:"numeric",month:"short",timeZone:"UTC"})}
+function spark(pts,key,color,unit){if(pts.length<2)return"";const W=300,H=60,vs=pts.map(p=>p[key]),mn=Math.min(...vs),mx=Math.max(...vs),r=mx-mn||1;
+ const xy=pts.map((p,i)=>[8+i/(pts.length-1)*(W-16),H-8-(p[key]-mn)/r*(H-20)]);
+ return `<svg viewBox="0 0 ${W} ${H}" width="100%" height="${H}" role="img" aria-label="${unit} per pass"><polyline fill="none" stroke="${color}" stroke-width="2" points="${xy.map(a=>a.join(",")).join(" ")}"/>${xy.map((a,i)=>`<circle cx="${a[0]}" cy="${a[1]}" r="3" fill="${color}"><title>${pts[i].date}: ${pts[i][key]} ${unit}</title></circle>`).join("")}<text x="8" y="12" font-size="10" font-family="ui-monospace,monospace" fill="#4B5470">${mx} ${unit}</text><text x="8" y="${H-1}" font-size="10" font-family="ui-monospace,monospace" fill="#4B5470">${mn}</text></svg>`}
+async function loadIntel(s){const tok=tourI;let d=null;
+ try{const r=await fetch(`/api/science/${s.id}.json`);if(r.ok){d=await r.json();d.science=true;d.note=`${d.source}; water = HH below ${d.water_threshold_db} dB (Otsu threshold)`;d.points.forEach(p=>{p.hv=p.hv_db})}}catch(e){}
+ if(!d)try{d=await (await fetch(`/api/stats.json?lon=${s.lon}&lat=${s.lat}&km=15`)).json()}catch(e){d=null}
+ if(tok!==tourI||!$("intel"))return;
+ if(!d||!d.points||d.points.length<2){$("intel").innerHTML='<p class="eyebrow">Measured from the radar</p><p style="font-size:12.5px">Not enough clean passes here to measure.</p>';return}
+ const p=d.points,a=p[0],b=p.at(-1),dw=b.water_km2-a.water_km2,pct=a.water_km2>1?Math.round(dw/a.water_km2*100):null,dhv=Math.round((b.hv-a.hv)/Math.max(a.hv,1)*100);
+ const wmax=p.reduce((m,x)=>x.water_km2>m.water_km2?x:m,p[0]),wmin=p.reduce((m,x)=>x.water_km2<m.water_km2?x:m,p[0]);
+ const sent=`In a ${d.box_km} × ${d.box_km} km box, dark open water went from <b>${a.water_km2} km²</b> (${fmtDate(a.date)}) to <b>${b.water_km2} km²</b> (${fmtDate(b.date)})${pct!==null?` (${pct>0?"+":""}${pct} %)`:""}; the most was ${wmax.water_km2} km² on ${fmtDate(wmax.date)}, the least ${wmin.water_km2} km² on ${fmtDate(wmin.date)}. Plant signal (HV) changed ${dhv>0?"+":""}${dhv} %.`;
+ $("intel").innerHTML=`<p class="eyebrow">Measured from the radar · ${p.length} passes · ${d.science?"calibrated dB":"preview estimate"}</p><p style="font-size:13.5px;margin:4px 0 8px">${sent}</p>
+  <p class="eyebrow" style="text-transform:none;letter-spacing:0">Open water, km²</p>${spark(p,"water_km2","#2563EB","km²")}
+  <p class="eyebrow" style="text-transform:none;letter-spacing:0">Plant signal (HV)${d.science?", dB":", 0-255"}</p>${spark(p,"hv","#1C7E69","")}
+  <p style="font-size:11px;color:var(--ink3);margin-top:4px">${esc(d.note)}.</p>`}
+
+
+/* before | after swipe: left of the bar shows the first pass, right shows the current pass */
+let swipeOn=false,swipeX=0.5;
+function swipeApply(){const W=map.getCanvas().clientWidth;const x=swipeX*W;$("sbar").style.left=x+"px";$("stagL").style.left=Math.max(8,x-110)+"px";$("stagR").style.left=(x+12)+"px";
+ const a=dance.frames[0],b=dance.frames[dance.i];if(!a||!b)return;$("stagL").textContent="before · "+fmtDate(a.date);$("stagR").textContent="after · "+fmtDate(b.date);
+ // front layer = current pass; back layer = first pass, clipped by a mask image layer is not available in MapLibre raster, so draw the first pass in the back layer at full opacity and clip the canvas with CSS
+ map.getCanvas().style.clipPath="";$("swipeimg").style.clipPath=`inset(0 ${W-x}px 0 0)`}
+function swipeStart(){const a=dance.frames[0];if(!a)return;swipeOn=true;tog($("pswipe"),true);stopPlay();if(dance.frames.length>1)show(dance.frames.length-1);
+ $("swipe").hidden=false;let img=$("swipeimg");if(!img){img=document.createElement("canvas");img.id="swipeimg";img.style.cssText="position:absolute;inset:0;width:100%;height:100%;pointer-events:none";$("swipe").prepend(img)}
+ drawBefore();swipeApply()}
+async function drawBefore(){const a=dance.frames[0];const cv=$("swipeimg");if(!cv||!a)return;const W=map.getCanvas().clientWidth,H=map.getCanvas().clientHeight;cv.width=W;cv.height=H;
+ const im=new Image();im.crossOrigin="anonymous";im.src=frameUrl(a);await im.decode().catch(()=>{});const ctx=cv.getContext("2d");ctx.clearRect(0,0,W,H);
+ const tl=map.project([a.bbox[0],a.bbox[3]]),br=map.project([a.bbox[2],a.bbox[1]]);ctx.drawImage(im,tl.x,tl.y,br.x-tl.x,br.y-tl.y)}
+function swipeStop(){swipeOn=false;tog($("pswipe"),false);$("swipe").hidden=true}
+$("pswipe").onclick=()=>swipeOn?swipeStop():swipeStart();
+map.on("move",()=>{if(swipeOn){drawBefore();swipeApply()}});
+(function(){let drag=false;const bar=()=>$("sbar");document.addEventListener("pointerdown",e=>{if(e.target.closest("#sbar")){drag=true;e.preventDefault()}});
+ document.addEventListener("pointermove",e=>{if(!drag)return;const r=map.getCanvas().getBoundingClientRect();swipeX=Math.min(.98,Math.max(.02,(e.clientX-r.left)/r.width));swipeApply()});
+ document.addEventListener("pointerup",()=>drag=false)})();
+
+
+/* drawn event icons (no emoji): flame, wave, storm spiral, ice crystal */
+function makeIcon(kind,color){const S=48,c=document.createElement("canvas");c.width=c.height=S;const g=c.getContext("2d");
+ g.fillStyle="#fff";g.beginPath();g.arc(24,24,20,0,7);g.fill();g.fillStyle=color;g.strokeStyle=color;g.lineWidth=3.2;g.lineCap="round";g.lineJoin="round";
+ if(kind==="fire"){g.beginPath();g.moveTo(24,10);g.bezierCurveTo(32,20,34,26,31,32);g.bezierCurveTo(28,38,20,38,17,32);g.bezierCurveTo(15,27,18,23,21,20);g.bezierCurveTo(21,25,24,26,25,24);g.bezierCurveTo(27,19,24,14,24,10);g.fill()}
+ else if(kind==="flood"){for(const y of [19,26,33]){g.beginPath();for(let x=12;x<=36;x++)g.lineTo(x,y+Math.sin((x-12)/24*Math.PI*2)*2.4);g.stroke()}}
+ else if(kind==="storm"){g.beginPath();for(let t=0;t<11;t+=0.2){const r=2+t*1.25;g.lineTo(24+r*Math.cos(t),24+r*Math.sin(t))}g.stroke()}
+ else if(kind==="ice"){for(let k=0;k<3;k++){const a=k*Math.PI/3;g.beginPath();g.moveTo(24-12*Math.cos(a),24-12*Math.sin(a));g.lineTo(24+12*Math.cos(a),24+12*Math.sin(a));g.stroke()}}
+ else{g.beginPath();g.arc(24,24,7,0,7);g.fill()}
+ return {width:S,height:S,data:g.getImageData(0,0,S,S).data}}
+const KIND={"Wildfires":"fire","Floods":"flood","Severe Storms":"storm","Sea and Lake Ice":"ice"};
+
+/* data layers */
+let EV=[],evCat="All",pop=null;
+map.on("load",()=>{
+ fetch("/api/status.json").then(r=>r.json()).then(s=>{$("st-frames").textContent=s.frames.toLocaleString("en");$("st-tb").textContent=s.tb+" TB";
+  const d0=new Date(s.window[0]+"T00:00Z"),d1=new Date(s.window[1]+"T00:00Z");$("st-window").textContent=d0.getUTCDate()+"-"+d1.toLocaleDateString("en-GB",{day:"numeric",month:"short",timeZone:"UTC"})}).catch(()=>{});
+ map.addSource("frames",{type:"geojson",data:"/api/frames.geojson"});
+ map.addLayer({id:"frames-fill",type:"fill",source:"frames",paint:{"fill-color":"#1C7E69","fill-opacity":0}},"danceA");
+ map.addLayer({id:"frames-line",type:"line",source:"frames",layout:{visibility:"none"},paint:{"line-color":"#7CF5D2","line-width":0.7,"line-opacity":0.55}},"labels");
+ map.addSource("tracks",{type:"geojson",data:{type:"FeatureCollection",features:[]}});
+ map.addLayer({id:"tracks",type:"line",source:"tracks",paint:{"line-color":["get","color"],"line-width":1.6,"line-opacity":0.75,"line-dasharray":[2,1.5]}});
+ map.addSource("events",{type:"geojson",data:{type:"FeatureCollection",features:[]}});
+ map.addLayer({id:"events-halo",type:"circle",source:"events",paint:{"circle-radius":8,"circle-color":["get","color"],"circle-opacity":0.25,"circle-stroke-width":0}});
+ for(const [cat,kind] of Object.entries(KIND))map.addImage("ev-"+kind,makeIcon(kind,CAT[cat]),{pixelRatio:2});map.addImage("ev-dot",makeIcon("dot","#6B7280"),{pixelRatio:2});
+ map.addLayer({id:"events",type:"symbol",source:"events",layout:{"icon-image":["get","icon"],"icon-size":["interpolate",["linear"],["zoom"],1,0.55,8,1],"icon-allow-overlap":true}});
+ loadEvents();zoomNote();
+ const qp=new URLSearchParams(location.search);if(qp.has("tour"))tourGo(+qp.get("tour")||0);
+ if(!matchMedia("(prefers-reduced-motion: reduce)").matches)pulse();
+});
+const DASH=[[0,4,3],[0.5,4,2.5],[1,4,2],[1.5,4,1.5],[2,4,1],[2.5,4,0.5],[3,4,0],[0,0.5,3,3.5],[0,1,3,3],[0,1.5,3,2.5],[0,2,3,2],[0,2.5,3,1.5],[0,3,3,1],[0,3.5,3,0.5]];let dashStep=-1;
+function pulse(){const k=(performance.now()/1000%1.6)/1.6;const st=Math.floor(performance.now()/90)%DASH.length;
+ if(st!==dashStep&&map.getLayer("tracks")){dashStep=st;map.setPaintProperty("tracks","line-dasharray",DASH[st])}
+ if(map.getLayer("events-halo")){map.setPaintProperty("events-halo","circle-radius",["interpolate",["linear"],["zoom"],1,4+k*12,8,8+k*22]);map.setPaintProperty("events-halo","circle-opacity",0.45*(1-k))}
+ requestAnimationFrame(pulse)}
+
+async function loadEvents(){
+ const fail='<p class="eyebrow" style="padding:8px">NASA EONET did not answer. Reload to try again.</p>';
+ try{EV=await (await fetch("/api/events.json")).json()}catch(e){EV=null}
+ if(!Array.isArray(EV)){$("evlist").innerHTML=fail;EV=[];return}
+ EV.forEach(e=>e.color=CAT[e.category]||"#6B7280");
+ map.getSource("events").setData({type:"FeatureCollection",features:EV.map((e,i)=>({type:"Feature",geometry:{type:"Point",coordinates:[e.lon,e.lat]},properties:{i,color:e.color,icon:"ev-"+(KIND[e.category]||"dot")}}))});
+ map.getSource("tracks").setData({type:"FeatureCollection",features:EV.filter(e=>e.track&&e.track.length>1).map(e=>({type:"Feature",geometry:{type:"LineString",coordinates:e.track},properties:{color:e.color}}))});
+ const cats=["All",...new Set(EV.map(e=>e.category))];
+ $("evfilter").innerHTML=cats.map(c=>`<button class="tog${c==="All"?" on":""}" data-c="${esc(c)}">${esc(c)} <span style="opacity:.7">${c==="All"?EV.length:EV.filter(e=>e.category===c).length}</span></button>`).join("");
+ $("evfilter").querySelectorAll("button").forEach(b=>b.onclick=()=>{evCat=b.dataset.c;$("evfilter").querySelectorAll("button").forEach(x=>tog(x,x===b));renderList()});
+ renderList();
+}
+function renderList(){const list=EV.map((e,i)=>({...e,i})).filter(e=>evCat==="All"||e.category===evCat);
+ $("evlist").innerHTML=list.slice(0,400).map(e=>`<button class="ev" data-i="${e.i}"><span class="dot" style="background:${e.color}"></span><span><b>${esc(e.title)}</b><span>${e.date} · ${esc(e.category)}${e.mag?" · "+Math.round(e.mag).toLocaleString("en")+" "+esc(e.unit||""):""}</span></span></button>`).join("");
+ $("evlist").querySelectorAll(".ev").forEach(b=>b.onclick=()=>openEvent(+b.dataset.i,true))}
+function openEvent(i,fly){const e=EV[i];if(fly)map.flyTo({center:[e.lon,e.lat],zoom:Math.max(map.getZoom(),8),speed:1.6});
+ const src=(e.sources||[]).map(u=>{try{return `<a href="${u}" target="_blank" rel="noopener">${new URL(u).hostname.replace("www.","")}</a>`}catch(x){return ""}}).join(" · ");
+ pop&&pop.remove();pop=new maplibregl.Popup({offset:10}).setLngLat([e.lon,e.lat]).setHTML(`<div class="pop"><b>${esc(e.title)}</b><div class="m">${esc(e.category)} · ${e.date}${e.mag?" · "+Math.round(e.mag).toLocaleString("en")+" "+esc(e.unit||""):""}</div>${src?`<div style="margin-top:6px">News and sources: ${src}</div>`:""}<button class="btn" id="pop-play">Play the radar here</button></div>`).addTo(map);
+ $("pop-play").onclick=()=>{pop.remove();$("tour").hidden=true;startDance(e.lon,e.lat,e.title)}}
+map.on("click","events",ev=>{ev.preventDefault();openEvent(ev.features[0].properties.i,false)});
+map.on("mouseenter","events",()=>map.getCanvas().style.cursor="pointer");map.on("mouseleave","events",()=>map.getCanvas().style.cursor="");
+map.on("click",ev=>{if(ev.defaultPrevented)return;const fs=map.queryRenderedFeatures(ev.point,{layers:["frames-fill"]});
+ const ll=ev.lngLat;pop&&pop.remove();
+ const top=fs.sort((a,b)=>a.properties.start<b.properties.start?1:-1)[0];
+ pop=new maplibregl.Popup({offset:6}).setLngLat(ll).setHTML(`<div class="pop"><b>${ll.lat.toFixed(3)}°, ${ll.lng.toFixed(3)}°</b>
+  ${top?`<div class="m">${fs.length} pass${fs.length>1?"es":""} in the 6-17 Oct cycle · newest ${top.properties.start} UTC · ${top.properties.dir==="A"?"ascending":"descending"}</div>
+  <div class="m">full file ${(top.properties.mb/1000).toFixed(2)} GB · <a href="https://search.asf.alaska.edu/#/?searchType=List%20Search&searchList=${top.properties.id}" target="_blank" rel="noopener">open in Vertex</a></div>`:`<div class="m">No pass in the 6-17 Oct cycle here (open ocean is not imaged).</div>`}
+  <button class="btn" id="pop-play">Play every pass here</button></div>`).addTo(map);
+ $("pop-play").onclick=()=>{pop.remove();$("tour").hidden=true;startDance(ll.lng,ll.lat)}});
+</script>
+</body>
+</html>

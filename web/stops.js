@@ -1,0 +1,78 @@
+// Tour stops. Each stop: where, what the radar shows, the physical driver, which polarization, one honest limit.
+// Coordinates are inside a NISAR track/frame with 10+ passes (checked via /api/series.json on 14 Nov 2026).
+window.STOPS = [
+  {
+    id: "tashkent", place: "Tashkent, Uzbekistan", title: "A city that shines", lon: 69.28, lat: 41.31, zoom: 9.3,
+    kind: "City", what: "The capital glows white in every pass. The bright core matches the city edge on the photo.",
+    driver: "Walls and streets form corners. The pulse bounces wall to ground and straight back (double bounce), so buildings return far more energy than fields.",
+    pol: "HH: strongest from buildings. HV stays lower, so towns look pink-white in NASA's colour preview.",
+    limit: "A city barely changes in 4 months. That stability is the point: it is our control, so any change elsewhere is real.",
+  },
+  {
+    id: "aral", place: "Aral Sea, Karakalpakstan", title: "A sea that breathes", lon: 60.3, lat: 45.4, zoom: 8.2,
+    kind: "Water", what: "Play the passes: the dark water in the middle grows and shrinks between June and October.",
+    driver: "The shallow eastern basin fills only when the Amu Darya brings water, then evaporates in the desert heat. Calm water acts like a mirror and sends the pulse away, so it looks dark.",
+    pol: "HH shows water best: dark water, brighter wet mud and salt crust around it.",
+    limit: "Wind ripples can make open water look bright. Compare several dates before calling a shoreline.",
+    event: { name: "Aral Sea, NASA Earth Observatory", url: "https://earthobservatory.nasa.gov/world-of-change/AralSea" },
+  },
+  {
+    id: "fergana", place: "Fergana Valley, Uzbekistan", title: "The cotton calendar", lon: 71.8, lat: 40.6, zoom: 9.2,
+    kind: "Crops", what: "Irrigated fields change colour pass by pass from June to October.",
+    driver: "Cotton and other crops grow leaves and stems all summer, then are defoliated and harvested in September-October. More plant volume means more pulse scattered back tilted.",
+    pol: "HV rises as the canopy grows and drops after harvest; HH follows soil moisture after each irrigation.",
+    limit: "These are NASA's colour previews, not calibrated decibels. Field-level numbers need the full files.",
+  },
+  {
+    id: "rogun", place: "Rogun dam, Tajikistan (upstream of Uzbekistan)", title: "A river being stored", lon: 69.79, lat: 38.69, zoom: 11.2,
+    kind: "Reservoir", what: "Switch the player to HH: the reservoir is the thin black ribbon winding along the Vakhsh valley. Drag Before | after to see whether it widened.",
+    driver: "Rogun stores Vakhsh water, a main source of the Amu Darya. How fast it fills changes how much water reaches Uzbek fields and the Aral downstream.",
+    pol: "HH: still water is dark. Steep slopes facing the satellite look bright, slopes facing away look dark (a geometry effect, not change).",
+    limit: "Mountains bend radar geometry (layover and shadow). Compare only passes from the same track, as this player does.",
+  },
+  {
+    id: "nepal", place: "Narayani basin, Nepal", title: "A monsoon flood", lon: 84.63, lat: 27.99, zoom: 9,
+    kind: "Flood", what: "NASA EONET lists a flood here on 10 Oct 2026. Step through the passes around that date.",
+    driver: "Late monsoon rain overtops river banks on the flat Terai plain. Flooded fields turn into mirrors and go dark; flooded forest can turn very bright (water + trunk corner).",
+    pol: "HH: dark open floodwater, bright flooded vegetation. Radar sees it through the monsoon clouds that block optical satellites.",
+    limit: "A pass every few days can miss the flood peak. The player shows only the passes NISAR made.",
+    event: { name: "GDACS flood report 1104225", url: "https://www.gdacs.org/report.aspx?eventtype=FL&eventid=1104225" },
+  },
+  {
+    id: "fire", place: "Northern Territory, Australia", title: "After the fire", lon: 132.24, lat: -14.68, zoom: 8.6,
+    kind: "Wildfire", what: "NASA EONET lists a 43,703 ha fire starting 14 Sep 2026. Compare passes before and after.",
+    driver: "Fire removes grass, shrubs and leaves. With less plant material, less of the pulse is scattered back tilted, and the burned soil changes moisture and roughness.",
+    pol: "HV drops over the burn scar; HH changes with soil moisture and roughness.",
+    limit: "Savanna fires burn mostly grass, so the radar change is subtler than in a forest.",
+    event: { name: "NASA EONET wildfire 1032001", url: "https://eonet.gsfc.nasa.gov/api/v3/events/EONET_1032001" },
+  },
+  {
+    id: "iowa", place: "Iowa, USA", title: "The corn harvest", lon: -93.5, lat: 42.0, zoom: 9.3,
+    kind: "Crops", what: "A quilt of square fields. Watch them change from the summer canopy to bare autumn ground.",
+    driver: "Corn reaches 2-3 m by August, then is harvested in September-October, leaving stubble and bare soil.",
+    pol: "HV is the canopy meter: high in summer, low after harvest.",
+    limit: "Rain on the day of a pass brightens bare soil in HH; one date alone can mislead.",
+  },
+  {
+    id: "rondonia", place: "Rondônia, Brazil", title: "The forest edge", lon: -63.0, lat: -9.5, zoom: 9,
+    kind: "Forest loss", what: "Fishbone clearings along roads cut into the Amazon. Look for patches that change between passes.",
+    driver: "Clearing for pasture and soy removes the canopy. Dry-season fires in August-September follow the cutting.",
+    pol: "HV is high over intact forest and drops sharply where trees are removed. L-band sees through the canopy to the trunks.",
+    limit: "Some passes here are HH only (single polarization); the player marks the polarization of each pass.",
+  },
+  {
+    id: "lava", place: "Krasheninnikov, Kamchatka, Russia", title: "New land from lava", lon: 160.27, lat: 54.59, zoom: 9.6,
+    kind: "Volcano", what: "Fresh lava flows show as new bright tongues on the volcano's slopes.",
+    driver: "New lava is rough, blocky rock. Rough surfaces scatter the pulse back strongly, so new flows look brighter than older smooth ground or snow.",
+    pol: "HH: rough lava is bright. Wet snow (dark) and dry snow change the background through the season.",
+    limit: "Snow and steep slopes also change brightness; NASA's own NISAR team showed this eruption in frames from Dec 2025 to Aug 2026.",
+    event: { name: "NASA NISAR images", url: "https://www.jpl.nasa.gov/news/us-india-satellite-delivers-data-reveals-hummingbird-in-antarctica/" },
+  },
+  {
+    id: "delta", place: "Mississippi River Delta, USA", title: "A delta that floods and grows", lon: -89.6, lat: 29.2, zoom: 9,
+    kind: "Wetland", what: "Open water is dark, marsh and flooded forest are bright; the boundary shifts pass by pass.",
+    driver: "River sediment builds new land while subsidence and storms drown old marsh. Water level and wind change from pass to pass.",
+    pol: "HH: dark open water, bright flooded vegetation (water + stems). HV marks taller marsh and forest.",
+    limit: "Tides and wind change the water surface between passes, so a single pair can exaggerate change.",
+  },
+];
