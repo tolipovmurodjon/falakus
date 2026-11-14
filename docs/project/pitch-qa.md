@@ -1,0 +1,21 @@
+# Pitch round: 15 likely judge questions, answered with our own measured numbers
+
+Rule: answer in one or two sentences, number first, then where it comes from. If we do not know, say so and say how we would find out.
+
+| # | Likely question | Our answer |
+|---|---|---|
+| 1 | Why radar, why not just Sentinel-2? | In 2025, 29 of 85 Sentinel-2 visits to the Andijan reservoir (34 %) were mostly cloud, 15 of 24 in Dec–Mar, when release plans are made. On 24 Sep 2026 the photo was 100 % cloud and NISAR still saw the whole lake. |
+| 2 | How do you know the water area is right? | Against cloud-free Sentinel-2 water (NDWI) on 8 photo days, r = 0.83. The cut-off was learned on ONE pass and tested on 7 it never saw: map overlap IoU 0.49–0.71, median 0.58. |
+| 3 | Where is it wrong? | Late summer the radar counts ~8.6 km² too much water on average (up to 13.5 km² on 19 Aug): smooth wet mud and dry lakebed look like water. Wind roughens the lake and lowers the count (24 Sep). We show both on screen. |
+| 4 | Which polarization and why? | HH for water (calm water is a mirror, darkest in HH). HV for crops (only leaves and stems turn the pulse). At the Aral, HH alone calls wet salt crust water (16–38 km²); requiring HH AND HV dark gives ≤ 0.93 km², matching photos (1.1 km²). |
+| 5 | What does L-band add over Sentinel-1 C-band? | Same week in Oct 2026, over the drained reservoir: Sentinel-1 over-counted water by 21.9 km², NISAR by 4.8 km² against the photo. |
+| 6 | Is your ML real or decoration? | Ridge regression on 3 years of monthly water area, tested walk-forward on every 2026 month it never saw: average miss 2.3 km², vs 3.3 for "same month last year" and 4.3 for "same as last month" (30 % and 47 % better). Its 80 % band (±3.5–6 km²) comes from its own real misses. |
+| 7 | Only 2 years of training data? | Yes, and we say so on screen. NISAR's calibrated record over the valley starts 18 Jun 2026; earlier months come from Sentinel-2 photos and Sentinel-1 radar corrected to the photos. ALOS PALSAR (L-band, 2006–2009, 28 scenes over the reservoir) is the next data to add. |
+| 8 | Is "12.8 % harvested" real? | 12.8 % of a 30 × 30 km box lost more than 2 dB of HV (about 1.6× weaker) between 2 Jul and 30 Oct. Mostly harvest, but drying soil or stopped watering also lower HV, so we call it "lost plant echo". The radar crop index tracks Sentinel-2 NDVI at r = 0.58. |
+| 9 | Who would use this, concretely? | The basin water agency planning releases: a reservoir area every 12 days (every ~3 days with all orbits), cloud or not, with the photo check beside it. Farm agencies: harvest timing across the valley. Teachers: every screen explains HH/HV in plain words. |
+| 10 | Does it work outside Uzbekistan? | The same pipeline runs on any NISAR box: Explore has a world map of 16,691 frames, compare-anywhere, Langtang under cloud, Panama quake fringes with a control pair, and a NASA EONET flood check. |
+| 11 | Your flood results look empty. | We found NASA EONET lists 49 of 125 GDACS flood outlines with latitude and longitude swapped (e.g. "Poland" plotted in Yemen). We now check every point against its country before measuring and are re-running the scan; we will not show flood numbers until it finishes. |
+| 12 | Is NISAR data final? | No. Before 21 Oct 2026 it is provisional (public beta), and 27 Jul – 10 Aug 2026 is a permanent gap. We label this everywhere. |
+| 13 | What is new here vs existing tools? | Radar-against-radar across 29 years (Canada's RADARSAT-1 1997 next to NISAR 2026), every number paired with its outside check and its failure case, and a 3-month water forecast tested against baselines, for one river from source to sea. |
+| 14 | How did you use AI? | AI (Claude) helped write code and draft texts; the team ran, tested and fact-checked everything. No AI-generated images; the video is app screenshots. Disclosed on the project page. |
+| 15 | What would you do with 3 more months? | Volume, not just area: area × a shoreline height model, checked against NASA ICESat-2 laser water levels (our reader works: 10 Jan 2025 = 847.99 m, 335 segments); add Toktogul and Rogun upstream; add ALOS PALSAR for 2006–2011. |
