@@ -739,7 +739,7 @@ const CASES={
    why:"Radar is a flashlight, not a camera: it sends its own microwave pulse, and 24 cm waves pass through cloud and work at night."}]},
  aral:{title:"Aral Sea, Uzbekistan–Kazakhstan: a sea that is gone",bbox:AR,slides:[
   {tab:"1997 | 2026 radar",bbox:[57.5,43.6,62.0,46.9],L:{img:"/history/aral/rs1_19970716_wide.png",lab:"RADARSAT-1 (Canada) · 16 Jul 1997"},R:{layer:"nisar",lab:"NISAR (NASA-ISRO) · Oct 2026"},
-   n:"29 years",s:"Left, 1997: the Large Aral Sea is one body of water around Vozrozhdeniya Island. Right, 2026: the eastern basin is dry seabed; in our 40 × 40 km box, at most 0.93 km² was water in any NISAR pass.",
+   n:"29 years",s:"Left, 1997: the Large Aral Sea is one body of water around Vozrozhdeniya Island. Right, 2026: the eastern basin is dry seabed. Yellow box: the 40 × 40 km area we measure.",
    why:"Both are radar and both see through cloud, so water vs land is a fair comparison: open water is smooth (dark), dry seabed and salt crust are rough and bright. Brightness itself is not comparable: RADARSAT-1 is 5.6 cm C-band, uncalibrated, ~100 m pixels; NISAR is 24 cm L-band, calibrated.",
    src:"Radar: CSA RADARSAT-1 ScanSAR Wide (Open Government Licence – Canada, open archive on AWS; uncalibrated, relative brightness, placed with 15 ground control points) and NASA-ISRO NISAR GCOV previews (provisional), ASF DAAC."},
   {tab:"1997 radar | 2026 photo",bbox:[57.5,43.6,62.0,46.9],L:{img:"/history/aral/rs1_19970716_wide.png",lab:"RADARSAT-1 · 16 Jul 1997"},R:{s2:["2026-10-12","2026-10-29",1],lab:"Sentinel-2 photo · Oct 2026"},
@@ -918,6 +918,22 @@ $("b-explore").onclick=()=>{const e=$("explore");e.hidden=!e.hidden;$("b-explore
 $("x-tour").onclick=()=>{closeCase();if(fc)closeFree();$("b-tour")?$("b-tour").click():null};
 $("x-finds").onclick=()=>{closeCase();if(fc)closeFree();openFinds()};
 const FIRST_VISIT=!location.hash||location.hash==="#2.4/40/64";const firstOpen=()=>setTimeout(()=>{if(FIRST_VISIT&&!cmp&&!fc){const i=$("intro");if(i)i.hidden=true;openCase("andijan")}},1200);if(map.isStyleLoaded())firstOpen();else map.once("load",firstOpen);
+
+/* Flood watch: NASA EONET floods mapped with NISAR before vs after (tools/flood_watch.py) */
+async function openFloods(){closeCase();if(fc)closeFree();let L=[];try{L=await (await fetch("/floods/index.json")).json()}catch(e){}
+ const M=L.filter(r=>r.status==="mapped"),N=L.length-M.length;findsLayers();
+ findsPanel(`<div class="top"><span class="chip">Explore · flood watch</span><div class="nav"><button class="tog" id="fclose" aria-label="Close">✕</button></div></div>
+ <h3 style="margin-top:8px">NASA's flood events, checked with NISAR before and after</h3>
+ <p style="font-size:13px;color:var(--ink2)">${M.length} floods mapped (${N} had no NISAR pass on both sides, or a read error). Blue = new open water (dark after, not before, 3 dB darker, not a lake or river that is always there). Magenta = 3 dB brighter: wetter soil after rain OR water under plants/walls (double bounce); a candidate, not a flood.</p>
+ <div class="grid">${M.map((r,i)=>`<p><button class="btn" data-f="${i}" style="margin-bottom:4px">${esc(cleanTitle(r.title))}</button><br><span style="font:500 11.5px var(--mono);color:var(--ink3)">${r.date} · NISAR ${r.before} → ${r.after} · new water <b>${r.new_open_water_km2} km²</b> · brighter ${r.brighter_km2} km²${r.s2_cloud_pct!=null?` · Sentinel-2 ${r.s2_cloud_pct} % cloud`:""}${r.iou_vs_s2!=null?`, IoU ${r.iou_vs_s2}`:""}</span></p>`).join("")||"<p>Mapping is still running.</p>"}</div>
+ <p style="font-size:11px;color:var(--ink3)">Honest limit: EONET gives one point per flood; floods are often smaller than our 20 km box or gone by the next 12-day pass, so many show no new water. Radar: NASA-ISRO NISAR GCOV (provisional), permanent water: JRC Global Surface Water.</p>`);
+ document.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{const r=M[+b.dataset.f],w=r.bbox,co=[[w[0],w[3]],[w[2],w[3]],[w[2],w[1]],[w[0],w[1]]];
+  if(!map.getSource("flood")){map.addSource("flood",{type:"image",url:`/floods/${r.id}.png`,coordinates:co});map.addLayer({id:"flood",type:"raster",source:"flood"},"labels")}
+  else map.getSource("flood").updateImage({url:`/floods/${r.id}.png`,coordinates:co});map.setLayoutProperty("flood","visibility","visible");
+  map.fitBounds([[w[0],w[1]],[w[2],w[3]]],{padding:{left:40,right:440,top:90,bottom:40}})});
+ const old=$("fclose").onclick;$("fclose").onclick=()=>{old&&old();map.getLayer("flood")&&map.setLayoutProperty("flood","visibility","none")}}
+$("x-floods").onclick=openFloods;
+
 /* data layers */
 let EV=[],evCat="All",pop=null;
 map.on("load",()=>{

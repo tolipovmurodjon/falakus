@@ -8,3 +8,4 @@ Flood in Peru 1104145 | read failed: unsupported projection EPSG 3031 | None -> 
 Flood in Indonesia 1104146 | error: HTTP Error 502: Bad Gateway | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
 Flood in Islamic Republic of Iran 1104147 | mapped | 2026-09-03 -> 2026-09-15 | new water 0.0 km2 | brighter 0.0 | S2 5 % cloud, IoU 0.0
 Flood in Germany 1104150 | mapped | 2026-09-01 -> 2026-09-13 | new water 0.0 km2 | brighter 50.72 | S2 50 % cloud, IoU None
+Flood in France 1104149 | mapped | 2026-08-30 -> 2026-09-11 | new water 0.0 km2 | brighter 0.0 | S2 47 % cloud, IoU 0.0
