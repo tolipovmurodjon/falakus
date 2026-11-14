@@ -87,8 +87,8 @@ def place(name):
         if T["t"] is None:
             T["t"] = -18.0  # placeholder until the first Sentinel-2 match fits it
         water = ok & zone & (fhh < T["t"])
-        d = f.stem
-        rec = {"date": d, "water_km2": round(float(water.sum() * px_km2), 2),
+        d = f.stem[:10]  # all-tracks files are named <date>_<track><A|D>
+        rec = {"date": d, "pass": f.stem, "water_km2": round(float(water.sum() * px_km2), 2),
                "rvi_crop": round(float(np.nanmean(rvi[ok & crop_mask])), 3) if (ok & crop_mask).any() else None,
                "hv_crop_db": round(float(10 * np.log10(np.nanmean(phv[ok & crop_mask]))), 2) if (ok & crop_mask).any() else None}
         # outside judge: clearest Sentinel-2 within 3 days
