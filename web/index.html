@@ -149,7 +149,7 @@ body.touring #powers{display:none}
   <div><b id="st-window">6-17 Oct</b><span>one 12-day cycle</span></div>
   <div><b id="st-revisit">12 days</b><span>NISAR revisit, day or night</span></div>
  </div>
- <div class="row"><button class="btn" id="b-tour">Start the tour</button><button class="tog" id="b-intro">What is this?</button><button class="tog" id="b-draw">Draw an area</button><button class="tog" id="b-layers" aria-expanded="false">Layers</button><button class="tog" id="b-ships">Ship watch</button></div>
+ <div class="row"><button class="btn" id="b-tour">Start the tour</button><button class="tog" id="b-intro">What is this?</button><button class="tog" id="b-draw">Draw an area</button><button class="tog" id="b-layers" aria-expanded="false">Layers</button><button class="tog" id="b-ships">Ship watch</button><button class="tog" id="b-finds">Radar finds</button></div>
  <div class="opts" id="opts" hidden>
   <div class="row"><button class="tog on" id="t-radar" aria-pressed="true">Radar</button><input type="range" id="op" min="0" max="100" value="90" aria-label="Radar opacity" style="width:110px"><button class="tog" id="t-frames" aria-pressed="false">Pass outlines</button></div>
   <div class="row"><span class="eyebrow" style="margin-right:2px">Radar</span><button class="tog on" id="r-nisar">NISAR L-band</button><button class="tog" id="r-s1">Sentinel-1 C-band</button></div>
@@ -533,6 +533,65 @@ async function lastLook(lon,lat,el){if(!el)return;el.textContent="Last radar loo
   const parts=[];if(j.nisar)parts.push(`NISAR ${ago(j.nisar)} (${j.nisar.slice(0,10)})`);if(j.s1)parts.push(`Sentinel-1 ${ago(j.s1)} (${j.s1.slice(0,10)})`);
   el.innerHTML=parts.length?`<span class="dot"></span>Last radar look: ${parts.join(" · ")}`:"Last radar look: no pass found here"}catch(e){el.textContent=""}}
 
+
+/* event size in plain words: magnitude for quakes, hectares for fires, knots for storms */
+function evSize(e){if(!e.mag)return "";
+ if(e.category==="Earthquakes"){const m=+e.mag,w=m>=7?"major: heavy damage near the centre":m>=6?"strong: damage likely near the centre":m>=5?"moderate: felt widely, light damage possible":"light";
+  return ` · magnitude ${m.toFixed(1)} (${w})${e.depth_km!=null?` · ${Math.round(e.depth_km)} km deep`:""}`}
+ const u=(e.unit||"").replace("acres","acres").replace("kts","knots wind");return ` · ${Math.round(e.mag).toLocaleString("en")} ${esc(u)}`}
+
+
+/* Radar finds: oil-slick candidates off Baku and plane-sized objects at Tashkent airport (Sentinel-1, no login) */
+function findsLayers(){if(map.getSource("finds"))return;
+ map.addSource("finds",{type:"geojson",data:{type:"FeatureCollection",features:[]}});
+ map.addLayer({id:"finds-fill",type:"fill",source:"finds",filter:["==",["geometry-type"],"Polygon"],paint:{"fill-color":"#1C7E69","fill-opacity":0.12}});
+ map.addLayer({id:"finds-line",type:"line",source:"finds",filter:["==",["geometry-type"],"Polygon"],paint:{"line-color":"#1C7E69","line-width":1.5}});
+ map.addLayer({id:"finds-pt",type:"circle",source:"finds",filter:["==",["geometry-type"],"Point"],paint:{"circle-radius":["coalesce",["get","r"],5],"circle-color":["coalesce",["get","c"],"#7048E8"],"circle-opacity":0.8,"circle-stroke-color":"#fff","circle-stroke-width":1}})}
+function findsPanel(html){endDance();const T=$("tour");T.hidden=false;document.body.classList.add("touring");T.innerHTML=html;
+ $("fclose").onclick=()=>{T.hidden=true;document.body.classList.remove("touring");map.getSource("finds").setData({type:"FeatureCollection",features:[]})}}
+function bars(P,val,col,lab){const mx=Math.max(1,...P.map(val));return `<div class="shipbars">${P.map((p,i)=>`<button class="shipbar" data-i="${i}" title="${lab(p)}"><i style="height:${Math.max(4,Math.round(64*val(p)/mx))}px;background:${col(p)}"></i><span>${p.date.slice(5)}</span></button>`).join("")}</div>`}
+async function openFinds(){let html=`<div class="top"><span class="chip">Radar finds · Sentinel-1</span><div class="nav"><button class="tog" id="fclose" aria-label="Close">✕</button></div></div>
+ <h3 style="margin-top:8px">What radar finds that a camera can't</h3>
+ <div class="grid"><p><button class="btn" id="f-ships">Ships at 7 chokepoints</button> steel hulls are bright points on a dark sea, day and night.</p>
+ <p><button class="btn" id="f-slick">Oil-slick candidates off Baku</button> oil calms the waves, so a slick is a long dark streak.</p>
+ <p><button class="btn" id="f-apron">Plane-sized objects at Tashkent airport</button> parked aircraft are metal corner reflectors on smooth concrete.</p></div>`;
+ findsLayers();findsPanel(html);$("f-ships").onclick=()=>shipWatch(true);$("f-slick").onclick=openSlick;$("f-apron").onclick=openApron}
+async function openSlick(){const j=await (await fetch("/api/ships/slicks_baku.json")).json();const P=j.passes,w=j.bbox;findsLayers();
+ map.fitBounds([[w[0],w[1]],[w[2],w[3]]],{padding:{left:60,right:440,top:60,bottom:80},essential:false});
+ const big=P.reduce((m,p)=>p.slick_km2>m.slick_km2?p:m,P[0]);
+ findsPanel(`<div class="top"><span class="chip">Radar finds · Caspian Sea, Baku</span><div class="nav"><button class="tog" id="fclose" aria-label="Close">✕</button></div></div>
+  <h3 style="margin-top:8px">Slick candidates off the Absheron peninsula</h3>
+  <div class="hero"><b id="fn">${big.slick_km2.toFixed(1)} km²</b><span id="fw">of long dark streaks on ${fmtDate(big.date)} (${big.slick_candidates} candidates)</span></div>
+  ${bars(P,p=>p.slick_km2,p=>p.box_seen_pct<90?"repeating-linear-gradient(45deg,#C9CED9 0 3px,#E6E9F1 3px 6px)":"#7048E8",p=>p.date)}
+  <p style="font-size:12px;color:var(--ink3);margin:2px 0 10px">violet = slick-candidate area per pass · grey = pass saw only part of the box · tap a bar · dark squares = ${j.fixed_bright_structures} fixed platforms (Neft Daşları chain)</p>
+  <div class="grid"><p><span class="lab">What you see</span>On ${fmtDate(big.date)} a dark plume about 21 km long runs west from the Neft Daşları platforms, with the feathered edges typical of oil.</p>
+  <p><span class="lab">Why radar</span>Wind ripples scatter the radar pulse back (bright sea). Oil damps those ripples, so the slick reflects the pulse away and looks dark, day or night.</p>
+  <p><span class="lab">Who acts on it</span>Caspian environment agencies and coast guards: a candidate is a reason to send a boat or a plane, not proof.</p>
+  <p><span class="lab">Honest limit</span>${esc((j.caveats||[]).join(" ")||"Low wind, rain cells and natural films make look-alikes; these are candidates, not confirmed spills.")}</p></div>
+  <p style="font-size:11px;color:var(--ink3)">${esc(j.source||"")} · ${esc(j.method||"")}</p>`);
+ const fixed=(j.fixed_points||[]).map(c=>({type:"Feature",geometry:{type:"Point",coordinates:c.lon_lat||c},properties:{r:3,c:"#0F1630"}}));
+ const show=i=>{const p=P[i];$("fn").textContent=p.slick_km2.toFixed(1)+" km²";$("fw").textContent=`of long dark streaks on ${fmtDate(p.date)} (${p.slick_candidates} candidates, ${p.box_seen_pct} % of box seen)`;
+  document.querySelectorAll(".shipbar").forEach(b=>b.classList.toggle("on",+b.dataset.i===i));
+  map.getSource("finds").setData({type:"FeatureCollection",features:fixed.concat(p.candidates.map(c=>({type:"Feature",geometry:{type:"Point",coordinates:c.lon_lat},properties:{r:Math.min(22,4+Math.sqrt(c.area_km2)*3),c:"#7048E8"}})))})};
+ document.querySelectorAll(".shipbar").forEach(b=>b.onclick=()=>show(+b.dataset.i));show(P.indexOf(big))}
+async function openApron(){const j=await (await fetch("/api/ships/apron_tashkent.json")).json();const P=j.passes,w=j.bbox;findsLayers();
+ map.fitBounds([[w[0],w[1]],[w[2],w[3]]],{padding:{left:60,right:440,top:60,bottom:80},essential:false});
+ findsPanel(`<div class="top"><span class="chip">Radar finds · Tashkent airport</span><div class="nav"><button class="tog" id="fclose" aria-label="Close">✕</button></div></div>
+  <h3 style="margin-top:8px">Plane-sized bright objects on the aprons</h3>
+  <div class="hero"><b id="fn">–</b><span id="fw"></span></div>
+  ${bars(P,p=>p.objects,p=>p.direction&&p.direction.startsWith("desc")?"#0F1630":"#F59E0B",p=>p.date)}
+  <p style="font-size:12px;color:var(--ink3);margin:2px 0 10px">amber = evening pass (ascending) · navy = early-morning pass (descending): compare only same colours · tap a bar</p>
+  <div class="grid"><p><span class="lab">What you see</span>Green outlines are the aprons (traced from a clear Sentinel-2 image). Each violet dot is a bright metal object the size of an aircraft.</p>
+  <p><span class="lab">Why radar</span>Concrete is smooth (dark); a parked airliner's fuselage, wings and tail make corner reflectors (bright), seen through cloud and at night.</p>
+  <p><span class="lab">Honest limit</span>Not a plane count: a plane parked in the same spot every pass is masked with the buildings, ground vehicles can cluster into a blob, and counts move by about ±3 with the mask edge.</p></div>
+  <p style="font-size:11px;color:var(--ink3)">${esc(j.source||"")} · ${esc(j.method||"")}</p>`);
+ const outl=Object.values(j.apron_outlines||{}).map(o=>{const r=o.slice();if(r.length&&(r[0][0]!==r.at(-1)[0]||r[0][1]!==r.at(-1)[1]))r.push(r[0]);return {type:"Feature",geometry:{type:"Polygon",coordinates:[r]},properties:{}}});
+ const show=i=>{const p=P[i];$("fn").textContent=p.objects;$("fw").textContent=`plane-sized bright objects on ${fmtDate(p.date)} (${p.direction} pass, ${p.time_utc} UTC)`;
+  document.querySelectorAll(".shipbar").forEach(b=>b.classList.toggle("on",+b.dataset.i===i));
+  map.getSource("finds").setData({type:"FeatureCollection",features:outl.concat(p.points.map(c=>({type:"Feature",geometry:{type:"Point",coordinates:(c.lon_lat||c).slice(0,2)},properties:{r:6,c:"#7048E8"}})))})};
+ document.querySelectorAll(".shipbar").forEach(b=>b.onclick=()=>show(+b.dataset.i));show(P.length-1)}
+$("b-finds").onclick=openFinds;
+
 /* data layers */
 let EV=[],evCat="All",pop=null;
 map.on("load",()=>{
@@ -570,11 +629,11 @@ async function loadEvents(){
  renderList();
 }
 function renderList(){const list=EV.map((e,i)=>({...e,i})).filter(e=>evCat==="All"||e.category===evCat);
- $("evlist").innerHTML=list.slice(0,400).map(e=>`<button class="ev" data-i="${e.i}"><span class="dot" style="background:${e.color}"></span><span><b>${esc(e.title)}</b><span>${e.date} · ${esc(e.category)}${e.mag?" · "+Math.round(e.mag).toLocaleString("en")+" "+esc(e.unit||""):""}</span></span></button>`).join("");
+ $("evlist").innerHTML=list.slice(0,400).map(e=>`<button class="ev" data-i="${e.i}"><span class="dot" style="background:${e.color}"></span><span><b>${esc(e.title)}</b><span>${e.date} · ${esc(e.category)}${evSize(e)}</span></span></button>`).join("");
  $("evlist").querySelectorAll(".ev").forEach(b=>b.onclick=()=>openEvent(+b.dataset.i,true))}
 function openEvent(i,fly){const e=EV[i];if(fly)map.flyTo({center:[e.lon,e.lat],zoom:Math.max(map.getZoom(),8),speed:1.6});
  const src=(e.sources||[]).map(u=>{try{return `<a href="${u}" target="_blank" rel="noopener">${new URL(u).hostname.replace("www.","")}</a>`}catch(x){return ""}}).join(" · ");
- pop&&pop.remove();pop=new maplibregl.Popup({offset:10}).setLngLat([e.lon,e.lat]).setHTML(`<div class="pop"><b>${esc(e.title)}</b><div class="m">${esc(e.category)} · ${e.date}${e.mag?" · "+Math.round(e.mag).toLocaleString("en")+" "+esc(e.unit||""):""}</div>${src?`<div style="margin-top:6px">News and sources: ${src}</div>`:""}${nisarCovers(e.lon,e.lat)?`<button class="btn" id="pop-play">Play the radar here</button>`:`<div class="m" style="margin-top:6px">No NISAR pass here: NISAR images land, ice and coasts, not the open ocean.</div>`}</div>`).addTo(map);
+ pop&&pop.remove();pop=new maplibregl.Popup({offset:10}).setLngLat([e.lon,e.lat]).setHTML(`<div class="pop"><b>${esc(e.title)}</b><div class="m">${esc(e.category)} · ${e.date}${evSize(e)}</div>${src?`<div style="margin-top:6px">News and sources: ${src}</div>`:""}${nisarCovers(e.lon,e.lat)?`<button class="btn" id="pop-play">Play the radar here</button>`:`<div class="m" style="margin-top:6px">No NISAR pass here: NISAR images land, ice and coasts, not the open ocean.</div>`}</div>`).addTo(map);
  $("pop-play").onclick=()=>{pop.remove();$("tour").hidden=true;startDance(e.lon,e.lat,e.title)}}
 map.on("click","events",ev=>{ev.preventDefault();openEvent(ev.features[0].properties.i,false)});
 map.on("mouseenter","events",()=>map.getCanvas().style.cursor="pointer");map.on("mouseleave","events",()=>map.getCanvas().style.cursor="");

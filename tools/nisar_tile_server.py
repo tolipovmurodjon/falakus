@@ -694,8 +694,8 @@ class Handler(SimpleHTTPRequestHandler):
             idx = []
             for f in sorted((DATA / "ships").glob("*.json")):
                 j = json.loads(f.read_text())
-                if "passes" not in j:
-                    continue
+                if "passes" not in j or not j["passes"] or "ships" not in j["passes"][0] or "sea_km2" not in j["passes"][0]:
+                    continue  # only sea ship counts (slick and airport results live in the same folder)
                 idx.append({"name": j["name"], "bbox": j["bbox"], "source": j.get("source"), "method": j.get("method"),
                             "passes": [{k: p[k] for k in ("date", "time_utc", "light", "ships", "sea_km2") if k in p} for p in j["passes"]]})
             return self.send_bytes(json.dumps(idx).encode(), "application/json", cache="no-store")

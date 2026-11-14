@@ -37,3 +37,55 @@ Traceback (most recent call last):
                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ValueError: operands could not be broadcast together with shapes (2034,2034) (2034,2034) (2013,2013) 
 === malacca
+Traceback (most recent call last):
+  File "D:\10_projects\falakus\tools\ship_count.py", line 104, in <module>
+    main()
+  File "D:\10_projects\falakus\tools\ship_count.py", line 81, in main
+    mosaic = v if mosaic is None else np.where(np.isfinite(mosaic), mosaic, v)
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: operands could not be broadcast together with shapes (1537,2048) (1537,2048) (1536,2048) 
+=== panama
+2026-11-10T23  ships  154  day    box seen 100%
+2026-11-10T11  ships  174  night  box seen 100%
+2026-10-29T23  ships  131  day    box seen 100%
+2026-10-23T11  only 24% of the box seen, skipped
+2026-10-17T23  ships  148  day    box seen 100%
+2026-10-17T11  ships  146  night  box seen 100%
+2026-10-05T23  ships  154  day    box seen 100%
+2026-10-05T11  ships  171  night  box seen 100%
+=== gibraltar
+2026-11-13T18  ships   22  day    box seen 100%
+2026-11-13T06  ships    7  night  box seen 100%
+2026-11-12T18  ships    6  day    box seen 51%
+2026-11-08T06  ships   33  night  box seen 99%
+2026-11-07T18  ships    8  day    box seen 100%
+2026-11-06T18  ships   19  day    box seen 51%
+2026-11-02T06  ships   37  night  box seen 99%
+2026-11-01T18  ships   23  day    box seen 100%
+=== hormuz
+2026-11-12T14  ships   12  day    box seen 100%
+2026-11-11T14  only 17% of the box seen, skipped
+2026-11-09T02  ships   59  night  box seen 64%
+2026-11-08T02  ships   76  night  box seen 98%
+2026-11-06T14  ships   66  day    box seen 100%
+2026-11-05T14  only 17% of the box seen, skipped
+2026-11-03T02  ships   64  night  box seen 63%
+2026-11-02T02  ships   68  night  box seen 98%
+=== suez
+2026-11-13T15  ships  108  day    box seen 100%
+2026-11-12T15  ships  140  day    box seen 100%
+2026-11-09T03  ships  151  night  box seen 100%
+2026-11-07T15  ships   45  day    box seen 100%
+2026-11-06T15  ships  117  day    box seen 100%
+2026-11-03T03  ships  131  night  box seen 100%
+2026-11-01T15  ships  136  day    box seen 100%
+2026-10-31T15  ships  114  day    box seen 100%
+=== malacca
+2026-11-13T23  ships   21  night  box seen 70%
+2026-11-07T11  ships  103  day    box seen 100%
+2026-11-01T23  ships   14  night  box seen 70%
+2026-10-27T22  ships  112  night  box seen 93%
+2026-10-20T23  ships   30  night  box seen 70%
+2026-10-15T22  ships  127  night  box seen 93%
+2026-10-14T11  ships  132  day    box seen 100%
+2026-10-03T22  ships  106  night  box seen 93%

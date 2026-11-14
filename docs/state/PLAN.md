@@ -75,3 +75,20 @@ Every build ends with an in-depth play test in Chrome, as a judge and as an ordi
 
 ## Verification (every round)
 Server up → Chrome on localhost: intro → tour stops 1-10 → play, change map, swipe → event "play the radar here" → tap anywhere; screenshots 1440 + 390 into `docs/state/overnight/round-N/`; prewarm.py timings; one fresh Opus checker agent scores the challenge checklist (CLAUDE.md "What the challenge asks") with evidence; log in `docs/state/overnight.md`; local git commit every 2 rounds.
+
+## Full plan, 14 Nov 22:00 (Boss: optional = required; everything global)
+| challenge line | status | next |
+|---|---|---|
+| Interactive NISAR app | done: world map, tour 16, time player, draw-a-box 20 m analysis | public link (needs Boss yes) |
+| Surface change types | water, crops/plants, built-up, forest, fire, lava, landslide, flood, quake, glacier | ground motion (GUNW) after 403 fix |
+| Places around the world, time steps | 16 stops, 7 chokepoints, Baku, airport | fill Europe/Russia holes in world map (partial frames) |
+| Actionable insight | who-acts + next on stops, hero numbers | Water road summary card |
+| Open source, user friendly | local; repo not public yet | README + LICENSE + static export |
+| Drivers hypothesized | per stop | wind test at Andijan/Aral (Open-Meteo) |
+| Polarizations + future NISAR | HH/HV per stop; next field | polarization side-by-side panel |
+| (opt) other frequencies | Sentinel-1 C-band switch + ship/slick/apron | L vs C swipe at Rondonia |
+| (opt) time series + ancillary data | time player, charts | population (WorldPop/GHSL) + land cover (ESA WorldCover) per box |
+| (opt) human drivers | irrigation, canal, rice, dam, ships, oil | add slick + apron to "Radar finds" |
+| (opt) storytelling | Water road + World chapters | 30 s video, 7-slide deck |
+| (opt) hometown context | Uzbekistan first | team note on Tashkent/Aral |
+| (opt) interactive summary | sliders, web map, charts | demo mode ?demo=1 |

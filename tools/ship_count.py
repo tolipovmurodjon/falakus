@@ -78,6 +78,8 @@ def main():
             except Exception as ex:
                 print(f"{key} {item[-30:]} fetch failed: {ex}", flush=True)
                 continue
+            if mosaic is not None and v.shape != mosaic.shape:  # frames of one pass can differ by a few pixels: resample onto the first grid
+                v = ndimage.zoom(v, (mosaic.shape[0] / v.shape[0], mosaic.shape[1] / v.shape[1]), order=0)[: mosaic.shape[0], : mosaic.shape[1]]
             mosaic = v if mosaic is None else np.where(np.isfinite(mosaic), mosaic, v)
         if mosaic is None:
             continue
