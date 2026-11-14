@@ -92,3 +92,6 @@ Traceback (most recent call last):
     raise FileNotFoundError(url) from exc
 FileNotFoundError: https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/ATLAS/ATL13/007/2025/04/11/ATL13_20250411153451_03932701_007_01.h5
 2025-04-11 fail https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/ATLAS/ATL13/007/2025/04/11/A
+2025-06-10 fail 
+2025-07-09 no water segments in box
+{'date': '2025-07-11', 'level_m': 852.25, 'spread_m': 0.12, 'segments': 668, 'water_body_id': 14508}

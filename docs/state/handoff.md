@@ -22,6 +22,16 @@ Repo: github.com/tolipovmurodjon/falakus (private, branch overnight, Zaynobiddin
 - ALOS PALSAR (L-band like NISAR, 2006-2011, 28 scenes over the reservoir incl. HH+HV Jun/Aug/Oct 2008) returns 401 "Pre authorization required".
   Fix: log in at https://urs.earthdata.nasa.gov -> Applications -> Authorized Apps -> approve "Alaska Satellite Facility Data Access"; then open https://search.asf.alaska.edu once and accept the ALOS terms. Then run: python tools/alos_series.py andijan_res 73.135 40.765 73.0279 40.6839 73.2421 40.8461
 
+## STATE 15 Nov ~03:00 (judge 4: 5.0 -> 5: 7.0 -> 6: 6.5 after it found the EONET lat/lon swap)
+STOPPED by low laptop memory (restart only when Boss says / memory is free):
+- app server:   python tools/nisar_tile_server.py --port 8765
+- laser check:  python -u tools/icesat2_levels.py > docs/state/logs/icesat2.log   (works when NASA reachable; 10 Jan 2025 = 847.99 m, 335 segments)
+- flood rescan: python -u tools/flood_watch.py --max 125 > docs/state/logs/floods4.log   (uses tools/event_coords.py; 46 old swapped results already discarded)
+- cloud photo:  python tools/bake_cloud_photo.py   (textured 24 Sep cloud from raw B04/B03/B02)
+Network to NASA/GitHub/Planetary Computer flaps (Google fine): retry, push when up.
+Done tonight since round 4: baked story photos (offline-safe, JPEG), cloudy tab real cloud, shoreline overlay in time-lapse, Aral 1,598->1 km2 (photos) + NISAR HH+HV <= 0.93 km2 (polarization finding), Fergana harvest map (12.8 % lost plant echo), forecast skill 30 % + honest 80 % band, 30 s video docs/video/falakus-30s.mp4 (tools/make_video.py), 7-slide deck docs/deck/story.html, project page text docs/project/page.md, EONET coordinate check, player fixes.
+NEXT: 1) restart server, re-run the 4 jobs above; 2) pair laser levels with areas (icesat2 json) -> chapter 1 line + deck row if r holds; 3) recapture video shot s2 with the textured cloud, rebuild video; 4) judge round 7 (app + deck + video); 5) public link needs Boss's yes; ALOS needs Boss's ASF authorization.
+
 ## Done 15 Nov 01:00-02:00 (see git log)
 - Judge round 4 = 5.0/10 (fresh website-design-auditor). Fixed: phone nav row, front-door line, Explore menu closes (now a dropdown card), calm Play mode, dated headline, flood list sorted + no layer leak, settings reachable on phone, zoom cap + sharp 20 m pixels in all radar views, photo cut to exactly the box at native 10 m + cloud % inside the box.
 - New: cloudy-day slide (24 Sep 2026, photo 100 % cloud vs NISAR), time-lapse frame info (water/crops + plain HH/HV lesson), data timeline panel, ML forecast slide (ridge, walk-forward 2026: MAE 2.3 km2 vs 3.3 seasonal / 4.3 persistence; Dec-Feb 22.6/26.9/29.4 km2), 7-slide story deck docs/deck/story.html (tools/build_story_pitch.py), Falak design system tokens from Zaynobiddin's static.zip (warm paper, #17515F, one shadow).
