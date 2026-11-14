@@ -496,7 +496,7 @@ def sentinel2_photo(w, s, e, n, start, end, clearest):
     if full:
         pick = min(full, key=lambda f: f["properties"]["eo:cloud_cover"]) if clearest else max(full, key=lambda f: f["properties"]["datetime"])
         base = f"https://planetarycomputer.microsoft.com/api/data/v1/item/bbox/{w},{s},{e},{n}"
-        box = {"url": f"{base}.png?collection=sentinel-2-l2a&item={pick['id']}&assets=visual&nodata=0&max_size=1400",
+        box = {"url": f"{base}.png?collection=sentinel-2-l2a&item={pick['id']}&assets=visual&nodata=0&max_size=2048",
                "date": pick["properties"]["datetime"][:10], "scene_cloud_pct": round(pick["properties"]["eo:cloud_cover"])}
         try:  # cloud inside the box itself, from the scene classification layer (8, 9, 10 = cloud, 3 = cloud shadow)
             import io as _io
@@ -759,7 +759,7 @@ class Handler(SimpleHTTPRequestHandler):
             except (KeyError, ValueError):
                 return self.send_bytes(b"{}", "application/json", code=400)
             return self.send_bytes(json.dumps(last_look(lon, lat)).encode(), "application/json", cache="no-store")
-        mw = re.match(r"^/(waterroad|floods)/([A-Za-z0-9_\-]+\.(?:png|json))$", path)
+        mw = re.match(r"^/(waterroad|floods|forecast|s1series)/([A-Za-z0-9_\-]+\.(?:png|json))$", path)
         if mw:
             f = DATA / mw.group(1) / mw.group(2)
             return self.send_bytes(f.read_bytes(), "application/json" if f.suffix == ".json" else "image/png", cache="no-cache") if f.exists() else self.send_bytes(b"", "text/plain", code=404)

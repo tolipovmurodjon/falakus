@@ -818,7 +818,11 @@ CASES.andijan={title:"1 · Source: the Andijan reservoir, the valley's water tan
   {tab:"July | October radar",colour:true,chart:"andijan",L:{st:"andijan_res",d:"2026-07-14",lab:"NISAR · 14 Jul"},R:{st:"andijan_res",d:"2026-10-06",lab:"NISAR · 6 Oct"},
    n:"−31 km²",s:"of water between the July and October passes. Where the shore pulled back, the radar sees bare lakebed. Honest limit: in late summer the radar counts ~8.6 km² more water than the photos, most likely smooth wet mud on the new shore.",
    why:"Wet mud and calm water are both smooth, so both send the pulse away. Only a photo or a second radar band tells them apart, which is why every number here has a photo check next to it.",
-   src:"Radar: NASA-ISRO NISAR GCOV gamma0, calibrated dB (provisional)."}]};
+   src:"Radar: NASA-ISRO NISAR GCOV gamma0, calibrated dB (provisional)."},
+  {tab:"3 years + next 3 months",colour:true,chart:"forecast",L:{st:"andijan_res",d:"2026-10-18",lab:"NISAR radar · 18 Oct"},R:{s2:["2026-10-12","2026-10-26",1],lab:"Sentinel-2 photo · mid-Oct"},
+   n:"≈ 23 → 29 km²",s:"forecast for Dec 2026 → Feb 2027 as the reservoir refills over winter (error band ±2 to ±4 km²). Each autumn it ends lower: 33 km² in Oct 2024, 19 km² in Nov 2025, 17 km² in Nov 2026 (photo-measured).",
+   why:"A small machine-learning model (ridge regression) learns the yearly rhythm from 3 years of monthly radar and photos: the time of year, last month, and the same month a year ago. We tested it on every month of 2026 without letting it see that month first: average miss 2.3 km², better than 'same as last year' (3.3) or 'same as last month' (4.3). It missed August 2026 most (said 31, real 20): the water was let out earlier than in past years.",
+   src:"Monthly values Nov 2023 – Nov 2026: Sentinel-2 photo water on clear months (snow masked); other months ESA Sentinel-1 C-band radar, corrected by the photo-vs-radar fit of the same season. NISAR starts Jun 2026 here. tools/s1_series.py, tools/forecast_reservoir.py. Honest limit: only 2 years to learn from."}]};
 const FG=[72.27,40.27,72.65,40.55];
 CASES.fergana={title:"2 · Use: the Fergana fields drink it",bbox:null,sci:"fergana",slides:[
   {tab:"Plants signal: July | October",colour:true,chart:"fergana",colourDefault:"hv",L:{st:"fergana",d:"2026-07-02",lab:"NISAR HV · 2 Jul"},R:{st:"fergana",d:"2026-10-30",lab:"NISAR HV · 30 Oct"},
@@ -828,6 +832,15 @@ CASES.fergana={title:"2 · Use: the Fergana fields drink it",bbox:null,sci:"ferg
   {tab:"Radar | photo",colour:true,chart:"fergana",L:{st:"fergana",d:"2026-10-18",lab:"NISAR · 18 Oct"},R:{s2:["2026-10-12","2026-10-29",1],lab:"Sentinel-2 photo · Oct"},
    n:"11 passes",s:"every 12 days from June to October, cloud or not: the rhythm of planting, watering and harvest.",why:"Radar brightness follows plant structure and soil water, not colour, so it keeps counting on cloudy days.",src:"Radar: NASA-ISRO NISAR GCOV (provisional)."}]};
 async function cmpChart(kind){const el=$("cmpchart");el.innerHTML="";if(!kind)return;
+ if(kind==="forecast"){const j=await (await fetch("/forecast/andijan_res.json")).json();const S=j.series,F=j.forecast,all=[...S.map(s=>({m:s.month,v:s.km2,f:s.from})),...F.map(f=>({m:f.month,v:f.km2,b:f.band_km2,fc:1}))];
+  const W=340,H=110,mx=Math.max(...all.map(a=>a.v+(a.b||0)))*1.08,x=i=>12+i/(all.length-1)*(W-24),yv=v=>H-16-v/mx*(H-28);
+  const hist=all.filter(a=>!a.fc),n=hist.length;let d="";hist.forEach((a,i)=>d+=(i?"L":"M")+x(i).toFixed(1)+","+yv(a.v).toFixed(1));
+  let fd="M"+x(n-1).toFixed(1)+","+yv(hist[n-1].v).toFixed(1),band="";F.forEach((f,k)=>{fd+="L"+x(n+k).toFixed(1)+","+yv(f.km2).toFixed(1)});
+  const up=F.map((f,k)=>x(n+k).toFixed(1)+","+yv(f.km2+f.band_km2).toFixed(1)),dn=F.map((f,k)=>x(n+k).toFixed(1)+","+yv(Math.max(0,f.km2-f.band_km2)).toFixed(1)).reverse();
+  band=`<polygon points="${x(n-1).toFixed(1)},${yv(hist[n-1].v).toFixed(1)} ${up.join(" ")} ${dn.join(" ")}" fill="#7C3AED" opacity=".15"/>`;
+  const dots=hist.map((a,i)=>`<circle cx="${x(i)}" cy="${yv(a.v)}" r="2.4" fill="${a.f==="photo"?"#E8590C":"#fff"}" stroke="#E8590C" stroke-width="1.2"><title>${a.m}: ${a.v} km² (${a.f})</title></circle>`).join("");
+  const yrs=all.map((a,i)=>a.m.endsWith("-01")?`<line x1="${x(i)}" x2="${x(i)}" y1="6" y2="${H-14}" stroke="#8A92AA" stroke-opacity=".25"/><text x="${x(i)+2}" y="${H-3}" font-size="9" fill="#8A92AA" font-family="ui-monospace,monospace">${a.m.slice(0,4)}</text>`:"").join("");
+  el.innerHTML=`<div class="lg"><span><i style="background:#E8590C"></i>water km² (filled = photo, hollow = radar)</span><span><i style="background:#7C3AED"></i>forecast ± typical miss</span></div><svg viewBox="0 0 ${W} ${H}">${yrs}<path d="${d}" fill="none" stroke="#E8590C" stroke-width="1.6"/>${band}<path d="${fd}" fill="none" stroke="#7C3AED" stroke-width="2.2" stroke-dasharray="4 3"/>${dots}<text x="4" y="10" font-size="9" fill="#8A92AA" font-family="ui-monospace,monospace">${Math.round(mx)} km²</text></svg><div class="lg"><span>tested on 2026, never seen: miss ${j.mae_km2.ridge} km² · same-as-last-year ${j.mae_km2.seasonal} · same-as-last-month ${j.mae_km2.persistence}</span></div>`;return}
  const j=await (await fetch(`/waterroad/${kind==="andijan"?"andijan_res":kind}.json`)).json();const P=j.passes;const W=340,H=96,x=i=>14+i/(P.length-1)*(W-28);
  const line=(vals,mx,col,dash)=>{const pts=vals.map((v,i)=>v==null?null:[x(i),H-16-v/mx*(H-30)]);let d="";pts.forEach((p,i)=>{if(p)d+=(d&&pts[i-1]?"L":"M")+p[0].toFixed(1)+","+p[1].toFixed(1)});
   return `<path d="${d}" fill="none" stroke="${col}" stroke-width="2.2" ${dash?'stroke-dasharray="4 3"':""}/>`+pts.map((p,i)=>p?`<circle cx="${p[0]}" cy="${p[1]}" r="2.6" fill="${col}"><title>${P[i].date}: ${vals[i]}</title></circle>`:"").join("")};
