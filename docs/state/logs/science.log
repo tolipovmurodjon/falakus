@@ -28,3 +28,18 @@ water (HH<-18 & HV<-24 dB) | 8.14 km2 (2026-06-20) -> 19.22 km2 (2026-10-30)
 andijan: 11 passes rendered at 20 m -> D:\10_projects\falakus\data\science\andijan\img
 andijan: 413 tiles (z10-14) from 2026-10-30, native 20 m
 === fergana 20:43
+2026-06-20  box (1500, 1500)  HH median -11.08 dB
+2026-07-02  box (1500, 1500)  HH median -10.66 dB
+2026-07-14  box (1500, 1500)  HH median -10.6 dB
+2026-07-26  box (1500, 1500)  HH median -10.03 dB
+2026-08-19  box (1500, 1500)  HH median -9.56 dB
+2026-08-31  box (1500, 1500)  HH median -9.43 dB
+2026-09-12  box (1500, 1500)  HH median -9.3 dB
+2026-09-24  box (1500, 1500)  HH median -8.55 dB
+2026-10-06  box (1500, 1500)  HH median -8.31 dB
+2026-10-18  box (1500, 1500)  HH median -8.84 dB
+2026-10-30  box (1500, 1500)  HH median -9.71 dB
+water (HH<-18 & HV<-24 dB) | 8.34 km2 (2026-06-20) -> 3.97 km2 (2026-10-30)
+fergana: 11 passes rendered at 20 m -> D:\10_projects\falakus\data\science\fergana\img
+fergana: 394 tiles (z10-14) from 2026-10-30, native 20 m
+=== langtang 20:55

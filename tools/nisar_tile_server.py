@@ -227,7 +227,7 @@ def canvas_tile(z, x, y):
     return block
 
 
-TILE_CACHE = DATA / "tilecache"
+TILE_CACHE = DATA / "tilecache_hh"  # grayscale HH tiles (one colour, one meaning; RGB preview only on demand)
 
 
 def render_tile(z, x, y):
@@ -259,6 +259,7 @@ def _render_tile(z, x, y):
                     sample_into(arr, lon, lat, prev)
     if arr is None or not arr[..., 3].any():
         return EMPTY
+    arr[..., 1] = arr[..., 0]; arr[..., 2] = arr[..., 0]  # HH (red channel of NASA's preview) as gray
     buf = io.BytesIO()
     Image.fromarray(arr, "RGBA").save(buf, "WEBP", quality=82, method=2)
     return buf.getvalue()
@@ -403,7 +404,7 @@ def _unused_frame_image(gid, collection):
 
 @lru_cache(maxsize=32)
 def diff_image(c1, g1, c2, g2):
-    """Brightness change between two previews of the same track/frame: red = brighter, blue = darker."""
+    """Brightness change between two previews of the same track/frame: orange = brighter, violet = darker."""
     a = Image.open(io.BytesIO(frame_image(g1, c1))).convert("RGBA")
     b = Image.open(io.BytesIO(frame_image(g2, c2))).convert("RGBA").resize(a.size, Image.BILINEAR)
     A, B = np.asarray(a).astype(np.float32), np.asarray(b).astype(np.float32)
@@ -413,9 +414,9 @@ def diff_image(c1, g1, c2, g2):
     d = d - np.median(d[valid]) if valid.any() else d  # remove a whole-frame brightness shift
     mag = np.clip(np.abs(d) / 60.0, 0, 1)
     out = np.zeros(A.shape, np.uint8)
-    out[..., 0] = np.where(d > 0, 255, 40)
-    out[..., 1] = np.where(d > 0, 80, 120)
-    out[..., 2] = np.where(d > 0, 40, 255)
+    out[..., 0] = np.where(d > 0, 232, 112)
+    out[..., 1] = np.where(d > 0, 89, 72)
+    out[..., 2] = np.where(d > 0, 12, 232)
     out[..., 3] = np.where(valid & (mag > 0.25), (mag * 255).astype(np.uint8), 0)
     buf = io.BytesIO()
     Image.fromarray(out, "RGBA").save(buf, "WEBP", quality=80, method=2)

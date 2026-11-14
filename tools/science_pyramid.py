@@ -86,7 +86,8 @@ def build(stop):
                 for name, img in (("raw", raw), ("class", classed)):
                     p = OUT / name / str(z) / str(x) / f"{y}.webp"
                     p.parent.mkdir(parents=True, exist_ok=True)
-                    Image.fromarray(np.dstack([img[iyc, ixc], a]), "RGBA").save(p, "WEBP", quality=82 if name == "raw" else 90, method=3)
+                    al = a if name == "raw" else np.where(major[iyc, ixc] == 3, 0, a).astype(np.uint8)  # bare: photo shows through
+                    Image.fromarray(np.dstack([img[iyc, ixc], al]), "RGBA").save(p, "WEBP", quality=82 if name == "raw" else 90, method=3)
                 for name, (img, alpha) in themes.items():
                     p = OUT / name / str(z) / str(x) / f"{y}.webp"
                     p.parent.mkdir(parents=True, exist_ok=True)

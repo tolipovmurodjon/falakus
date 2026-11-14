@@ -66,7 +66,7 @@ def main():
             mag = np.clip(np.abs(np.nan_to_num(diff)) / 6, 0, 1)
             up = diff > 0
             col = np.zeros((h, w, 3), np.uint8)
-            col[..., 0] = np.where(up, 255, 40); col[..., 1] = np.where(up, 80, 120); col[..., 2] = np.where(up, 40, 255)
+            col[..., 0] = np.where(up, 232, 112); col[..., 1] = np.where(up, 89, 72); col[..., 2] = np.where(up, 12, 232)  # orange = brighter, violet = darker (never the water blue)
             save(col, np.where(np.abs(np.nan_to_num(diff)) > 3, mag, 0), img / f"{date}_change.webp")
         frames.append({"date": date, "sci": True, "bbox": bbox, "res": RES})
     (d / "frames.json").write_text(json.dumps({"stop": a.stop, "bbox": bbox, "resolution_m": RES, "frames": frames}, indent=1))

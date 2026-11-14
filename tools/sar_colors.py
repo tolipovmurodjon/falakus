@@ -48,7 +48,7 @@ def composite(hh_db, hv_db):
 # plants  : leaves and stems scatter it sideways    -> HV > -17
 # bare    : everything else (soil, sand, salt crust, stubble)
 CLASS_NAMES = ["water", "built", "plants", "bare"]
-CLASS_RGB = np.array([[37, 99, 235], [214, 92, 120], [46, 150, 80], [222, 196, 140]], np.uint8)
+CLASS_RGB = np.array([[37, 99, 235], [232, 163, 61], [46, 150, 80], [0, 0, 0]], np.uint8)  # water, very bright (built), plants; bare is not painted
 
 
 def classify(hh_db, hv_db):
@@ -77,4 +77,4 @@ def class_shares(cls, r=3):
     return np.stack([_box_sum((cls == i).astype(np.float32), r) / n for i in range(len(CLASS_NAMES))]), _box_sum(valid, r) > 0
 
 
-THEME_RGB = {"water": (37, 99, 235), "built": (190, 50, 90), "plants": (30, 130, 60)}
+THEME_RGB = {"water": (37, 99, 235), "built": (232, 163, 61), "plants": (46, 150, 80)}
