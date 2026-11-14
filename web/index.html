@@ -201,6 +201,7 @@ body.freecmp #swipe .tag{top:104px}
  <h3 id="cmpt"></h3>
  <div id="cmptabs" class="row"></div>
  <div class="hero"><b id="cmpn"></b><span id="cmps"></span></div>
+ <div class="row" id="cmpplayrow"></div>
  <div id="cmpchart"></div>
  <p id="cmpwhy" class="why"></p>
  <div id="cmpcol" class="row"></div>
@@ -814,7 +815,11 @@ async function openCase(id,k=0){const c=CASES[id];endDance();if(typeof closeFree
  const S=cmp.slide;$("cmp").hidden=false;$("cmpchip").textContent="Before | after · drag the white bar";$("cmpt").textContent=c.title;
  $("cmptabs").innerHTML=c.slides.map((x,i)=>`<button class="tog${i===k?" on":""}" data-k="${i}">${x.tab}</button>`).join("");
  $("cmptabs").querySelectorAll("button").forEach(b=>b.onclick=()=>openCase(id,+b.dataset.k));
- $("cmpn").textContent=S.n;cmpChart(S.chart);$("cmps").textContent=S.s;$("cmpwhy").innerHTML=`<b>Why it looks like this:</b> ${S.why}`;
+ $("cmpn").textContent=S.n;cmpChart(S.chart);
+ const PLAY={andijan:"andijan_res",fergana:"fergana",aral:"aral",langtang:"langtang"}[id];
+ $("cmpplayrow").innerHTML=PLAY?`<button class="btn" id="cmpplay">▶ Play every pass (time-lapse)</button>`:"";
+ if(PLAY)$("cmpplay").onclick=async()=>{const fr=await (await fetch(`/science/${PLAY}/frames.json`)).json();const b=fr.bbox;closeCase();
+  map.fitBounds([[b[0],b[1]],[b[2],b[3]]],{padding:{top:90,bottom:150,left:40,right:40},duration:600});setTimeout(()=>startDance((b[0]+b[2])/2,(b[1]+b[3])/2,c.title,PLAY),700)};$("cmps").textContent=S.s;$("cmpwhy").innerHTML=`<b>Why it looks like this:</b> ${S.why}`;
  $("cmpcol").innerHTML=S.colour?`<span class="eyebrow" style="align-self:center">Radar colours</span>`+[["hh","Grey (HH echo)"],["rgb","False colour"],["hv","Plants (HV)"]].map(([v,t])=>`<button class="tog${cmpKind===v?" on":""}" data-v="${v}">${t}</button>`).join("")
   +`<span style="font-size:11.5px;color:var(--ink3);flex-basis:100%">False colour: red = HH (walls, rough ground), green = HV (leaves, branches), blue = HH/HV ratio. NISAR measures HH and HV, so the ratio stands in for the VV channel of the UAVSAR recipe.</span>`:"";
  $("cmpcol").querySelectorAll("button").forEach(b=>b.onclick=()=>{cmpKind=b.dataset.v;openCase(id,k)});

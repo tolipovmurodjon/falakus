@@ -19,6 +19,7 @@ Repo: github.com/tolipovmurodjon/falakus (private, branch overnight, Zaynobiddin
 - Story screen live: top bar 1 Andijan reservoir / 2 Fergana fields / 3 Aral Sea + Explore menu; chapter 1 auto-opens on first visit; chart radar vs Sentinel-2 km2. Task board: docs/state/PLAN.md (bottom).
 
 ## Next steps
+-1. RUNNING: tools/s1_series.py andijan_res (Sentinel-1 monthly Nov 2023-Nov 2026, log docs/state/logs/s1series.log, out data/s1series/andijan_res/*.png + andijan_res.json). When done: serve /s1series/ route, add a 3-year chart (S1 monthly water km2 + NISAR 12-day + S2 points) and a multi-year time-lapse button to story ch.1 (Boss: 'timelapse for all time, 1-2 years, like Google Earth'). Case->tour freeze NOT reproduced (0 errors). Time-lapse button per chapter added (NISAR passes).
 0. DONE: ch.2 colour, Aral box outline, Flood watch view, Andijan stop rewritten (id andijan_res). NEXT: judge bug case->tour freeze (closeCase must leave no hooks), phone 390 px check, then fresh judge round 4 (Opus agent, Chrome, own tab) -> fix lowest.
 1. When flood_watch finishes: look at 3 PNGs by eye, add "Flood watch" list+map in Explore (label: new open water vs wetter/flooded-vegetation candidates; S2 check).
 2. Build the one-screen story (Andijan reservoir chart r=0.83 + photo/radar swipe; Fergana HV/RVI heartbeat; Aral 1997 vs 2026).
