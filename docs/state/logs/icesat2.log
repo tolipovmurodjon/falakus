@@ -1,0 +1,94 @@
+2025-01-09 fail 
+{'date': '2025-01-10', 'level_m': 847.99, 'spread_m': 0.14, 'segments': 335, 'water_body_id': 14508}
+2025-03-12 fail 
+An exception occurred while trying to access remote files via HTTPS
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1301, in _wrap_create_connection
+    sock = await aiohappyeyeballs.start_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohappyeyeballs\impl.py", line 122, in start_connection
+    raise first_exception
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohappyeyeballs\impl.py", line 73, in start_connection
+    sock = await _connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohappyeyeballs\impl.py", line 208, in _connect_sock
+    await loop.sock_connect(sock, address)
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\asyncio\proactor_events.py", line 729, in sock_connect
+    return await self._proactor.connect(sock, address)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\asyncio\windows_events.py", line 803, in _poll
+    value = callback(transferred, key, ov)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\asyncio\windows_events.py", line 599, in finish_connect
+    ov.getresult()
+OSError: [WinError 121] The semaphore timeout period has expired
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 447, in _info
+    await _file_info(
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 861, in _file_info
+    r = await session.get(url, allow_redirects=ar, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 858, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 812, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 657, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1242, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1620, in _create_direct_connection
+    raise last_exc
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1589, in _create_direct_connection
+    transp, proto = await self._wrap_create_connection(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1324, in _wrap_create_connection
+    raise client_error(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorError: Cannot connect to host data.nsidc.earthdatacloud.nasa.gov:443 ssl:default [The semaphore timeout period has expired]
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 1002, in _open_urls_https
+    return _open_files(
+           ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 160, in _open_files
+    return pqdm(
+           ^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\threads.py", line 22, in pqdm
+    return _parallel_process(
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 79, in _parallel_process
+    raise e
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 76, in _parallel_process
+    results.append(future.result())
+                   ^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 147, in multi_thread_open
+    f_size = fs.info(url)["size"]
+             ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 217, in wrapper
+    return sync(self.loop, func, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 106, in sync
+    raise return_result
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 59, in _runner
+    result[0] = await coro
+                ^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 460, in _info
+    raise FileNotFoundError(url) from exc
+FileNotFoundError: https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/ATLAS/ATL13/007/2025/04/11/ATL13_20250411153451_03932701_007_01.h5
+2025-04-11 fail https://data.nsidc.earthdatacloud.nasa.gov/nsidc-cumulus-prod-protected/ATLAS/ATL13/007/2025/04/11/A

@@ -11,11 +11,9 @@ CAP = [
     "24 Sep 2026: the camera saw only cloud.\nNASA-ISRO's NISAR radar still saw the lake.",
     "Pass after pass, through cloud: 50.5 km² of open water on 14 Jul...",
     "...19.3 km² on 6 Oct. Checked against every clear photo: r = 0.83.",
-    "The water becomes crops: 12.8 % of this 30 x 30 km box
-lost its plant echo by late October, mostly harvest.",
+    "The water becomes crops: 12.8 % of this 30 x 30 km box\nlost its plant echo by late October, mostly harvest.",
     "Where the rivers end: 1,598 km² of sea in this box in 1997,\nabout 1 km² in 2026.",
-    "Winter forecast: about 23 -> 29 km² by February (80 % band ±3.5 to ±6).
-Falakus · open source · NISAR radar for any place on Earth.",
+    "Winter forecast: about 23 -> 29 km² by February (80 % band ±3.5 to ±6).\nFalakus · open source · NISAR radar for any place on Earth.",
 ]
 DUR, FADE = 4.6, 0.45
 FONT = "C\:/Windows/Fonts/arialbd.ttf"
