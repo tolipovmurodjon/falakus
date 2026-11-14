@@ -649,6 +649,19 @@ class Handler(SimpleHTTPRequestHandler):
             if not job:
                 return self.send_bytes(b'{"error":"unknown job"}', "application/json", cache="no-store", code=404)
             return self.send_bytes(json.dumps(job).encode(), "application/json", cache="no-store")
+        if path == "/api/ships.json":
+            idx = []
+            for f in sorted((DATA / "ships").glob("*.json")):
+                j = json.loads(f.read_text())
+                if "passes" not in j:
+                    continue
+                idx.append({"name": j["name"], "bbox": j["bbox"], "source": j.get("source"), "method": j.get("method"),
+                            "passes": [{k: p[k] for k in ("date", "time_utc", "light", "ships") if k in p} for p in j["passes"]]})
+            return self.send_bytes(json.dumps(idx).encode(), "application/json", cache="no-store")
+        mship = re.match(r"^/api/ships/([a-z_]+)\.json$", path)
+        if mship:
+            f = DATA / "ships" / f"{mship.group(1)}.json"
+            return self.send_bytes(f.read_bytes(), "application/json", cache="no-store") if f.exists() else self.send_bytes(b"{}", "application/json", code=404)
         if path == "/api/s1.json":
             return self.send_bytes(json.dumps(sentinel1_mosaic()).encode(), "application/json", cache="no-store")
         if path == "/api/science_boxes.json":

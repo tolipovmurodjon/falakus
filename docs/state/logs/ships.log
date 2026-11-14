@@ -1,0 +1,20 @@
+=== singapore
+2026-11-09T11  only 5% of the box seen, skipped
+2026-11-03T22  ships  650  night  box seen 100%
+2026-11-02T11  ships  612  day    box seen 100%
+2026-10-28T11  only 5% of the box seen, skipped
+2026-10-22T22  ships  606  night  box seen 100%
+2026-10-21T11  ships  601  day    box seen 100%
+2026-10-16T11  only 5% of the box seen, skipped
+2026-10-10T22  ships  612  night  box seen 100%
+=== hormuz
+2026-11-09T02  ships   59  night  box seen 64%
+2026-11-08T02  ships   76  night  box seen 98%
+Traceback (most recent call last):
+  File "D:\10_projects\falakus\tools\ship_count.py", line 104, in <module>
+    main()
+  File "D:\10_projects\falakus\tools\ship_count.py", line 81, in main
+    mosaic = v if mosaic is None else np.where(np.isfinite(mosaic), mosaic, v)
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: operands could not be broadcast together with shapes (1281,2048) (1281,2048) (1280,2048) 
+=== bosphorus

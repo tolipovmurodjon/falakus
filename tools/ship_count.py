@@ -89,9 +89,11 @@ def main():
         H, W = mosaic.shape
         pts = [[round(w + (c[1] + 0.5) / W * (e - w), 5), round(n - (c[0] + 0.5) / H * (n - s), 5)] for c in ships]
         px_km2 = ((e - w) * 111.32 * np.cos(np.radians((s + n) / 2)) / W) * ((n - s) * 110.57 / H)
-        out.append({"date": key[:10], "time_utc": key[11:13] + ":00", "ships": len(pts), "box_seen_pct": round(100 * seen),
+        local_h = (int(key[11:13]) + (w + e) / 2 / 15) % 24  # local solar time of the pass
+        out.append({"date": key[:10], "time_utc": key[11:13] + ":00", "local_solar_h": round(local_h, 1),
+                    "light": "night" if (local_h < 6 or local_h >= 18) else "day", "ships": len(pts), "box_seen_pct": round(100 * seen),
                     "sea_km2": round(float(sea.sum() * px_km2)), "points": pts, "frames": by_pass[key]})
-        print(f"{key}  ships {len(pts):4d}  box seen {seen:.0%}", flush=True)
+        print(f"{key}  ships {len(pts):4d}  {out[-1]['light']:5s}  box seen {seen:.0%}", flush=True)
     dst = ROOT / "data" / "ships"; dst.mkdir(parents=True, exist_ok=True)
     (dst / f"{a.name}.json").write_text(json.dumps({"name": a.name, "bbox": a.bbox, "source": "Sentinel-1 RTC VV (Copernicus/ESA) via Microsoft Planetary Computer",
                                                    "method": "VV > 0.25 with sea-dark 41 px neighbourhood (median < 0.03), blobs merged within 3 px, >= 3 px",
