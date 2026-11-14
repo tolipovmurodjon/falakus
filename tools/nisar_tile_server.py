@@ -15,6 +15,7 @@ import json
 import math
 import re
 import threading
+from urllib.parse import parse_qs, urlparse
 import time
 import urllib.request
 import gzip
@@ -26,6 +27,9 @@ from pathlib import Path
 
 import numpy as np
 from PIL import Image
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import sar_colors  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA, WEB = ROOT / "data", ROOT / "web"
@@ -310,13 +314,7 @@ def band_view(rgba, band):
     lo, hi = 10.0, 235.0  # one fixed scale for every pass, so brightness can be compared across dates
     v = np.clip((ch - lo) / max(hi - lo, 1), 0, 1)
     out = np.zeros_like(rgba)
-    if band == "hh":
-        g = (v * 255).astype(np.uint8)
-        out[..., 0], out[..., 1], out[..., 2] = g, g, g
-    else:  # HV as a green ramp: dark soil -> bright vegetation
-        out[..., 0] = (v * 120).astype(np.uint8)
-        out[..., 1] = (40 + v * 215).astype(np.uint8)
-        out[..., 2] = (v * 60).astype(np.uint8)
+    out[..., :3] = sar_colors.apply(v, sar_colors.GRAY_LUT if band == "hh" else sar_colors.HV_LUT)
     out[..., 3] = rgba[..., 3]
     return out
 
@@ -424,6 +422,11 @@ def diff_image(c1, g1, c2, g2):
     return buf.getvalue()
 
 
+JOBS = {}
+JOB_LANE = threading.Semaphore(2)  # at most 2 NASA reads at once; more just queue
+SCI_TILES = DATA / "scitiles"  # cut by tools/science_pyramid.py from calibrated GCOV boxes
+
+
 # ---- small JSON APIs ------------------------------------------------------
 def frames_geojson():
     feats = []
@@ -443,13 +446,38 @@ EVENTS = {"t": 0, "body": b"{}"}
 EONET_CACHE = DATA / "eonet_v2.json"
 
 
+QUAKE_CACHE = DATA / "usgs_quakes.json"
+
+
+def usgs_quakes():
+    """USGS earthquakes M5+ since NISAR's first science passes (17 Jun 2026); cached on disk."""
+    if not QUAKE_CACHE.exists():
+        url = ("https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2026-06-17"
+               "&minmagnitude=5&orderby=time&limit=2000")
+        with urllib.request.urlopen(url, timeout=90) as r:
+            feats = json.load(r)["features"]
+        out = [{"id": f["id"], "title": f["properties"]["title"], "category": "Earthquakes",
+                "date": time.strftime("%Y-%m-%d", time.gmtime(f["properties"]["time"] / 1000)),
+                "lon": f["geometry"]["coordinates"][0], "lat": f["geometry"]["coordinates"][1],
+                "depth_km": f["geometry"]["coordinates"][2], "track": [], "closed": "",
+                "mag": f["properties"]["mag"], "unit": "M", "tsunami": f["properties"].get("tsunami", 0),
+                "sources": [f["properties"]["url"]]} for f in feats]
+        QUAKE_CACHE.write_text(json.dumps(out))
+    return json.loads(QUAKE_CACHE.read_text())
+
+
 def eonet_events():
     if EVENTS["t"]:
         return EVENTS["body"]
-    if EONET_CACHE.exists():
-        EVENTS.update(t=EONET_CACHE.stat().st_mtime, body=EONET_CACHE.read_bytes())
-        return EVENTS["body"]
-    return refresh_eonet()
+    raw = EONET_CACHE.read_bytes() if EONET_CACHE.exists() else refresh_eonet()
+    items = json.loads(raw)
+    try:
+        items += usgs_quakes()
+    except Exception as ex:
+        print("usgs quakes unavailable:", ex, flush=True)
+    items.sort(key=lambda d: d["date"], reverse=True)
+    EVENTS.update(t=time.time(), body=json.dumps(items).encode())
+    return EVENTS["body"]
 
 
 def refresh_eonet():
@@ -476,7 +504,7 @@ def refresh_eonet():
     out.sort(key=lambda d: d["date"], reverse=True)
     body = json.dumps(out).encode()
     EONET_CACHE.write_bytes(body)
-    EVENTS.update(t=time.time(), body=body)
+    EVENTS.update(t=0)  # the next eonet_events() call merges the fresh file with USGS quakes
     return body
 
 
@@ -506,6 +534,11 @@ class Handler(SimpleHTTPRequestHandler):
 
     def do_GET(self):
         path = self.path.split("?")[0]
+        ms = re.match(r"^/scitiles/(raw|class)/(\d+)/(\d+)/(\d+)\.webp$", path)
+        if ms:
+            kind, (z, x, y) = ms.group(1), map(int, ms.groups()[1:])
+            f = SCI_TILES / kind / str(z) / str(x) / f"{y}.webp"
+            return self.send_bytes(f.read_bytes(), "image/webp", cache="no-cache") if f.exists() else self.send_bytes(b"", "image/webp", code=204)
         m = TILE_RE.match(path)
         if m:
             z, x, y = map(int, m.groups())
@@ -516,7 +549,6 @@ class Handler(SimpleHTTPRequestHandler):
                 return self.send_bytes(b"", "image/webp", code=204)
             return self.send_bytes(body, "image/webp")
         if path == "/api/series.json":
-            from urllib.parse import parse_qs, urlparse
             q = parse_qs(urlparse(self.path).query)
             try:
                 body = json.dumps(place_series(float(q["lon"][0]), float(q["lat"][0]))).encode()
@@ -536,7 +568,6 @@ class Handler(SimpleHTTPRequestHandler):
                 return self.send_bytes(b"{}", "application/json", cache="no-store", code=404)
             return self.send_bytes(f.read_bytes(), "application/json", cache="no-store")
         if path == "/api/stats.json":
-            from urllib.parse import parse_qs, urlparse
             q = parse_qs(urlparse(self.path).query)
             try:
                 body = json.dumps(place_stats(float(q["lon"][0]), float(q["lat"][0]), float(q.get("km", ["15"])[0]))).encode()
@@ -546,7 +577,6 @@ class Handler(SimpleHTTPRequestHandler):
         m2 = re.match(r"^/api/frame/(NISAR_L2_GCOV_(?:PROVISIONAL_|BETA_)?V1)/([A-Za-z0-9_]+)\.webp$", path)
         if m2 and ID_RE.match(m2.group(2)):
             try:
-                from urllib.parse import parse_qs, urlparse
                 band = parse_qs(urlparse(self.path).query).get("band", ["rgb"])[0]
                 body = frame_image(m2.group(2), m2.group(1), band if band in ("hh", "hv") else "rgb")
             except Exception:
@@ -570,6 +600,35 @@ class Handler(SimpleHTTPRequestHandler):
                 return self.send_bytes(eonet_events(), "application/json", cache="max-age=600")
             except Exception as e:
                 return self.send_bytes(json.dumps({"error": str(e)}).encode(), "application/json", code=502)
+        if path == "/api/analyze":
+            q = parse_qs(urlparse(self.path).query)
+            try:
+                w, s_, e, n = (float(q[k][0]) for k in ("w", "s", "e", "n"))
+            except (KeyError, ValueError):
+                return self.send_bytes(b'{"error":"need w,s,e,n"}', "application/json", cache="no-store", code=400)
+            jid = f"{int(time.time() * 1000) % 10**9:09d}"
+            job = {"id": jid, "state": "queued", "progress": 0, "bbox": [w, s_, e, n]}
+            JOBS[jid] = job
+
+            def work():
+                with JOB_LANE:
+                    try:
+                        import analyze_area
+                        analyze_area.run(job, w, s_, e, n)
+                    except Exception as ex:
+                        job.update(state="done", progress=1, error=f"analysis failed: {ex}"[:300])
+            threading.Thread(target=work, daemon=True).start()
+            return self.send_bytes(json.dumps({"id": jid}).encode(), "application/json", cache="no-store")
+        mj = re.match(r"^/api/job/(\d+)\.json$", path)
+        if mj:
+            job = JOBS.get(mj.group(1))
+            if not job:
+                return self.send_bytes(b'{"error":"unknown job"}', "application/json", cache="no-store", code=404)
+            return self.send_bytes(json.dumps(job).encode(), "application/json", cache="no-store")
+        if path == "/api/science_boxes.json":
+            f = SCI_TILES / "boxes.json"
+            boxes = list(json.loads(f.read_text()).values()) if f.exists() else []
+            return self.send_bytes(json.dumps([{**b, "bbox": [float(v) for v in b["bbox"]]} for b in boxes]).encode(), "application/json", cache="no-store")
         if path == "/api/status.json":
             body = json.dumps({"window": INDEX["window"], "frames": len(FRAMES),
                                "tb": round(sum(f["mb"] for f in FRAMES) / 1e6, 1),

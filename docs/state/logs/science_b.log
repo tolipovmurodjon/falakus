@@ -1,0 +1,2274 @@
+=== langtang 17:25
+2025-11-28  skip: 
+An exception occurred while trying to access remote files via HTTPS
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 135, in resolve
+    resp = await self._resolver.getaddrinfo(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+aiodns.error.DNSError: (11, 'Could not contact DNS servers')
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1571, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1181, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1212, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 154, in resolve
+    raise OSError(None, msg) from exc
+OSError: [Errno None] Could not contact DNS servers
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 447, in _info
+    await _file_info(
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 861, in _file_info
+    r = await session.get(url, allow_redirects=ar, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 858, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 812, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 657, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1242, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1577, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host nisar.asf.earthdatacloud.nasa.gov:443 ssl:default [Could not contact DNS servers]
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 1002, in _open_urls_https
+    return _open_files(
+           ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 160, in _open_files
+    return pqdm(
+           ^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\threads.py", line 22, in pqdm
+    return _parallel_process(
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 79, in _parallel_process
+    raise e
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 76, in _parallel_process
+    results.append(future.result())
+                   ^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 147, in multi_thread_open
+    f_size = fs.info(url)["size"]
+             ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 217, in wrapper
+    return sync(self.loop, func, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 106, in sync
+    raise return_result
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 59, in _runner
+    result[0] = await coro
+                ^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 460, in _info
+    raise FileNotFoundError(url) from exc
+FileNotFoundError: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_007_098_A_016_4005_DHDH_A_20251210T233920_20251210T233955_X05026_N_F_J_001/NISAR_L2_PR_GCOV_007_098_A_016_4005_DHDH_A_20251210T233920_20251210T233955_X05026_N_F_J_001.h5
+2025-12-10  skip: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_007_098_A_016_4005_DHDH_A_20251210T233920_20251210T233955_X05026_N_F_J_001/NISAR_L2_PR_GCOV_007_098_A_016_4005_DHDH_A_20251210T233920_20251210T233955_X05026_N_F_J_001.h5
+An exception occurred while trying to access remote files via HTTPS
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 135, in resolve
+    resp = await self._resolver.getaddrinfo(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+aiodns.error.DNSError: (11, 'Could not contact DNS servers')
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1571, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1181, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1212, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 154, in resolve
+    raise OSError(None, msg) from exc
+OSError: [Errno None] Could not contact DNS servers
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 447, in _info
+    await _file_info(
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 861, in _file_info
+    r = await session.get(url, allow_redirects=ar, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 858, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 812, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 657, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1242, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1577, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host nisar.asf.earthdatacloud.nasa.gov:443 ssl:default [Could not contact DNS servers]
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 1002, in _open_urls_https
+    return _open_files(
+           ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 160, in _open_files
+    return pqdm(
+           ^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\threads.py", line 22, in pqdm
+    return _parallel_process(
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 79, in _parallel_process
+    raise e
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 76, in _parallel_process
+    results.append(future.result())
+                   ^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 147, in multi_thread_open
+    f_size = fs.info(url)["size"]
+             ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 217, in wrapper
+    return sync(self.loop, func, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 106, in sync
+    raise return_result
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 59, in _runner
+    result[0] = await coro
+                ^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 460, in _info
+    raise FileNotFoundError(url) from exc
+FileNotFoundError: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_008_098_A_016_4005_DHDH_A_20251222T233921_20251222T233955_X05026_N_F_J_001/NISAR_L2_PR_GCOV_008_098_A_016_4005_DHDH_A_20251222T233921_20251222T233955_X05026_N_F_J_001.h5
+2025-12-22  skip: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_008_098_A_016_4005_DHDH_A_20251222T233921_20251222T233955_X05026_N_F_J_001/NISAR_L2_PR_GCOV_008_098_A_016_4005_DHDH_A_20251222T233921_20251222T233955_X05026_N_F_J_001.h5
+An exception occurred while trying to access remote files via HTTPS
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 135, in resolve
+    resp = await self._resolver.getaddrinfo(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+aiodns.error.DNSError: (11, 'Could not contact DNS servers')
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1571, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1181, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1212, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 154, in resolve
+    raise OSError(None, msg) from exc
+OSError: [Errno None] Could not contact DNS servers
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 447, in _info
+    await _file_info(
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 861, in _file_info
+    r = await session.get(url, allow_redirects=ar, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 858, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 812, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 657, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1242, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1577, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host nisar.asf.earthdatacloud.nasa.gov:443 ssl:default [Could not contact DNS servers]
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 1002, in _open_urls_https
+    return _open_files(
+           ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 160, in _open_files
+    return pqdm(
+           ^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\threads.py", line 22, in pqdm
+    return _parallel_process(
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 79, in _parallel_process
+    raise e
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 76, in _parallel_process
+    results.append(future.result())
+                   ^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 147, in multi_thread_open
+    f_size = fs.info(url)["size"]
+             ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 217, in wrapper
+    return sync(self.loop, func, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 106, in sync
+    raise return_result
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 59, in _runner
+    result[0] = await coro
+                ^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 460, in _info
+    raise FileNotFoundError(url) from exc
+FileNotFoundError: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_009_098_A_016_4005_DHDH_A_20260103T233921_20260103T233956_X05026_N_F_J_001/NISAR_L2_PR_GCOV_009_098_A_016_4005_DHDH_A_20260103T233921_20260103T233956_X05026_N_F_J_001.h5
+2026-01-03  skip: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_009_098_A_016_4005_DHDH_A_20260103T233921_20260103T233956_X05026_N_F_J_001/NISAR_L2_PR_GCOV_009_098_A_016_4005_DHDH_A_20260103T233921_20260103T233956_X05026_N_F_J_001.h5
+An exception occurred while trying to access remote files via HTTPS
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 135, in resolve
+    resp = await self._resolver.getaddrinfo(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+aiodns.error.DNSError: (11, 'Could not contact DNS servers')
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1571, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1181, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1212, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 154, in resolve
+    raise OSError(None, msg) from exc
+OSError: [Errno None] Could not contact DNS servers
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 447, in _info
+    await _file_info(
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 861, in _file_info
+    r = await session.get(url, allow_redirects=ar, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 858, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 812, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 657, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1242, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1577, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host nisar.asf.earthdatacloud.nasa.gov:443 ssl:default [Could not contact DNS servers]
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 1002, in _open_urls_https
+    return _open_files(
+           ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 160, in _open_files
+    return pqdm(
+           ^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\threads.py", line 22, in pqdm
+    return _parallel_process(
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 79, in _parallel_process
+    raise e
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 76, in _parallel_process
+    results.append(future.result())
+                   ^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 147, in multi_thread_open
+    f_size = fs.info(url)["size"]
+             ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 217, in wrapper
+    return sync(self.loop, func, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 106, in sync
+    raise return_result
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 59, in _runner
+    result[0] = await coro
+                ^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 460, in _info
+    raise FileNotFoundError(url) from exc
+FileNotFoundError: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_010_098_A_016_4005_DHDH_A_20260115T233922_20260115T233956_X05026_N_F_J_001/NISAR_L2_PR_GCOV_010_098_A_016_4005_DHDH_A_20260115T233922_20260115T233956_X05026_N_F_J_001.h5
+2026-01-15  skip: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_010_098_A_016_4005_DHDH_A_20260115T233922_20260115T233956_X05026_N_F_J_001/NISAR_L2_PR_GCOV_010_098_A_016_4005_DHDH_A_20260115T233922_20260115T233956_X05026_N_F_J_001.h5
+An exception occurred while trying to access remote files via HTTPS
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 135, in resolve
+    resp = await self._resolver.getaddrinfo(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+aiodns.error.DNSError: (11, 'Could not contact DNS servers')
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1571, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1181, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1212, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 154, in resolve
+    raise OSError(None, msg) from exc
+OSError: [Errno None] Could not contact DNS servers
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 447, in _info
+    await _file_info(
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 861, in _file_info
+    r = await session.get(url, allow_redirects=ar, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 858, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 812, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 657, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1242, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1577, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host nisar.asf.earthdatacloud.nasa.gov:443 ssl:default [Could not contact DNS servers]
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 1002, in _open_urls_https
+    return _open_files(
+           ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 160, in _open_files
+    return pqdm(
+           ^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\threads.py", line 22, in pqdm
+    return _parallel_process(
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 79, in _parallel_process
+    raise e
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 76, in _parallel_process
+    results.append(future.result())
+                   ^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 147, in multi_thread_open
+    f_size = fs.info(url)["size"]
+             ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 217, in wrapper
+    return sync(self.loop, func, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 106, in sync
+    raise return_result
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 59, in _runner
+    result[0] = await coro
+                ^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 460, in _info
+    raise FileNotFoundError(url) from exc
+FileNotFoundError: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_011_098_A_016_4005_DHDH_A_20260127T233922_20260127T233957_X05026_N_F_J_001/NISAR_L2_PR_GCOV_011_098_A_016_4005_DHDH_A_20260127T233922_20260127T233957_X05026_N_F_J_001.h5
+2026-01-27  skip: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_011_098_A_016_4005_DHDH_A_20260127T233922_20260127T233957_X05026_N_F_J_001/NISAR_L2_PR_GCOV_011_098_A_016_4005_DHDH_A_20260127T233922_20260127T233957_X05026_N_F_J_001.h5
+An exception occurred while trying to access remote files via HTTPS
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 135, in resolve
+    resp = await self._resolver.getaddrinfo(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+aiodns.error.DNSError: (11, 'Could not contact DNS servers')
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1571, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1181, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1212, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 154, in resolve
+    raise OSError(None, msg) from exc
+OSError: [Errno None] Could not contact DNS servers
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 447, in _info
+    await _file_info(
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 861, in _file_info
+    r = await session.get(url, allow_redirects=ar, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 858, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 812, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 657, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1242, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1577, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host nisar.asf.earthdatacloud.nasa.gov:443 ssl:default [Could not contact DNS servers]
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 1002, in _open_urls_https
+    return _open_files(
+           ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 160, in _open_files
+    return pqdm(
+           ^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\threads.py", line 22, in pqdm
+    return _parallel_process(
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 79, in _parallel_process
+    raise e
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 76, in _parallel_process
+    results.append(future.result())
+                   ^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 147, in multi_thread_open
+    f_size = fs.info(url)["size"]
+             ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 217, in wrapper
+    return sync(self.loop, func, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 106, in sync
+    raise return_result
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 59, in _runner
+    result[0] = await coro
+                ^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 460, in _info
+    raise FileNotFoundError(url) from exc
+FileNotFoundError: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_012_098_A_016_4005_DHDH_A_20260208T233923_20260208T233958_X05026_N_F_J_001/NISAR_L2_PR_GCOV_012_098_A_016_4005_DHDH_A_20260208T233923_20260208T233958_X05026_N_F_J_001.h5
+2026-02-08  skip: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_012_098_A_016_4005_DHDH_A_20260208T233923_20260208T233958_X05026_N_F_J_001/NISAR_L2_PR_GCOV_012_098_A_016_4005_DHDH_A_20260208T233923_20260208T233958_X05026_N_F_J_001.h5
+An exception occurred while trying to access remote files via HTTPS
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 135, in resolve
+    resp = await self._resolver.getaddrinfo(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+aiodns.error.DNSError: (11, 'Could not contact DNS servers')
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1571, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1181, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1212, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 154, in resolve
+    raise OSError(None, msg) from exc
+OSError: [Errno None] Could not contact DNS servers
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 447, in _info
+    await _file_info(
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 861, in _file_info
+    r = await session.get(url, allow_redirects=ar, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 858, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 812, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 657, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1242, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1577, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host nisar.asf.earthdatacloud.nasa.gov:443 ssl:default [Could not contact DNS servers]
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 1002, in _open_urls_https
+    return _open_files(
+           ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 160, in _open_files
+    return pqdm(
+           ^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\threads.py", line 22, in pqdm
+    return _parallel_process(
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 79, in _parallel_process
+    raise e
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 76, in _parallel_process
+    results.append(future.result())
+                   ^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 147, in multi_thread_open
+    f_size = fs.info(url)["size"]
+             ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 217, in wrapper
+    return sync(self.loop, func, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 106, in sync
+    raise return_result
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 59, in _runner
+    result[0] = await coro
+                ^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 460, in _info
+    raise FileNotFoundError(url) from exc
+FileNotFoundError: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_013_098_A_016_4005_DHDH_A_20260220T233923_20260220T233958_X05026_N_F_J_001/NISAR_L2_PR_GCOV_013_098_A_016_4005_DHDH_A_20260220T233923_20260220T233958_X05026_N_F_J_001.h5
+2026-02-20  skip: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_013_098_A_016_4005_DHDH_A_20260220T233923_20260220T233958_X05026_N_F_J_001/NISAR_L2_PR_GCOV_013_098_A_016_4005_DHDH_A_20260220T233923_20260220T233958_X05026_N_F_J_001.h5
+An exception occurred while trying to access remote files via HTTPS
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 135, in resolve
+    resp = await self._resolver.getaddrinfo(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+aiodns.error.DNSError: (11, 'Could not contact DNS servers')
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1571, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1181, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1212, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 154, in resolve
+    raise OSError(None, msg) from exc
+OSError: [Errno None] Could not contact DNS servers
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 447, in _info
+    await _file_info(
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 861, in _file_info
+    r = await session.get(url, allow_redirects=ar, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 858, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 812, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 657, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1242, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1577, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host nisar.asf.earthdatacloud.nasa.gov:443 ssl:default [Could not contact DNS servers]
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 1002, in _open_urls_https
+    return _open_files(
+           ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 160, in _open_files
+    return pqdm(
+           ^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\threads.py", line 22, in pqdm
+    return _parallel_process(
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 79, in _parallel_process
+    raise e
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 76, in _parallel_process
+    results.append(future.result())
+                   ^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 147, in multi_thread_open
+    f_size = fs.info(url)["size"]
+             ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 217, in wrapper
+    return sync(self.loop, func, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 106, in sync
+    raise return_result
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 59, in _runner
+    result[0] = await coro
+                ^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 460, in _info
+    raise FileNotFoundError(url) from exc
+FileNotFoundError: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_014_098_A_016_4005_DHDH_A_20260304T233924_20260304T233958_X05026_F_F_J_001/NISAR_L2_PR_GCOV_014_098_A_016_4005_DHDH_A_20260304T233924_20260304T233958_X05026_F_F_J_001.h5
+2026-03-04  skip: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_014_098_A_016_4005_DHDH_A_20260304T233924_20260304T233958_X05026_F_F_J_001/NISAR_L2_PR_GCOV_014_098_A_016_4005_DHDH_A_20260304T233924_20260304T233958_X05026_F_F_J_001.h5
+An exception occurred while trying to access remote files via HTTPS
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 135, in resolve
+    resp = await self._resolver.getaddrinfo(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+aiodns.error.DNSError: (11, 'Could not contact DNS servers')
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1571, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1181, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1212, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 154, in resolve
+    raise OSError(None, msg) from exc
+OSError: [Errno None] Could not contact DNS servers
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 447, in _info
+    await _file_info(
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 861, in _file_info
+    r = await session.get(url, allow_redirects=ar, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 858, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 812, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 657, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1242, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1577, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host nisar.asf.earthdatacloud.nasa.gov:443 ssl:default [Could not contact DNS servers]
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 1002, in _open_urls_https
+    return _open_files(
+           ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 160, in _open_files
+    return pqdm(
+           ^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\threads.py", line 22, in pqdm
+    return _parallel_process(
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 79, in _parallel_process
+    raise e
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 76, in _parallel_process
+    results.append(future.result())
+                   ^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 147, in multi_thread_open
+    f_size = fs.info(url)["size"]
+             ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 217, in wrapper
+    return sync(self.loop, func, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 106, in sync
+    raise return_result
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 59, in _runner
+    result[0] = await coro
+                ^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 460, in _info
+    raise FileNotFoundError(url) from exc
+FileNotFoundError: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_015_098_A_016_4005_DHDH_A_20260316T233924_20260316T233959_X05026_N_F_J_001/NISAR_L2_PR_GCOV_015_098_A_016_4005_DHDH_A_20260316T233924_20260316T233959_X05026_N_F_J_001.h5
+2026-03-16  skip: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_015_098_A_016_4005_DHDH_A_20260316T233924_20260316T233959_X05026_N_F_J_001/NISAR_L2_PR_GCOV_015_098_A_016_4005_DHDH_A_20260316T233924_20260316T233959_X05026_N_F_J_001.h5
+An exception occurred while trying to access remote files via HTTPS
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 135, in resolve
+    resp = await self._resolver.getaddrinfo(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+aiodns.error.DNSError: (11, 'Could not contact DNS servers')
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1571, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1181, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1212, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 154, in resolve
+    raise OSError(None, msg) from exc
+OSError: [Errno None] Could not contact DNS servers
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 447, in _info
+    await _file_info(
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 861, in _file_info
+    r = await session.get(url, allow_redirects=ar, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 858, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 812, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 657, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1242, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1577, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host nisar.asf.earthdatacloud.nasa.gov:443 ssl:default [Could not contact DNS servers]
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 1002, in _open_urls_https
+    return _open_files(
+           ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 160, in _open_files
+    return pqdm(
+           ^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\threads.py", line 22, in pqdm
+    return _parallel_process(
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 79, in _parallel_process
+    raise e
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 76, in _parallel_process
+    results.append(future.result())
+                   ^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 147, in multi_thread_open
+    f_size = fs.info(url)["size"]
+             ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 217, in wrapper
+    return sync(self.loop, func, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 106, in sync
+    raise return_result
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 59, in _runner
+    result[0] = await coro
+                ^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 460, in _info
+    raise FileNotFoundError(url) from exc
+FileNotFoundError: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_016_098_A_016_4005_DHDH_A_20260328T233924_20260328T233959_X05026_N_F_J_001/NISAR_L2_PR_GCOV_016_098_A_016_4005_DHDH_A_20260328T233924_20260328T233959_X05026_N_F_J_001.h5
+2026-03-28  skip: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_016_098_A_016_4005_DHDH_A_20260328T233924_20260328T233959_X05026_N_F_J_001/NISAR_L2_PR_GCOV_016_098_A_016_4005_DHDH_A_20260328T233924_20260328T233959_X05026_N_F_J_001.h5
+An exception occurred while trying to access remote files via HTTPS
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 135, in resolve
+    resp = await self._resolver.getaddrinfo(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+aiodns.error.DNSError: (11, 'Could not contact DNS servers')
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1571, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1181, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1212, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 154, in resolve
+    raise OSError(None, msg) from exc
+OSError: [Errno None] Could not contact DNS servers
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 447, in _info
+    await _file_info(
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 861, in _file_info
+    r = await session.get(url, allow_redirects=ar, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 858, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 812, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 657, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1242, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1577, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host nisar.asf.earthdatacloud.nasa.gov:443 ssl:default [Could not contact DNS servers]
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 1002, in _open_urls_https
+    return _open_files(
+           ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 160, in _open_files
+    return pqdm(
+           ^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\threads.py", line 22, in pqdm
+    return _parallel_process(
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 79, in _parallel_process
+    raise e
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 76, in _parallel_process
+    results.append(future.result())
+                   ^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 147, in multi_thread_open
+    f_size = fs.info(url)["size"]
+             ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 217, in wrapper
+    return sync(self.loop, func, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 106, in sync
+    raise return_result
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 59, in _runner
+    result[0] = await coro
+                ^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 460, in _info
+    raise FileNotFoundError(url) from exc
+FileNotFoundError: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_017_098_A_016_4005_DHDH_A_20260409T233924_20260409T233959_X05026_N_F_J_001/NISAR_L2_PR_GCOV_017_098_A_016_4005_DHDH_A_20260409T233924_20260409T233959_X05026_N_F_J_001.h5
+2026-04-09  skip: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_017_098_A_016_4005_DHDH_A_20260409T233924_20260409T233959_X05026_N_F_J_001/NISAR_L2_PR_GCOV_017_098_A_016_4005_DHDH_A_20260409T233924_20260409T233959_X05026_N_F_J_001.h5
+An exception occurred while trying to access remote files via HTTPS
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 135, in resolve
+    resp = await self._resolver.getaddrinfo(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+aiodns.error.DNSError: (11, 'Could not contact DNS servers')
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1571, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1181, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1212, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 154, in resolve
+    raise OSError(None, msg) from exc
+OSError: [Errno None] Could not contact DNS servers
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 447, in _info
+    await _file_info(
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 861, in _file_info
+    r = await session.get(url, allow_redirects=ar, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 858, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 812, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 657, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1242, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1577, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host nisar.asf.earthdatacloud.nasa.gov:443 ssl:default [Could not contact DNS servers]
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 1002, in _open_urls_https
+    return _open_files(
+           ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 160, in _open_files
+    return pqdm(
+           ^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\threads.py", line 22, in pqdm
+    return _parallel_process(
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 79, in _parallel_process
+    raise e
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 76, in _parallel_process
+    results.append(future.result())
+                   ^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 147, in multi_thread_open
+    f_size = fs.info(url)["size"]
+             ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 217, in wrapper
+    return sync(self.loop, func, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 106, in sync
+    raise return_result
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 59, in _runner
+    result[0] = await coro
+                ^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 460, in _info
+    raise FileNotFoundError(url) from exc
+FileNotFoundError: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_018_098_A_016_4005_DHDH_A_20260421T233924_20260421T233959_X05026_N_F_J_001/NISAR_L2_PR_GCOV_018_098_A_016_4005_DHDH_A_20260421T233924_20260421T233959_X05026_N_F_J_001.h5
+2026-04-21  skip: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_018_098_A_016_4005_DHDH_A_20260421T233924_20260421T233959_X05026_N_F_J_001/NISAR_L2_PR_GCOV_018_098_A_016_4005_DHDH_A_20260421T233924_20260421T233959_X05026_N_F_J_001.h5
+An exception occurred while trying to access remote files via HTTPS
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 135, in resolve
+    resp = await self._resolver.getaddrinfo(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+aiodns.error.DNSError: (11, 'Could not contact DNS servers')
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1571, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1181, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1212, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 154, in resolve
+    raise OSError(None, msg) from exc
+OSError: [Errno None] Could not contact DNS servers
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 447, in _info
+    await _file_info(
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 861, in _file_info
+    r = await session.get(url, allow_redirects=ar, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 858, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 812, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 657, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1242, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1577, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host nisar.asf.earthdatacloud.nasa.gov:443 ssl:default [Could not contact DNS servers]
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 1002, in _open_urls_https
+    return _open_files(
+           ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 160, in _open_files
+    return pqdm(
+           ^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\threads.py", line 22, in pqdm
+    return _parallel_process(
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 79, in _parallel_process
+    raise e
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 76, in _parallel_process
+    results.append(future.result())
+                   ^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 147, in multi_thread_open
+    f_size = fs.info(url)["size"]
+             ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 217, in wrapper
+    return sync(self.loop, func, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 106, in sync
+    raise return_result
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 59, in _runner
+    result[0] = await coro
+                ^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 460, in _info
+    raise FileNotFoundError(url) from exc
+FileNotFoundError: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_019_098_A_016_4005_DHDH_A_20260503T233924_20260503T233959_X05026_N_F_J_001/NISAR_L2_PR_GCOV_019_098_A_016_4005_DHDH_A_20260503T233924_20260503T233959_X05026_N_F_J_001.h5
+2026-05-03  skip: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_019_098_A_016_4005_DHDH_A_20260503T233924_20260503T233959_X05026_N_F_J_001/NISAR_L2_PR_GCOV_019_098_A_016_4005_DHDH_A_20260503T233924_20260503T233959_X05026_N_F_J_001.h5
+An exception occurred while trying to access remote files via HTTPS
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 135, in resolve
+    resp = await self._resolver.getaddrinfo(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+aiodns.error.DNSError: (11, 'Could not contact DNS servers')
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1571, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1181, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1212, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 154, in resolve
+    raise OSError(None, msg) from exc
+OSError: [Errno None] Could not contact DNS servers
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 447, in _info
+    await _file_info(
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 861, in _file_info
+    r = await session.get(url, allow_redirects=ar, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 858, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 812, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 657, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1242, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1577, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host nisar.asf.earthdatacloud.nasa.gov:443 ssl:default [Could not contact DNS servers]
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 1002, in _open_urls_https
+    return _open_files(
+           ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 160, in _open_files
+    return pqdm(
+           ^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\threads.py", line 22, in pqdm
+    return _parallel_process(
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 79, in _parallel_process
+    raise e
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 76, in _parallel_process
+    results.append(future.result())
+                   ^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 147, in multi_thread_open
+    f_size = fs.info(url)["size"]
+             ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 217, in wrapper
+    return sync(self.loop, func, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 106, in sync
+    raise return_result
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 59, in _runner
+    result[0] = await coro
+                ^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 460, in _info
+    raise FileNotFoundError(url) from exc
+FileNotFoundError: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_020_098_A_016_4005_DHDH_A_20260515T233923_20260515T233958_X05026_N_F_J_001/NISAR_L2_PR_GCOV_020_098_A_016_4005_DHDH_A_20260515T233923_20260515T233958_X05026_N_F_J_001.h5
+2026-05-15  skip: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_020_098_A_016_4005_DHDH_A_20260515T233923_20260515T233958_X05026_N_F_J_001/NISAR_L2_PR_GCOV_020_098_A_016_4005_DHDH_A_20260515T233923_20260515T233958_X05026_N_F_J_001.h5
+An exception occurred while trying to access remote files via HTTPS
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 135, in resolve
+    resp = await self._resolver.getaddrinfo(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+aiodns.error.DNSError: (11, 'Could not contact DNS servers')
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1571, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1181, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1212, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 154, in resolve
+    raise OSError(None, msg) from exc
+OSError: [Errno None] Could not contact DNS servers
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 447, in _info
+    await _file_info(
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 861, in _file_info
+    r = await session.get(url, allow_redirects=ar, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 858, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 812, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 657, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1242, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1577, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host nisar.asf.earthdatacloud.nasa.gov:443 ssl:default [Could not contact DNS servers]
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 1002, in _open_urls_https
+    return _open_files(
+           ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 160, in _open_files
+    return pqdm(
+           ^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\threads.py", line 22, in pqdm
+    return _parallel_process(
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 79, in _parallel_process
+    raise e
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 76, in _parallel_process
+    results.append(future.result())
+                   ^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 147, in multi_thread_open
+    f_size = fs.info(url)["size"]
+             ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 217, in wrapper
+    return sync(self.loop, func, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 106, in sync
+    raise return_result
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 59, in _runner
+    result[0] = await coro
+                ^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 460, in _info
+    raise FileNotFoundError(url) from exc
+FileNotFoundError: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_021_098_A_016_4005_DHDH_A_20260527T233923_20260527T233957_X05026_N_F_J_001/NISAR_L2_PR_GCOV_021_098_A_016_4005_DHDH_A_20260527T233923_20260527T233957_X05026_N_F_J_001.h5
+2026-05-27  skip: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_021_098_A_016_4005_DHDH_A_20260527T233923_20260527T233957_X05026_N_F_J_001/NISAR_L2_PR_GCOV_021_098_A_016_4005_DHDH_A_20260527T233923_20260527T233957_X05026_N_F_J_001.h5
+An exception occurred while trying to access remote files via HTTPS
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 135, in resolve
+    resp = await self._resolver.getaddrinfo(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+aiodns.error.DNSError: (11, 'Could not contact DNS servers')
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1571, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1181, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1212, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 154, in resolve
+    raise OSError(None, msg) from exc
+OSError: [Errno None] Could not contact DNS servers
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 447, in _info
+    await _file_info(
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 861, in _file_info
+    r = await session.get(url, allow_redirects=ar, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 858, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 812, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 657, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1242, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1577, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host nisar.asf.earthdatacloud.nasa.gov:443 ssl:default [Could not contact DNS servers]
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 1002, in _open_urls_https
+    return _open_files(
+           ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 160, in _open_files
+    return pqdm(
+           ^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\threads.py", line 22, in pqdm
+    return _parallel_process(
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 79, in _parallel_process
+    raise e
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 76, in _parallel_process
+    results.append(future.result())
+                   ^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 147, in multi_thread_open
+    f_size = fs.info(url)["size"]
+             ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 217, in wrapper
+    return sync(self.loop, func, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 106, in sync
+    raise return_result
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 59, in _runner
+    result[0] = await coro
+                ^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 460, in _info
+    raise FileNotFoundError(url) from exc
+FileNotFoundError: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_022_098_A_016_4005_DHDH_A_20260608T233922_20260608T233956_X05026_N_F_J_001/NISAR_L2_PR_GCOV_022_098_A_016_4005_DHDH_A_20260608T233922_20260608T233956_X05026_N_F_J_001.h5
+2026-06-08  skip: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_022_098_A_016_4005_DHDH_A_20260608T233922_20260608T233956_X05026_N_F_J_001/NISAR_L2_PR_GCOV_022_098_A_016_4005_DHDH_A_20260608T233922_20260608T233956_X05026_N_F_J_001.h5
+An exception occurred while trying to access remote files via HTTPS
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 135, in resolve
+    resp = await self._resolver.getaddrinfo(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+aiodns.error.DNSError: (11, 'Could not contact DNS servers')
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1571, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1181, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1212, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 154, in resolve
+    raise OSError(None, msg) from exc
+OSError: [Errno None] Could not contact DNS servers
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 447, in _info
+    await _file_info(
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 861, in _file_info
+    r = await session.get(url, allow_redirects=ar, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 858, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 812, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 657, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1242, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1577, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host nisar.asf.earthdatacloud.nasa.gov:443 ssl:default [Could not contact DNS servers]
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 1002, in _open_urls_https
+    return _open_files(
+           ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 160, in _open_files
+    return pqdm(
+           ^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\threads.py", line 22, in pqdm
+    return _parallel_process(
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 79, in _parallel_process
+    raise e
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 76, in _parallel_process
+    results.append(future.result())
+                   ^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 147, in multi_thread_open
+    f_size = fs.info(url)["size"]
+             ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 217, in wrapper
+    return sync(self.loop, func, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 106, in sync
+    raise return_result
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 59, in _runner
+    result[0] = await coro
+                ^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 460, in _info
+    raise FileNotFoundError(url) from exc
+FileNotFoundError: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_023_098_A_016_4005_DHDH_A_20260620T233921_20260620T233956_P05023_N_F_J_001/NISAR_L2_PR_GCOV_023_098_A_016_4005_DHDH_A_20260620T233921_20260620T233956_P05023_N_F_J_001.h5
+2026-06-20  skip: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_023_098_A_016_4005_DHDH_A_20260620T233921_20260620T233956_P05023_N_F_J_001/NISAR_L2_PR_GCOV_023_098_A_016_4005_DHDH_A_20260620T233921_20260620T233956_P05023_N_F_J_001.h5
+An exception occurred while trying to access remote files via HTTPS
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 135, in resolve
+    resp = await self._resolver.getaddrinfo(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+aiodns.error.DNSError: (11, 'Could not contact DNS servers')
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1571, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1181, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1212, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 154, in resolve
+    raise OSError(None, msg) from exc
+OSError: [Errno None] Could not contact DNS servers
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 447, in _info
+    await _file_info(
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 861, in _file_info
+    r = await session.get(url, allow_redirects=ar, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 858, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 812, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 657, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1242, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1577, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host nisar.asf.earthdatacloud.nasa.gov:443 ssl:default [Could not contact DNS servers]
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 1002, in _open_urls_https
+    return _open_files(
+           ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 160, in _open_files
+    return pqdm(
+           ^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\threads.py", line 22, in pqdm
+    return _parallel_process(
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 79, in _parallel_process
+    raise e
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 76, in _parallel_process
+    results.append(future.result())
+                   ^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 147, in multi_thread_open
+    f_size = fs.info(url)["size"]
+             ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 217, in wrapper
+    return sync(self.loop, func, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 106, in sync
+    raise return_result
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 59, in _runner
+    result[0] = await coro
+                ^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 460, in _info
+    raise FileNotFoundError(url) from exc
+FileNotFoundError: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_024_098_A_016_4005_DHDH_A_20260702T233920_20260702T233955_P05023_N_F_J_001/NISAR_L2_PR_GCOV_024_098_A_016_4005_DHDH_A_20260702T233920_20260702T233955_P05023_N_F_J_001.h5
+2026-07-02  skip: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_024_098_A_016_4005_DHDH_A_20260702T233920_20260702T233955_P05023_N_F_J_001/NISAR_L2_PR_GCOV_024_098_A_016_4005_DHDH_A_20260702T233920_20260702T233955_P05023_N_F_J_001.h5
+An exception occurred while trying to access remote files via HTTPS
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 135, in resolve
+    resp = await self._resolver.getaddrinfo(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+aiodns.error.DNSError: (11, 'Could not contact DNS servers')
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1571, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1181, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1212, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 154, in resolve
+    raise OSError(None, msg) from exc
+OSError: [Errno None] Could not contact DNS servers
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 447, in _info
+    await _file_info(
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 861, in _file_info
+    r = await session.get(url, allow_redirects=ar, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 858, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 812, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 657, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1242, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1577, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host nisar.asf.earthdatacloud.nasa.gov:443 ssl:default [Could not contact DNS servers]
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 1002, in _open_urls_https
+    return _open_files(
+           ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 160, in _open_files
+    return pqdm(
+           ^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\threads.py", line 22, in pqdm
+    return _parallel_process(
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 79, in _parallel_process
+    raise e
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 76, in _parallel_process
+    results.append(future.result())
+                   ^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 147, in multi_thread_open
+    f_size = fs.info(url)["size"]
+             ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 217, in wrapper
+    return sync(self.loop, func, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 106, in sync
+    raise return_result
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 59, in _runner
+    result[0] = await coro
+                ^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 460, in _info
+    raise FileNotFoundError(url) from exc
+FileNotFoundError: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_025_098_A_016_4005_DHDH_A_20260714T233920_20260714T233954_P05023_F_F_J_001/NISAR_L2_PR_GCOV_025_098_A_016_4005_DHDH_A_20260714T233920_20260714T233954_P05023_F_F_J_001.h5
+2026-07-14  skip: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_025_098_A_016_4005_DHDH_A_20260714T233920_20260714T233954_P05023_F_F_J_001/NISAR_L2_PR_GCOV_025_098_A_016_4005_DHDH_A_20260714T233920_20260714T233954_P05023_F_F_J_001.h5
+An exception occurred while trying to access remote files via HTTPS
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 135, in resolve
+    resp = await self._resolver.getaddrinfo(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+aiodns.error.DNSError: (11, 'Could not contact DNS servers')
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1571, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1181, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1212, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 154, in resolve
+    raise OSError(None, msg) from exc
+OSError: [Errno None] Could not contact DNS servers
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 447, in _info
+    await _file_info(
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 861, in _file_info
+    r = await session.get(url, allow_redirects=ar, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 858, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 812, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 657, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1242, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1577, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host nisar.asf.earthdatacloud.nasa.gov:443 ssl:default [Could not contact DNS servers]
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 1002, in _open_urls_https
+    return _open_files(
+           ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 160, in _open_files
+    return pqdm(
+           ^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\threads.py", line 22, in pqdm
+    return _parallel_process(
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 79, in _parallel_process
+    raise e
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 76, in _parallel_process
+    results.append(future.result())
+                   ^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 147, in multi_thread_open
+    f_size = fs.info(url)["size"]
+             ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 217, in wrapper
+    return sync(self.loop, func, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 106, in sync
+    raise return_result
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 59, in _runner
+    result[0] = await coro
+                ^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 460, in _info
+    raise FileNotFoundError(url) from exc
+FileNotFoundError: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_026_098_A_016_4005_DHDH_A_20260726T233919_20260726T233954_P05023_N_F_J_001/NISAR_L2_PR_GCOV_026_098_A_016_4005_DHDH_A_20260726T233919_20260726T233954_P05023_N_F_J_001.h5
+2026-07-26  skip: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_026_098_A_016_4005_DHDH_A_20260726T233919_20260726T233954_P05023_N_F_J_001/NISAR_L2_PR_GCOV_026_098_A_016_4005_DHDH_A_20260726T233919_20260726T233954_P05023_N_F_J_001.h5
+An exception occurred while trying to access remote files via HTTPS
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 135, in resolve
+    resp = await self._resolver.getaddrinfo(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+aiodns.error.DNSError: (11, 'Could not contact DNS servers')
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1571, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1181, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1212, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 154, in resolve
+    raise OSError(None, msg) from exc
+OSError: [Errno None] Could not contact DNS servers
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 447, in _info
+    await _file_info(
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 861, in _file_info
+    r = await session.get(url, allow_redirects=ar, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 858, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 812, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 657, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1242, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1577, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host nisar.asf.earthdatacloud.nasa.gov:443 ssl:default [Could not contact DNS servers]
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 1002, in _open_urls_https
+    return _open_files(
+           ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 160, in _open_files
+    return pqdm(
+           ^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\threads.py", line 22, in pqdm
+    return _parallel_process(
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 79, in _parallel_process
+    raise e
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 76, in _parallel_process
+    results.append(future.result())
+                   ^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 147, in multi_thread_open
+    f_size = fs.info(url)["size"]
+             ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 217, in wrapper
+    return sync(self.loop, func, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 106, in sync
+    raise return_result
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 59, in _runner
+    result[0] = await coro
+                ^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 460, in _info
+    raise FileNotFoundError(url) from exc
+FileNotFoundError: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_028_098_A_016_4005_DHDH_A_20260819T233918_20260819T233953_P05023_N_F_J_001/NISAR_L2_PR_GCOV_028_098_A_016_4005_DHDH_A_20260819T233918_20260819T233953_P05023_N_F_J_001.h5
+2026-08-19  skip: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_028_098_A_016_4005_DHDH_A_20260819T233918_20260819T233953_P05023_N_F_J_001/NISAR_L2_PR_GCOV_028_098_A_016_4005_DHDH_A_20260819T233918_20260819T233953_P05023_N_F_J_001.h5
+An exception occurred while trying to access remote files via HTTPS
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 135, in resolve
+    resp = await self._resolver.getaddrinfo(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+aiodns.error.DNSError: (11, 'Could not contact DNS servers')
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1571, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1181, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1212, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 154, in resolve
+    raise OSError(None, msg) from exc
+OSError: [Errno None] Could not contact DNS servers
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 447, in _info
+    await _file_info(
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 861, in _file_info
+    r = await session.get(url, allow_redirects=ar, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 858, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 812, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 657, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1242, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1577, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host nisar.asf.earthdatacloud.nasa.gov:443 ssl:default [Could not contact DNS servers]
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 1002, in _open_urls_https
+    return _open_files(
+           ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 160, in _open_files
+    return pqdm(
+           ^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\threads.py", line 22, in pqdm
+    return _parallel_process(
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 79, in _parallel_process
+    raise e
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 76, in _parallel_process
+    results.append(future.result())
+                   ^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 147, in multi_thread_open
+    f_size = fs.info(url)["size"]
+             ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 217, in wrapper
+    return sync(self.loop, func, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 106, in sync
+    raise return_result
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 59, in _runner
+    result[0] = await coro
+                ^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 460, in _info
+    raise FileNotFoundError(url) from exc
+FileNotFoundError: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_029_098_A_016_4005_DHDH_A_20260831T233918_20260831T233952_P05023_N_F_J_001/NISAR_L2_PR_GCOV_029_098_A_016_4005_DHDH_A_20260831T233918_20260831T233952_P05023_N_F_J_001.h5
+2026-08-31  skip: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_029_098_A_016_4005_DHDH_A_20260831T233918_20260831T233952_P05023_N_F_J_001/NISAR_L2_PR_GCOV_029_098_A_016_4005_DHDH_A_20260831T233918_20260831T233952_P05023_N_F_J_001.h5
+An exception occurred while trying to access remote files via HTTPS
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 135, in resolve
+    resp = await self._resolver.getaddrinfo(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+aiodns.error.DNSError: (11, 'Could not contact DNS servers')
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1571, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1181, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1212, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 154, in resolve
+    raise OSError(None, msg) from exc
+OSError: [Errno None] Could not contact DNS servers
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 447, in _info
+    await _file_info(
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 861, in _file_info
+    r = await session.get(url, allow_redirects=ar, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 858, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 812, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 657, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1242, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1577, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host nisar.asf.earthdatacloud.nasa.gov:443 ssl:default [Could not contact DNS servers]
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 1002, in _open_urls_https
+    return _open_files(
+           ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 160, in _open_files
+    return pqdm(
+           ^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\threads.py", line 22, in pqdm
+    return _parallel_process(
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 79, in _parallel_process
+    raise e
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 76, in _parallel_process
+    results.append(future.result())
+                   ^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 147, in multi_thread_open
+    f_size = fs.info(url)["size"]
+             ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 217, in wrapper
+    return sync(self.loop, func, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 106, in sync
+    raise return_result
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 59, in _runner
+    result[0] = await coro
+                ^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 460, in _info
+    raise FileNotFoundError(url) from exc
+FileNotFoundError: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_030_098_A_016_4005_DHDH_A_20260912T233918_20260912T233952_P05023_N_F_J_001/NISAR_L2_PR_GCOV_030_098_A_016_4005_DHDH_A_20260912T233918_20260912T233952_P05023_N_F_J_001.h5
+2026-09-12  skip: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_030_098_A_016_4005_DHDH_A_20260912T233918_20260912T233952_P05023_N_F_J_001/NISAR_L2_PR_GCOV_030_098_A_016_4005_DHDH_A_20260912T233918_20260912T233952_P05023_N_F_J_001.h5
+An exception occurred while trying to access remote files via HTTPS
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 135, in resolve
+    resp = await self._resolver.getaddrinfo(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+aiodns.error.DNSError: (11, 'Could not contact DNS servers')
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1571, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1181, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1212, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 154, in resolve
+    raise OSError(None, msg) from exc
+OSError: [Errno None] Could not contact DNS servers
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 447, in _info
+    await _file_info(
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 861, in _file_info
+    r = await session.get(url, allow_redirects=ar, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 858, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 812, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 657, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1242, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1577, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host nisar.asf.earthdatacloud.nasa.gov:443 ssl:default [Could not contact DNS servers]
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 1002, in _open_urls_https
+    return _open_files(
+           ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 160, in _open_files
+    return pqdm(
+           ^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\threads.py", line 22, in pqdm
+    return _parallel_process(
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 79, in _parallel_process
+    raise e
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 76, in _parallel_process
+    results.append(future.result())
+                   ^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 147, in multi_thread_open
+    f_size = fs.info(url)["size"]
+             ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 217, in wrapper
+    return sync(self.loop, func, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 106, in sync
+    raise return_result
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 59, in _runner
+    result[0] = await coro
+                ^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 460, in _info
+    raise FileNotFoundError(url) from exc
+FileNotFoundError: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_031_098_A_016_4005_DHDH_A_20260924T233918_20260924T233952_P05023_N_F_J_001/NISAR_L2_PR_GCOV_031_098_A_016_4005_DHDH_A_20260924T233918_20260924T233952_P05023_N_F_J_001.h5
+2026-09-24  skip: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_031_098_A_016_4005_DHDH_A_20260924T233918_20260924T233952_P05023_N_F_J_001/NISAR_L2_PR_GCOV_031_098_A_016_4005_DHDH_A_20260924T233918_20260924T233952_P05023_N_F_J_001.h5
+An exception occurred while trying to access remote files via HTTPS
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 135, in resolve
+    resp = await self._resolver.getaddrinfo(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+aiodns.error.DNSError: (11, 'Could not contact DNS servers')
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1571, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1181, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1212, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 154, in resolve
+    raise OSError(None, msg) from exc
+OSError: [Errno None] Could not contact DNS servers
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 447, in _info
+    await _file_info(
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 861, in _file_info
+    r = await session.get(url, allow_redirects=ar, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 858, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 812, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 657, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1242, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1577, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host nisar.asf.earthdatacloud.nasa.gov:443 ssl:default [Could not contact DNS servers]
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 1002, in _open_urls_https
+    return _open_files(
+           ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 160, in _open_files
+    return pqdm(
+           ^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\threads.py", line 22, in pqdm
+    return _parallel_process(
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 79, in _parallel_process
+    raise e
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 76, in _parallel_process
+    results.append(future.result())
+                   ^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 147, in multi_thread_open
+    f_size = fs.info(url)["size"]
+             ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 217, in wrapper
+    return sync(self.loop, func, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 106, in sync
+    raise return_result
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 59, in _runner
+    result[0] = await coro
+                ^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 460, in _info
+    raise FileNotFoundError(url) from exc
+FileNotFoundError: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_032_098_A_016_4005_DHDH_A_20261006T233918_20261006T233952_P05023_N_F_J_001/NISAR_L2_PR_GCOV_032_098_A_016_4005_DHDH_A_20261006T233918_20261006T233952_P05023_N_F_J_001.h5
+2026-10-06  skip: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_032_098_A_016_4005_DHDH_A_20261006T233918_20261006T233952_P05023_N_F_J_001/NISAR_L2_PR_GCOV_032_098_A_016_4005_DHDH_A_20261006T233918_20261006T233952_P05023_N_F_J_001.h5
+An exception occurred while trying to access remote files via HTTPS
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 135, in resolve
+    resp = await self._resolver.getaddrinfo(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+aiodns.error.DNSError: (11, 'Could not contact DNS servers')
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1571, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1181, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1212, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 154, in resolve
+    raise OSError(None, msg) from exc
+OSError: [Errno None] Could not contact DNS servers
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 447, in _info
+    await _file_info(
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 861, in _file_info
+    r = await session.get(url, allow_redirects=ar, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 858, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 812, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 657, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1242, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1577, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host nisar.asf.earthdatacloud.nasa.gov:443 ssl:default [Could not contact DNS servers]
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 1002, in _open_urls_https
+    return _open_files(
+           ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 160, in _open_files
+    return pqdm(
+           ^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\threads.py", line 22, in pqdm
+    return _parallel_process(
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 79, in _parallel_process
+    raise e
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 76, in _parallel_process
+    results.append(future.result())
+                   ^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 147, in multi_thread_open
+    f_size = fs.info(url)["size"]
+             ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 217, in wrapper
+    return sync(self.loop, func, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 106, in sync
+    raise return_result
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 59, in _runner
+    result[0] = await coro
+                ^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 460, in _info
+    raise FileNotFoundError(url) from exc
+FileNotFoundError: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_033_098_A_016_4005_DHDH_A_20261018T233918_20261018T233952_P05023_N_F_J_001/NISAR_L2_PR_GCOV_033_098_A_016_4005_DHDH_A_20261018T233918_20261018T233952_P05023_N_F_J_001.h5
+2026-10-18  skip: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_PROVISIONAL_V1/NISAR_L2_PR_GCOV_033_098_A_016_4005_DHDH_A_20261018T233918_20261018T233952_P05023_N_F_J_001/NISAR_L2_PR_GCOV_033_098_A_016_4005_DHDH_A_20261018T233918_20261018T233952_P05023_N_F_J_001.h5
+An exception occurred while trying to access remote files via HTTPS
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 135, in resolve
+    resp = await self._resolver.getaddrinfo(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+aiodns.error.DNSError: (11, 'Could not contact DNS servers')
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1571, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1181, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1212, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 154, in resolve
+    raise OSError(None, msg) from exc
+OSError: [Errno None] Could not contact DNS servers
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 447, in _info
+    await _file_info(
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 861, in _file_info
+    r = await session.get(url, allow_redirects=ar, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 858, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 812, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 657, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1242, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1577, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host nisar.asf.earthdatacloud.nasa.gov:443 ssl:default [Could not contact DNS servers]
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 1002, in _open_urls_https
+    return _open_files(
+           ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 160, in _open_files
+    return pqdm(
+           ^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\threads.py", line 22, in pqdm
+    return _parallel_process(
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 79, in _parallel_process
+    raise e
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 76, in _parallel_process
+    results.append(future.result())
+                   ^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 147, in multi_thread_open
+    f_size = fs.info(url)["size"]
+             ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 217, in wrapper
+    return sync(self.loop, func, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 106, in sync
+    raise return_result
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 59, in _runner
+    result[0] = await coro
+                ^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 460, in _info
+    raise FileNotFoundError(url) from exc
+FileNotFoundError: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_034_098_A_016_4005_DHDH_A_20261030T233918_20261030T233953_P05036_N_F_J_001/NISAR_L2_PR_GCOV_034_098_A_016_4005_DHDH_A_20261030T233918_20261030T233953_P05036_N_F_J_001.h5
+2026-10-30  skip: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_034_098_A_016_4005_DHDH_A_20261030T233918_20261030T233953_P05036_N_F_J_001/NISAR_L2_PR_GCOV_034_098_A_016_4005_DHDH_A_20261030T233918_20261030T233953_P05036_N_F_J_001.h5
+An exception occurred while trying to access remote files via HTTPS
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 135, in resolve
+    resp = await self._resolver.getaddrinfo(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+aiodns.error.DNSError: (11, 'Could not contact DNS servers')
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1571, in _create_direct_connection
+    hosts = await self._resolve_host(host, port, traces=traces)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1181, in _resolve_host
+    return await asyncio.shield(resolved_host_task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1212, in _resolve_host_with_throttle
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\resolver.py", line 154, in resolve
+    raise OSError(None, msg) from exc
+OSError: [Errno None] Could not contact DNS servers
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 447, in _info
+    await _file_info(
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 861, in _file_info
+    r = await session.get(url, allow_redirects=ar, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 858, in _request
+    resp = await handler(req)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\client.py", line 812, in _connect_and_send_request
+    conn = await self._connector.connect(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 657, in connect
+    proto = await self._create_connection(req, traces, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1242, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\site-packages\aiohttp\connector.py", line 1577, in _create_direct_connection
+    raise ClientConnectorDNSError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorDNSError: Cannot connect to host nisar.asf.earthdatacloud.nasa.gov:443 ssl:default [Could not contact DNS servers]
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 1002, in _open_urls_https
+    return _open_files(
+           ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 160, in _open_files
+    return pqdm(
+           ^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\threads.py", line 22, in pqdm
+    return _parallel_process(
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 79, in _parallel_process
+    raise e
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\pqdm\_base.py", line 76, in _parallel_process
+    results.append(future.result())
+                   ^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\Murodjon\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\earthaccess\store.py", line 147, in multi_thread_open
+    f_size = fs.info(url)["size"]
+             ^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 217, in wrapper
+    return sync(self.loop, func, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 106, in sync
+    raise return_result
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\asyn.py", line 59, in _runner
+    result[0] = await coro
+                ^^^^^^^^^^
+  File "C:\Users\Murodjon\AppData\Roaming\Python\Python312\site-packages\fsspec\implementations\http.py", line 460, in _info
+    raise FileNotFoundError(url) from exc
+FileNotFoundError: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_035_098_A_016_4005_DHDH_A_20261111T233918_20261111T233953_P05036_N_F_J_001/NISAR_L2_PR_GCOV_035_098_A_016_4005_DHDH_A_20261111T233918_20261111T233953_P05036_N_F_J_001.h5
+2026-11-11  skip: https://nisar.asf.earthdatacloud.nasa.gov/NISAR/NISAR_L2_GCOV_V1/NISAR_L2_PR_GCOV_035_098_A_016_4005_DHDH_A_20261111T233918_20261111T233953_P05036_N_F_J_001/NISAR_L2_PR_GCOV_035_098_A_016_4005_DHDH_A_20261111T233918_20261111T233953_P05036_N_F_J_001.h5
+no passes read
+no passes
+langtang: no pass with position metadata yet
+=== andijan 19:54

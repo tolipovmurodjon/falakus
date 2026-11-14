@@ -3,7 +3,7 @@
 Usage: python science_render.py <stop_id> <lon> <lat> [--km 15]
 Reads data/science/<stop>/<date>.npz, writes data/science/<stop>/img/<date>_{rgb,hh,hv}.webp,
 <date>_change.webp (vs the first pass) and data/science/<stop>/frames.json.
-Colours: rgb = R HH (-22..-5 dB), G HV (-28..-12 dB), B HH/HV ratio (0..12 dB), the UAVSAR postcard idea:
+Colours: sar_colors.composite = R HH, G HV, B HH/HV ratio on fixed dB scales (the UAVSAR postcard idea):
 water dark, cities white-pink, forests and crops green, bare soil blue-magenta.
 """
 import argparse
@@ -13,6 +13,8 @@ from pathlib import Path
 
 import numpy as np
 from PIL import Image
+
+import sar_colors
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -52,13 +54,10 @@ def main():
         ok = np.isfinite(hh).astype(np.float32)
         date = f.stem
         RES = round(2 * a.km * 1000 / hh.shape[1])
-        g = (scale(hh, -25, -3) * 255).astype(np.uint8)
-        save(np.dstack([g, g, g]), ok, img / f"{date}_hh.webp")
+        save(sar_colors.apply(scale(hh, *sar_colors.HH_DB), sar_colors.GRAY_LUT), ok, img / f"{date}_hh.webp")
+        save(sar_colors.composite(hh, hv), ok, img / f"{date}_rgb.webp")
         if hv.size:
-            r = scale(hh, -22, -5); gg = scale(hv, -28, -12); b = scale(hh - hv, 0, 12)
-            save((np.dstack([r, gg, b]) * 255).astype(np.uint8), ok, img / f"{date}_rgb.webp")
-            v = scale(hv, -28, -12)
-            save((np.dstack([v * 120, 40 + v * 215, v * 60])).astype(np.uint8), ok, img / f"{date}_hv.webp")
+            save(sar_colors.apply(scale(hv, *sar_colors.HV_DB), sar_colors.HV_LUT), ok, img / f"{date}_hv.webp")
         if first is None:
             first = hh
         else:

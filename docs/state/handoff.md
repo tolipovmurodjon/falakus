@@ -13,13 +13,16 @@ Deadline: Sun 15 Nov 2026 23:59 local. Plan: docs/state/PLAN.md (approved 14 Nov
 - Science mode: tools/gcov_science.py ready (earthaccess 0.19 + h5py installed; run with plain `python`, not -I). Boss is logged in to Earthdata in Chrome; ASF access already granted. WAITING: Boss runs earthaccess interactive login in his own PowerShell (writes the netrc). Never type his password or tokens.
 - QA: docs/state/qa/round-1.md. Aral preview estimate: water 51.1 -> 4.5 km2 (-91 %), unconfirmed until calibrated.
 
-## Science mode (live since ~17:00)
-- Boss's earthaccess login is saved (netrc). tools/gcov_science.py reads calibrated GCOV boxes (padded to the exact box); tools/science_render.py makes data/science/<stop>/img/<date>_{rgb,hh,hv,change}.webp + frames.json; the page plays them automatically for tour stops.
-- Resolution facts: Uzbekistan (Tashkent, Aral, Fergana) = 20 m only (mode 2005); Nepal, Iowa, Krasheninnikov, Mississippi delta = 10 m (mode 4005); Rogun mixed. 1 m only via Umbra/Capella open data (not checked yet).
-- Background run btgpkveoe: all 10 stops, log docs/state/logs/science.log ("=== ALL DONE" at the end). Aral box = 59.4, 45.1, +-50 km.
-- Map maxZoom 18; world radar dims only while the playing box is on screen.
+## Science mode (updated 14 Nov ~20:05)
+- Calibrated GCOV boxes: tools/gcov_science.py (retries x3, saves UTM meta, water = fixed rule HH<-18 & HV<-24, `--stats-only` recomputes from disk). Renders: tools/science_render.py (time-series images), tools/science_pyramid.py (z10-14 tiles in data/scitiles/{class,raw} + boxes.json). Colours/classes: tools/sar_colors.py (fixed dB scales; classes water/built/plants/bare; Tashkent built 35.8 % vs ~37 % real).
+- "What happened here?": /api/analyze?w,s,e,n -> background job (tools/analyze_area.py, <=25 km box, <=4 passes) -> /api/job/<id>.json; UI = popup button + "Draw an area" in the brand panel; result panel on the right.
+- Live per-tile streaming was tried and dropped: 42-314 s per tile.
+- Events: EONET 372 + USGS M5+ since 17 Jun = 1,308 (data/usgs_quakes.json). Ocean popups say NISAR does not image open ocean.
+- 16 tour stops (web/stops.js) incl. Andijan, Qosh Tepa, Kyzylorda, Fedchenko, Langtang (USGS-confirmed 26 Aug), Kumamoto M6.8; new fields use/next.
+- Lanes running: logs docs/state/logs/science.log (lane A, 10 stops) and science_b.log (lane B, 6 new stops). Max 2 NASA lanes + 2 analysis jobs: more got throttled (all reads failed 17:30-19:50).
+- Critic report (fresh Opus, 2.9/5): top fix = public static link; validity fixes done (legend, HV dB, range headline, Otsu removed).
 
 ## Next 3 steps
-1. After "done": `python tools/gcov_science.py aral 60.3 45.4`, then rogun 69.79 38.69, fergana 71.8 40.6, nepal 84.63 27.99; compare calibrated vs preview numbers; write the result in DECISIONS.md.
-2. Chrome QA round 2 at 1440 + 390 px (phone untested), Rogun eye check, docs/state/qa/round-2.md.
-3. Fresh checker agent on the challenge checklist; then P3: Central Asia river story, draw-a-box analysis, GIF export.
+1. Verify the Charvak area analysis in Chrome; then static export (tools/export_static.py) for a public link (Boss says yes before publishing).
+2. ESA WorldCover agreement % for the classes (no-login COG) -> DECISIONS.md.
+3. Fresh critic round 2; Sentinel-2 cloud contrast (Nepal), wind test for Aral.

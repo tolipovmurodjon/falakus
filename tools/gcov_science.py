@@ -10,10 +10,13 @@ Writes data/science/<stop_id>/<date>.npz (hh_db, hv_db) and data/science/<stop_i
 import argparse
 import json
 import math
+import time
 import urllib.request
 from pathlib import Path
 
 import numpy as np
+
+import sar_colors
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "data" / "science"
@@ -37,14 +40,6 @@ def utm_from_lonlat(lon, lat, zone, south):
     y = k0 * (m + n * math.tan(phi) * (A * A / 2 + (5 - t + 9 * c + 4 * c * c) * A ** 4 / 24
                                        + (61 - 58 * t + t * t + 600 * c - 330 * ep2) * A ** 6 / 720))
     return x, (y + 10000000 if south else y)
-
-
-def otsu(values):
-    hist, edges = np.histogram(values, bins=256)
-    p = hist / max(hist.sum(), 1)
-    w = np.cumsum(p); mu = np.cumsum(p * (edges[:-1] + edges[1:]) / 2)
-    between = (mu[-1] * w - mu) ** 2 / np.maximum(w * (1 - w), 1e-12)
-    return float((edges[:-1] + edges[1:])[np.argmax(between)] / 2)
 
 
 def read_box(fh, lon, lat, km):
@@ -81,44 +76,62 @@ def read_box(fh, lon, lat, km):
         hv = padded("HVHV") if "HVHV" in g else None
         px = dx * dy
     db = lambda a: 10 * np.log10(np.where(a > 0, a, np.nan))
-    return db(hh), (db(hv) if hv is not None else None), px
+    meta = {"x0": cx - r, "y0": cy + r, "dx": dx, "dy": dy, "zone": zone, "south": int(south)}  # top-left corner of the box, UTM metres
+    return db(hh), (db(hv) if hv is not None else None), px, meta
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("stop"); ap.add_argument("lon", type=float); ap.add_argument("lat", type=float)
     ap.add_argument("--km", type=float, default=15); ap.add_argument("--base", default="http://127.0.0.1:8765")
+    ap.add_argument("--stats-only", action="store_true")
     a = ap.parse_args()
     import earthaccess
     earthaccess.login(strategy="netrc")
-    with urllib.request.urlopen(f"{a.base}/api/series.json?lon={a.lon:.3f}&lat={a.lat:.3f}", timeout=180) as r:
-        frames = json.load(r)["frames"]
     out = OUT / a.stop; out.mkdir(parents=True, exist_ok=True)
     results = []
+    if a.stats_only:  # recompute numbers from boxes already on disk, no NASA reads
+        for f in sorted(out.glob("*.npz")):
+            z = np.load(f)
+            results.append({"date": f.stem, "id": "", "hh": z["hh_db"], "hv": z["hv_db"] if z["hv_db"].size else None, "px": float(z["dx"]) * float(z["dy"]) if "dx" in z.files else 400.0})
+        frames = []
+    else:
+        with urllib.request.urlopen(f"{a.base}/api/series.json?lon={a.lon:.3f}&lat={a.lat:.3f}", timeout=180) as r:
+            frames = json.load(r)["frames"]
     for f in frames:
         url = f"https://nisar.asf.earthdatacloud.nasa.gov/NISAR/{f['c']}/{f['id']}/{f['id']}.h5"
-        try:
-            fh = earthaccess.open([url])[0]
-            hh, hv, px = read_box(fh, a.lon, a.lat, a.km)
-        except Exception as e:
-            print(f"{f['date']}  skip: {e}", flush=True)
+        err = None
+        for attempt in range(3):  # NASA's cloud throttles bursts of parallel reads; wait and retry
+            try:
+                fh = earthaccess.open([url])[0]
+                hh, hv, px, meta = read_box(fh, a.lon, a.lat, a.km)
+                err = None
+                break
+            except Exception as e:
+                err = e
+                if "outside this frame" in str(e):
+                    break
+                time.sleep(20 * (attempt + 1))
+        if err is not None:
+            print(f"{f['date']}  skip: {type(err).__name__}: {str(err)[:100]}", flush=True)
             continue
-        np.savez_compressed(out / f"{f['date']}.npz", hh_db=hh, hv_db=hv if hv is not None else np.array([]))
+        np.savez_compressed(out / f"{f['date']}.npz", hh_db=hh, hv_db=hv if hv is not None else np.array([]), **meta)
         results.append({"date": f["date"], "id": f["id"], "hh": hh, "hv": hv, "px": px})
         print(f"{f['date']}  box {hh.shape}  HH median {np.nanmedian(hh):.1f} dB", flush=True)
     if not results:
         print("no passes read"); return
-    thr = otsu(np.concatenate([r["hh"][np.isfinite(r["hh"])] for r in results]))
-    stats = {"stop": a.stop, "box_km": 2 * a.km, "water_threshold_db": round(thr, 2), "source": "NISAR GCOV gamma0, calibrated dB (provisional)", "points": []}
+    # Fixed physical rule, not Otsu: in a box without a lake Otsu splits city from fields and calls the city "water".
+    stats = {"stop": a.stop, "box_km": 2 * a.km, "water_threshold_db": -18, "source": "NISAR GCOV gamma0, calibrated dB (provisional)", "points": []}
     for r in results:
-        hh = r["hh"]; ok = np.isfinite(hh)
-        stats["points"].append({"date": r["date"], "id": r["id"],
-                                "water_km2": round(float((hh[ok] < thr).sum() * r["px"] / 1e6), 2),
+        hh = r["hh"]; cls = sar_colors.classify(hh, r["hv"])
+        km2 = {name: round(float((cls == i).sum() * r["px"] / 1e6), 2) for i, name in enumerate(sar_colors.CLASS_NAMES)}
+        stats["points"].append({"date": r["date"], "id": r["id"], "classes_km2": km2,
+                                "water_km2": km2["water"],
                                 "hh_db": round(float(np.nanmedian(hh)), 2),
                                 "hv_db": round(float(np.nanmedian(r["hv"])), 2) if r["hv"] is not None else None})
     (out / "stats.json").write_text(json.dumps(stats, indent=1))
     p = stats["points"]
-    print(f"threshold {thr:.2f} dB | water {p[0]['water_km2']} km2 ({p[0]['date']}) -> {p[-1]['water_km2']} km2 ({p[-1]['date']})")
+    print(f"water (HH<-18 & HV<-24 dB) | {p[0]['water_km2']} km2 ({p[0]['date']}) -> {p[-1]['water_km2']} km2 ({p[-1]['date']})")
 
 
 if __name__ == "__main__":
