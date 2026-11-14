@@ -12,3 +12,10 @@ Flood in France 1104149 | mapped | 2026-08-30 -> 2026-09-11 | new water 0.0 km2 
 Flood in Spain 1104151 | mapped | 2026-08-29 -> 2026-09-10 | new water 0.0 km2 | brighter 0.01 | S2 1 % cloud, IoU 0.0
 Flood in Slovenia 1104152 | mapped | 2026-09-04 -> 2026-09-16 | new water 0.01 km2 | brighter 0.01 | S2 55 % cloud, IoU None
 Flood in Bangladesh 1104156 | no NISAR pass before and after | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Croatia 1104153 | mapped | 2026-08-30 -> 2026-09-11 | new water 0.0 km2 | brighter 0.01 | S2 1 % cloud, IoU None
+Flood in Maldives 1104155 | read failed: "Unable to synchronously open object (object 'frequencyA' doesn't exist)" | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in India 1104154 | error: HTTP Error 502: Bad Gateway | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Kenya 1104159 | mapped | 2026-08-31 -> 2026-09-12 | new water 0.01 km2 | brighter 0.57 | S2 0 % cloud, IoU None
+Flood in Albania 1104164 | mapped | 2026-09-05 -> 2026-09-17 | new water 0.0 km2 | brighter 0.02 | S2 0 % cloud, IoU None
+Flood in Nepal 1104157 | no NISAR pass before and after | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Sri Lanka 1104160 | no NISAR pass before and after | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
