@@ -1,62 +1,56 @@
-# Falakus: watching Central Asia's water and the world's changes with NASA-ISRO NISAR radar
+# Falakus: where the Fergana valley's water goes, seen by NASA-ISRO NISAR radar
 
 **Challenge:** Dancing with the SARs (NASA Space Apps 2026) · **Team:** 4, Tashkent, Uzbekistan
+**Demo:** 30 s video `docs/video/falakus-30s.mp4` · 7-slide deck `docs/deck/story.html` · app (link added at submission)
 
-## What it does
-Falakus is an open web map that plays every NISAR radar pass over a place as a time-lapse, from the archive start to this week.
-It starts at home: the Aral Sea, the Andijan reservoir, the Fergana fields, Rogun and the Qosh Tepa canal upstream, Kyzylorda's rice.
-Then it goes worldwide: the 26 Aug 2026 Langtang collapse in Nepal, the Kumamoto M6.8 earthquake, a monsoon flood, a savanna fire, corn and lava and a delta.
+## The problem
+The Fergana valley, Uzbekistan's most crowded region, drinks from one reservoir on the Kara Darya: Andijan.
+Water managers plan its release in winter and spring, exactly when camera satellites lose sight of it.
+In 2025, 29 of 85 Sentinel-2 visits to the reservoir (34 %) were mostly cloud, and 15 of 24 in December to March.
 
-At each stop you see:
-- what changed, as numbers measured from calibrated radar (km² of water, built-up land, plants and bare ground);
-- why it changed (the physical driver);
-- which polarization shows it (HH or HV);
-- who could act on it;
-- what NISAR could do next;
-- one honest limit.
+## What Falakus does
+One screen, three chapters, following the water. Every number is measured by our scripts and shown next to its outside check.
 
-Anyone can click any point on land, or draw a box, and get the same analysis at NISAR's native 10–20 m in about five minutes.
+1. **Source: the Andijan reservoir.** NISAR measured its open water falling from **50.5 km² (14 Jul)** to **19.3 km² (6 Oct)** as it was released for cotton. Cloud-free Sentinel-2 photos show the same fall (r = 0.83). On **24 Sep 2026 the photo was 100 % cloud; NISAR still saw the whole lake.** A small ML model forecasts the next 3 months (Dec–Feb: about 23 → 29 km², 80 % band ±3.5–6 km²).
+2. **Use: the Fergana fields.** NISAR's HV echo (the pulse turned sideways by leaves and stems) shows the season field by field: between 2 Jul and 30 Oct, **12.8 %** of a 30 × 30 km box lost its plant echo (mostly harvest) and 9.4 % gained it.
+3. **End of the line: the Aral Sea.** The valley's Syr Darya ends in the North Aral; the Amu Darya fed the South Aral. In a 40 × 40 km box of the South Aral's eastern basin, all **1,598 km²** were sea in summer 1997 (Landsat-5); in 2026 at most **1.1 km²** is water (Sentinel-2). Canada's 1997 RADARSAT-1 radar sits next to NISAR in a drag-to-compare slider.
 
-## Why radar
-NISAR brings its own microwave pulse (L-band, 24 cm), so it sees through cloud and at night.
-- Calm water sends the pulse away, so it shows dark.
-- Walls and ground form corners, so cities shine.
-- Leaves and stems scatter the pulse sideways (HV).
-- Wet snow absorbs it.
+Behind **Explore the world**: a world map of 16,691 NISAR frames, compare-anywhere (any two layers, any place), NASA EONET flood watch, the Langtang landslide under cloud, Panama quake fringes with a control pair, ships and oil-slick candidates.
 
-That is why radar can watch a flooded valley the day after a disaster, while optical satellites see only cloud.
+## Why radar sees it
+NISAR sends its own 24 cm L-band pulse, so cloud and night do not stop it.
+- **HH** (sent flat, back flat): calm water is a mirror and goes black; rough ground and walls come back bright.
+- **HV** (sent flat, back turned): only leaves, stems and branches turn the pulse, so HV rises as crops grow and falls at harvest.
+- In autumn, C-band Sentinel-1 counts drained wet mud as water far more than L-band NISAR does (same week, Oct 2026: +21.9 km² vs +4.8 km² over the photo).
 
-## NASA data used (the core)
-- **NISAR L2 GCOV** (provisional and validated V1), from the ASF DAAC via NASA CMR and Earthdata Cloud. Two uses:
-  - the world mosaic of one 12-day cycle: 16,691 frames, NASA browse previews;
-  - calibrated gamma0 HH and HV in dB for the science boxes, read straight from the HDF5 files.
-- **NASA EONET** natural events (fires, floods, storms, sea ice).
+## How we know it is right
+| claim | outside check | result |
+|---|---|---|
+| Reservoir water area | Sentinel-2 photo water (NDWI) on clear days | r = 0.83 over 8 passes; radar over-counts 8.6 km² on average in late summer (wet mud) |
+| The water rule is not tuned to the answer | cut-off learned on ONE pass, tested on 7 it never saw | map overlap IoU 0.49–0.71, median 0.58 |
+| More looks | all NISAR orbits crossing the lake (mixed viewing angles, a check only) | 42 looks in 4.5 months, r = 0.82 against 30 photo days |
+| Forecast | every 2026 month, never seen in training | miss 2.3 km² vs 3.3 (same month last year) and 4.3 (last month): 30 % better |
+| Crop signal | Sentinel-2 NDVI on the same cropland | r = 0.58 over 11 passes |
+| Ship detector (Explore) | ICEYE 0.5 m radar, Bosphorus | 5 of 12 dots on visible ships |
+| Where it fails, shown | Aral salt crust, Fergana canals, flood points | salt is as smooth as water; canals are narrower than a 20 m pixel; most EONET flood points show no new water |
 
-Other open data:
-- USGS earthquakes M5+ since 17 Jun 2026.
-- Esri World Imagery and EOX Sentinel-2 cloudless 2023 for optical context.
+## Data used
+NASA (core): **NISAR L2 GCOV** (provisional and validated, ASF DAAC via CMR and Earthdata Cloud; calibrated gamma0 HH and HV read straight from the HDF5), NISAR GUNW (quake fringes), NASA EONET events, NASA ICESat-2 ATL13 (independent laser water levels, in progress).
+Other open data: ESA Sentinel-1 RTC and Sentinel-2 L2A, ESA WorldCover, JRC Global Surface Water, USGS Landsat-5 (via Microsoft Planetary Computer); CSA RADARSAT-1 open archive; ICEYE open data (CC BY 4.0); USGS earthquakes.
 
-## How we measure
-- dB = 10·log10(gamma0). One fixed colour and class scale is used for every place and date.
-- Water = HH < −18 dB and HV < −24 dB.
-- Built-up = HH > −5 dB.
-- Plants = HV > −17 dB.
-- Bare ground = everything else.
-- Change = HH(last) − HH(first) beyond ±3 dB.
-- Each time series uses one orbit track and frame only, because mixing tracks fakes change.
-- Check: Tashkent's built-up share comes out at 35.8 % of a 30 × 30 km box, against about 37 % from the city's area.
+## Methods
+Lee speckle filter (7 × 7) · water = HH below a cut-off learned on one pass and tested on the rest · only inside the lake basin (WorldCover water + 1 km), which keeps hill shadows out · radar vegetation index RVI = 4·HV/(HH+HV) · HV change maps at 100 m · one orbit track per time series · ridge-regression forecast tested walk-forward against two baselines · tools in `tools/` reproduce every number.
 
 ## Honest limits
-- Most NISAR data is provisional (public beta); validated products start 21 Oct 2026.
-- Classes come from simple dB rules, not a trained model:
-  - wind can roughen water;
-  - steep mountains cause radar shadow and layover.
-- The world mosaic uses NASA's preview images (~150 m). Only the science boxes are calibrated at 10–20 m.
+- NISAR data before 21 Oct 2026 is provisional (public beta); there is a permanent gap 27 Jul – 10 Aug 2026; over the valley the calibrated record starts 18 Jun 2026.
+- Wind roughens the lake and lowers the radar's water count (24 Sep); wet mud raises it (late summer).
+- "Lost plant echo" is mostly harvest, but drying soil or stopped watering also lower HV.
+- The forecast learns from only 2 years.
 
 ## Use of AI (disclosure)
-- **Code:** AI (Anthropic Claude) helped write the data tools, the server and the web page. The team reviewed, ran and tested all of it.
-- **Text:** AI helped draft the stop texts and this page. The team checked the facts against NASA, USGS and ESA sources.
-- **Images:** no AI-generated images are used. All imagery is real satellite data. No NASA logos are used.
+- **Code:** AI (Anthropic Claude) helped write the data tools, the server and the web page. The team reviewed, ran and tested them.
+- **Text:** AI helped draft the chapter texts, this page and the deck. Every number comes from our scripts; the team checked facts against NASA, ESA, USGS and CSA sources.
+- **Images and video:** no AI-generated images. All imagery is real satellite data; the video is made from screenshots of the app. No NASA logos.
 
 ## Open source
-Code: the team will add the public repository link before submission (MIT licence).
+MIT licence. Repository link added at submission.
