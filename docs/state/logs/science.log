@@ -13,3 +13,18 @@ water (HH<-18 & HV<-24 dB) | 0.25 km2 (2026-06-24) -> 0.1 km2 (2026-10-22)
 aral: 10 passes rendered at 20 m -> D:\10_projects\falakus\data\science\aral\img
 aral: 782 tiles (z10-14) from 2026-10-22, native 20 m
 === andijan 20:32
+2026-06-20  box (1500, 1500)  HH median -11.09 dB
+2026-07-02  box (1500, 1500)  HH median -11.79 dB
+2026-07-14  box (1500, 1500)  HH median -11.51 dB
+2026-07-26  box (1500, 1500)  HH median -10.92 dB
+2026-08-19  box (1500, 1500)  HH median -10.72 dB
+2026-08-31  box (1500, 1500)  HH median -10.79 dB
+2026-09-12  box (1500, 1500)  HH median -10.94 dB
+2026-09-24  box (1500, 1500)  HH median -9.19 dB
+2026-10-06  box (1500, 1500)  HH median -9.98 dB
+2026-10-18  box (1500, 1500)  HH median -10.83 dB
+2026-10-30  box (1500, 1500)  HH median -11.85 dB
+water (HH<-18 & HV<-24 dB) | 8.14 km2 (2026-06-20) -> 19.22 km2 (2026-10-30)
+andijan: 11 passes rendered at 20 m -> D:\10_projects\falakus\data\science\andijan\img
+andijan: 413 tiles (z10-14) from 2026-10-30, native 20 m
+=== fergana 20:43

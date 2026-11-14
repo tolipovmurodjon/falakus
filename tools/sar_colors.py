@@ -60,3 +60,21 @@ def classify(hh_db, hv_db):
     c[(hh_db < -18) & (hv < -24)] = 0
     c[~np.isfinite(hh_db)] = -1
     return c
+
+
+def _box_sum(a, r):
+    """Sum over a (2r+1) x (2r+1) window, edges handled by padding; O(n) with cumulative sums."""
+    p = np.pad(a, r + 1, mode="constant").cumsum(0).cumsum(1)
+    k = 2 * r + 1
+    return p[k:, k:] - p[:-k, k:] - p[k:, :-k] + p[:-k, :-k]
+
+
+def class_shares(cls, r=3):
+    """Share (0..1) of each class in the window around every pixel (r=3 -> 7x7 = 140 m at 20 m pixels).
+    Smoothing the classes like this is the standard 'majority filter' that removes radar speckle."""
+    valid = (cls >= 0).astype(np.float32)
+    n = np.maximum(_box_sum(valid, r), 1)
+    return np.stack([_box_sum((cls == i).astype(np.float32), r) / n for i in range(len(CLASS_NAMES))]), _box_sum(valid, r) > 0
+
+
+THEME_RGB = {"water": (37, 99, 235), "built": (190, 50, 90), "plants": (30, 130, 60)}

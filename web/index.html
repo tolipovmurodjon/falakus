@@ -68,7 +68,7 @@ body.touring #brand .opts{display:none}
 #pticks i.on{background:var(--mint);height:10px}
 #plegend{font:400 10.5px/1.4 var(--mono);color:var(--ink2);grid-column:1/-1;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
 #plegend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:-1px}
-.maplibregl-popup-content{border-radius:14px;padding:12px 14px;font:400 12.5px/1.45 var(--sans);color:var(--ink);max-width:300px}
+.maplibregl-popup-content{border-radius:14px;padding:12px 14px;font:400 12.5px/1.45 var(--sans);color:var(--ink);max-width:340px}
 .pop b{font-weight:600}.pop .m{font:400 11px/1.4 var(--mono);color:var(--ink2)}
 .pop a{color:var(--mint)}.pop .btn{margin-top:8px;padding:9px 12px;font-size:12.5px;display:inline-block}
 #toast{position:absolute;left:50%;top:16px;transform:translateX(-50%);z-index:7;padding:10px 14px;font:500 12.5px/1.3 var(--sans)}
@@ -85,7 +85,7 @@ body.touring #brand .opts{display:none}
 #scikey{position:absolute;right:66px;bottom:30px;z-index:5;background:var(--glass,rgba(255,255,255,.86));backdrop-filter:blur(14px);border-radius:16px;padding:10px 12px;box-shadow:0 10px 30px -12px rgba(15,22,48,.35);font:500 12px/1.35 var(--sans);color:var(--ink);max-width:300px}
 #scikey .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
 #scikey i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
-#scikey .sw{display:flex;gap:6px;margin-top:8px}
+#scikey .sw{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 #scikey small{display:block;color:var(--ink3);margin-top:6px;font-size:11px}
 body.touring #scikey{right:430px}
 @media (max-width:640px){#scikey{left:8px;right:8px;bottom:150px;max-width:none}}
@@ -105,8 +105,8 @@ body.touring #powers{display:none}
  <b>Science mode · 20 m calibrated radar</b>
  <div class="row" id="sciclasses"><span><i style="background:#2563EB"></i>Water</span><span><i style="background:#D65C78"></i>Built-up</span><span><i style="background:#2E9650"></i>Plants</span><span><i style="background:#DEC48C"></i>Bare ground</span></div>
  <div class="row" id="sciraw" hidden><span><i style="background:#ff5aa0"></i>Pink-white: buildings</span><span><i style="background:#3fa34d"></i>Green: plants</span><span><i style="background:#3b5bd6"></i>Blue: bare soil</span><span><i style="background:#111"></i>Dark: water</span></div>
- <div class="sw"><button class="tog on" id="skclass">What is here</button><button class="tog" id="skraw">Radar colours</button></div>
- <small id="skhint">Each square is one 20 m radar pixel. Zoom out for the pattern; zoom in and the photo shows through.</small>
+ <div class="sw" id="skthemes"><button class="tog on" data-k="class">What is here</button><button class="tog" data-k="water">Water</button><button class="tog" data-k="built">Built-up</button><button class="tog" data-k="plants">Plants</button><button class="tog" data-k="raw">Radar colours</button></div>
+ <small id="skhint">Each area shows its main type within about 140 m. Pick one theme to see where there is more of it (darker = more).</small>
 </div>
 
 <div id="swipe" hidden><div class="bar" id="sbar"><div class="knob">⇆</div></div><span class="tag" id="stagL">before</span><span class="tag" id="stagR">after</span></div>
@@ -206,7 +206,7 @@ const map=new maplibregl.Map({container:"map",hash:true,attributionControl:{comp
   danceA:{type:"image",url:BLANK,coordinates:Q},danceB:{type:"image",url:BLANK,coordinates:Q},diff:{type:"image",url:BLANK,coordinates:Q}},
  layers:[{id:"sat",type:"raster",source:"sat"},{id:"s2",type:"raster",source:"s2",layout:{visibility:"none"}},{id:"light",type:"raster",source:"light",layout:{visibility:"none"}},
   {id:"nisar",type:"raster",source:"nisar",paint:{"raster-opacity":0.9,"raster-fade-duration":150}},
-  {id:"sci",type:"raster",source:"sci",minzoom:10,paint:{"raster-opacity":["interpolate",["linear"],["zoom"],10,0.9,14.5,0.85,16.5,0.3],"raster-fade-duration":150}},
+  {id:"sci",type:"raster",source:"sci",minzoom:10,paint:{"raster-opacity":["interpolate",["linear"],["zoom"],10,0.9,14.8,0.85,15.6,0],"raster-fade-duration":150}},
   {id:"danceA",type:"raster",source:"danceA",paint:{"raster-opacity":0,"raster-opacity-transition":{duration:650},"raster-fade-duration":0}},
   {id:"danceB",type:"raster",source:"danceB",paint:{"raster-opacity":0,"raster-opacity-transition":{duration:650},"raster-fade-duration":0}},
   {id:"diff",type:"raster",source:"diff",paint:{"raster-opacity":0,"raster-opacity-transition":{duration:400}}},
@@ -216,7 +216,7 @@ map.addControl(new maplibregl.ScaleControl({unit:"metric"}),"bottom-right");
 const vis=(id,on)=>map.getLayer(id)&&map.setLayoutProperty(id,"visibility",on?"visible":"none");
 let radarOpacity=0.9;
 
-$("op").oninput=e=>{radarOpacity=e.target.value/100;if(!dance.on)map.setPaintProperty("nisar","raster-opacity",radarOpacity);map.setPaintProperty("sci","raster-opacity",["interpolate",["linear"],["zoom"],10,radarOpacity,14.5,radarOpacity*0.95,16.5,radarOpacity*0.33])};
+$("op").oninput=e=>{radarOpacity=e.target.value/100;if(!dance.on)map.setPaintProperty("nisar","raster-opacity",radarOpacity);map.setPaintProperty("sci","raster-opacity",["interpolate",["linear"],["zoom"],10,radarOpacity,14.8,radarOpacity*0.95,15.6,0])};
 $("t-radar").onclick=e=>{const on=!e.currentTarget.classList.contains("on");tog(e.currentTarget,on);vis("nisar",on)};
 $("t-frames").onclick=e=>{const on=!e.currentTarget.classList.contains("on");tog(e.currentTarget,on);vis("frames-line",on)};
 $("t-events").onclick=e=>{const on=!e.currentTarget.classList.contains("on");tog(e.currentTarget,on);$("events").hidden=!on};
@@ -363,11 +363,13 @@ const KIND={"Wildfires":"fire","Floods":"flood","Severe Storms":"storm","Sea and
 /* science-mode key: shows only when 20 m tiles are on screen; switch between plain classes and raw radar colours */
 let sciKind="class";
 function sciSwitch(kind){sciKind=kind;map.getSource("sci").setTiles([location.origin+`/scitiles/${kind}/{z}/{x}/{y}.webp?v=3`]);
- tog($("skclass"),kind==="class");tog($("skraw"),kind==="raw");$("sciclasses").hidden=kind!=="class";$("sciraw").hidden=kind!=="raw"}
-$("skclass").onclick=()=>sciSwitch("class");$("skraw").onclick=()=>sciSwitch("raw");
+ document.querySelectorAll("#skthemes .tog").forEach(b=>tog(b,b.dataset.k===kind));$("sciclasses").hidden=kind!=="class";$("sciraw").hidden=kind!=="raw";
+ const T={water:["#2563EB","open water"],built:["#BE325A","buildings and streets"],plants:["#1E823C","trees and crops"]}[kind];
+ $("skhint").innerHTML=T?`<span style="display:inline-block;width:90px;height:9px;border-radius:5px;vertical-align:-1px;background:linear-gradient(90deg,transparent,${T[0]})"></span> share of ${T[1]} within ~140 m: darker = more.`:kind==="raw"?"R = HH, G = HV, B = HH/HV ratio, fixed dB scale.":"Each area shows its main type within about 140 m."}
+document.querySelectorAll("#skthemes .tog").forEach(b=>b.onclick=()=>sciSwitch(b.dataset.k));
 let SCIBOX=[];fetch("/api/science_boxes.json").then(r=>r.json()).then(b=>{SCIBOX=b;sciKeyUpdate()}).catch(()=>{});
 function sciKeyUpdate(){const z=map.getZoom(),b=map.getBounds();
- const any=z>=10&&SCIBOX.some(x=>x.bbox[0]<b.getEast()&&x.bbox[2]>b.getWest()&&x.bbox[1]<b.getNorth()&&x.bbox[3]>b.getSouth());$("scikey").hidden=!any}
+ const any=z>=10&&SCIBOX.some(x=>x.bbox[0]<b.getEast()&&x.bbox[2]>b.getWest()&&x.bbox[1]<b.getNorth()&&x.bbox[3]>b.getSouth());$("scikey").hidden=!any;if(!dance.on&&map.getLayer("nisar"))map.setPaintProperty("nisar","raster-opacity",any?Math.min(0.15,radarOpacity):radarOpacity)}
 map.on("moveend",sciKeyUpdate);
 
 let FRAMEBOX=null;fetch("/api/frames.geojson").then(r=>r.json()).then(d=>{FRAMEBOX=d.features}).catch(()=>{});
@@ -419,7 +421,7 @@ document.querySelectorAll("#powers .lnk").forEach(b=>b.onclick=()=>{const i=STOP
 /* NISAR (L-band, 24 cm) vs Sentinel-1 (C-band, 5.6 cm): same place, two wavelengths */
 let s1On=false;
 async function setRadar(which){const s1=which==="s1";tog($("r-nisar"),!s1);tog($("r-s1"),s1);
- if(s1&&!map.isStyleLoaded())await new Promise(r=>map.once("idle",r));
+ if(s1&&!mapReady)await new Promise(r=>map.once("load",r));
  if(s1&&!map.getSource("s1")){let j;try{j=await (await fetch("/api/s1.json")).json()}catch(e){toast("Sentinel-1 source did not answer.");tog($("r-s1"),false);tog($("r-nisar"),true);return}
   map.addSource("s1",{type:"raster",tiles:j.tiles,tileSize:256,maxzoom:13,attribution:j.attribution});
   map.addLayer({id:"s1",type:"raster",source:"s1",paint:{"raster-opacity":0.9}},"sci");
@@ -427,6 +429,10 @@ async function setRadar(which){const s1=which==="s1";tog($("r-nisar"),!s1);tog($
  s1On=s1;if(map.getLayer("s1"))map.setLayoutProperty("s1","visibility",s1?"visible":"none");
  ["nisar","sci"].forEach(l=>map.setLayoutProperty(l,"visibility",s1?"none":"visible"))}
 $("r-nisar").onclick=()=>setRadar("nisar");$("r-s1").onclick=()=>setRadar("s1");
+
+
+let mapReady=false;map.on("load",()=>{mapReady=true});
+map.on("zoomend",()=>{const z=map.getZoom();if(z>15.6&&!$("scikey").hidden)toast("Radar detail is 20 m: zoom out (to ~13) to see it; at this zoom you see the photo.")});
 
 /* data layers */
 let EV=[],evCat="All",pop=null;

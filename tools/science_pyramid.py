@@ -52,8 +52,16 @@ def build(stop):
     m = {k: float(z_[k]) for k in ("x0", "y0", "dx", "dy", "zone", "south")}
     raw = sar_colors.composite(hh, hv)
     cls = sar_colors.classify(hh, hv)
+    shares, has = sar_colors.class_shares(cls)
+    major = np.where(has, shares.argmax(0), -1)
     lut = np.vstack([sar_colors.CLASS_RGB, [[0, 0, 0]]]).astype(np.uint8)  # index -1 -> last row
-    classed = lut[cls]
+    classed = lut[major]
+    # one-theme heatmaps: colour strength = share of that class in the 140 m window (no colour mixing)
+    themes = {}
+    for name, rgb in sar_colors.THEME_RGB.items():
+        f = shares[sar_colors.CLASS_NAMES.index(name)]
+        themes[name] = (np.dstack([np.full(f.shape, c, np.uint8) for c in rgb]), (np.clip(f, 0, 1) ** 0.8 * 235).astype(np.uint8))
+    del shares
     ok = np.isfinite(hh)
     ny, nx = hh.shape
     # lon/lat corners of the box, to know which tiles to cut
@@ -79,6 +87,11 @@ def build(stop):
                     p = OUT / name / str(z) / str(x) / f"{y}.webp"
                     p.parent.mkdir(parents=True, exist_ok=True)
                     Image.fromarray(np.dstack([img[iyc, ixc], a]), "RGBA").save(p, "WEBP", quality=82 if name == "raw" else 90, method=3)
+                for name, (img, alpha) in themes.items():
+                    p = OUT / name / str(z) / str(x) / f"{y}.webp"
+                    p.parent.mkdir(parents=True, exist_ok=True)
+                    al = np.where(a > 0, alpha[iyc, ixc], 0).astype(np.uint8)
+                    Image.fromarray(np.dstack([img[iyc, ixc], al]), "RGBA").save(p, "WEBP", quality=85, method=3)
                 count += 1
     idx_path = OUT / "boxes.json"
     idx = json.loads(idx_path.read_text()) if idx_path.exists() else {}

@@ -557,7 +557,7 @@ class Handler(SimpleHTTPRequestHandler):
 
     def do_GET(self):
         path = self.path.split("?")[0]
-        ms = re.match(r"^/scitiles/(raw|class)/(\d+)/(\d+)/(\d+)\.webp$", path)
+        ms = re.match(r"^/scitiles/(raw|class|water|built|plants)/(\d+)/(\d+)/(\d+)\.webp$", path)
         if ms:
             kind, (z, x, y) = ms.group(1), map(int, ms.groups()[1:])
             f = SCI_TILES / kind / str(z) / str(x) / f"{y}.webp"
