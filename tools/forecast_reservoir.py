@@ -65,7 +65,12 @@ for h in range(1, 4):
     f = [math.sin(2 * math.pi * mm / 12), math.cos(2 * math.pi * mm / 12), ext_y[-1], ext_y[-12]]
     v = float(w[0] + np.dot(w[1:], f)); ext_y.append(v)
     fc.append({"month": nm, "km2": round(v, 1), "band_km2": round(mae["ridge"] * math.sqrt(h), 1)})
-out = {"method": __doc__.split("Writes")[0].strip(), "season_correction": {str(k): [round(float(x), 3) for x in v] for k, v in corr.items()},
+e = np.array([abs(r["ridge"] - r["truth"]) for r in rows]); q80 = float(np.quantile(e, 0.8))
+for h, f in enumerate(fc, 1):
+    f["band80_km2"] = round(q80 * math.sqrt(h), 1)
+skill = {"vs_seasonal_pct": round((1 - mae["ridge"] / mae["seasonal"]) * 100), "vs_persistence_pct": round((1 - mae["ridge"] / mae["persistence"]) * 100),
+         "mae_band_coverage_pct": round(float(np.mean(e <= mae["ridge"])) * 100), "band80_km2": round(q80, 1), "n_test": len(e)}
+out = {"skill": skill, "method": __doc__.split("Writes")[0].strip(), "season_correction": {str(k): [round(float(x), 3) for x in v] for k, v in corr.items()},
        "series": [{"month": a, "km2": b, "from": c} for a, b, c in series], "test": rows, "mae_km2": mae, "forecast": fc,
        "beats_baselines": mae["ridge"] < min(mae["persistence"], mae["seasonal"])}
 (ROOT / "data/forecast").mkdir(parents=True, exist_ok=True)

@@ -56,6 +56,7 @@ def main():
             sel = ok & (wid == main_id)
             rec = {"date": d, "level_m": round(float(np.median(ht[sel])), 2), "spread_m": round(float(np.std(ht[sel])), 2), "segments": int(sel.sum()), "water_body_id": int(main_id)}
             recs.append(rec); print(rec, flush=True)
+            (ROOT / "data/waterroad/andijan_res_icesat2_partial.json").write_text(json.dumps(recs, indent=1))
         except Exception as ex:
             print(d, "fail", str(ex)[:100], flush=True)
     # pair with areas
