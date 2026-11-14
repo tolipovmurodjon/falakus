@@ -82,13 +82,34 @@ def frames_in(w, s, e, n):
     return sorted(out)
 
 
+KML_FILE = DATA / "kml_boxes.json"
+KML = {"boxes": {}, "mtime": 0}
+
+
+def kml_box(gid):
+    """NASA's exact lon/lat box of a _LATLON.png (from its .kml, see tools/fetch_kml_boxes.py), or None."""
+    try:
+        m = KML_FILE.stat().st_mtime
+        if m != KML["mtime"]:
+            KML.update(boxes=json.loads(KML_FILE.read_text()), mtime=m)
+    except Exception:
+        return None
+    return KML["boxes"].get(gid)
+
+
 def load_preview(path, frame):
-    """Return (rgba array cropped to data, georef) or None."""
+    """Return (rgba array, georef) or None. With NASA's KML box the whole picture is placed exactly;
+    without it, the old fallback crops to data and stretches onto the catalogue box (0.5-4 km off, measured)."""
     try:
         im = np.asarray(Image.open(path).convert("RGB"))
     except Exception:
         return None
     mask = im.max(axis=2) > 6
+    box = kml_box(frame["id"])
+    if box:
+        if mask.mean() < 0.05:
+            return None
+        return np.dstack([im, (mask * 255).astype(np.uint8)]), tuple(box)
     cols, rows = np.flatnonzero(mask.any(axis=0)), np.flatnonzero(mask.any(axis=1))
     if cols.size < 2 or rows.size < 2:
         return None

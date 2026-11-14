@@ -633,7 +633,7 @@ async function openFinds(){let html=`<div class="top"><span class="chip">Radar f
  <h3 style="margin-top:8px">What radar finds that a camera can't</h3>
  <div class="grid"><p><button class="btn" id="f-ships">Ships at 7 chokepoints</button> steel hulls are bright points on a dark sea, day and night.</p>
  <p><button class="btn" id="f-slick">Oil-slick candidates off Baku</button> oil calms the waves, so a slick is a long dark streak.</p>
- <p><button class="btn" id="f-quake">Ground moved ~1 m: Panama M7.7 quake</button> two passes, 12 days apart; each rainbow band = 11.9 cm of ground motion (interferometry).</p>
+ <p><button class="btn" id="f-quake">The ground moved: Panama M7.7 quake</button> two passes, 12 days apart; each rainbow band = 11.9 cm of ground motion (interferometry).</p>
  <p><button class="btn" id="f-apron">Plane-sized objects at Tashkent airport</button> parked aircraft are metal corner reflectors on smooth concrete.</p></div>`;
  findsLayers();findsPanel(html);$("f-ships").onclick=()=>shipWatch(true);$("f-slick").onclick=openSlick;$("f-quake").onclick=()=>openMotion("panama_m77");$("f-apron").onclick=openApron}
 async function openSlick(){const j=await (await fetch("/api/ships/slicks_baku.json")).json();const P=j.passes,w=j.bbox;findsLayers();
@@ -724,7 +724,7 @@ const sci=(st,d,k)=>`/science/${st}/img/${d}_${k}.webp`;
 const CASES={
  langtang:{title:"Langtang, Nepal: a landslide seen through monsoon cloud",bbox:LT,slides:[
   {tab:"Before | after the collapse",colour:true,L:{st:"langtang",d:"2026-08-19",lab:"NISAR 19 Aug · before"},R:{st:"langtang",d:"2026-08-31",lab:"NISAR 31 Aug · after",over:"/science/langtang/img/anomaly_2026-08-19_2026-08-31.png"},
-   n:"0.9 km²",s:"changed more than 4× its normal 12-day wobble across the 26 Aug collapse: a 4 km streak in the north-east (orange = brighter, violet = darker). Summer pairs before it: 0.0–0.2 km².",
+   n:"0.9 km² vs 0.0–0.2",s:"changed more than 4× its normal 12-day wobble (wobble = the spread of 10 other 12-day pairs, after 100 m smoothing) across the 26 Aug collapse: a 4 km streak in the north-east (orange = brighter, violet = darker). Summer pairs before it: 0.0–0.2 km².",
    why:"Fresh rock and ice debris is rough, so it throws the 24 cm pulse back (brighter); scoured slopes change texture (darker). We flag a pixel only when its change is 4× bigger than its own usual pass-to-pass change."},
   {tab:"Radar | camera, same day",colour:true,L:{st:"langtang",d:"2026-08-31",lab:"NISAR radar · 31 Aug"},R:{s2:["2026-08-31","2026-08-31",0],lab:"Sentinel-2 camera · 31 Aug"},
    n:"89 % cloud",s:"in the Sentinel-2 photo taken the same day as the NISAR pass. The camera sees cloud; the radar sees the valley.",
@@ -732,7 +732,7 @@ const CASES={
  aral:{title:"Aral Sea, Uzbekistan–Kazakhstan: a sea that is gone",bbox:AR,slides:[
   {tab:"1997 | 2026 radar",bbox:[57.5,43.6,62.0,46.9],L:{img:"/history/aral/rs1_19970716_wide.png",lab:"RADARSAT-1 (Canada) · 16 Jul 1997"},R:{layer:"nisar",lab:"NISAR (NASA-ISRO) · Oct 2026"},
    n:"29 years",s:"Left, 1997: the Large Aral Sea is one body of water around Vozrozhdeniya Island. Right, 2026: the eastern basin is dry seabed; in our 40 × 40 km box, at most 0.93 km² was water in any NISAR pass.",
-   why:"Both are radar, both look straight through cloud, so the comparison is fair: open water is smooth (dark), dry seabed and salt crust are rough and bright. RADARSAT-1 used 5.6 cm C-band; NISAR uses 24 cm L-band.",
+   why:"Both are radar and both see through cloud, so water vs land is a fair comparison: open water is smooth (dark), dry seabed and salt crust are rough and bright. Brightness itself is not comparable: RADARSAT-1 is 5.6 cm C-band, uncalibrated, ~100 m pixels; NISAR is 24 cm L-band, calibrated.",
    src:"Radar: CSA RADARSAT-1 ScanSAR Wide (Open Government Licence – Canada, open archive on AWS; uncalibrated, relative brightness, placed with 15 ground control points) and NASA-ISRO NISAR GCOV previews (provisional), ASF DAAC."},
   {tab:"1997 radar | 2026 photo",bbox:[57.5,43.6,62.0,46.9],L:{img:"/history/aral/rs1_19970716_wide.png",lab:"RADARSAT-1 · 16 Jul 1997"},R:{s2:["2026-10-12","2026-10-29",1],lab:"Sentinel-2 photo · Oct 2026"},
    n:"a sea → a desert",s:"Drag the bar: the 1997 shoreline on the left sits tens of kilometres out in today's white salt flats on the right.",
@@ -743,13 +743,13 @@ const CASES={
    why:"Calm water is a mirror: it sends the pulse away, so it is the darkest thing radar sees. Salt crust and dry seabed return a weak, even echo."},
   {tab:"June | October 2026",colour:true,L:{st:"aral",d:"2026-06-24",lab:"NISAR 24 Jun"},R:{st:"aral",d:"2026-10-22",lab:"NISAR 22 Oct"},
    n:"0.03–0.93 km²",s:"open water across 10 passes: the eastern basin barely holds water even in early summer, when the Amu Darya runs highest.",
-   why:"Wet ground and puddles raise the dielectric constant (more echo); as the basin dries the echo stays low and even."}]},
- panama:{title:"Panama M7.7, 9 Oct 2026: the ground moved about a metre",bbox:null,motion:"panama_m77",slides:[
+   why:"Wet soil raises the dielectric constant, so it echoes more; standing water is mirror-smooth and goes dark. As the basin dries the echo stays low and even."}]},
+ panama:{title:"Panama M7.7, 9 Oct 2026: the ground moved",bbox:null,motion:"panama_m77",slides:[
   {tab:"Before the quake | across the quake",L:{img:"/motion/panama_pre/fringes.png",lab:"20 Sep → 2 Oct · control"},R:{img:"/motion/panama_m77/fringes.png",lab:"2 → 14 Oct · quake"},
-   n:"~1 m",s:"of ground motion toward the satellite near the epicentre. Each rainbow band = 11.9 cm. Left (no quake): straight, even bands from the ionosphere. Right: bands bend and bunch toward the fault.",
+   n:"bands bend",s:"near the fault in the quake pair; in the no-quake control they run straight and even. Each band = 11.9 cm along the line of sight. The control itself holds ~8 straight bands of ionosphere/orbit tilt, so we do not quote a metre count until that tilt is removed.",
    why:"NISAR measures the phase of its 23.8 cm wave. If the ground moves toward the satellite between two passes, the echo comes back a little early: half a wavelength = one full colour band (interferometry)."},
   {tab:"Fringes | photo",L:{img:"/motion/panama_m77/fringes.png",lab:"NISAR interferogram"},R:{s2:["2026-10-10","2026-10-31",1],lab:"Sentinel-2 photo · clearest after the quake"},
-   n:"no visible change",s:"in the photo: a 1 m shift of a whole landscape is invisible to a camera, but radar phase measures it to centimetres.",
+   n:"no visible change",s:"in the photo: a whole landscape shifting by centimetres to decimetres is invisible to a camera; radar phase measures it in 11.9 cm bands.",
    why:"A camera records colour and brightness; it cannot see a hillside move by a metre. Radar records the travel time of its own wave."}]}};
 let cmp=null,cmpKind="hh";
 function cmpImgUrl(side){return side.img||sci(side.st,side.d,cmpKind)}
