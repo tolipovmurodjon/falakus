@@ -56,7 +56,7 @@ def slides(n):
  <table><thead><tr><th>claim</th><th>outside check</th><th>result</th></tr></thead><tbody>
   <tr><td><b>Reservoir water area</b></td><td>Sentinel-2 photo water (NDWI) on clear days, 8 passes</td><td>areas track each other r = 0.83; radar over-counts ~8.6 km&sup2; in late summer (wet mud)</td></tr>
   <tr><td><b>The water rule is not tuned to the answer</b></td><td>cut-off learned on ONE pass, tested on 7 it never saw</td><td>map overlap IoU 0.49&ndash;0.71, median 0.58</td></tr>
-  <tr><td><b>Forecast, Dec &ndash; Feb</b></td><td>ML model tested on every 2026 month it never saw</td><td>miss 2.3 km&sup2; vs 3.3 (same as last year) and 4.3 (same as last month)</td></tr>
+  <tr><td><b>Forecast, Dec &ndash; Feb</b></td><td>ML model tested on every 2026 month it never saw</td><td>miss 2.3 km&sup2; vs 3.3 (same as last year) and 4.3 (same as last month): 30 % better; 80 % band from its real misses, &plusmn;3.5&ndash;6 km&sup2;</td></tr>
   <tr><td><b>Crop signal</b></td><td>Sentinel-2 plant index (NDVI) on the same fields, 11 passes</td><td>r = 0.58: same rise and fall, weaker in midsummer</td></tr>
   <tr><td><b>Ships found by our 10 m detector</b></td><td>a 0.5 m ICEYE radar image of the Bosphorus, 5 h later</td><td>5 of 12 dots on ships you can see; 1 false (breakwater)</td></tr>
   <tr><td><b>Where it fails (shown, not hidden)</b></td><td>same water rule on the Aral salt flats and Fergana canals</td><td>salt crust is as smooth as water; canals are narrower than a 20 m pixel</td></tr>
