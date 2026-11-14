@@ -191,6 +191,7 @@ body.comparing #datatime{bottom:28px}body.freecmp #datatime,body.touring #datati
 #cmpn,.hero b,#pinfo .k,.stats b{font-variant-numeric:tabular-nums}
 #cmp,#tour,#fc,#scikey,#player{background:#fff}
 .eyebrow{color:var(--ink3)}
+#cmpsrcwrap summary{cursor:pointer;font:500 11.5px var(--mono);color:var(--mint);margin-top:6px}#cmpsrcwrap p{margin:6px 0 0}
 #cases{flex-wrap:nowrap!important;padding:6px 8px!important;gap:6px!important}#cases .case{padding:8px 11px!important;font-size:13px!important;white-space:nowrap}
 #cases .credits{display:none!important}@media (max-width:1500px){#cases .eyebrow{display:none!important}}
 #explore:not([hidden]){display:flex!important;position:absolute;top:calc(100% + 6px);right:0;flex-wrap:wrap;gap:6px;width:420px;padding:8px;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:var(--fk-pop)}
@@ -235,7 +236,7 @@ body.comparing #datatime{bottom:28px}body.freecmp #datatime,body.touring #datati
  <div id="cmpchart"></div>
  <p id="cmpwhy" class="why"></p>
  <div id="cmpcol" class="row"></div>
- <p id="cmpsrc" class="src"></p>
+ <details id="cmpsrcwrap" class="src"><summary>How we measured · sources</summary><p id="cmpsrc"></p></details>
 </section>
 <div id="swipe" hidden><div class="bar" id="sbar"><div class="knob">⇆</div></div><span class="tag" id="stagL">before</span><span class="tag" id="stagR">after</span></div>
 
@@ -868,7 +869,7 @@ async function cmpChart(kind){const el=$("cmpchart");el.innerHTML="";if(!kind)re
  const j=await (await fetch(`/waterroad/${kind==="andijan"?"andijan_res":kind}.json`)).json();const P=j.passes;const W=340,H=96,x=i=>14+i/(P.length-1)*(W-28);
  const line=(vals,mx,col,dash)=>{const pts=vals.map((v,i)=>v==null?null:[x(i),H-16-v/mx*(H-30)]);let d="";pts.forEach((p,i)=>{if(p)d+=(d&&pts[i-1]?"L":"M")+p[0].toFixed(1)+","+p[1].toFixed(1)});
   return `<path d="${d}" fill="none" stroke="${col}" stroke-width="2.2" ${dash?'stroke-dasharray="4 3"':""}/>`+pts.map((p,i)=>p?`<circle cx="${p[0]}" cy="${p[1]}" r="2.6" fill="${col}"><title>${P[i].date}: ${vals[i]}</title></circle>`:"").join("")};
- const ticks=P.map((p,i)=>i%2?"":`<text x="${x(i)}" y="${H-2}" font-size="9" text-anchor="middle" fill="#8A92AA" font-family="ui-monospace,monospace">${p.date.slice(5)}</text>`).join("");
+ const ticks=P.map((p,i)=>i%2?"":`<text x="${x(i)}" y="${H-2}" font-size="9" text-anchor="middle" fill="#8A92AA" font-family="ui-monospace,monospace">${new Date(p.date+"T00:00Z").toLocaleDateString("en-GB",{day:"numeric",month:"short",timeZone:"UTC"})}</text>`).join("");
  if(kind==="andijan"){const r=P.map(p=>p.water_km2),o=P.map(p=>p.s2_water_km2??null),mx=Math.max(...r,...o.filter(v=>v!=null))*1.1;
   el.innerHTML=`<div class="lg"><span><i style="background:#2563EB"></i>NISAR radar water, km²</span><span><i style="background:#E8590C"></i>Sentinel-2 photo water (clear days)</span></div><svg viewBox="0 0 ${W} ${H}">${line(r,mx,"#2563EB")}${line(o,mx,"#E8590C",1)}${ticks}<text x="4" y="10" font-size="9" fill="#8A92AA" font-family="ui-monospace,monospace">${Math.round(mx)} km²</text></svg>`}
  else{const v=P.map(p=>p.rvi_crop),mn=Math.min(...v)-0.05,mx=Math.max(...v)+0.03;const sc=v.map(a=>(a-mn)/(mx-mn)*mx);
