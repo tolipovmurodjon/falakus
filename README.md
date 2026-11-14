@@ -7,6 +7,20 @@ It starts at home, with Central Asia's water: the Aral Sea, Rogun, the Qosh Tepa
 
 ![Science mode over Tashkent: every 20 m pixel classified from calibrated NISAR radar](docs/img/tashkent-science-mode.jpg)
 
+## Drag to compare: the front door
+
+Three one-click cases in the top bar. Each shows a before/after swipe, one number and one sentence of physics.
+
+![Aral Sea: RADARSAT-1 radar in 1997 (left) vs NISAR radar in 2026 (right)](docs/img/aral-1997-vs-2026.jpg)
+
+| case | left of the bar | right of the bar | what it proves |
+|---|---|---|---|
+| **Aral Sea** | CSA **RADARSAT-1** radar, 16 Jul 1997 | NASA-ISRO **NISAR** radar, Oct 2026 (or a Sentinel-2 photo) | a 29-year time machine: the eastern basin went from open sea to dry seabed |
+| **Langtang, Nepal** | NISAR, 19 Aug (before the 26 Aug collapse) | NISAR, 31 Aug, with the changed pixels marked | radar sees the landslide on a day the camera saw **89 % cloud** |
+| **Panama M7.7** | interferogram with no quake (control) | interferogram across the quake | the ground moved **~1 m**; the control shows that the fringes are not noise |
+
+Multi-agency data: NASA-ISRO NISAR · CSA RADARSAT-1 · ESA Sentinel-1/2 · USGS · NASA EONET.
+
 ---
 
 ## 1. The idea in 30 seconds
@@ -151,6 +165,8 @@ python tools/gunw_read.py panama_m77 -80.7566 7.6069 20261002 20261014 --km 30  
 | `tools/gunw_read.py` | interferogram to fringes and centimetres |
 | `tools/ship_count.py`, `slick_find.py`, `apron_count.py` | Sentinel-1 detectors |
 | `tools/ml_landcover.py` | Random Forest land cover, scored on unseen places |
+| `tools/rs1_fetch.py` | find and cut a RADARSAT-1 scene for any box (the 1990s baseline) |
+| `tools/explain_apron.py` | draws the 4-step airport figure in this README |
 | `tools/utm_convert.py` | UTM ↔ lon/lat (vectorised) |
 | `web/index.html`, `web/stops.js` | the app (MapLibre GL) and the tour stories |
 
@@ -164,7 +180,8 @@ python tools/gunw_read.py panama_m77 -80.7566 7.6069 20261002 20261014 --km 30  
 - **NASA EONET** natural events
 - **USGS** earthquake catalogue (M5+)
 - **Sentinel-1 RTC** and **ESA WorldCover 2021**, via Microsoft Planetary Computer
-- **Sentinel-2** cloudless (EOX) and Esri World Imagery for optical context
+- **Sentinel-2 L2A** photos for any box and date, via Microsoft Planetary Computer; Sentinel-2 cloudless (EOX) and Esri World Imagery for context
+- **CSA RADARSAT-1** open archive (1995–2013, Open Government Licence – Canada), found through the public NRCan EODMS STAC and read straight from the `radarsat-r1-l1-cog` bucket on AWS ([`tools/rs1_fetch.py`](tools/rs1_fetch.py))
 
 ## 7. AI use (as the challenge rules require)
 
