@@ -122,6 +122,9 @@ body.touring #powers{display:none}
 .shipbar i{display:block;width:100%;max-width:26px;border-radius:5px 5px 2px 2px;opacity:.75}
 .shipbar.on i{opacity:1;outline:2px solid var(--mint);outline-offset:1px}
 .shipbar span{font:500 10.5px var(--mono);color:var(--ink3)}
+
+.lastlook{margin:6px 0 0;font:500 12px/1.4 var(--mono);color:var(--ink2)}
+.lastlook .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#16A34A;margin-right:6px;box-shadow:0 0 0 3px rgba(22,163,74,.18)}
 </style>
 </head>
 <body>
@@ -326,6 +329,7 @@ function tourGo(i){tourI=(i+STOPS.length)%STOPS.length;const s=STOPS[tourI];intr
  $("tour").hidden=false;
  $("tour").innerHTML=`<div class="top"><span class="chip">${esc(s.chapter||"")} · ${tourI+1} / ${STOPS.length} · ${esc(s.kind)}</span><div class="nav"><button class="tog" id="tprev" aria-label="Previous stop">‹ Back</button><button class="tog on" id="tnext">Next ›</button><button class="tog" id="tclose" aria-label="Close the tour">✕</button></div></div>
   <p class="eyebrow" style="margin-top:8px">${esc(s.place)}</p><h3>${esc(s.title)}</h3>
+  <p class="lastlook" id="tlast"></p>
   <div id="intel" style="margin-top:10px"><p class="eyebrow">Measured from the radar</p><p style="font-size:12.5px;color:var(--ink3)">Measuring every pass…</p></div>
   <div class="grid" style="margin-top:10px"><p><span class="lab">What you see</span>${esc(s.what)}</p><p><span class="lab">Why it changes</span>${esc(s.driver)}</p>
   <p><span class="lab">Which radar channel</span>${esc(s.pol)}</p>${s.use?`<p><span class="lab">Who acts on it</span>${esc(s.use)}</p>`:""}${s.next?`<p><span class="lab">What NISAR could do next</span>${esc(s.next)}</p>`:""}<p><span class="lab">Honest limit</span>${esc(s.limit)}</p></div>
@@ -334,7 +338,7 @@ function tourGo(i){tourI=(i+STOPS.length)%STOPS.length;const s=STOPS[tourI];intr
  endDance();$("player").hidden=false;$("pdate").textContent="Flying…";
  map.flyTo({center:[s.lon,s.lat],zoom:s.zoom,speed:1.4,curve:1.5,essential:true});
  map.once("moveend",()=>startDance(s.lon,s.lat,s.place,s.id));
- loadIntel(s);
+ loadIntel(s);lastLook(s.lon,s.lat,$("tlast"));
 }
 
 
@@ -503,6 +507,7 @@ async function openShips(name){let j;try{j=await (await fetch(`/api/ships/${name
  const bars=P.map((p,i)=>`<button class="shipbar" data-i="${i}" title="${p.date} ${p.light}"><i style="height:${Math.max(6,Math.round(64*p.ships/mx))}px;background:${p.light==="night"?"#0F1630":"#F59E0B"}"></i><span>${p.date.slice(5)}</span></button>`).join("");
  T.innerHTML=`<div class="top"><span class="chip">Ship watch · Sentinel-1 radar</span><div class="nav"><button class="tog" id="sclose" aria-label="Close">✕</button></div></div>
   <h3 style="margin-top:8px">${esc(SHIPNAMES[name]||name)}</h3>
+  <p class="lastlook" id="slast"></p>
   <div class="hero"><b id="shipn">${P.at(-1).ships}</b><span id="shipwhen">large ships at sea on ${fmtDate(P.at(-1).date)} (${P.at(-1).light} pass, ${P.at(-1).time_utc} UTC) · ${area} km² box</span></div>
   <div class="shipbars">${bars}</div>
   <p style="font-size:12px;color:var(--ink3);margin:2px 0 10px"><i style="display:inline-block;width:10px;height:10px;background:#F59E0B;border-radius:2px"></i> day pass &nbsp; <i style="display:inline-block;width:10px;height:10px;background:#0F1630;border-radius:2px"></i> night pass · tap a bar to see that pass</p>
@@ -515,9 +520,17 @@ async function openShips(name){let j;try{j=await (await fetch(`/api/ships/${name
  const showPass=i=>{const p=P[i];$("shipn").textContent=p.ships;$("shipwhen").textContent=`large ships at sea on ${fmtDate(p.date)} (${p.light} pass, ${p.time_utc} UTC) · ${area} km² box`;
   document.querySelectorAll(".shipbar").forEach(b=>b.classList.toggle("on",+b.dataset.i===i));
   map.getSource("shipdots").setData({type:"FeatureCollection",features:p.points.map(c=>({type:"Feature",geometry:{type:"Point",coordinates:c},properties:{}}))})};
- document.querySelectorAll(".shipbar").forEach(b=>b.onclick=()=>showPass(+b.dataset.i));showPass(P.length-1);
+ document.querySelectorAll(".shipbar").forEach(b=>b.onclick=()=>showPass(+b.dataset.i));showPass(P.length-1);lastLook((w[0]+w[2])/2,(w[1]+w[3])/2,$("slast"));
  $("sclose").onclick=()=>{T.hidden=true;document.body.classList.remove("touring");map.getSource("shipdots").setData({type:"FeatureCollection",features:[]})}}
 $("b-ships").onclick=()=>shipWatch(!shipOn);
+
+
+/* "Last radar look": how fresh the radar is over a place, from NASA CMR and the Sentinel-1 catalogue */
+function ago(iso){const h=(Date.now()-Date.parse(iso))/36e5;return h<48?`${Math.max(1,Math.round(h))} h ago`:`${Math.round(h/24)} days ago`}
+async function lastLook(lon,lat,el){if(!el)return;el.textContent="Last radar look: checking…";
+ try{const j=await (await fetch(`/api/lastlook.json?lon=${lon.toFixed(3)}&lat=${lat.toFixed(3)}`)).json();
+  const parts=[];if(j.nisar)parts.push(`NISAR ${ago(j.nisar)} (${j.nisar.slice(0,10)})`);if(j.s1)parts.push(`Sentinel-1 ${ago(j.s1)} (${j.s1.slice(0,10)})`);
+  el.innerHTML=parts.length?`<span class="dot"></span>Last radar look: ${parts.join(" · ")}`:"Last radar look: no pass found here"}catch(e){el.textContent=""}}
 
 /* data layers */
 let EV=[],evCat="All",pop=null;

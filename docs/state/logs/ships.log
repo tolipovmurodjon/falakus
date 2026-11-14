@@ -18,3 +18,12 @@ Traceback (most recent call last):
                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ValueError: operands could not be broadcast together with shapes (1281,2048) (1281,2048) (1280,2048) 
 === bosphorus
+2026-11-12T15  ships   12  day    box seen 100%
+2026-11-12T04  ships  118  night  box seen 100%
+2026-11-11T04  ships    2  night  box seen 100%
+2026-11-06T15  ships  140  day    box seen 100%
+2026-11-06T04  ships  135  night  box seen 100%
+2026-10-31T15  ships   54  day    box seen 100%
+2026-10-31T04  ships  130  night  box seen 100%
+2026-10-30T04  ships  117  night  box seen 100%
+=== suez

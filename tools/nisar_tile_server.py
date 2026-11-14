@@ -451,6 +451,40 @@ def sentinel1_mosaic():
     return S1["body"]
 
 
+LASTLOOK = {}
+
+
+def last_look(lon, lat):
+    """Newest NISAR GCOV pass (NASA CMR) and newest Sentinel-1 pass (Planetary Computer) over a point; cached 1 h."""
+    key = (round(lon, 2), round(lat, 2))
+    hit = LASTLOOK.get(key)
+    if hit and time.time() - hit[0] < 3600:
+        return hit[1]
+    out = {}
+    try:
+        url = ("https://cmr.earthdata.nasa.gov/search/granules.json?short_name=NISAR_L2_GCOV_V1&short_name=NISAR_L2_GCOV_PROVISIONAL_V1"
+               f"&point={lon},{lat}&sort_key=-start_date&page_size=1")
+        with urllib.request.urlopen(url, timeout=40) as r:
+            e = json.load(r)["feed"]["entry"]
+        if e:
+            out["nisar"] = e[0]["time_start"][:16] + "Z"
+    except Exception as ex:
+        out["nisar_error"] = str(ex)[:80]
+    try:
+        body = {"collections": ["sentinel-1-rtc"], "intersects": {"type": "Point", "coordinates": [lon, lat]}, "limit": 1,
+                "sortby": [{"field": "datetime", "direction": "desc"}]}
+        req = urllib.request.Request("https://planetarycomputer.microsoft.com/api/stac/v1/search", data=json.dumps(body).encode(),
+                                     headers={"Content-Type": "application/json"}, method="POST")
+        with urllib.request.urlopen(req, timeout=40) as r:
+            f = json.load(r)["features"]
+        if f:
+            out["s1"] = f[0]["properties"]["datetime"][:16] + "Z"
+    except Exception as ex:
+        out["s1_error"] = str(ex)[:80]
+    LASTLOOK[key] = (time.time(), out)
+    return out
+
+
 # ---- small JSON APIs ------------------------------------------------------
 def frames_geojson():
     feats = []
@@ -649,6 +683,13 @@ class Handler(SimpleHTTPRequestHandler):
             if not job:
                 return self.send_bytes(b'{"error":"unknown job"}', "application/json", cache="no-store", code=404)
             return self.send_bytes(json.dumps(job).encode(), "application/json", cache="no-store")
+        if path == "/api/lastlook.json":
+            q = parse_qs(urlparse(self.path).query)
+            try:
+                lon, lat = float(q["lon"][0]), float(q["lat"][0])
+            except (KeyError, ValueError):
+                return self.send_bytes(b"{}", "application/json", code=400)
+            return self.send_bytes(json.dumps(last_look(lon, lat)).encode(), "application/json", cache="no-store")
         if path == "/api/ships.json":
             idx = []
             for f in sorted((DATA / "ships").glob("*.json")):
