@@ -122,8 +122,8 @@ def main():
     idx = OUT / "index.json"
     done = {r["id"]: r for r in json.loads(idx.read_text())} if idx.exists() else {}
     for e in events()[: a.max]:
-        if e["id"] in done:
-            continue
+        if e["id"] in done and not str(done[e["id"]].get("status", "")).startswith(("error", "read failed")):
+            continue  # retry only events that failed on a network error
         try:
             r = one(e, a.km, earthaccess)
         except Exception as ex:

@@ -3,3 +3,4 @@ Flood in Canada 1104143 | read failed: unsupported projection EPSG 3031 | None -
 Flood in Brazil 1104148 | no NISAR pass before and after | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
 Flood in Japan 1104140 | error: HTTP Error 502: Bad Gateway | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
 Flood in Vietnam 1104141 | error: HTTP Error 502: Bad Gateway | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Poland 1104144 | mapped | 2026-08-31 -> 2026-09-12 | new water 0.0 km2 | brighter 0.0 | S2 0 % cloud, IoU None

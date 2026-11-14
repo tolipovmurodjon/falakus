@@ -92,3 +92,20 @@ Server up → Chrome on localhost: intro → tour stops 1-10 → play, change ma
 | (opt) storytelling | Water road + World chapters | 30 s video, 7-slide deck |
 | (opt) hometown context | Uzbekistan first | team note on Tashkent/Aral |
 | (opt) interactive summary | sliders, web map, charts | demo mode ?demo=1 |
+
+## TASK BOARD (15 Nov, overnight loop; Boss asleep until ~12:00). Each row: done when = the check
+| # | part | done when | state |
+|---|---|---|---|
+| 1 | Story screen ch.1 Andijan reservoir (radar/photo swipe + km2 chart radar vs S2) | opens on first visit, chart shows both curves, Chrome screenshot 1440 + 390 | building |
+| 2 | Story ch.2 Fergana (HV swipe Jul/Oct + RVI chart) | same | building |
+| 3 | Story ch.3 Aral 1997 vs 2026 (box drawn, "in this box") | box outline visible | todo |
+| 4 | RVI outside check: Sentinel-2 NDVI over the same cropland, per pass | r(RVI, NDVI) printed | todo |
+| 5 | Andijan stop text rewritten with real reservoir numbers | text matches water_road json | todo |
+| 6 | Flood watch: 40 EONET floods mapped, retry 502s, list + map in Explore, honest labels (new open water vs wetter/flooded-veg candidates), S2 check | Explore -> Flood watch shows >= 5 mapped events with PNG | running |
+| 7 | Earthquakes: USGS M5+ list; GUNW co-event pair + control pair for each quake with NISAR pairs (Panama done); ramp (tilt) removal before quoting cm | >= 2 quakes with fringes + control, tilt-removed numbers | todo |
+| 8 | Judge bugs: case->tour freeze, phone layout (390 px), S2 trimmed to box + cloud % in box, analysis box drawn | fresh judge confirms | todo |
+| 9 | World map placement (NASA KML boxes) | offset test < 1 px at Andijan/Fergana | paused 600/16691 |
+| 10 | Deck (10 slides) updated to the one story with real numbers | render.py check | todo |
+| 11 | 30 s video storyboard + recording plan | storyboard file updated | todo |
+| 12 | Fresh judge round 4 -> fix lowest -> round 5 | >= 9/10 twice or 12:00 | todo |
+| 13 | README/TEAM.md + push after each round | git log on GitHub | ongoing |

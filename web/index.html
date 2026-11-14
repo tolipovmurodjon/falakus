@@ -161,6 +161,11 @@ body.comparing #swipe .tag{top:104px}
 body.freecmp #powers,body.freecmp #howto,body.freecmp #tour,body.freecmp #player,body.freecmp #scikey,body.freecmp #brand{display:none!important}
 body.freecmp #swipe .tag{top:104px}
 @media (max-width:640px){#fc{top:auto;right:8px;left:8px;width:auto;bottom:10px;max-height:46vh;overflow:auto}}
+.case.ghost{background:transparent;border-style:dashed}
+#explore{display:contents}#explore[hidden]{display:none}
+#cmpchart svg{display:block;width:100%}
+#cmpchart .lg{display:flex;gap:12px;font:500 11px var(--mono);color:var(--ink3);margin:2px 0 6px}
+#cmpchart .lg i{display:inline-block;width:14px;height:3px;border-radius:2px;vertical-align:3px;margin-right:4px}
 </style>
 </head>
 <body>
@@ -175,13 +180,14 @@ body.freecmp #swipe .tag{top:104px}
  <small id="skhint">The measurement itself: R = HH, G = HV, B = HH/HV, fixed dB scale. Green means a strong HV echo: leaves, or building walls turned away from the radar.</small>
 </div>
 
-<nav id="cases" aria-label="Compare before and after">
- <span class="eyebrow">Drag to compare</span>
- <button class="case" id="fc-open">Compare anywhere</button>
- <button class="case" data-c="langtang">Langtang: seen through cloud</button>
- <button class="case" data-c="aral">Aral Sea: a sea that is gone</button>
- <button class="case" data-c="panama">Panama: the ground moved</button>
- <span class="credits">NASA-ISRO NISAR · CSA RADARSAT-1 · ESA Sentinel-1/2 · USGS · NASA EONET</span>
+<nav id="cases" aria-label="The story">
+ <span class="eyebrow">Where the valley's water goes</span>
+ <button class="case" data-c="andijan">1 · Andijan reservoir</button>
+ <button class="case" data-c="fergana">2 · Fergana fields</button>
+ <button class="case" data-c="aral">3 · Aral Sea</button>
+ <button class="case ghost" id="b-explore" aria-expanded="false">Explore the world ▾</button>
+ <span id="explore" hidden><button class="case" id="fc-open">Compare anywhere</button><button class="case" data-c="langtang">Langtang landslide</button><button class="case" data-c="panama">Panama quake</button><button class="case" id="x-floods">Flood watch</button><button class="case" id="x-tour">Guided tour (16 places)</button><button class="case" id="x-finds">Radar finds</button></span>
+ <span class="credits">NASA-ISRO NISAR · CSA RADARSAT-1 · ESA Sentinel-1/2 · ESA WorldCover · USGS · NASA EONET</span>
 </nav>
 <section id="fc" class="panel" hidden aria-label="Compare any two layers">
  <div class="top"><span class="chip">Compare anywhere · pan and zoom freely</span><button class="tog" id="fcx" aria-label="Close">✕</button></div>
@@ -195,6 +201,7 @@ body.freecmp #swipe .tag{top:104px}
  <h3 id="cmpt"></h3>
  <div id="cmptabs" class="row"></div>
  <div class="hero"><b id="cmpn"></b><span id="cmps"></span></div>
+ <div id="cmpchart"></div>
  <p id="cmpwhy" class="why"></p>
  <div id="cmpcol" class="row"></div>
  <p id="cmpsrc" class="src"></p>
@@ -752,6 +759,35 @@ const CASES={
   {tab:"Fringes | photo",L:{img:"/motion/panama_m77/fringes.png",lab:"NISAR interferogram"},R:{s2:["2026-10-10","2026-10-31",1],lab:"Sentinel-2 photo · clearest after the quake"},
    n:"no visible change",s:"in the photo: a whole landscape shifting by centimetres to decimetres is invisible to a camera; radar phase measures it in 11.9 cm bands.",
    why:"A camera records colour and brightness; it cannot see a hillside move by a metre. Radar records the travel time of its own wave."}]}};
+
+const AJ=[73.02795,40.68392,73.24205,40.84608];
+CASES.andijan={title:"1 · Source: the Andijan reservoir, the valley's water tank",bbox:AJ,slides:[
+  {tab:"Radar | photo, 18-19 Oct",colour:true,chart:"andijan",L:{st:"andijan_res",d:"2026-10-18",lab:"NISAR radar · 18 Oct"},R:{s2:["2026-10-19","2026-10-19",0],lab:"Sentinel-2 photo · 19 Oct"},
+   n:"50 → 19 km²",s:"of open water seen by NISAR from mid-July to early October, as the reservoir was drawn down for the cotton fields. Cloud-free Sentinel-2 photos show the same fall (40 → 17 km²); the two curves move together, r = 0.83.",
+   why:"Calm water is a mirror for the 24 cm pulse, so the lake is the darkest thing in the radar picture, through cloud or at night. We learned the darkness cut-off (HH < −16.75 dB) on ONE pass and checked it on 7 passes it never saw: map overlap with the photos IoU 0.49–0.71 (median 0.58).",
+   src:"Radar: NASA-ISRO NISAR GCOV gamma0, calibrated dB (provisional), Lee-filtered, 40 m analysis grid. Check: ESA Sentinel-2 L2A NDWI water on clear days; possible-water zone from ESA WorldCover. tools/water_road.py."},
+  {tab:"July | October radar",colour:true,chart:"andijan",L:{st:"andijan_res",d:"2026-07-14",lab:"NISAR · 14 Jul"},R:{st:"andijan_res",d:"2026-10-06",lab:"NISAR · 6 Oct"},
+   n:"−31 km²",s:"of water between the July and October passes. Where the shore pulled back, the radar sees bare lakebed. Honest limit: in late summer the radar counts ~8.6 km² more water than the photos, most likely smooth wet mud on the new shore.",
+   why:"Wet mud and calm water are both smooth, so both send the pulse away. Only a photo or a second radar band tells them apart, which is why every number here has a photo check next to it.",
+   src:"Radar: NASA-ISRO NISAR GCOV gamma0, calibrated dB (provisional)."}]};
+const FG=[72.27,40.27,72.65,40.55];
+CASES.fergana={title:"2 · Use: the Fergana fields drink it",bbox:null,sci:"fergana",slides:[
+  {tab:"Plants signal: July | October",colour:true,chart:"fergana",colourDefault:"hv",L:{st:"fergana",d:"2026-07-02",lab:"NISAR HV · 2 Jul"},R:{st:"fergana",d:"2026-10-30",lab:"NISAR HV · 30 Oct"},
+   n:"0.81 → 0.65",s:"radar vegetation index (RVI) over ESA WorldCover cropland: high while cotton and maize stand in July, falling after the autumn harvest. The water from the reservoir becomes this green signal.",
+   why:"HV is the echo that comes back turned sideways: leaves and stems scatter the pulse many times, so a full field glows in HV and a harvested field goes dark. RVI = 4·HV/(HH+HV) in power, 0 for bare soil, near 1 for dense plants.",
+   src:"Radar: NASA-ISRO NISAR GCOV gamma0 HH and HV, calibrated, Lee-filtered; cropland mask ESA WorldCover. Honest limit: not yet checked against an optical plant index; canals are narrower than our 40 m grid."},
+  {tab:"Radar | photo",colour:true,chart:"fergana",L:{st:"fergana",d:"2026-10-18",lab:"NISAR · 18 Oct"},R:{s2:["2026-10-12","2026-10-29",1],lab:"Sentinel-2 photo · Oct"},
+   n:"11 passes",s:"every 12 days from June to October, cloud or not: the rhythm of planting, watering and harvest.",why:"Radar brightness follows plant structure and soil water, not colour, so it keeps counting on cloudy days.",src:"Radar: NASA-ISRO NISAR GCOV (provisional)."}]};
+async function cmpChart(kind){const el=$("cmpchart");el.innerHTML="";if(!kind)return;
+ const j=await (await fetch(`/waterroad/${kind==="andijan"?"andijan_res":kind}.json`)).json();const P=j.passes;const W=340,H=96,x=i=>14+i/(P.length-1)*(W-28);
+ const line=(vals,mx,col,dash)=>{const pts=vals.map((v,i)=>v==null?null:[x(i),H-16-v/mx*(H-30)]);let d="";pts.forEach((p,i)=>{if(p)d+=(d&&pts[i-1]?"L":"M")+p[0].toFixed(1)+","+p[1].toFixed(1)});
+  return `<path d="${d}" fill="none" stroke="${col}" stroke-width="2.2" ${dash?'stroke-dasharray="4 3"':""}/>`+pts.map((p,i)=>p?`<circle cx="${p[0]}" cy="${p[1]}" r="2.6" fill="${col}"><title>${P[i].date}: ${vals[i]}</title></circle>`:"").join("")};
+ const ticks=P.map((p,i)=>i%2?"":`<text x="${x(i)}" y="${H-2}" font-size="9" text-anchor="middle" fill="#8A92AA" font-family="ui-monospace,monospace">${p.date.slice(5)}</text>`).join("");
+ if(kind==="andijan"){const r=P.map(p=>p.water_km2),o=P.map(p=>p.s2_water_km2??null),mx=Math.max(...r,...o.filter(v=>v!=null))*1.1;
+  el.innerHTML=`<div class="lg"><span><i style="background:#2563EB"></i>NISAR radar water, km²</span><span><i style="background:#E8590C"></i>Sentinel-2 photo water (clear days)</span></div><svg viewBox="0 0 ${W} ${H}">${line(r,mx,"#2563EB")}${line(o,mx,"#E8590C",1)}${ticks}<text x="4" y="10" font-size="9" fill="#8A92AA" font-family="ui-monospace,monospace">${Math.round(mx)} km²</text></svg>`}
+ else{const v=P.map(p=>p.rvi_crop),mn=Math.min(...v)-0.05,mx=Math.max(...v)+0.03;const sc=v.map(a=>(a-mn)/(mx-mn)*mx);
+  el.innerHTML=`<div class="lg"><span><i style="background:#2E9650"></i>Radar vegetation index over cropland (RVI)</span></div><svg viewBox="0 0 ${W} ${H}">${line(sc,mx,"#2E9650")}${ticks}<text x="4" y="10" font-size="9" fill="#8A92AA" font-family="ui-monospace,monospace">${mx.toFixed(2)}</text><text x="4" y="${H-14}" font-size="9" fill="#8A92AA" font-family="ui-monospace,monospace">${mn.toFixed(2)}</text></svg>`}}
+
 let cmp=null,cmpKind="hh";
 function cmpImgUrl(side){return side.img||sci(side.st,side.d,cmpKind)}
 async function cmpDraw(){if(!cmp)return;const cv=$("swipeimg"),L=cmp.slide.L;if(!cv)return;const W=map.getCanvas().clientWidth,H=map.getCanvas().clientHeight;cv.width=W;cv.height=H;
@@ -767,14 +803,16 @@ async function cmpRight(){const R=cmp.slide.R,b=cmp.bbox,coords=[[b[0],b[3]],[b[
   const sc=(j.scenes||[]).map(x=>`${fmtDate(x.date)} ${x.cloud_pct} % cloud`).join(" · ");$("cmpsrc").textContent=`Photo: ${j.attribution}. Scenes: ${sc}. `+$("cmpsrc").dataset.base;return}
  map.addSource("cmpR",{type:"image",url:cmpImgUrl(R),coordinates:coords});map.addLayer({id:"cmpR",type:"raster",source:"cmpR",paint:{"raster-fade-duration":0}},"labels");
  if(R.over){map.addSource("cmpO",{type:"image",url:R.over,coordinates:coords});map.addLayer({id:"cmpO",type:"raster",source:"cmpO"},"labels")}}
-async function openCase(id,k=0){const c=CASES[id];endDance();$("tour").hidden=true;document.body.classList.remove("touring");document.body.classList.add("comparing");
+async function openCase(id,k=0){const c=CASES[id];endDance();if(typeof closeFree==="function"&&fc)closeFree();
+ if(!c.bbox&&c.sci){const j=await (await fetch(`/science/${c.sci}/frames.json`)).json();c.bbox=j.bbox}
+ if(c.slides[k].colourDefault&&!cmp)cmpKind=c.slides[k].colourDefault;$("tour").hidden=true;document.body.classList.remove("touring");document.body.classList.add("comparing");
  if(!c.bbox&&c.motion){const j=await (await fetch(`/motion/${c.motion}/info.json`)).json();c.bbox=j.bbox}
  cmp={id,c,slide:c.slides[k],bbox:c.slides[k].bbox||c.bbox};document.querySelectorAll(".case").forEach(b=>b.classList.toggle("on",b.dataset.c===id));
  map.setPaintProperty("nisar","raster-opacity",0);if(map.getLayer("sci"))map.setLayoutProperty("sci","visibility","none");if(map.getLayer("motion"))map.setLayoutProperty("motion","visibility","none");
  const S=cmp.slide;$("cmp").hidden=false;$("cmpchip").textContent="Before | after · drag the white bar";$("cmpt").textContent=c.title;
  $("cmptabs").innerHTML=c.slides.map((x,i)=>`<button class="tog${i===k?" on":""}" data-k="${i}">${x.tab}</button>`).join("");
  $("cmptabs").querySelectorAll("button").forEach(b=>b.onclick=()=>openCase(id,+b.dataset.k));
- $("cmpn").textContent=S.n;$("cmps").textContent=S.s;$("cmpwhy").innerHTML=`<b>Why it looks like this:</b> ${S.why}`;
+ $("cmpn").textContent=S.n;cmpChart(S.chart);$("cmps").textContent=S.s;$("cmpwhy").innerHTML=`<b>Why it looks like this:</b> ${S.why}`;
  $("cmpcol").innerHTML=S.colour?`<span class="eyebrow" style="align-self:center">Radar colours</span>`+[["hh","Grey (HH echo)"],["rgb","False colour"],["hv","Plants (HV)"]].map(([v,t])=>`<button class="tog${cmpKind===v?" on":""}" data-v="${v}">${t}</button>`).join("")
   +`<span style="font-size:11.5px;color:var(--ink3);flex-basis:100%">False colour: red = HH (walls, rough ground), green = HV (leaves, branches), blue = HH/HV ratio. NISAR measures HH and HV, so the ratio stands in for the VV channel of the UAVSAR recipe.</span>`:"";
  $("cmpcol").querySelectorAll("button").forEach(b=>b.onclick=()=>{cmpKind=b.dataset.v;openCase(id,k)});
@@ -874,6 +912,10 @@ async function openHires(){const j=await (await fetch("/hires/bosphorus_anchorag
  $("h-dots").onclick=e2=>{const on=e2.target.textContent==="Show dots";e2.target.textContent=on?"Hide dots":"Show dots";["finds-pt","hireslines","hiresships"].forEach(l=>map.getLayer(l)&&map.setLayoutProperty(l,"visibility",on?"visible":"none"))};
  const old=$("fclose").onclick;$("fclose").onclick=()=>{old&&old();["hires","hireslines","hiresships"].forEach(l=>map.getLayer(l)&&map.setLayoutProperty(l,"visibility","none"));map.setPaintProperty("nisar","raster-opacity",radarOp(radarOpacity))}}
 
+$("b-explore").onclick=()=>{const e=$("explore");e.hidden=!e.hidden;$("b-explore").setAttribute("aria-expanded",String(!e.hidden));$("b-explore").textContent=e.hidden?"Explore the world ▾":"Explore the world ▴"};
+$("x-tour").onclick=()=>{closeCase();if(fc)closeFree();$("b-tour")?$("b-tour").click():null};
+$("x-finds").onclick=()=>{closeCase();if(fc)closeFree();openFinds()};
+const FIRST_VISIT=!location.hash;map.once("idle",()=>{if(FIRST_VISIT&&!cmp){const i=$("intro");if(i)i.hidden=true;openCase("andijan")}});
 /* data layers */
 let EV=[],evCat="All",pop=null;
 map.on("load",()=>{
