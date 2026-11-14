@@ -25,3 +25,6 @@ Flood in Chile 1104190 | read failed: "Unable to synchronously open object (obje
 Flood in India, Nepal 1104198 | no NISAR pass before and after | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
 Flood in Costa Rica 1104197 | read failed:  | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
 Flood in Colombia 1104200 | error: HTTP Error 502: Bad Gateway | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Panama 1104204 | mapped | 2026-09-15 -> 2026-09-27 | new water 0.02 km2 | brighter 5.13 | S2 41 % cloud, IoU None
+Flood in Ecuador 1104201 | error: <urlopen error [WinError 10060] A connection attempt failed because the connecte | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Senegal 1104203 | error: HTTP Error 502: Bad Gateway | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
