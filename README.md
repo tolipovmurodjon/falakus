@@ -1,5 +1,7 @@
 # Falakus
 
+> **Team: start with [docs/TEAM.md](docs/TEAM.md)** (story, status, how to run, rules, next steps).
+
 **See how the Earth changes, through cloud and at night, with NASA-ISRO NISAR radar.**
 
 An open, interactive web map built for the NASA Space Apps Challenge 2026, *Dancing with the SARs*.
