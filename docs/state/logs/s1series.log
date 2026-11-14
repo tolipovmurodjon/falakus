@@ -19,3 +19,56 @@
 2025-05 2025-05-17 photo
 2025-06 2025-06-16 photo
 2025-07 2025-07-16 photo
+2025-08 2025-08-15 photo
+2025-09 2025-09-15 photo
+2025-10 2025-10-14 photo
+2025-11 2025-11-14 photo
+2025-12 2025-12-13 
+2026-01 2026-01-13 photo
+2026-02 2026-02-17 
+2026-03 2026-03-14 photo
+2026-04 2026-04-18 
+2026-05 2026-05-13 photo
+2026-06 2026-06-17 photo
+2026-07 2026-07-18 photo
+2026-08 2026-08-17 photo
+2026-09 2026-09-16 photo
+2026-10 2026-10-16 photo
+2026-11 2026-11-09 photo
+{'month': '2023-11', 'date': '2023-11-13', 'sensor': 'Sentinel-1 C-band VV', 's2_date': '2023-11-14', 's2_water_km2': 25.69, 'water_km2': 26.86, 'fit_month': True}
+{'month': '2023-12', 'date': '2023-12-18', 'sensor': 'Sentinel-1 C-band VV', 'water_km2': 25.92}
+{'month': '2024-01', 'date': '2024-01-17', 'sensor': 'Sentinel-1 C-band VV', 's2_date': '2024-01-18', 's2_water_km2': 31.04, 'water_km2': 27.66, 'iou': 0.835}
+{'month': '2024-02', 'date': '2024-02-16', 'sensor': 'Sentinel-1 C-band VV', 'water_km2': 30.84}
+{'month': '2024-03', 'date': '2024-03-17', 'sensor': 'Sentinel-1 C-band VV', 's2_date': '2024-03-18', 's2_water_km2': 30.9, 'water_km2': 34.38, 'iou': 0.775}
+{'month': '2024-04', 'date': '2024-04-16', 'sensor': 'Sentinel-1 C-band VV', 'water_km2': 29.11}
+{'month': '2024-05', 'date': '2024-05-16', 'sensor': 'Sentinel-1 C-band VV', 's2_date': '2024-05-22', 's2_water_km2': 42.68, 'water_km2': 41.26, 'iou': 0.838}
+{'month': '2024-06', 'date': '2024-06-15', 'sensor': 'Sentinel-1 C-band VV', 's2_date': '2024-06-11', 's2_water_km2': 46.18, 'water_km2': 42.57, 'iou': 0.866}
+{'month': '2024-07', 'date': '2024-07-15', 'sensor': 'Sentinel-1 C-band VV', 'water_km2': 46.0}
+{'month': '2024-08', 'date': '2024-08-15', 'sensor': 'Sentinel-1 C-band VV', 's2_date': '2024-08-20', 's2_water_km2': 33.13, 'water_km2': 35.33, 'iou': 0.789}
+{'month': '2024-09', 'date': '2024-09-13', 'sensor': 'Sentinel-1 C-band VV', 'water_km2': 46.36}
+{'month': '2024-10', 'date': '2024-10-14', 'sensor': 'Sentinel-1 C-band VV', 's2_date': '2024-10-19', 's2_water_km2': 33.25, 'water_km2': 25.54, 'iou': 0.476}
+{'month': '2024-11', 'date': '2024-11-18', 'sensor': 'Sentinel-1 C-band VV', 's2_date': '2024-11-23', 's2_water_km2': 38.08, 'water_km2': 35.46, 'iou': 0.879}
+{'month': '2024-12', 'date': '2024-12-13', 'sensor': 'Sentinel-1 C-band VV', 's2_date': '2024-12-13', 's2_water_km2': 94.23, 'water_km2': 32.84, 'iou': 0.343}
+{'month': '2025-01', 'date': '2025-01-17', 'sensor': 'Sentinel-1 C-band VV', 's2_date': '2025-01-12', 's2_water_km2': 61.7, 'water_km2': 37.86, 'iou': 0.53}
+{'month': '2025-02', 'date': '2025-02-16', 'sensor': 'Sentinel-1 C-band VV', 's2_date': '2025-02-21', 's2_water_km2': 83.92, 'water_km2': 49.39, 'iou': 0.443}
+{'month': '2025-03', 'date': '2025-03-18', 'sensor': 'Sentinel-1 C-band VV', 's2_date': '2025-03-18', 's2_water_km2': 35.13, 'water_km2': 36.89, 'iou': 0.836}
+{'month': '2025-04', 'date': '2025-04-17', 'sensor': 'Sentinel-1 C-band VV', 's2_date': '2025-04-12', 's2_water_km2': 36.48, 'water_km2': 38.99, 'iou': 0.862}
+{'month': '2025-05', 'date': '2025-05-17', 'sensor': 'Sentinel-1 C-band VV', 's2_date': '2025-05-17', 's2_water_km2': 45.84, 'water_km2': 44.71, 'iou': 0.887}
+{'month': '2025-06', 'date': '2025-06-16', 'sensor': 'Sentinel-1 C-band VV', 's2_date': '2025-06-21', 's2_water_km2': 45.43, 'water_km2': 46.98, 'iou': 0.855}
+{'month': '2025-07', 'date': '2025-07-16', 'sensor': 'Sentinel-1 C-band VV', 's2_date': '2025-07-18', 's2_water_km2': 39.99, 'water_km2': 43.14, 'iou': 0.798}
+{'month': '2025-08', 'date': '2025-08-15', 'sensor': 'Sentinel-1 C-band VV', 's2_date': '2025-08-10', 's2_water_km2': 27.71, 'water_km2': 41.88, 'iou': 0.53}
+{'month': '2025-09', 'date': '2025-09-15', 'sensor': 'Sentinel-1 C-band VV', 's2_date': '2025-09-14', 's2_water_km2': 21.95, 'water_km2': 26.2, 'iou': 0.641}
+{'month': '2025-10', 'date': '2025-10-14', 'sensor': 'Sentinel-1 C-band VV', 's2_date': '2025-10-14', 's2_water_km2': 22.26, 'water_km2': 46.04, 'iou': 0.436}
+{'month': '2025-11', 'date': '2025-11-14', 'sensor': 'Sentinel-1 C-band VV', 's2_date': '2025-11-18', 's2_water_km2': 19.49, 'water_km2': 25.09, 'iou': 0.595}
+{'month': '2025-12', 'date': '2025-12-13', 'sensor': 'Sentinel-1 C-band VV', 'water_km2': 21.94}
+{'month': '2026-01', 'date': '2026-01-13', 'sensor': 'Sentinel-1 C-band VV', 's2_date': '2026-01-07', 's2_water_km2': 28.98, 'water_km2': 27.86, 'iou': 0.792}
+{'month': '2026-02', 'date': '2026-02-17', 'sensor': 'Sentinel-1 C-band VV', 'water_km2': 30.02}
+{'month': '2026-03', 'date': '2026-03-14', 'sensor': 'Sentinel-1 C-band VV', 's2_date': '2026-03-13', 's2_water_km2': 39.82, 'water_km2': 29.43, 'iou': 0.682}
+{'month': '2026-04', 'date': '2026-04-18', 'sensor': 'Sentinel-1 C-band VV', 'water_km2': 35.9}
+{'month': '2026-05', 'date': '2026-05-13', 'sensor': 'Sentinel-1 C-band VV', 's2_date': '2026-05-14', 's2_water_km2': 41.5, 'water_km2': 38.77, 'iou': 0.856}
+{'month': '2026-06', 'date': '2026-06-17', 'sensor': 'Sentinel-1 C-band VV', 's2_date': '2026-06-23', 's2_water_km2': 41.81, 'water_km2': 41.58, 'iou': 0.886}
+{'month': '2026-07', 'date': '2026-07-18', 'sensor': 'Sentinel-1 C-band VV', 's2_date': '2026-07-16', 's2_water_km2': 37.47, 'water_km2': 41.43, 'iou': 0.742}
+{'month': '2026-08', 'date': '2026-08-17', 'sensor': 'Sentinel-1 C-band VV', 's2_date': '2026-08-20', 's2_water_km2': 20.0, 'water_km2': 36.01, 'iou': 0.48}
+{'month': '2026-09', 'date': '2026-09-16', 'sensor': 'Sentinel-1 C-band VV', 's2_date': '2026-09-14', 's2_water_km2': 18.57, 'water_km2': 31.53, 'iou': 0.515}
+{'month': '2026-10', 'date': '2026-10-16', 'sensor': 'Sentinel-1 C-band VV', 's2_date': '2026-10-19', 's2_water_km2': 21.04, 'water_km2': 42.92, 'iou': 0.418}
+{'month': '2026-11', 'date': '2026-11-09', 'sensor': 'Sentinel-1 C-band VV', 's2_date': '2026-11-08', 's2_water_km2': 17.34, 'water_km2': 50.94, 'iou': 0.385}

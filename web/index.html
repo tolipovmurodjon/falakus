@@ -66,6 +66,7 @@ body.touring #brand .opts{display:none}
 #pticks{position:absolute;left:0;right:0;bottom:0;height:8px}
 #pticks i{position:absolute;bottom:0;width:2px;height:8px;background:var(--ink3);border-radius:1px;transform:translateX(-1px)}
 #pticks i.on{background:var(--mint);height:10px}
+#pinfo{grid-column:1/-1;font:400 12.5px/1.45 var(--sans,system-ui);color:var(--ink);display:grid;gap:4px}#pinfo:empty{display:none}#pinfo .k{font:600 15px var(--mono);color:var(--ink)}#pinfo .d{font:500 11.5px var(--mono);color:var(--ink3)}#pinfo .up{color:#2E9650}#pinfo .dn{color:#C2410C}#pinfo .learn{font-size:11.5px;color:var(--ink2);border-top:1px dashed rgba(120,130,150,.35);padding-top:4px}
 #plegend{font:400 10.5px/1.4 var(--mono);color:var(--ink2);grid-column:1/-1;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
 #plegend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:-1px}
 .maplibregl-popup-content{border-radius:14px;padding:12px 14px;font:400 12.5px/1.45 var(--sans);color:var(--ink);max-width:340px}
@@ -273,6 +274,7 @@ body.freecmp #swipe .tag{top:104px}
   <div id="ptrack"><input type="range" id="prange" min="0" max="0" value="0" aria-label="Pass date"><div id="pticks"></div></div>
   <div style="display:flex;gap:6px;align-items:center"><span id="pband"><button class="tog on" data-b="rgb" title="NASA colour composite">NASA</button><button class="tog" data-b="hh" title="HH only: water dark, cities bright">HH</button><button class="tog" data-b="hv" title="HV only: plants bright">HV</button></span><button class="tog" id="pswipe" aria-pressed="false">Before | after</button><button class="tog" id="pchange" aria-pressed="false">Change map</button><button class="tog" id="pclose" aria-label="Close the time player">✕</button></div>
   <div id="plegend"><span id="pmeta"></span></div>
+  <div id="pinfo" aria-live="polite"></div>
  </section>
 </div>
 
@@ -343,12 +345,26 @@ try{if(!localStorage.getItem("seen")&&!location.hash.includes("/"))intro(true)}c
 const dance={on:false,frames:[],i:0,playing:false,front:"danceA",timer:null,token:0,change:false,track:""};
 let band="rgb";const frameUrl=f=>f.sci?`/science/${f.stop}/img/${f.date}_${band}.webp`:`/api/frame/${f.c}/${f.id}.webp${band==="rgb"?"":"?band="+band}`;
 const coords=b=>[[b[0],b[3]],[b[2],b[3]],[b[2],b[1]],[b[0],b[1]]];
+
+/* what this frame means: the measured numbers for this pass + one plain-words lesson on what the colours are */
+const LEARN={rgb:"Colours: red = HH (rough ground, walls), green = HV (leaves and branches turn the pulse sideways), blue = HH/HV. Black = calm water: a mirror sends the pulse away.",
+ hh:"HH = sent flat, came back flat. Calm water is a mirror, so it goes black; rough ground and buildings come back bright.",
+ hv:"HV = sent flat, came back turned. Only messy things like leaves, stems and branches turn the pulse, so bright HV = plants growing; dark HV after harvest."};
+function passInfo(i){const el=$("pinfo");if(!el)return;const f=dance.frames[i];let h="";
+ const P=dance.wr&&dance.wr.passes;
+ if(P&&f){const k=P.findIndex(p=>p.date===f.date);const p=P[k],q=k>0?P[k-1]:null;
+  if(p){const dw=q?p.water_km2-q.water_km2:null,dr=q&&p.rvi_crop!=null&&q.rvi_crop!=null?p.rvi_crop-q.rvi_crop:null;
+   const big=P.reduce((a,b)=>b.water_km2>a.water_km2?b:a,P[0]);
+   h+=`<div><span class="k">${p.water_km2.toFixed(1)} km²</span> open water on this pass${dw!=null?` · <span class="${dw>=0?"up":"dn"}">${dw>=0?"+":""}${dw.toFixed(1)} km² since ${q.date.slice(5)}</span>`:""}${p.s2_water_km2!=null?` · photo check ${p.s2_water_km2.toFixed(1)} km²${p.iou!=null?`, overlap IoU ${p.iou.toFixed(2)}`:""}`:" · no clear photo this week (clouds): radar only"}</div>`;
+   if(p.rvi_crop!=null)h+=`<div class="d">crop index RVI ${p.rvi_crop.toFixed(2)}${dr!=null?` (${dr>=0?"+":""}${dr.toFixed(2)})`:""} · ${p.rvi_crop>0.78?"fields full of plants":p.rvi_crop>0.68?"plants thinning (harvest starting)":"mostly bare fields after harvest"} · water ${Math.round(p.water_km2/big.water_km2*100)} % of this season's biggest (${big.date.slice(5)})</div>`}}
+ h+=`<div class="learn">${LEARN[typeof band!=="undefined"&&LEARN[band]?band:"rgb"]}</div>`;el.innerHTML=h}
 function setMeta(t){const m=$("pmeta");if(m)m.textContent=t}
 async function startDance(lon,lat,label,stopId){
  const tok=++dance.token;stopPlay();dance.ll=[lon,lat];if(!stopId&&map.getZoom()<8.5)map.flyTo({center:[lon,lat],zoom:9,essential:false});
  $("player").hidden=false;$("pdate").textContent="Loading…";setMeta(`Finding every NISAR pass over ${label||"this spot"}…`);
  let s=null;
  if(stopId)try{const r=await fetch(`/science/${stopId}/frames.json`);if(r.ok){const j=await r.json();s={track:"20 m calibrated",sci:true,frames:j.frames.map(f=>({...f,stop:stopId,time:"",pol:"DHDH",c:"science"}))}}}catch(e){}
+ dance.wr=null;$("pinfo").innerHTML="";if(stopId)try{const r=await fetch(`/waterroad/${stopId.replace(/_all$/,"")}.json`);if(r.ok)dance.wr=await r.json()}catch(e){}
  if(!s)try{s=await (await fetch(`/api/series.json?lon=${lon.toFixed(3)}&lat=${lat.toFixed(3)}`)).json()}catch(e){s={frames:[]}}
  if(tok!==dance.token)return;
  if(!s.frames||!s.frames.length){$("pdate").textContent="No passes";setMeta("NISAR has no public pass here yet (open ocean is not imaged).");return}
@@ -382,6 +398,7 @@ function show(i){
  setMeta(f.sci?`pass ${i+1} of ${dance.frames.length} · science mode · ${f.res||20} m pixels · calibrated dB (provisional) · HH + HV`:`pass ${i+1} of ${dance.frames.length} · ${f.time} UTC · ${pol} · track ${dance.track.replace(/_/g," ")} · ${f.sci?"science mode · 20 m pixels · calibrated dB":f.c.includes("PROVISIONAL")?"preview · ~150 m · provisional":"preview · ~150 m · validated"}`);
  [...$("pticks").children].forEach((t,k)=>t.classList.toggle("on",k===i));
  if(dance.change)showChange();
+ passInfo(i);
 }
 function play(){if(!dance.on)return;dance.playing=true;$("pplay").textContent="Pause";tog($("pplay"),true);clearInterval(dance.timer);
  dance.timer=setInterval(()=>show((dance.i+1)%dance.frames.length),playMs)}
@@ -396,7 +413,7 @@ function showChange(){const a=dance.frames[0],b=dance.frames[dance.i];
   :`<span><i style="background:#E8590C"></i>brighter than on ${fmtDate(a.date)}</span><span><i style="background:#7048E8"></i>darker</span><span>preview brightness, not calibrated dB</span>`)}
 $("pchange").onclick=e=>{dance.change=!dance.change;tog(e.currentTarget,dance.change);if(dance.change){stopPlay();if(dance.i===0&&dance.frames.length>1)show(dance.frames.length-1);else showChange()}else{map.setPaintProperty("diff","raster-opacity",0);legend("")}};
 function endDance(){if(typeof swipeStop==="function")swipeStop();dance.token++;stopPlay();dance.on=false;$("player").hidden=true;["danceA","danceB","diff"].forEach(l=>map.setPaintProperty(l,"raster-opacity",0));map.setPaintProperty("nisar","raster-opacity",radarOp(radarOpacity));dance.change=false;tog($("pchange"),false);legend("")}
-document.querySelectorAll("#pband button").forEach(b=>b.onclick=()=>{band=b.dataset.b;document.querySelectorAll("#pband button").forEach(x=>tog(x,x===b));if(dance.on){dance.frames.forEach(f=>{const im=new Image();im.src=frameUrl(f)});show(dance.i)}});
+document.querySelectorAll("#pband button").forEach(b=>b.onclick=()=>{band=b.dataset.b;if(dance.on)passInfo(dance.i);document.querySelectorAll("#pband button").forEach(x=>tog(x,x===b));if(dance.on){dance.frames.forEach(f=>{const im=new Image();im.src=frameUrl(f)});show(dance.i)}});
 $("pclose").onclick=()=>{endDance();$("tour").hidden=true};
 
 /* tour */
