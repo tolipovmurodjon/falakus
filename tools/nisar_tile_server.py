@@ -697,7 +697,7 @@ class Handler(SimpleHTTPRequestHandler):
                 if "passes" not in j:
                     continue
                 idx.append({"name": j["name"], "bbox": j["bbox"], "source": j.get("source"), "method": j.get("method"),
-                            "passes": [{k: p[k] for k in ("date", "time_utc", "light", "ships") if k in p} for p in j["passes"]]})
+                            "passes": [{k: p[k] for k in ("date", "time_utc", "light", "ships", "sea_km2") if k in p} for p in j["passes"]]})
             return self.send_bytes(json.dumps(idx).encode(), "application/json", cache="no-store")
         mship = re.match(r"^/api/ships/([a-z_]+)\.json$", path)
         if mship:

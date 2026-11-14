@@ -27,3 +27,13 @@ ValueError: operands could not be broadcast together with shapes (1281,2048) (12
 2026-10-31T04  ships  130  night  box seen 100%
 2026-10-30T04  ships  117  night  box seen 100%
 === suez
+2026-11-13T15  ships  108  day    box seen 100%
+2026-11-12T15  ships  140  day    box seen 100%
+Traceback (most recent call last):
+  File "D:\10_projects\falakus\tools\ship_count.py", line 104, in <module>
+    main()
+  File "D:\10_projects\falakus\tools\ship_count.py", line 81, in main
+    mosaic = v if mosaic is None else np.where(np.isfinite(mosaic), mosaic, v)
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: operands could not be broadcast together with shapes (2034,2034) (2034,2034) (2013,2013) 
+=== malacca
