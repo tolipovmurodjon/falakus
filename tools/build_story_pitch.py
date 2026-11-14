@@ -42,13 +42,13 @@ def slides(n):
  <div style="position:absolute;left:52px;right:52px;top:150px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
   <div class="glass" style="padding:22px;display:grid;gap:8px;align-content:start"><b style="font:400 30px/1 var(--mono);color:var(--mint)">1 reservoir</b><h3>feeds the valley</h3><p class="muted" style="font-size:14px">The Andijan reservoir on the Kara Darya stores spring water and releases it June&ndash;September for cotton and wheat in the Fergana valley, Uzbekistan's most crowded region.</p></div>
   <div class="glass" style="padding:22px;display:grid;gap:8px;align-content:start"><b style="font:400 30px/1 var(--mono);color:#C2410C">1 in 3</b><h3>camera visits lost to cloud</h3><p class="muted" style="font-size:14px">Sentinel-2, 2025: 29 of 85 visits were mostly cloud, 15 of 24 in Dec&ndash;Mar, exactly when the spring water budget is planned.</p></div>
-  <div class="glass" style="padding:22px;display:grid;gap:8px;align-content:start"><b style="font:400 30px/1 var(--mono);color:var(--mint)">Aral</b><h3>where the water ends</h3><p class="muted" style="font-size:14px">The same rivers once filled the Aral Sea. Canada's 1997 radar shows open sea; today the eastern basin is dry.</p></div>
+  <div class="glass" style="padding:22px;display:grid;gap:8px;align-content:start"><b style="font:400 30px/1 var(--mono);color:var(--mint)">Aral</b><h3>where the water ends</h3><p class="muted" style="font-size:14px">The valley's Syr Darya ends in the North Aral; the Amu Darya fed the South Aral, now dry in our box: 1,598 km&sup2; of water in 1997, about 1 km&sup2; in 2026.</p></div>
  </div>
  <div class="glass mint-card" style="position:absolute;left:52px;right:52px;top:430px;padding:20px 26px"><p style="font-size:17px"><b>Not another dashboard.</b> A dashboard shows a picture. Falakus gives a basin water manager one checked number every 12 days, says how sure it is, and shows the photo it was checked against.</p></div>""")
     S.append(f"""${{F("02 · the water road","Three chapters, one river, one radar")}}
  <div style="position:absolute;left:52px;right:52px;top:150px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
   <div class="glass tile"><div class="shot"><img src="img/andijan.jpg" alt="reservoir chapter"></div><b>{n['aj_max']:.1f} &rarr; {n['aj_min']:.1f} km&sup2;</b><h4>1 · Source: Andijan reservoir</h4><p>Calm water is a mirror for the radar pulse, so it is black. NISAR counts the black area every pass; photos agree (r = 0.83). By 30 Oct it is refilling: {n['aj_refill']:.0f} km&sup2;.</p></div>
-  <div class="glass tile"><div class="shot"><img src="img/fergana-harvest.jpg" alt="Fergana harvest map: fields whose plant echo fell (red) or rose (green)"></div><b>12.8 % harvested</b><h4>2 · Use: Fergana fields</h4><p>HV is the echo turned sideways by leaves and stems. From 2 Jul to 30 Oct it fell in 12.8 % of the box: fields cut for harvest, seen field by field.</p></div>
+  <div class="glass tile"><div class="shot"><img src="img/fergana-harvest.jpg" alt="Fergana harvest map: fields whose plant echo fell (red) or rose (green)"></div><b>12.8 % lost plant echo</b><h4>2 · Use: Fergana fields</h4><p>HV is the echo turned sideways by leaves and stems. From 2 Jul to 30 Oct it fell in 12.8 % of the box: mostly harvest, seen field by field.</p></div>
   <div class="glass tile"><div class="shot"><img src="img/aral.jpg" alt="Aral 1997 vs 2026"></div><b>1,598 &rarr; 1 km&sup2;</b><h4>3 · End: Aral Sea</h4><p>Water in one 40 &times; 40 km box: all sea in 1997 (Landsat-5), at most 1.1 km&sup2; in 2026 (Sentinel-2). Canada's 1997 radar next to NISAR.</p></div>
  </div>""")
     S.append("""${F("03 · how we know it is right","Every number has an outside check, and we show where we fail")}
@@ -68,7 +68,7 @@ def slides(n):
   <p class="cap">Flood watch: NASA's EONET flood list, each event checked with the NISAR pass before and after it.</p>
  </div>
  <div style="position:absolute;left:720px;right:52px;top:150px;display:grid;gap:12px">
-  <div class="glass mint-card" style="padding:20px"><b style="font:400 38px/1 var(--mono)">{n['fl_n']}</b><p style="margin-top:8px;font-size:14px">NASA flood events checked so far; {n['fl_map']} had a NISAR pass on both sides. Blue = new open water, magenta = brighter (flooded plants or wet soil, a candidate).</p></div>
+  <div class="glass mint-card" style="padding:20px"><b style="font:400 38px/1 var(--mono)">{n['fl_n']}</b><p style="margin-top:8px;font-size:14px">NASA flood events checked so far; {n['fl_map']} had a NISAR pass on both sides. Honest result: most show almost no new water, because NASA's point marks the district, not the field, and floods often drain before the next 12-day pass. Clear hit: Senegal, 0.94 km&sup2;.</p></div>
   <div class="glass" style="padding:18px 20px"><p class="lab">Also in Explore</p><p style="font-size:14px">16,691 NISAR frames on a world map · compare any two layers anywhere · Langtang landslide under cloud · Panama quake fringes with a control pair · ships and oil-slick candidates.</p></div>
  </div>""")
     S.append("""${F("05 · who acts on it","From a radar echo to a decision")}
@@ -96,6 +96,7 @@ def slides(n):
 def main():
     t = bp.TEMPLATE.read_text(encoding="utf-8")
     head = t[: t.index('<main class="stage"')].replace("<style>", bp.CSS + "<style>", 1)
+    head = head.replace("<title>PAGEL Jarvis Audit</title>", "")
     tail = t[t.index('const stage=document.getElementById("stage");'):]
     tail = tail[: tail.index('document.getElementById("copy").onclick')]
     body = ["S.push(`" + s + "`);" for s in slides(nums())]

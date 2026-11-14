@@ -231,7 +231,7 @@ body.comparing #datatime{bottom:28px}body.freecmp #datatime,body.touring #datati
 </section>
 <section id="cmp" class="panel" hidden aria-label="Before and after">
  <div class="top"><span class="chip" id="cmpchip"></span><button class="tog" id="cmpx" aria-label="Close">✕</button></div>
- <p id="cmplede"><b>Falakus</b> · NASA-ISRO's new NISAR radar watches Central Asia's water every 12 days, through cloud and at night. Every number is checked against photos.</p>
+ <p id="cmplede"><b>Falakus</b> · NASA-ISRO's new NISAR radar watches Central Asia's water every 12 days, through cloud and at night. Every water and crop number is checked against photos.</p>
  <h3 id="cmpt"></h3>
  <div id="cmptabs" class="row"></div>
  <div class="hero"><b id="cmpn"></b><span id="cmps"></span></div>
@@ -447,8 +447,9 @@ function show(i){
  if(dance.change)showChange();
  passInfo(i);
 }
-function play(){if(!dance.on)return;dance.playing=true;$("pplay").textContent="Pause";tog($("pplay"),true);clearInterval(dance.timer);
- dance.timer=setInterval(()=>show((dance.i+1)%dance.frames.length),playMs)}
+const stepPlay=()=>{if(dance.i>=dance.frames.length-1){stopPlay();$("pplay").textContent="Replay";return}show(dance.i+1)};
+function play(){if(!dance.on)return;if(dance.i>=dance.frames.length-1)show(0);dance.playing=true;$("pplay").textContent="Pause";tog($("pplay"),true);clearInterval(dance.timer);
+ dance.timer=setInterval(stepPlay,playMs)}
 function stopPlay(){dance.playing=false;clearInterval(dance.timer);$("pplay").textContent="Play";tog($("pplay"),false)}
 $("pplay").onclick=()=>dance.playing?stopPlay():play();
 $("prange").oninput=e=>{stopPlay();show(+e.target.value)};
@@ -461,7 +462,7 @@ function showChange(){const a=dance.frames[0],b=dance.frames[dance.i];
 $("pchange").onclick=e=>{dance.change=!dance.change;tog(e.currentTarget,dance.change);if(dance.change){stopPlay();if(dance.i===0&&dance.frames.length>1)show(dance.frames.length-1);else showChange()}else{map.setPaintProperty("diff","raster-opacity",0);legend("")}};
 function endDance(){map.setMaxZoom(22);document.body.classList.remove("playing");if(typeof swipeStop==="function")swipeStop();dance.token++;stopPlay();dance.on=false;$("player").hidden=true;["danceA","danceB","diff"].forEach(l=>map.setPaintProperty(l,"raster-opacity",0));map.setPaintProperty("nisar","raster-opacity",radarOp(radarOpacity));dance.change=false;tog($("pchange"),false);legend("")}
 document.querySelectorAll("#pband button").forEach(b=>b.onclick=()=>{band=b.dataset.b;if(dance.on)passInfo(dance.i);document.querySelectorAll("#pband button").forEach(x=>tog(x,x===b));if(dance.on){dance.frames.forEach(f=>{const im=new Image();im.src=frameUrl(f)});show(dance.i)}});
-$("pclose").onclick=()=>{endDance();$("tour").hidden=true};
+$("pclose").onclick=()=>{const back=dance.from;dance.from=null;endDance();$("tour").hidden=true;if(back)openCase(back)};
 
 /* tour */
 let tourI=-1;
@@ -758,7 +759,7 @@ const cleanTitle=t=>String(t||"").replace(/\s+\d{5,}$/,"");
 map.on("moveend",()=>{if(!dance.on||!dance.ll||!$("tour").hidden)return;const c=map.getCenter();if(Math.abs(c.lng-dance.ll[0])>3||Math.abs(c.lat-dance.ll[1])>3||map.getZoom()<4)endDance()});
 const radarOp=v=>["interpolate",["linear"],["zoom"],11,v,13.5,v*0.7];
 let playMs=2200;
-$("op-speed").oninput=e=>{playMs=+e.target.value;if(dance.timer){clearInterval(dance.timer);dance.timer=setInterval(()=>show((dance.i+1)%dance.frames.length),playMs)}};
+$("op-speed").oninput=e=>{playMs=+e.target.value;if(dance.timer){clearInterval(dance.timer);dance.timer=setInterval(stepPlay,playMs)}};
 $("op-base").oninput=e=>{const v=+e.target.value/100;["sat","s2","light"].forEach(l=>map.getLayer(l)&&map.setPaintProperty(l,"raster-brightness-max",v))};
 const setVis=(ids,on)=>ids.forEach(l=>map.getLayer(l)&&map.setLayoutProperty(l,"visibility",on?"visible":"none"));
 $("t-labels").onclick=e=>{const on=e.target.getAttribute("aria-pressed")!=="true";tog(e.target,on);e.target.setAttribute("aria-pressed",String(on));setVis(["labels"],on)};
@@ -806,10 +807,10 @@ const CASES={
   {tab:"Radar | camera, same day",colour:true,L:{st:"langtang",d:"2026-08-31",lab:"NISAR radar · 31 Aug"},R:{s2:["2026-08-31","2026-08-31",0],lab:"Sentinel-2 camera · 31 Aug"},
    n:"89 % cloud",s:"in the Sentinel-2 photo taken the same day as the NISAR pass. The camera sees cloud; the radar sees the valley.",
    why:"Radar is a flashlight, not a camera: it sends its own microwave pulse, and 24 cm waves pass through cloud and work at night."}]},
- aral:{title:"3 · End: the Aral Sea, where the rivers used to arrive",bbox:AR,slides:[
+ aral:{title:"3 · End of the line: the Aral Sea",bbox:AR,slides:[
   {tab:"1997 | 2026 radar",bbox:[57.5,43.6,62.0,46.9],L:{img:"/history/aral/rs1_19970716_wide.png",lab:"RADARSAT-1 (Canada) · 16 Jul 1997"},R:{layer:"nisar",lab:"NISAR (NASA-ISRO) · Oct 2026"},
    n:"1,598 → 1 km²",s:"of open water in the yellow 40 × 40 km box: all of it was sea in summer 1997 (Landsat-5 photos, 22 Jul – 23 Aug), at most 1.1 km² in 2026 (Sentinel-2, every clear day Jun – Oct). Left, Canada's 1997 radar; right, NISAR 2026.",
-   why:"Both are radar and both see through cloud, so water vs land is a fair comparison: open water is smooth (dark), dry seabed and salt crust are rough and bright. Brightness itself is not comparable: RADARSAT-1 is 5.6 cm C-band, uncalibrated, ~100 m pixels; NISAR is 24 cm L-band, calibrated.",
+   why:"Where the water goes: the Fergana valley's rivers join the Syr Darya, which ends in the North Aral; a dam built in 2005 has partly refilled that small northern sea. The box here is in the South Aral's eastern basin, fed by the Amu Darya, Uzbekistan's other great river. Both rivers were taken for irrigation upstream, and this basin is where it shows most. The km² come from photos (Landsat-5, Sentinel-2): NISAR's water rule is fooled here by wet salt crust, which is as smooth as water. Both images are radar and see through cloud; brightness itself is not comparable: RADARSAT-1 is 5.6 cm C-band, uncalibrated, ~100 m pixels; NISAR is 24 cm L-band, calibrated.",
    src:"Radar: CSA RADARSAT-1 ScanSAR Wide (Open Government Licence – Canada, open archive on AWS; uncalibrated, relative brightness, placed with 15 ground control points) and NASA-ISRO NISAR GCOV previews (provisional), ASF DAAC."},
   {tab:"1997 radar | 2026 photo",bbox:[57.5,43.6,62.0,46.9],L:{img:"/history/aral/rs1_19970716_wide.png",lab:"RADARSAT-1 · 16 Jul 1997"},R:{s2:["2026-10-12","2026-10-29",1],lab:"Sentinel-2 photo · Oct 2026"},
    n:"a sea → a desert",s:"Drag the bar: the 1997 shoreline on the left sits tens of kilometres out in today's white salt flats on the right.",
@@ -831,33 +832,33 @@ const CASES={
 
 const AJ=[73.02795,40.68392,73.24205,40.84608];
 CASES.andijan={title:"1 · Source: the Andijan reservoir, the valley's water tank",bbox:AJ,slides:[
-  {tab:"Radar | photo, October",colour:true,chart:"andijan",L:{st:"andijan_res",d:"2026-10-18",lab:"NISAR radar · 18 Oct"},R:{s2:["2026-10-12","2026-10-26",1],lab:"Sentinel-2 photo · clearest, mid-Oct"},
-   n:"50.5 → 19.3 km²",s:"of open water seen by NISAR on 14 Jul and 6 Oct, as the reservoir was drawn down for the cotton fields; by 30 Oct it was refilling (33 km²). Cloud-free Sentinel-2 photos show the same fall (40 → 17 km²); the two curves move together, r = 0.83.",
-   why:"Calm water is a mirror for the 24 cm pulse, so the lake is the darkest thing in the radar picture, through cloud or at night. We learned the darkness cut-off (HH < −16.75 dB) on ONE pass and checked it on 7 passes it never saw: map overlap with the photos IoU 0.49–0.71 (median 0.58). Using every NISAR orbit that crosses the lake gives 42 looks in 4.5 months, one every 3 days, and still r = 0.82 against 30 photo days.",
+  {tab:"Radar | photo, 6 Oct",colour:true,chart:"andijan",L:{st:"andijan_res",d:"2026-10-06",lab:"NISAR radar · 6 Oct"},R:{s2:["2026-10-04","2026-10-08",1],baked:"andijan_oct6",lab:"Sentinel-2 photo · clearest, 4–8 Oct"},
+   n:"50.5 → 19.3 km²",s:"of open water seen by NISAR on 14 Jul and 6 Oct (both checked against photos), as the reservoir was drawn down for the cotton fields. Cloud-free Sentinel-2 photos show the same fall (40 → 17 km²); the two curves move together, r = 0.83.",
+   why:"Calm water is a mirror for the 24 cm pulse, so the lake is the darkest thing in the radar picture, through cloud or at night. We learned the darkness cut-off (HH < −16.75 dB) on ONE pass and checked it on 7 passes it never saw: map overlap with the photos IoU 0.49–0.71 (median 0.58). r = 0.83 is for these 8 photo days on one orbit track. Water is only counted inside the lake basin (ESA WorldCover water + 1 km), which keeps the dark radar shadows of the hills out. As a cross-check, all NISAR orbits that cross the lake give 42 looks in 4.5 months (every ~3 days) and r = 0.82 against 30 photo days; those mix viewing angles, so they are a check, not the headline. The low point is 6 Oct: the 24 Sep pass reads 16.3 km², but the lake was wind-roughened that day.",
    src:"Radar: NASA-ISRO NISAR GCOV gamma0, calibrated dB (provisional), Lee-filtered, 40 m analysis grid. Check: ESA Sentinel-2 L2A NDWI water on clear days; possible-water zone from ESA WorldCover. tools/water_road.py."},
-  {tab:"Cloudy day, 24 Sep",colour:true,chart:"andijan",L:{st:"andijan_res",d:"2026-09-24",lab:"NISAR radar · 24 Sep"},R:{s2:["2026-09-24","2026-09-24",0],lab:"Sentinel-2 photo · 24 Sep · 100 % cloud"},
+  {tab:"Cloudy day, 24 Sep",colour:true,chart:"andijan",L:{st:"andijan_res",d:"2026-09-24",lab:"NISAR radar · 24 Sep"},R:{s2:["2026-09-24","2026-09-24",0],baked:"andijan_cloudy",lab:"Sentinel-2 photo · 24 Sep · 100 % cloud"},
    n:"100 % cloud",s:"in the camera photo on 24 Sep 2026, the same day NISAR passed. The photo shows only cloud; the radar still shows the whole lake. In 2025, 1 in 3 camera visits here were mostly cloud, and 15 of 24 in December to March.",
    why:"Clouds are tiny water drops, far smaller than NISAR's 24 cm wave, so the pulse goes straight through them, like sound through fog. NISAR also brings its own light, so night does not matter either. Honest note: that day was windy; waves roughen the lake and make the radar count less water (16 km²).",
    src:"Radar: NASA-ISRO NISAR GCOV, 24 Sep 2026 (provisional). Photo: ESA Sentinel-2 L2A, 24 Sep 2026, scene cloud 100 %. Cloud count 2025: Sentinel-2 scenes over the reservoir, scene cloud > 50 %."},
   {tab:"July | October radar",colour:true,chart:"andijan",L:{st:"andijan_res",d:"2026-07-14",lab:"NISAR · 14 Jul"},R:{st:"andijan_res",d:"2026-10-06",lab:"NISAR · 6 Oct"},
-   n:"−31 km²",s:"of water between the July and October passes. Where the shore pulled back, the radar sees bare lakebed. Honest limit: in late summer the radar counts ~8.6 km² more water than the photos, most likely smooth wet mud on the new shore.",
+   n:"−31 km²",s:"of water between the July and October passes. Where the shore pulled back, the radar sees bare lakebed. Honest limit: in late summer the radar counts more water than the photos, 8.6 km² on average over 8 photo days and up to 13.5 km² on 19 Aug, most likely smooth wet mud on the new shore. The same explains 30 Oct: the radar reads 33 km², but photos on 8 Nov show only 17 km².",
    why:"Wet mud and calm water are both smooth, so both send the pulse away. Only a photo or a second radar band tells them apart, which is why every number here has a photo check next to it.",
    src:"Radar: NASA-ISRO NISAR GCOV gamma0, calibrated dB (provisional)."},
-  {tab:"3 years + next 3 months",colour:true,chart:"forecast",L:{st:"andijan_res",d:"2026-10-18",lab:"NISAR radar · 18 Oct"},R:{s2:["2026-10-12","2026-10-26",1],lab:"Sentinel-2 photo · mid-Oct"},
+  {tab:"3-year record + forecast",colour:true,chart:"forecast",L:{st:"andijan_res",d:"2026-10-18",lab:"NISAR radar · 18 Oct"},R:{s2:["2026-10-12","2026-10-26",1],baked:"andijan_midoct",lab:"Sentinel-2 photo · mid-Oct"},
    n:"≈ 23 → 29 km²",s:"forecast for Dec 2026 → Feb 2027 as the reservoir refills over winter (error band ±2 to ±4 km²). Each autumn it ends lower: 33 km² in Oct 2024, 19 km² in Nov 2025, 17 km² in Nov 2026 (photo-measured).",
    why:"A small machine-learning model (ridge regression) learns the yearly rhythm from 3 years of monthly radar and photos: the time of year, last month, and the same month a year ago. We tested it on every month of 2026 without letting it see that month first: average miss 2.3 km², better than 'same as last year' (3.3) or 'same as last month' (4.3). It missed August 2026 most (said 31, real 20): the water was let out earlier than in past years.",
-   src:"Monthly values Nov 2023 – Nov 2026: Sentinel-2 photo water on clear months (snow masked); other months ESA Sentinel-1 C-band radar, corrected by the photo-vs-radar fit of the same season. NISAR starts Jun 2026 here. tools/s1_series.py, tools/forecast_reservoir.py. Honest limit: only 2 years to learn from."}]};
+   src:"3 years of monthly values, Nov 2023 – Nov 2026; the model learns from the first 2 (to Dec 2025) and is tested on 2026. Sentinel-2 photo water on clear months (snow masked); other months ESA Sentinel-1 C-band radar, corrected by the photo-vs-radar fit of the same season. NISAR starts Jun 2026 here. tools/s1_series.py, tools/forecast_reservoir.py. Honest limits: only 2 years to learn from; winter values come from photos and corrected C-band radar (ice and frozen soil change radar echoes, so frozen months lean on photos)."}]};
 const FG=[72.27,40.27,72.65,40.55];
 CASES.fergana={title:"2 · Use: the Fergana fields drink it",bbox:null,sci:"fergana",slides:[
   {tab:"Harvest map, Jul → Oct",colour:true,chart:"fergana",colourDefault:"hv",L:{st:"fergana",d:"2026-07-02",lab:"NISAR HV · 2 Jul"},R:{img:"/waterroad/fergana_hvchange.png",lab:"Change in the plant echo, 2 Jul → 30 Oct"},
-   n:"12.8 % harvested",s:"of the 30 × 30 km box lost its plant echo between 2 Jul and 30 Oct (red): fields cut for harvest. 9.4 % gained it (green): most likely a second crop or winter wheat coming up. You can see it field by field.",
-   why:"HV is the echo that comes back turned sideways. Leaves and stems turn the pulse, so when a field is cut, its HV drops. We averaged 5 × 5 pixels (100 m) to calm the radar speckle and marked fields that changed by more than 2 dB, about a third weaker or stronger. Grey fields did not change much.",
+   n:"12.8 % lost plant echo",s:"of the 30 × 30 km box lost its plant echo between 2 Jul and 30 Oct (red): mostly harvest; a drying field or stopped watering also lowers it. 9.4 % gained it (green): most likely a second crop or winter wheat coming up. You can see it field by field.",
+   why:"HV is the echo that comes back turned sideways. Leaves and stems turn the pulse, so when a field is cut, its HV drops. We averaged 5 × 5 pixels (100 m) to calm the radar speckle and marked fields that changed by more than 2 dB, about 1.6 times weaker or stronger. Grey fields did not change much.",
    src:"Radar: NASA-ISRO NISAR GCOV HV, 2 Jul and 30 Oct 2026 (provisional), 20 m pixels, 5 × 5 average. tools/hv_change.py. Check: over the same cropland, the radar crop index follows the Sentinel-2 plant index (NDVI) pass by pass, r = 0.58 (11 passes)."},
   {tab:"Plants signal: July | October",colour:true,chart:"fergana",colourDefault:"hv",L:{st:"fergana",d:"2026-07-02",lab:"NISAR HV · 2 Jul"},R:{st:"fergana",d:"2026-10-30",lab:"NISAR HV · 30 Oct"},
    n:"0.81 → 0.65",s:"radar vegetation index (RVI) over ESA WorldCover cropland: high while cotton and maize stand in July, falling after the autumn harvest. The water from the reservoir becomes this green signal.",
    why:"HV is the echo that comes back turned sideways: leaves and stems scatter the pulse many times, so a full field glows in HV and a harvested field goes dark. RVI = 4·HV/(HH+HV) in power, 0 for bare soil, near 1 for dense plants.",
    src:"Radar: NASA-ISRO NISAR GCOV gamma0 HH and HV, calibrated, Lee-filtered; cropland mask ESA WorldCover. Honest limit: not yet checked against an optical plant index; canals are narrower than our 40 m grid."},
-  {tab:"Radar | photo",colour:true,chart:"fergana",L:{st:"fergana",d:"2026-10-18",lab:"NISAR · 18 Oct"},R:{s2:["2026-10-12","2026-10-29",1],lab:"Sentinel-2 photo · Oct"},
+  {tab:"Radar | photo",colour:true,chart:"fergana",L:{st:"fergana",d:"2026-10-18",lab:"NISAR · 18 Oct"},R:{s2:["2026-10-12","2026-10-29",1],baked:"fergana_oct",lab:"Sentinel-2 photo · Oct"},
    n:"11 passes",s:"every 12 days from June to October, cloud or not: the rhythm of planting, watering and harvest.",why:"Radar brightness follows plant structure and soil water, not colour, so it keeps counting on cloudy days.",src:"Radar: NASA-ISRO NISAR GCOV (provisional)."}]};
 async function cmpChart(kind){const el=$("cmpchart");el.innerHTML="";if(!kind)return;
  if(kind==="forecast"){const j=await (await fetch("/forecast/andijan_res.json")).json();const S=j.series,F=j.forecast,all=[...S.map(s=>({m:s.month,v:s.km2,f:s.from})),...F.map(f=>({m:f.month,v:f.km2,b:f.band_km2,fc:1}))];
@@ -890,6 +891,9 @@ function cmpBox(b){const d={type:"FeatureCollection",features:b?[{type:"Feature"
 function cmpClearRight(){["cmpR","cmpO","cmpS2"].forEach(id=>{if(map.getLayer(id))map.removeLayer(id);if(map.getSource(id))map.removeSource(id)})}
 async function cmpRight(){const R=cmp.slide.R,b=cmp.bbox,coords=[[b[0],b[3]],[b[2],b[3]],[b[2],b[1]],[b[0],b[1]]];cmpClearRight();
  if(R.layer==="nisar"){map.setPaintProperty("nisar","raster-opacity",0.95);return}
+ if(R.baked){try{const pj=await (await fetch("/waterroad/photos.json")).json(),m=pj[R.baked];if(m&&(await fetch(`/waterroad/photo_${R.baked}.png`,{method:"HEAD"})).ok){if(!cmp||cmp.slide.R!==R)return;
+  map.addSource("cmpS2",{type:"image",url:`/waterroad/photo_${R.baked}.png`,coordinates:coords});map.addLayer({id:"cmpS2",type:"raster",source:"cmpS2",paint:{"raster-fade-duration":0}},"labels");
+  $("cmpsrc").textContent=`Photo: Sentinel-2 L2A (Copernicus, ESA) via Microsoft Planetary Computer, ${fmtDate(m.date)}: ${m.box_cloud_pct!=null?m.box_cloud_pct+" % cloud inside the box, ":""}${m.scene_cloud_pct} % in the whole scene. `+$("cmpsrc").dataset.base;return}}catch(e){}}
  if(R.s2){const q=`w=${b[0]}&s=${b[1]}&e=${b[2]}&n=${b[3]}&start=${R.s2[0]}&end=${R.s2[1]}&clearest=${R.s2[2]}`;const j=await (await fetch("/api/s2.json?"+q)).json();if(!cmp||cmp.slide.R!==R||!j.tiles)return;
   if(j.box)map.addSource("cmpS2",{type:"image",url:j.box.url,coordinates:coords});else map.addSource("cmpS2",{type:"raster",tiles:j.tiles,tileSize:256,bounds:b,attribution:j.attribution});
   map.addLayer({id:"cmpS2",type:"raster",source:"cmpS2",paint:{"raster-fade-duration":0}},"labels");
@@ -909,7 +913,7 @@ async function openCase(id,k=0){const c=CASES[id];map.setMaxZoom(14.5);if(map.ge
  const PLAY={andijan:"andijan_res",fergana:"fergana",aral:"aral",langtang:"langtang"}[id];
  $("cmpplayrow").innerHTML=PLAY?`<button class="btn" id="cmpplay">▶ Play every pass (time-lapse)</button>`:"";
  if(PLAY)$("cmpplay").onclick=async()=>{const fr=await (await fetch(`/science/${PLAY}/frames.json`)).json();const b=fr.bbox;closeCase();
-  map.fitBounds([[b[0],b[1]],[b[2],b[3]]],{padding:{top:90,bottom:150,left:40,right:40},duration:600});setTimeout(()=>startDance((b[0]+b[2])/2,(b[1]+b[3])/2,c.title,PLAY),700)};$("cmps").textContent=S.s;$("cmpwhy").innerHTML=`<b>Why it looks like this:</b> ${S.why}`;
+  map.fitBounds([[b[0],b[1]],[b[2],b[3]]],{padding:{top:90,bottom:150,left:40,right:40},duration:600});setTimeout(()=>{startDance((b[0]+b[2])/2,(b[1]+b[3])/2,c.title,PLAY);dance.from=id},700)};$("cmps").textContent=S.s;$("cmpwhy").innerHTML=`<b>Why it looks like this:</b> ${S.why}`;
  $("cmpcol").innerHTML=S.colour?`<span class="eyebrow" style="align-self:center">Radar colours</span>`+[["hh","Grey (HH echo)"],["rgb","False colour"],["hv","Plants (HV)"]].map(([v,t])=>`<button class="tog${cmpKind===v?" on":""}" data-v="${v}">${t}</button>`).join("")
   +`<span style="font-size:11.5px;color:var(--ink3);flex-basis:100%">False colour: red = HH (walls, rough ground), green = HV (leaves, branches), blue = HH/HV ratio. NISAR measures HH and HV, so the ratio stands in for the VV channel of the UAVSAR recipe.</span>`:"";
  $("cmpcol").querySelectorAll("button").forEach(b=>b.onclick=()=>{cmpKind=b.dataset.v;openCase(id,k)});
@@ -920,7 +924,7 @@ async function openCase(id,k=0){const c=CASES[id];map.setMaxZoom(14.5);if(map.ge
  map.once("moveend",()=>{const W=map.getCanvas().clientWidth,b=cmp.bbox,cx=(map.project([b[0],b[3]]).x+map.project([b[2],b[1]]).x)/2;swipeX=Math.min(.9,Math.max(.1,cx/W));cmpDraw();cmpApply()});cmpDraw();cmpApply()}
 function closeCase(){map.setMaxZoom(22);cmp=null;cmpClearRight();cmpBox(null);$("cmp").hidden=true;$("swipe").hidden=true;document.body.classList.remove("comparing");document.querySelectorAll(".case").forEach(b=>b.classList.remove("on"));
  map.setPaintProperty("nisar","raster-opacity",radarOp(radarOpacity));if(map.getLayer("sci"))map.setLayoutProperty("sci","visibility","visible")}
-document.querySelectorAll(".case[data-c]").forEach(b=>b.onclick=()=>{closeFree();cmp&&cmp.id===b.dataset.c?closeCase():openCase(b.dataset.c)});
+document.querySelectorAll(".case[data-c]").forEach(b=>b.onclick=()=>{closeFree();openCase(b.dataset.c)});
 $("cmpx").onclick=closeCase;
 map.on("move",()=>{if(cmp){cmpDraw();cmpApply()}});
 
