@@ -802,9 +802,9 @@ const CASES={
   {tab:"Radar | camera, same day",colour:true,L:{st:"langtang",d:"2026-08-31",lab:"NISAR radar · 31 Aug"},R:{s2:["2026-08-31","2026-08-31",0],lab:"Sentinel-2 camera · 31 Aug"},
    n:"89 % cloud",s:"in the Sentinel-2 photo taken the same day as the NISAR pass. The camera sees cloud; the radar sees the valley.",
    why:"Radar is a flashlight, not a camera: it sends its own microwave pulse, and 24 cm waves pass through cloud and work at night."}]},
- aral:{title:"Aral Sea, Uzbekistan–Kazakhstan: a sea that is gone",bbox:AR,slides:[
+ aral:{title:"3 · End: the Aral Sea, where the rivers used to arrive",bbox:AR,slides:[
   {tab:"1997 | 2026 radar",bbox:[57.5,43.6,62.0,46.9],L:{img:"/history/aral/rs1_19970716_wide.png",lab:"RADARSAT-1 (Canada) · 16 Jul 1997"},R:{layer:"nisar",lab:"NISAR (NASA-ISRO) · Oct 2026"},
-   n:"29 years",s:"Left, 1997: the Large Aral Sea is one body of water around Vozrozhdeniya Island. Right, 2026: the eastern basin is dry seabed. Yellow box: the 40 × 40 km area we measure.",
+   n:"1,598 → 1 km²",s:"of open water in the yellow 40 × 40 km box: all of it was sea in summer 1997 (Landsat-5 photos, 22 Jul – 23 Aug), at most 1.1 km² in 2026 (Sentinel-2, every clear day Jun – Oct). Left, Canada's 1997 radar; right, NISAR 2026.",
    why:"Both are radar and both see through cloud, so water vs land is a fair comparison: open water is smooth (dark), dry seabed and salt crust are rough and bright. Brightness itself is not comparable: RADARSAT-1 is 5.6 cm C-band, uncalibrated, ~100 m pixels; NISAR is 24 cm L-band, calibrated.",
    src:"Radar: CSA RADARSAT-1 ScanSAR Wide (Open Government Licence – Canada, open archive on AWS; uncalibrated, relative brightness, placed with 15 ground control points) and NASA-ISRO NISAR GCOV previews (provisional), ASF DAAC."},
   {tab:"1997 radar | 2026 photo",bbox:[57.5,43.6,62.0,46.9],L:{img:"/history/aral/rs1_19970716_wide.png",lab:"RADARSAT-1 · 16 Jul 1997"},R:{s2:["2026-10-12","2026-10-29",1],lab:"Sentinel-2 photo · Oct 2026"},
