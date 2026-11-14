@@ -10,3 +10,5 @@ Flood in Islamic Republic of Iran 1104147 | mapped | 2026-09-03 -> 2026-09-15 | 
 Flood in Germany 1104150 | mapped | 2026-09-01 -> 2026-09-13 | new water 0.0 km2 | brighter 50.72 | S2 50 % cloud, IoU None
 Flood in France 1104149 | mapped | 2026-08-30 -> 2026-09-11 | new water 0.0 km2 | brighter 0.0 | S2 47 % cloud, IoU 0.0
 Flood in Spain 1104151 | mapped | 2026-08-29 -> 2026-09-10 | new water 0.0 km2 | brighter 0.01 | S2 1 % cloud, IoU 0.0
+Flood in Slovenia 1104152 | mapped | 2026-09-04 -> 2026-09-16 | new water 0.01 km2 | brighter 0.01 | S2 55 % cloud, IoU None
+Flood in Bangladesh 1104156 | no NISAR pass before and after | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None

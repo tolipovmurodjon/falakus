@@ -19,7 +19,7 @@ Repo: github.com/tolipovmurodjon/falakus (private, branch overnight, Zaynobiddin
 - Story screen live: top bar 1 Andijan reservoir / 2 Fergana fields / 3 Aral Sea + Explore menu; chapter 1 auto-opens on first visit; chart radar vs Sentinel-2 km2. Task board: docs/state/PLAN.md (bottom).
 
 ## Next steps
-0. Check ch.2 Fergana + ch.3 Aral in Chrome; draw the Aral box; wire Explore -> Flood watch (x-floods button has no handler yet).
+0. DONE: ch.2 colour, Aral box outline, Flood watch view, Andijan stop rewritten (id andijan_res). NEXT: judge bug case->tour freeze (closeCase must leave no hooks), phone 390 px check, then fresh judge round 4 (Opus agent, Chrome, own tab) -> fix lowest.
 1. When flood_watch finishes: look at 3 PNGs by eye, add "Flood watch" list+map in Explore (label: new open water vs wetter/flooded-vegetation candidates; S2 check).
 2. Build the one-screen story (Andijan reservoir chart r=0.83 + photo/radar swipe; Fergana HV/RVI heartbeat; Aral 1997 vs 2026).
 3. Rewrite Andijan stop text; fix judge open problems; fresh judge; deck + 30 s video; public link needs Boss yes.
