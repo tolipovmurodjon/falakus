@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.0.0/dist/maplibre-gl.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;800&display=swap">
 <style>
-:root{--ink:#0F1630;--ink2:#4B5470;--ink3:#6B7390;--line:#E6E9F1;--mint:#1C7E69;--mint2:#23A06C;--mint-s:rgba(28,126,105,.12);--amber:#B45309;
+:root{--ink:#0F1630;--ink2:#4B5470;--ink3:#6B7390;--line:#E6E9F1;--mint:#17515F;--mint2:#17515F;--mint-s:rgba(28,126,105,.12);--amber:#B45309;
  --glass:rgba(255,255,255,.84);--sans:"Inter Tight",system-ui,"Segoe UI",sans-serif;--mono:ui-monospace,"Cascadia Mono",Consolas,monospace}
 *{box-sizing:border-box}[hidden]{display:none!important}html,body{margin:0;height:100%;font:400 14px/1.45 var(--sans);color:var(--ink);background:#0b0f1c;overflow:hidden}
 #map{position:fixed;inset:0}
@@ -19,10 +19,10 @@ h1,h2,h3{margin:0;letter-spacing:-.02em;text-wrap:balance}
 .tog{all:unset;cursor:pointer;font:500 12px/1 var(--sans);padding:8px 11px;border-radius:999px;background:rgba(15,22,48,.06);color:var(--ink2);white-space:nowrap}
 .tog.on{background:var(--mint);color:#fff}
 .tog:focus-visible,.btn:focus-visible,.ev:focus-visible{outline:2px solid var(--mint);outline-offset:2px}
-.btn{all:unset;cursor:pointer;font:600 13.5px/1 var(--sans);padding:12px 16px;border-radius:999px;background:linear-gradient(150deg,#1C7E69,#23A06C);color:#fff;box-shadow:0 10px 22px -12px rgba(28,126,105,.8);text-align:center}
+.btn{all:unset;cursor:pointer;font:600 13.5px/1 var(--sans);padding:12px 16px;border-radius:999px;background:linear-gradient(150deg,#17515F,#17515F);color:#fff;box-shadow:0 10px 22px -12px rgba(28,126,105,.8);text-align:center}
 .btn.ghost{background:rgba(15,22,48,.06);color:var(--ink);box-shadow:none}
 .row{display:flex;align-items:center;gap:6px;margin-top:9px;flex-wrap:wrap}
-input[type=range]{accent-color:#1C7E69}
+input[type=range]{accent-color:#17515F}
 #brand{left:14px;top:14px;padding:14px 16px;width:340px}
 #brand h1{font-size:19px;font-weight:800;margin-top:2px}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px}
@@ -175,6 +175,26 @@ body.playing #brand,body.playing #powers,body.playing #howto,body.playing #datat
 body.comparing #datatime{bottom:28px}body.freecmp #datatime,body.touring #datatime,body.opts-open #datatime{display:none}
 @media (max-width:640px){#datatime{display:none}.maplibregl-ctrl-top-right{top:64px!important}}
 #cmplede{margin:0 0 6px;font-size:13px;line-height:1.4;color:var(--ink2)}#cmplede b{color:var(--ink)}
+
+/* ===== FALAK design system (from the team's app.css): warm paper, white cards, deep-water blue, one soft shadow, no glow, tabular numbers ===== */
+:root{--ink:#14120D;--ink2:#514B3F;--ink3:#8A8171;--line:#E5DFD2;--mint:#17515F;--mint2:#0F3A45;--mint-s:#E4EDEF;--amber:#C9A961;
+ --glass:#FFFFFF;--paper:#F6F3ED;--paper2:#FBF9F5;--fk-shadow:0 1px 2px rgba(20,18,13,.05),0 4px 12px rgba(20,18,13,.04);--fk-pop:0 1px 2px rgba(20,18,13,.06),0 8px 24px rgba(20,18,13,.08);
+ --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,"Helvetica Neue",Arial,sans-serif}
+.panel{background:#fff;-webkit-backdrop-filter:none;backdrop-filter:none;border:1px solid var(--line);border-radius:10px;box-shadow:var(--fk-pop)}
+#cases{background:var(--paper)!important;border:1px solid var(--line)!important;box-shadow:var(--fk-shadow)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;border-radius:10px!important}
+.btn{background:var(--mint);box-shadow:none;border-radius:6px;font-weight:600;transition:background .15s}.btn:hover{background:var(--mint2)}
+.btn.ghost{background:var(--paper);border:1px solid var(--line)}
+.tog{background:var(--paper);border:1px solid var(--line);border-radius:6px;color:var(--ink2);transition:background .15s,border-color .15s}
+.tog:hover{border-color:#CFC7B6}.tog.on{background:var(--mint);border-color:var(--mint);color:#fff}
+.case{border-radius:6px!important}.case.ghost{border-style:dashed!important}
+.chip{border-radius:999px;background:var(--mint-s)!important;color:var(--mint)!important}
+#cmpn,.hero b,#pinfo .k,.stats b{font-variant-numeric:tabular-nums}
+#cmp,#tour,#fc,#scikey,#player{background:#fff}
+.eyebrow{color:var(--ink3)}
+#cases{flex-wrap:nowrap!important;padding:6px 8px!important;gap:6px!important}#cases .case{padding:8px 11px!important;font-size:13px!important;white-space:nowrap}
+#cases .credits{display:none!important}@media (max-width:1500px){#cases .eyebrow{display:none!important}}
+#explore:not([hidden]){display:flex!important;position:absolute;top:calc(100% + 6px);right:0;flex-wrap:wrap;gap:6px;width:420px;padding:8px;background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:var(--fk-pop)}
+#cases{position:absolute}
 </style>
 </head>
 <body>
@@ -493,7 +513,7 @@ async function loadIntel(s){const tok=tourI;let d=null;
    return}
   $("intel").innerHTML=`<p class="eyebrow">Measured from the radar · ${p.length} passes · preview estimate</p><p style="font-size:13.5px;margin:4px 0 8px">${sent}</p>
    <p class="eyebrow" style="text-transform:none;letter-spacing:0">Open water, km²</p>${spark(p,"water_km2","#2563EB","km²")}
-   <p class="eyebrow" style="text-transform:none;letter-spacing:0">Plant signal (HV), 0-255</p>${spark(p,"hv","#1C7E69","")}
+   <p class="eyebrow" style="text-transform:none;letter-spacing:0">Plant signal (HV), 0-255</p>${spark(p,"hv","#17515F","")}
    <p style="font-size:11px;color:var(--ink3);margin-top:4px">${esc(d.note)}.</p>`}
 
 
@@ -553,8 +573,8 @@ $("b-draw").onclick=()=>{drawing={a:null};tog($("b-draw"),true);map.getCanvas().
  toast("Press and drag a box on the map (up to 25 x 25 km).")};
 function boxGeo(a,b){return {type:"Feature",geometry:{type:"Polygon",coordinates:[[[a.lng,a.lat],[b.lng,a.lat],[b.lng,b.lat],[a.lng,b.lat],[a.lng,a.lat]]]}}}
 map.on("load",()=>{map.addSource("area",{type:"geojson",data:{type:"FeatureCollection",features:[]}});
- map.addLayer({id:"area-fill",type:"fill",source:"area",paint:{"fill-color":"#1C7E69","fill-opacity":0.08}});
- map.addLayer({id:"area-line",type:"line",source:"area",paint:{"line-color":"#1C7E69","line-width":2,"line-dasharray":[2,1.5]}})});
+ map.addLayer({id:"area-fill",type:"fill",source:"area",paint:{"fill-color":"#17515F","fill-opacity":0.08}});
+ map.addLayer({id:"area-line",type:"line",source:"area",paint:{"line-color":"#17515F","line-width":2,"line-dasharray":[2,1.5]}})});
 map.on("mousedown",e=>{if(!drawing)return;drawing.a=e.lngLat});
 map.on("mousemove",e=>{if(!drawing||!drawing.a)return;map.getSource("area").setData(boxGeo(drawing.a,e.lngLat))});
 map.on("mouseup",e=>{if(!drawing||!drawing.a)return;const a=drawing.a,b=e.lngLat;drawing=null;tog($("b-draw"),false);map.getCanvas().style.cursor="";map.dragPan.enable();
@@ -674,8 +694,8 @@ function evSize(e){if(!e.mag)return "";
 /* Radar finds: oil-slick candidates off Baku and plane-sized objects at Tashkent airport (Sentinel-1, no login) */
 function findsLayers(){if(map.getSource("finds"))return;
  map.addSource("finds",{type:"geojson",data:{type:"FeatureCollection",features:[]}});
- map.addLayer({id:"finds-fill",type:"fill",source:"finds",filter:["==",["geometry-type"],"Polygon"],paint:{"fill-color":"#1C7E69","fill-opacity":0.12}});
- map.addLayer({id:"finds-line",type:"line",source:"finds",filter:["==",["geometry-type"],"Polygon"],paint:{"line-color":"#1C7E69","line-width":1.5}});
+ map.addLayer({id:"finds-fill",type:"fill",source:"finds",filter:["==",["geometry-type"],"Polygon"],paint:{"fill-color":"#17515F","fill-opacity":0.12}});
+ map.addLayer({id:"finds-line",type:"line",source:"finds",filter:["==",["geometry-type"],"Polygon"],paint:{"line-color":"#17515F","line-width":1.5}});
  map.addLayer({id:"finds-pt",type:"circle",source:"finds",filter:["==",["geometry-type"],"Point"],paint:{"circle-radius":["coalesce",["get","r"],5],"circle-color":["coalesce",["get","c"],"#7048E8"],"circle-opacity":0.8,"circle-stroke-color":"#fff","circle-stroke-width":1}})}
 function findsPanel(html){endDance();const T=$("tour");T.hidden=false;document.body.classList.add("touring");T.innerHTML=html;
  $("fclose").onclick=()=>{T.hidden=true;document.body.classList.remove("touring");map.getSource("finds").setData({type:"FeatureCollection",features:[]})}}
@@ -1013,7 +1033,7 @@ map.on("load",()=>{
  fetch("/api/status.json").then(r=>r.json()).then(s=>{$("st-frames").textContent=s.frames.toLocaleString("en");
   const d0=new Date(s.window[0]+"T00:00Z"),d1=new Date(s.window[1]+"T00:00Z");$("st-window").textContent=d0.getUTCDate()+"-"+d1.toLocaleDateString("en-GB",{day:"numeric",month:"short",timeZone:"UTC"})}).catch(()=>{});
  map.addSource("frames",{type:"geojson",data:"/api/frames.geojson"});
- map.addLayer({id:"frames-fill",type:"fill",source:"frames",paint:{"fill-color":"#1C7E69","fill-opacity":0}},"danceA");
+ map.addLayer({id:"frames-fill",type:"fill",source:"frames",paint:{"fill-color":"#17515F","fill-opacity":0}},"danceA");
  map.addLayer({id:"frames-line",type:"line",source:"frames",layout:{visibility:"none"},paint:{"line-color":"#7CF5D2","line-width":0.7,"line-opacity":0.55}},"labels");
  map.addSource("tracks",{type:"geojson",data:{type:"FeatureCollection",features:[]}});
  map.addLayer({id:"tracks",type:"line",source:"tracks",paint:{"line-color":["get","color"],"line-width":1.6,"line-opacity":0.75,"line-dasharray":[2,1.5]}});

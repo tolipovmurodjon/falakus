@@ -17,3 +17,5 @@ Flood in El Salvador 1104189 | no NISAR pass before and after | None -> None | n
 Flood in Cote d&#039;Ivoire 1104194 | no NISAR pass before and after | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
 Flood in Guatemala 1104188 | error: HTTP Error 502: Bad Gateway | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
 Flood in Nigeria 1104186 | mapped | 2026-09-12 -> 2026-09-24 | new water 0.0 km2 | brighter 0.08 | S2 100 % cloud, IoU None
+Flood in Argentina 1104192 | read failed: "Unable to synchronously open object (object 'frequencyA' doesn't exist)" | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Ukraine 1104193 | mapped | 2026-09-12 -> 2026-09-24 | new water 0.0 km2 | brighter 0.51 | S2 0 % cloud, IoU 0.0

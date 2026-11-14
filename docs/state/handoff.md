@@ -22,7 +22,14 @@ Repo: github.com/tolipovmurodjon/falakus (private, branch overnight, Zaynobiddin
 - ALOS PALSAR (L-band like NISAR, 2006-2011, 28 scenes over the reservoir incl. HH+HV Jun/Aug/Oct 2008) returns 401 "Pre authorization required".
   Fix: log in at https://urs.earthdata.nasa.gov -> Applications -> Authorized Apps -> approve "Alaska Satellite Facility Data Access"; then open https://search.asf.alaska.edu once and accept the ALOS terms. Then run: python tools/alos_series.py andijan_res 73.135 40.765 73.0279 40.6839 73.2421 40.8461
 
+## Done 15 Nov 01:00-02:00 (see git log)
+- Judge round 4 = 5.0/10 (fresh website-design-auditor). Fixed: phone nav row, front-door line, Explore menu closes (now a dropdown card), calm Play mode, dated headline, flood list sorted + no layer leak, settings reachable on phone, zoom cap + sharp 20 m pixels in all radar views, photo cut to exactly the box at native 10 m + cloud % inside the box.
+- New: cloudy-day slide (24 Sep 2026, photo 100 % cloud vs NISAR), time-lapse frame info (water/crops + plain HH/HV lesson), data timeline panel, ML forecast slide (ridge, walk-forward 2026: MAE 2.3 km2 vs 3.3 seasonal / 4.3 persistence; Dec-Feb 22.6/26.9/29.4 km2), 7-slide story deck docs/deck/story.html (tools/build_story_pitch.py), Falak design system tokens from Zaynobiddin's static.zip (warm paper, #17515F, one shadow).
+- Measured: Sentinel-1 2023-2026 monthly (median IoU 0.79, autumn mud over-count), all-tracks NISAR 42 passes r 0.82 vs photo, RVI vs NDVI r 0.578 (n 11), cloudy camera visits 2025: 29/85 (34 %), Dec-Mar 15/24.
+- Zaynobiddin will send his latest design repo; old Zaynobiddin33/Falak is outdated (mock data) -> do not use.
+
 ## Next steps
+- A. Put '42 NISAR looks, all orbits, r 0.82' into chapter 1 text. B. Aral chapter: lead with a measured number (judge #8). C. Fergana: show HV change map so the change is visible (judge #7). D. Fresh judge round 5. E. 30 s video storyboard + record. F. Deck: add forecast + cloudy slide numbers.
 -1. RUNNING: tools/s1_series.py andijan_res (Sentinel-1 monthly Nov 2023-Nov 2026, log docs/state/logs/s1series.log, out data/s1series/andijan_res/*.png + andijan_res.json). When done: serve /s1series/ route, add a 3-year chart (S1 monthly water km2 + NISAR 12-day + S2 points) and a multi-year time-lapse button to story ch.1 (Boss: 'timelapse for all time, 1-2 years, like Google Earth'). Case->tour freeze NOT reproduced (0 errors). Time-lapse button per chapter added (NISAR passes).
 0. DONE: ch.2 colour, Aral box outline, Flood watch view, Andijan stop rewritten (id andijan_res). NEXT: judge bug case->tour freeze (closeCase must leave no hooks), phone 390 px check, then fresh judge round 4 (Opus agent, Chrome, own tab) -> fix lowest.
 1. When flood_watch finishes: look at 3 PNGs by eye, add "Flood watch" list+map in Explore (label: new open water vs wetter/flooded-vegetation candidates; S2 check).
