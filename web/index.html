@@ -87,7 +87,8 @@ body.touring #brand .opts{display:none}
 #scikey i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
 #scikey .sw{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 #scikey small{display:block;color:var(--ink3);margin-top:6px;font-size:11px}
-body.touring #scikey{right:430px}
+body.touring #scikey{right:auto;left:18px;bottom:28px}
+body.touring #howto{display:none}
 @media (max-width:640px){#scikey{left:8px;right:8px;bottom:150px;max-width:none}}
 
 #powers{position:absolute;left:18px;bottom:72px;z-index:4;max-width:360px}
@@ -98,6 +99,20 @@ body.touring #scikey{right:430px}
 body.touring #powers{display:none}
 @media (max-width:640px){#powers{display:none}}
 .promise{margin:4px 0 10px;font:500 14px/1.4 var(--sans);color:var(--ink2);max-width:330px}
+
+.hero{margin:2px 0 10px}.hero b{display:block;font:700 38px/1 var(--mono);letter-spacing:-.02em;color:var(--ink)}.hero span{display:block;margin-top:6px;font:500 12.5px/1.4 var(--sans);color:var(--ink2)}
+#tour .grid p{font-size:14.5px;line-height:1.5}
+.stats span{font-size:11.5px!important}
+
+@media (max-width:640px){
+ body.touring #brand{display:none}
+ body.touring #tour{bottom:170px;max-height:36vh}
+ body.touring .maplibregl-ctrl-top-right{top:64px}
+ body.touring #scikey{left:8px;right:8px;top:8px;bottom:auto;padding:6px 10px}
+ body.touring #scikey .sw,body.touring #scikey small,body.touring #scikey b{display:none}
+ body.touring #scikey .row{margin-top:0;gap:8px;font-size:11.5px}
+ #brand .promise{font-size:13px;margin-bottom:6px}
+}
 </style>
 </head>
 <body>
@@ -121,8 +136,8 @@ body.touring #powers{display:none}
   <div><b id="st-window">6-17 Oct</b><span>one 12-day cycle</span></div>
   <div><b id="st-revisit">12 days</b><span>NISAR revisit, day or night</span></div>
  </div>
- <div class="row"><button class="btn" id="b-tour">Start the tour</button><button class="tog" id="b-intro">What is this?</button><button class="tog" id="b-draw">Draw an area</button></div>
- <div class="opts">
+ <div class="row"><button class="btn" id="b-tour">Start the tour</button><button class="tog" id="b-intro">What is this?</button><button class="tog" id="b-draw">Draw an area</button><button class="tog" id="b-layers" aria-expanded="false">Layers</button></div>
+ <div class="opts" id="opts" hidden>
   <div class="row"><button class="tog on" id="t-radar" aria-pressed="true">Radar</button><input type="range" id="op" min="0" max="100" value="90" aria-label="Radar opacity" style="width:110px"><button class="tog" id="t-frames" aria-pressed="false">Pass outlines</button></div>
   <div class="row"><span class="eyebrow" style="margin-right:2px">Radar</span><button class="tog on" id="r-nisar">NISAR L-band</button><button class="tog" id="r-s1">Sentinel-1 C-band</button></div>
   <div class="row"><span class="eyebrow" style="margin-right:2px">Base</span><button class="tog on" id="b-sat">Photo</button><button class="tog" id="b-s2">Sentinel-2</button><button class="tog" id="b-light">Map</button><button class="tog" id="t-events">Event list</button><button class="tog" id="t-globe">Globe</button></div>
@@ -181,7 +196,7 @@ body.touring #powers{display:none}
  <ul>
   <li><b>01</b><span>The map shows <b>every NISAR radar pass of one 12-day cycle</b> (6-17 Oct 2026): 16,691 frames, the whole world.</span></li>
   <li><b>02</b><span>Tap any place, or an event, to <b>play every pass there</b> since NISAR began. That is the surface "dancing" over time.</span></li>
-  <li><b>03</b><span>The tour visits 10 places, from <b>Uzbekistan</b> to the Amazon, and says what changes, why, and which radar channel shows it.</span></li>
+  <li><b>03</b><span>The tour visits <span id="nstops">16</span> places in two chapters (Water road, World), from <b>Uzbekistan</b> to the Amazon, and says what changes, why, and which radar channel shows it.</span></li>
  </ul>
  <div class="row"><button class="btn" id="i-tour">Start the tour</button><button class="btn ghost" id="i-close">Explore the world</button></div>
 </section>
@@ -264,7 +279,9 @@ async function startDance(lon,lat,label,stopId){
  show(0);
  setTimeout(()=>{if(tok===dance.token)play()},900);
 }
-function drawTicks(){const n=dance.frames.length;$("pticks").innerHTML=dance.frames.map((f,k)=>`<i title="${f.date}" style="left:${n>1?k/(n-1)*100:0}%"></i>`).join("")}
+function drawTicks(){const fs=dance.frames;if(!fs.length)return;const t0=Date.parse(fs[0].date),t1=Date.parse(fs.at(-1).date),pos=d=>t1>t0?(Date.parse(d)-t0)/(t1-t0)*100:0;
+ const s=STOPS[tourI];const ev=dance.on&&s&&s.eventDate&&Date.parse(s.eventDate)>=t0&&Date.parse(s.eventDate)<=t1?`<i title="event ${s.eventDate}" style="left:${pos(s.eventDate)}%;background:#B42318;height:16px;top:-3px;width:3px"></i>`:"";
+ $("pticks").innerHTML=fs.map(f=>`<i title="${f.date}" style="left:${pos(f.date)}%"></i>`).join("")+ev}
 function show(i){
  const f=dance.frames[i];if(!f)return;dance.i=i;$("prange").value=i;
  const back=dance.front==="danceA"?"danceB":"danceA";
@@ -296,7 +313,7 @@ $("pclose").onclick=()=>{endDance();$("tour").hidden=true};
 let tourI=-1;
 function tourGo(i){tourI=(i+STOPS.length)%STOPS.length;const s=STOPS[tourI];intro(false);document.body.classList.add("touring");
  $("tour").hidden=false;
- $("tour").innerHTML=`<div class="top"><span class="chip">${tourI+1} / ${STOPS.length} · ${esc(s.kind)}</span><div class="nav"><button class="tog" id="tprev" aria-label="Previous stop">‹ Back</button><button class="tog on" id="tnext">Next ›</button><button class="tog" id="tclose" aria-label="Close the tour">✕</button></div></div>
+ $("tour").innerHTML=`<div class="top"><span class="chip">${esc(s.chapter||"")} · ${tourI+1} / ${STOPS.length} · ${esc(s.kind)}</span><div class="nav"><button class="tog" id="tprev" aria-label="Previous stop">‹ Back</button><button class="tog on" id="tnext">Next ›</button><button class="tog" id="tclose" aria-label="Close the tour">✕</button></div></div>
   <p class="eyebrow" style="margin-top:8px">${esc(s.place)}</p><h3>${esc(s.title)}</h3>
   <div id="intel" style="margin-top:10px"><p class="eyebrow">Measured from the radar</p><p style="font-size:12.5px;color:var(--ink3)">Measuring every pass…</p></div>
   <div class="grid" style="margin-top:10px"><p><span class="lab">What you see</span>${esc(s.what)}</p><p><span class="lab">Why it changes</span>${esc(s.driver)}</p>
@@ -323,7 +340,10 @@ async function loadIntel(s){const tok=tourI;let d=null;
  const p=d.points,a=p[0],b=p.at(-1),dw=b.water_km2-a.water_km2,pct=a.water_km2>1?Math.round(dw/a.water_km2*100):null,dhv=d.science?(b.hv-a.hv):Math.round((b.hv-a.hv)/Math.max(a.hv,1)*100),dhvTxt=d.science?`${dhv>0?"+":""}${dhv.toFixed(1)} dB`:`${dhv>0?"+":""}${dhv} %`;
  const wmax=p.reduce((m,x)=>x.water_km2>m.water_km2?x:m,p[0]),wmin=p.reduce((m,x)=>x.water_km2<m.water_km2?x:m,p[0]);
  const sent=`In a ${d.box_km} × ${d.box_km} km box, dark open water ranged from <b>${wmin.water_km2} km²</b> (${fmtDate(wmin.date)}) to <b>${wmax.water_km2} km²</b> (${fmtDate(wmax.date)}) over ${p.length} passes; first pass ${a.water_km2} km², last ${b.water_km2} km². Plant signal (HV) first to last: ${dhvTxt}.${d.science?"":" Preview-based: wind on water and dry smooth sand also look dark, so read the range, not one date."}`;
- $("intel").innerHTML=`<p class="eyebrow">Measured from the radar · ${p.length} passes · ${d.science?"calibrated dB":"preview estimate"}</p><p style="font-size:13.5px;margin:4px 0 8px">${sent}</p>
+ const hero=d.science&&p[0].classes_km2?(()=>{const theme={Reservoir:"water",Water:"water",Wetland:"water",Flood:"water",Canal:"plants",Crops:"plants","Forest loss":"plants",Wildfire:"plants",City:"built"}[s.kind];
+  const k=theme?[theme,b.classes_km2[theme]-a.classes_km2[theme]]:["water","built","plants"].map(c=>[c,b.classes_km2[c]-a.classes_km2[c]]).sort((x,y)=>Math.abs(y[1])-Math.abs(x[1]))[0];
+  const nm={water:"calm water",built:"very bright ground",plants:"plant cover"}[k[0]];return `<div class="hero"><b>${k[1]>=0?"+":"−"}${Math.abs(k[1]).toFixed(1)} km²</b><span>${nm}, ${fmtDate(a.date)} → ${fmtDate(b.date)} · ${d.box_km} × ${d.box_km} km box · ${p.length} calibrated passes</span></div>`})():"";
+ $("intel").innerHTML=hero+`<p class="eyebrow">Measured from the radar · ${p.length} passes · ${d.science?"calibrated dB":"preview estimate"}</p><p style="font-size:13.5px;margin:4px 0 8px">${sent}</p>
   <p class="eyebrow" style="text-transform:none;letter-spacing:0">Open water, km²</p>${spark(p,"water_km2","#2563EB","km²")}
   <p class="eyebrow" style="text-transform:none;letter-spacing:0">Plant signal (HV)${d.science?", dB":", 0-255"}</p>${spark(p,"hv","#1C7E69","")}
   <p style="font-size:11px;color:var(--ink3);margin-top:4px">${esc(d.note)}.</p>`}
@@ -436,6 +456,10 @@ $("r-nisar").onclick=()=>setRadar("nisar");$("r-s1").onclick=()=>setRadar("s1");
 let mapReady=false;map.on("load",()=>{mapReady=true});
 map.on("zoomend",()=>{const z=map.getZoom();if(z>15.6&&!$("scikey").hidden)toast("Radar detail is 20 m: zoom out (to ~13) to see it; at this zoom you see the photo.")});
 
+
+$("b-layers").onclick=()=>{const o=$("opts");o.hidden=!o.hidden;tog($("b-layers"),!o.hidden);$("b-layers").setAttribute("aria-expanded",String(!o.hidden))};
+
+if($("nstops"))$("nstops").textContent=STOPS.length;
 /* data layers */
 let EV=[],evCat="All",pop=null;
 map.on("load",()=>{
