@@ -30,7 +30,7 @@ def slides(n):
   <p class="muted" style="font-size:17px">We built a free, open tool that measures the water every 12 days with NASA-ISRO NISAR radar, through cloud and at night, and checks every number against photos.</p>
   <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
    <div class="kpi warn"><b>34 %</b><span>of 2025 camera visits to the reservoir were mostly cloud (63 % in Dec&ndash;Mar)</span></div>
-   <div class="kpi"><b>{n['aj_max']:.0f} &rarr; {n['aj_min']:.0f} km&sup2;</b><span>reservoir water NISAR measured, 14 Jul &rarr; 6 Oct 2026</span></div>
+   <div class="kpi"><b>{n['aj_max']:.1f} &rarr; {n['aj_min']:.1f} km&sup2;</b><span>reservoir water NISAR measured, 14 Jul &rarr; 6 Oct 2026</span></div>
    <div class="kpi"><b>r = 0.83</b><span>radar vs cloud-free photos</span></div>
   </div>
  </div>
@@ -47,15 +47,17 @@ def slides(n):
  <div class="glass mint-card" style="position:absolute;left:52px;right:52px;top:430px;padding:20px 26px"><p style="font-size:17px"><b>Not another dashboard.</b> A dashboard shows a picture. Falakus gives a basin water manager one checked number every 12 days, says how sure it is, and shows the photo it was checked against.</p></div>""")
     S.append(f"""${{F("02 · the water road","Three chapters, one river, one radar")}}
  <div style="position:absolute;left:52px;right:52px;top:150px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
-  <div class="glass tile"><div class="shot"><img src="img/andijan.jpg" alt="reservoir chapter"></div><b>{n['aj_max']:.0f} &rarr; {n['aj_min']:.0f} km&sup2;</b><h4>1 · Source: Andijan reservoir</h4><p>Calm water is a mirror for the radar pulse, so it is black. NISAR counts the black area every pass; photos agree (r = 0.83). By 30 Oct it is refilling: {n['aj_refill']:.0f} km&sup2;.</p></div>
-  <div class="glass tile"><div class="shot"><img src="img/fergana-hv.jpg" alt="Fergana fields in HV"></div><b>RVI {n['rvi0']:.2f} &rarr; {n['rvi1']:.2f}</b><h4>2 · Use: Fergana fields</h4><p>HV is the echo turned sideways by leaves and stems. It glows while cotton grows and fades after harvest: the water becomes crops.</p></div>
-  <div class="glass tile"><div class="shot"><img src="img/aral.jpg" alt="Aral 1997 vs 2026"></div><b>1997 &#8644; 2026</b><h4>3 · End: Aral Sea</h4><p>Canada's RADARSAT-1 in 1997 next to NISAR in 2026: radar against radar, 29 years apart, no clouds in either.</p></div>
+  <div class="glass tile"><div class="shot"><img src="img/andijan.jpg" alt="reservoir chapter"></div><b>{n['aj_max']:.1f} &rarr; {n['aj_min']:.1f} km&sup2;</b><h4>1 · Source: Andijan reservoir</h4><p>Calm water is a mirror for the radar pulse, so it is black. NISAR counts the black area every pass; photos agree (r = 0.83). By 30 Oct it is refilling: {n['aj_refill']:.0f} km&sup2;.</p></div>
+  <div class="glass tile"><div class="shot"><img src="img/fergana-harvest.jpg" alt="Fergana harvest map: fields whose plant echo fell (red) or rose (green)"></div><b>12.8 % harvested</b><h4>2 · Use: Fergana fields</h4><p>HV is the echo turned sideways by leaves and stems. From 2 Jul to 30 Oct it fell in 12.8 % of the box: fields cut for harvest, seen field by field.</p></div>
+  <div class="glass tile"><div class="shot"><img src="img/aral.jpg" alt="Aral 1997 vs 2026"></div><b>1,598 &rarr; 1 km&sup2;</b><h4>3 · End: Aral Sea</h4><p>Water in one 40 &times; 40 km box: all sea in 1997 (Landsat-5), at most 1.1 km&sup2; in 2026 (Sentinel-2). Canada's 1997 radar next to NISAR.</p></div>
  </div>""")
     S.append("""${F("03 · how we know it is right","Every number has an outside check, and we show where we fail")}
  <div class="glass" style="position:absolute;left:52px;right:52px;top:150px;padding:20px 26px">
  <table><thead><tr><th>claim</th><th>outside check</th><th>result</th></tr></thead><tbody>
   <tr><td><b>Reservoir water area</b></td><td>Sentinel-2 photo water (NDWI) on clear days, 8 passes</td><td>areas track each other r = 0.83; radar over-counts ~8.6 km&sup2; in late summer (wet mud)</td></tr>
   <tr><td><b>The water rule is not tuned to the answer</b></td><td>cut-off learned on ONE pass, tested on 7 it never saw</td><td>map overlap IoU 0.49&ndash;0.71, median 0.58</td></tr>
+  <tr><td><b>Forecast, Dec &ndash; Feb</b></td><td>ML model tested on every 2026 month it never saw</td><td>miss 2.3 km&sup2; vs 3.3 (same as last year) and 4.3 (same as last month)</td></tr>
+  <tr><td><b>Crop signal</b></td><td>Sentinel-2 plant index (NDVI) on the same fields, 11 passes</td><td>r = 0.58: same rise and fall, weaker in midsummer</td></tr>
   <tr><td><b>Ships found by our 10 m detector</b></td><td>a 0.5 m ICEYE radar image of the Bosphorus, 5 h later</td><td>5 of 12 dots on ships you can see; 1 false (breakwater)</td></tr>
   <tr><td><b>Where it fails (shown, not hidden)</b></td><td>same water rule on the Aral salt flats and Fergana canals</td><td>salt crust is as smooth as water; canals are narrower than a 20 m pixel</td></tr>
   <tr><td><b>Data status</b></td><td>NASA's own labels</td><td>NISAR provisional before 21 Oct 2026; data gap 27 Jul&ndash;10 Aug</td></tr>
