@@ -23,6 +23,12 @@ Deadline: Sun 15 Nov 2026 23:59 local. Plan: docs/state/PLAN.md (approved 14 Nov
 - GUNW (ground motion): tools/gunw_read.py written; Kumamoto pair 20260721->20260814 returned 403 Forbidden from ASF CloudFront (needs check: maybe GUNW requires separate EULA/app approval). NISAR permanent gap 2026-07-27..08-10.
 - Europe holes in world map: CMR has ~350 frames/cycle over 0-40E,45-60N; index kept 280; partial frames rejected in load_preview. Fix candidate: place partial frames by full footprint (test first).
 
+## Added ~23:00
+- Ground motion WORKS: tools/gunw_read.py panama_m77 (pair 20261002->20261014, 80 m, ~100 cm LOS, fringes.png/los.png in data/motion/). Kumamoto file 403 (that file only; Rogun GUNW opens). In Radar finds.
+- ML: tools/ml_landcover.py (RF on NISAR time-series features vs ESA WorldCover via PC, leave-one-place-out). First run: ML beats rules at tashkent 0.60 vs 0.48, andijan 0.58 vs 0.26, fergana 0.66 vs 0.36; aral 0.00 (98 % bare, model calls dry seabed water/crops: needs bare examples), langtang 0.24 (mountains). Results data/ml/landcover_results.json. Next: more places as lane finishes, add pooled score, show in app.
+- Map settings panel; theme-aware measured card; page broke once from duplicate const (parse check rule in CLAUDE.md).
+- Cache data/full cleared with Boss's yes (2 GB). Science lane running again (tashkent missing passes first).
+
 ## Next steps
 1. Verify Radar finds in Chrome (slick + apron), commit.
 2. GUNW 403: test another pair / check ASF EULA; if blocked, write in DECISIONS and show wrapped phase from a pair that works.

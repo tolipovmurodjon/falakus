@@ -576,8 +576,9 @@ async function openFinds(){let html=`<div class="top"><span class="chip">Radar f
  <h3 style="margin-top:8px">What radar finds that a camera can't</h3>
  <div class="grid"><p><button class="btn" id="f-ships">Ships at 7 chokepoints</button> steel hulls are bright points on a dark sea, day and night.</p>
  <p><button class="btn" id="f-slick">Oil-slick candidates off Baku</button> oil calms the waves, so a slick is a long dark streak.</p>
+ <p><button class="btn" id="f-quake">Ground moved ~1 m: Panama M7.7 quake</button> two passes, 12 days apart; each rainbow band = 11.9 cm of ground motion (interferometry).</p>
  <p><button class="btn" id="f-apron">Plane-sized objects at Tashkent airport</button> parked aircraft are metal corner reflectors on smooth concrete.</p></div>`;
- findsLayers();findsPanel(html);$("f-ships").onclick=()=>shipWatch(true);$("f-slick").onclick=openSlick;$("f-apron").onclick=openApron}
+ findsLayers();findsPanel(html);$("f-ships").onclick=()=>shipWatch(true);$("f-slick").onclick=openSlick;$("f-quake").onclick=()=>openMotion("panama_m77");$("f-apron").onclick=openApron}
 async function openSlick(){const j=await (await fetch("/api/ships/slicks_baku.json")).json();const P=j.passes,w=j.bbox;findsLayers();
  map.fitBounds([[w[0],w[1]],[w[2],w[3]]],{padding:{left:60,right:440,top:60,bottom:80},essential:false});
  const big=P.reduce((m,p)=>p.slick_km2>m.slick_km2?p:m,P[0]);
@@ -629,6 +630,29 @@ $("t-tracks").onclick=e=>{const on=e.target.getAttribute("aria-pressed")!=="true
 const evOff=new Set();
 document.querySelectorAll(".evcat").forEach(b=>b.onclick=()=>{const c=b.dataset.c;evOff.has(c)?evOff.delete(c):evOff.add(c);tog(b,!evOff.has(c));
  const f=["!",["in",["get","cat"],["literal",[...evOff]]]];["events","events-halo"].forEach(l=>map.getLayer(l)&&map.setFilter(l,evOff.size?f:null))});
+
+
+/* ground motion from a NISAR interferogram (GUNW): fringes or centimetres */
+async function openMotion(name){const j=await (await fetch(`/motion/${name}/info.json`)).json();const w=j.bbox;
+ const coords=[[w[0],w[3]],[w[2],w[3]],[w[2],w[1]],[w[0],w[1]]];
+ if(!map.getSource("motion")){map.addSource("motion",{type:"image",url:`/motion/${name}/fringes.png`,coordinates:coords});map.addLayer({id:"motion",type:"raster",source:"motion",paint:{"raster-opacity":0.85}},"labels")}
+ else map.getSource("motion").updateImage({url:`/motion/${name}/fringes.png`,coordinates:coords});
+ map.setLayoutProperty("motion","visibility","visible");
+ map.fitBounds([[w[0],w[1]],[w[2],w[3]]],{padding:{left:60,right:440,top:60,bottom:80},essential:false});
+ const fd=d=>`${d.slice(6)} ${["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][+d.slice(4,6)-1]} ${d.slice(0,4)}`;
+ findsPanel(`<div class="top"><span class="chip">Radar finds · ground motion</span><div class="nav"><button class="tog" id="fclose" aria-label="Close">✕</button></div></div>
+  <h3 style="margin-top:8px">The ground moved: Panama M7.7, 9 Oct 2026</h3>
+  <div class="hero"><b>~${Math.round(j.toward_cm_p99)} cm</b><span>largest motion toward the satellite in the clear (coherent) area, between ${fd(j.ref)} and ${fd(j.sec)} · ${j.pixel_m} m pixels</span></div>
+  <div class="sw" style="display:flex;gap:6px;margin:4px 0 10px"><button class="tog on" id="m-fr">Rainbow fringes</button><button class="tog" id="m-cm">Centimetres</button><button class="tog" id="m-off">Hide</button></div>
+  <div class="grid"><p><span class="lab">What you see</span>Each full rainbow band (red → yellow → green → blue → violet → red) is <b>11.9 cm</b> of ground motion along the radar's line of sight. Bands bunch up where the ground moved most: count the bands toward the epicentre to read the motion.</p>
+  <p><span class="lab">How radar measures it</span>NISAR measures the <b>phase</b> of its 23.8 cm wave. Image the same ground twice; if it moved toward the satellite, the round trip is shorter and the phase shifts. Half a wavelength of motion = one full band. NASA's GUNW product compares two passes 12 days apart (${fd(j.ref)} and ${fd(j.sec)}), which bracket the quake.</p>
+  <p><span class="lab">Who acts on it</span>Earthquake scientists map which fault slipped and by how much; emergency teams see where the ground broke, through cloud, within days.</p>
+  <p><span class="lab">Honest limit</span>Only ${j.coherent_pct} % of the box keeps a clean signal (coherence ≥ 0.3); dense jungle, water and broken ground lose it (blank). Motion is along the line of sight, not straight up; the ionosphere and air moisture add a few cm.</p></div>
+  <p style="font-size:11px;color:var(--ink3)">${esc(j.granule)} · ${esc(j.method)}</p>`);
+ const set=k=>{["m-fr","m-cm","m-off"].forEach(id=>tog($(id),id===k));if(k==="m-off"){map.setLayoutProperty("motion","visibility","none");return}
+  map.setLayoutProperty("motion","visibility","visible");map.getSource("motion").updateImage({url:`/motion/${name}/${k==="m-fr"?"fringes":"los"}.png`,coordinates:coords})};
+ $("m-fr").onclick=()=>set("m-fr");$("m-cm").onclick=()=>set("m-cm");$("m-off").onclick=()=>set("m-off");
+ const old=$("fclose").onclick;$("fclose").onclick=()=>{old&&old();map.getLayer("motion")&&map.setLayoutProperty("motion","visibility","none")}}
 
 /* data layers */
 let EV=[],evCat="All",pop=null;

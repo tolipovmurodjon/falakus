@@ -690,6 +690,10 @@ class Handler(SimpleHTTPRequestHandler):
             except (KeyError, ValueError):
                 return self.send_bytes(b"{}", "application/json", code=400)
             return self.send_bytes(json.dumps(last_look(lon, lat)).encode(), "application/json", cache="no-store")
+        mm = re.match(r"^/motion/([a-z0-9_]+)/(fringes\.png|los\.png|info\.json)$", path)
+        if mm:
+            f = DATA / "motion" / mm.group(1) / mm.group(2)
+            return self.send_bytes(f.read_bytes(), "application/json" if f.suffix == ".json" else "image/png", cache="no-cache") if f.exists() else self.send_bytes(b"", "text/plain", code=404)
         if path == "/api/ships.json":
             idx = []
             for f in sorted((DATA / "ships").glob("*.json")):
