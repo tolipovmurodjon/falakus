@@ -23,3 +23,4 @@ Flood in Libya 1104195 | mapped | 2026-09-17 -> 2026-09-29 | new water 0.97 km2 
 Flood in Ghana 1104196 | mapped | 2026-09-19 -> 2026-10-01 | new water 0.01 km2 | brighter 0.0 | S2 21 % cloud, IoU None
 Flood in Chile 1104190 | read failed: "Unable to synchronously open object (object 'frequencyA' doesn't exist)" | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
 Flood in India, Nepal 1104198 | no NISAR pass before and after | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Costa Rica 1104197 | read failed:  | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None

@@ -191,6 +191,7 @@ body.comparing #datatime{bottom:28px}body.freecmp #datatime,body.touring #datati
 #cmpn,.hero b,#pinfo .k,.stats b{font-variant-numeric:tabular-nums}
 #cmp,#tour,#fc,#scikey,#player{background:#fff}
 .eyebrow{color:var(--ink3)}
+#howto{bottom:20px!important}#powers{bottom:76px!important}#datatime{bottom:124px}body.comparing #datatime{bottom:20px}
 .tog,.case,.btn{min-height:36px;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center}.tog{font-size:13px;padding:9px 12px}
 #pinfo .d,#cmpchart .lg,.stats span,#pmeta{font-size:12px!important}#cmpchart svg text{font-size:10px}
 @media (max-width:640px){.tog,.case,.btn{min-height:44px}}
@@ -920,7 +921,7 @@ async function openCase(id,k=0){const c=CASES[id];map.setMaxZoom(14.5);if(map.ge
  $("cmpsrc").dataset.base=S.src||("Radar: NASA-ISRO NISAR "+(S.L.img?"GUNW interferograms (provisional)":"GCOV gamma0, calibrated dB (provisional)")+", ASF DAAC.");$("cmpsrc").textContent=$("cmpsrc").dataset.base;
  map.fitBounds([[cmp.bbox[0],cmp.bbox[1]],[cmp.bbox[2],cmp.bbox[3]]],{padding:innerWidth<640?{top:70,bottom:330,left:12,right:12}:{top:80,bottom:40,left:40,right:450},duration:800,essential:false});
  let cv=$("swipeimg");if(!cv){cv=document.createElement("canvas");cv.id="swipeimg";cv.style.cssText="position:absolute;inset:0;width:100%;height:100%;pointer-events:none";$("swipe").prepend(cv)}
- $("swipe").hidden=false;swipeX=0.5;cmp.imgL=null;await cmpRight();cmpBox(cmp.slide.bbox&&c.bbox?c.bbox:null);
+ $("swipe").hidden=false;swipeX=cmp.slide.bbox?0.32:0.5;cmp.imgL=null;await cmpRight();cmpBox(cmp.slide.bbox&&c.bbox?c.bbox:null);
  map.once("moveend",()=>{const W=map.getCanvas().clientWidth,b=cmp.bbox,cx=(map.project([b[0],b[3]]).x+map.project([b[2],b[1]]).x)/2;swipeX=Math.min(.9,Math.max(.1,cx/W));cmpDraw();cmpApply()});cmpDraw();cmpApply()}
 function closeCase(){map.setMaxZoom(22);cmp=null;cmpClearRight();cmpBox(null);$("cmp").hidden=true;$("swipe").hidden=true;document.body.classList.remove("comparing");document.querySelectorAll(".case").forEach(b=>b.classList.remove("on"));
  map.setPaintProperty("nisar","raster-opacity",radarOp(radarOpacity));if(map.getLayer("sci"))map.setLayoutProperty("sci","visibility","visible")}
@@ -1025,7 +1026,7 @@ async function openFloods(){closeCase();if(fc)closeFree();let L=[];try{L=await (
  <h3 style="margin-top:8px">NASA's flood events, checked with NISAR before and after</h3>
  <p style="font-size:13px;color:var(--ink2)">${M.length} floods mapped (${N} had no NISAR pass on both sides, or a read error). Blue = new open water (dark after, not before, 3 dB darker, not a lake or river that is always there). Magenta = 3 dB brighter: wetter soil after rain OR water under plants/walls (double bounce); a candidate, not a flood.</p>
  <div class="grid">${M.map((r,i)=>`<p><button class="btn" data-f="${i}" style="margin-bottom:4px">${esc(cleanTitle(r.title))}</button><br><span style="font:500 11.5px var(--mono);color:var(--ink3)">${r.date} · NISAR ${r.before} → ${r.after} · new water <b>${r.new_open_water_km2} km²</b> · brighter ${r.brighter_km2} km²${r.s2_cloud_pct!=null?` · Sentinel-2 ${r.s2_cloud_pct} % cloud`:""}${r.iou_vs_s2!=null?`, IoU ${r.iou_vs_s2}`:""}</span></p>`).join("")||"<p>Mapping is still running.</p>"}</div>
- <p style="font-size:11px;color:var(--ink3)">Honest limit: EONET gives one point per flood; floods are often smaller than our 20 km box or gone by the next 12-day pass, so many show no new water. Radar: NASA-ISRO NISAR GCOV (provisional), permanent water: JRC Global Surface Water.</p>`);
+ <p style="font-size:11px;color:var(--ink3)">Honest limit: each map is centred on NASA EONET's own point for the event (from GDACS), which can sit far from the flooded area: the "Libya" point, for example, lies in Sudan. EONET gives one point per flood; floods are often smaller than our 20 km box or gone by the next 12-day pass, so many show no new water. Radar: NASA-ISRO NISAR GCOV (provisional), permanent water: JRC Global Surface Water.</p>`);
  document.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{const r=M[+b.dataset.f],w=r.bbox,co=[[w[0],w[3]],[w[2],w[3]],[w[2],w[1]],[w[0],w[1]]];
   if(!map.getSource("flood")){map.addSource("flood",{type:"image",url:`/floods/${r.id}.png`,coordinates:co});map.addLayer({id:"flood",type:"raster",source:"flood"},"labels")}
   else map.getSource("flood").updateImage({url:`/floods/${r.id}.png`,coordinates:co});map.setLayoutProperty("flood","visibility","visible");
