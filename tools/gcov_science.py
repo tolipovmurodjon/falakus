@@ -107,6 +107,12 @@ def main():
         with urllib.request.urlopen(f"{a.base}/api/series.json?lon={a.lon:.3f}&lat={a.lat:.3f}", timeout=180) as r:
             frames = json.load(r)["frames"]
     for f in frames:
+        done = out / f"{f['date']}.npz"
+        if done.exists():  # resume: a pass already on disk is not read from NASA again
+            z = np.load(done)
+            results.append(pass_numbers(f["date"], f["id"], z["hh_db"].astype(np.float32), z["hv_db"].astype(np.float32) if z["hv_db"].size else None,
+                                        float(z["dx"]) * float(z["dy"])))
+            continue
         url = f"https://nisar.asf.earthdatacloud.nasa.gov/NISAR/{f['c']}/{f['id']}/{f['id']}.h5"
         err = None
         for attempt in range(3):  # NASA's cloud throttles bursts of parallel reads; wait and retry
@@ -123,7 +129,7 @@ def main():
         if err is not None:
             print(f"{f['date']}  skip: {type(err).__name__}: {str(err)[:100]}", flush=True)
             continue
-        np.savez_compressed(out / f"{f['date']}.npz", hh_db=hh, hv_db=hv if hv is not None else np.array([]), **meta)
+        np.savez_compressed(out / f"{f['date']}.npz", hh_db=hh.astype(np.float16), hv_db=hv.astype(np.float16) if hv is not None else np.array([]), **meta)  # 16-bit dB: ~0.01 dB steps, half the disk
         results.append(pass_numbers(f["date"], f["id"], hh, hv, px))
         print(f"{f['date']}  box {hh.shape}  HH median {results[-1]['hh_db']} dB", flush=True)
         del hh, hv

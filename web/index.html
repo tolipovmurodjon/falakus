@@ -88,7 +88,7 @@ body.touring #brand .opts{display:none}
 #scikey .sw{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 #scikey small{display:block;color:var(--ink3);margin-top:6px;font-size:11px}
 body.touring #scikey{right:auto;left:18px;bottom:28px}
-body.touring #howto{display:none}
+
 @media (max-width:640px){#scikey{left:8px;right:8px;bottom:150px;max-width:none}}
 
 #powers{position:absolute;left:18px;bottom:72px;z-index:4;max-width:360px}
@@ -113,10 +113,14 @@ body.touring #powers{display:none}
  body.touring #scikey .row{margin-top:0;gap:8px;font-size:11.5px}
  #brand .promise{font-size:13px;margin-bottom:6px}
 }
+
+#s1chip{position:absolute;top:14px;left:50%;transform:translateX(-50%);z-index:6;background:#0F1630;color:#fff;font:500 12.5px var(--mono);padding:8px 12px;border-radius:999px}
+#aiNote{margin-top:10px;font:500 12px/1.4 var(--sans);color:var(--ink3)}
 </style>
 </head>
 <body>
 <div id="map" aria-label="World map with NISAR radar"></div>
+<div id="s1chip" hidden></div>
 <div id="scikey" hidden>
  <b>Science mode · 20 m calibrated radar</b>
  <div class="row" id="sciclasses"><span><i style="background:#2563EB"></i>Dark, smooth (mostly calm water)</span><span><i style="background:#E8A33D"></i>Very bright (mostly buildings)</span><span><i style="background:#2E9650"></i>Plants (volume scatter)</span><span><i style="background:transparent;border:1px solid #bbb"></i>Other: photo shows</span></div>
@@ -160,14 +164,14 @@ body.touring #powers{display:none}
 <details id="howto" class="panel">
  <summary>How to read the radar (30 s)</summary>
  <ul>
-  <li><i style="background:#f0f0f0;border:1px solid #ccc"></i>white = towns: walls + ground send the pulse straight back</li>
-  <li><i style="background:#d070d0"></i>pink = strong HH: rough or wet ground, rocks</li>
-  <li><i style="background:#60d060"></i>green = more HV: plants tumble the pulse (also noise over very dark ground)</li>
+  <li><i style="background:#f0f0f0;border:1px solid #ccc"></i>white = towns and rough ground: walls + ground send the pulse straight back (HH)</li>
+  <li><i style="background:#8a8a8a"></i>grey = fields, plants, soil: part of the pulse returns</li>
   <li><i style="background:#101010"></i>black = calm water or smooth sand: the pulse bounces away</li>
+  <li><i style="background:#2E9650"></i>in 20 m science areas: green = plants (HV, volume scatter), amber = very bright, blue = calm water</li>
   <li><i style="background:linear-gradient(90deg,#fff,#555)"></i>bright and dark sides of mountains = slope geometry, not change</li>
  </ul>
  <div id="zoomnote"></div>
- <p class="eyebrow" style="margin-top:8px;text-transform:none;letter-spacing:0">Colours are NASA's preview rendering of provisional NISAR data, not calibrated decibels.</p>
+ <p class="eyebrow" style="margin-top:8px;text-transform:none;letter-spacing:0">World view: HH from NASA's ~150 m previews of provisional NISAR data. Science areas: calibrated dB, 20 m, still provisional.</p>
 </details>
 
 <section id="events" class="panel" aria-label="NASA EONET events" hidden>
@@ -198,7 +202,8 @@ body.touring #powers{display:none}
   <li><b>02</b><span>Tap any place, or an event, to <b>play every pass there</b> since NISAR began. That is the surface "dancing" over time.</span></li>
   <li><b>03</b><span>The tour visits <span id="nstops">16</span> places in two chapters (Water road, World), from <b>Uzbekistan</b> to the Amazon, and says what changes, why, and which radar channel shows it.</span></li>
  </ul>
- <div class="row"><button class="btn" id="i-tour">Start the tour</button><button class="btn ghost" id="i-close">Explore the world</button></div>
+ <div class="row"><button class="btn" id="i-tour">Start the tour</button>
+ <p id="aiNote">AI use: Anthropic Claude helped write the code and draft the texts; the team checked them against NASA, USGS and ESA sources. All imagery is real satellite data.</p><button class="btn ghost" id="i-close">Explore the world</button></div>
 </section>
 <div id="toast" class="panel" hidden></div>
 
@@ -289,7 +294,7 @@ function show(i){
  map.setPaintProperty(back,"raster-opacity",0.95);map.setPaintProperty(dance.front,"raster-opacity",0);dance.front=back;
  $("pdate").textContent=new Date(f.date+"T00:00Z").toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric",timeZone:"UTC"});
  const pol=f.pol==="DHDH"?"HH + HV":f.pol==="SHSH"?"HH only":f.pol;
- setMeta(f.sci?`pass ${i+1} of ${dance.frames.length} · science mode · ${f.res||20} m pixels · calibrated dB · HH + HV`:`pass ${i+1} of ${dance.frames.length} · ${f.time} UTC · ${pol} · track ${dance.track.replace(/_/g," ")} · ${f.sci?"science mode · 20 m pixels · calibrated dB":f.c.includes("PROVISIONAL")?"preview · ~150 m · provisional":"preview · ~150 m · validated"}`);
+ setMeta(f.sci?`pass ${i+1} of ${dance.frames.length} · science mode · ${f.res||20} m pixels · calibrated dB (provisional) · HH + HV`:`pass ${i+1} of ${dance.frames.length} · ${f.time} UTC · ${pol} · track ${dance.track.replace(/_/g," ")} · ${f.sci?"science mode · 20 m pixels · calibrated dB":f.c.includes("PROVISIONAL")?"preview · ~150 m · provisional":"preview · ~150 m · validated"}`);
  [...$("pticks").children].forEach((t,k)=>t.classList.toggle("on",k===i));
  if(dance.change)showChange();
 }
@@ -342,7 +347,10 @@ async function loadIntel(s){const tok=tourI;let d=null;
  const sent=`In a ${d.box_km} × ${d.box_km} km box, dark open water ranged from <b>${wmin.water_km2} km²</b> (${fmtDate(wmin.date)}) to <b>${wmax.water_km2} km²</b> (${fmtDate(wmax.date)}) over ${p.length} passes; first pass ${a.water_km2} km², last ${b.water_km2} km². Plant signal (HV) first to last: ${dhvTxt}.${d.science?"":" Preview-based: wind on water and dry smooth sand also look dark, so read the range, not one date."}`;
  const hero=d.science&&p[0].classes_km2?(()=>{const theme={Reservoir:"water",Water:"water",Wetland:"water",Flood:"water",Canal:"plants",Crops:"plants","Forest loss":"plants",Wildfire:"plants",City:"built"}[s.kind];
   const k=theme?[theme,b.classes_km2[theme]-a.classes_km2[theme]]:["water","built","plants"].map(c=>[c,b.classes_km2[c]-a.classes_km2[c]]).sort((x,y)=>Math.abs(y[1])-Math.abs(x[1]))[0];
-  const nm={water:"calm water",built:"very bright ground",plants:"plant cover"}[k[0]];return `<div class="hero"><b>${k[1]>=0?"+":"−"}${Math.abs(k[1]).toFixed(1)} km²</b><span>${nm}, ${fmtDate(a.date)} → ${fmtDate(b.date)} · ${d.box_km} × ${d.box_km} km box · ${p.length} calibrated passes</span></div>`})():"";
+  const nm={water:"calm water",built:"very bright ground",plants:"plant cover"}[k[0]];
+  if(k[0]==="water"){const mx=p.reduce((m,x)=>x.classes_km2.water>m.classes_km2.water?x:m,p[0]),mn=p.reduce((m,x)=>x.classes_km2.water<m.classes_km2.water?x:m,p[0]);
+   return `<div class="hero"><b>${mx.classes_km2.water.toFixed(1)} km²</b><span>calm water at its largest (${fmtDate(mx.date)}); smallest ${mn.classes_km2.water.toFixed(1)} km² (${fmtDate(mn.date)}) · ${d.box_km} × ${d.box_km} km box · ${p.length} calibrated passes</span></div>`}
+  return `<div class="hero"><b>${k[1]>=0?"+":"−"}${Math.abs(k[1]).toFixed(1)} km²</b><span>${nm}, ${fmtDate(a.date)} → ${fmtDate(b.date)} · ${d.box_km} × ${d.box_km} km box · ${p.length} calibrated passes</span></div>`})():"";
  $("intel").innerHTML=hero+`<p class="eyebrow">Measured from the radar · ${p.length} passes · ${d.science?"calibrated dB":"preview estimate"}</p><p style="font-size:13.5px;margin:4px 0 8px">${sent}</p>
   <p class="eyebrow" style="text-transform:none;letter-spacing:0">Open water, km²</p>${spark(p,"water_km2","#2563EB","km²")}
   <p class="eyebrow" style="text-transform:none;letter-spacing:0">Plant signal (HV)${d.science?", dB":", 0-255"}</p>${spark(p,"hv","#1C7E69","")}
@@ -441,13 +449,14 @@ document.querySelectorAll("#powers .lnk").forEach(b=>b.onclick=()=>{const i=STOP
 
 
 /* NISAR (L-band, 24 cm) vs Sentinel-1 (C-band, 5.6 cm): same place, two wavelengths */
-let s1On=false;
+let s1On=false,S1DATES="";
 async function setRadar(which){const s1=which==="s1";tog($("r-nisar"),!s1);tog($("r-s1"),s1);
  if(s1&&!mapReady)await new Promise(r=>map.once("load",r));
  if(s1&&!map.getSource("s1")){let j;try{j=await (await fetch("/api/s1.json")).json()}catch(e){toast("Sentinel-1 source did not answer.");tog($("r-s1"),false);tog($("r-nisar"),true);return}
   map.addSource("s1",{type:"raster",tiles:j.tiles,tileSize:256,maxzoom:13,attribution:j.attribution});
   map.addLayer({id:"s1",type:"raster",source:"s1",paint:{"raster-opacity":0.9}},"sci");
-  toast(`Sentinel-1 C-band, newest pass ${j.start} to ${j.end}. Shorter waves stop at leaves; NISAR's L-band reaches stems and trunks.`)}
+  toast(`Sentinel-1 C-band: mosaic of passes ${j.start} to ${j.end} (newest on top). Shorter waves stop at leaves; NISAR's L-band reaches stems and trunks.`);S1DATES=`${j.start} → ${j.end}`}
+ if($("s1chip")){$("s1chip").hidden=!s1;$("s1chip").textContent=`Sentinel-1 VV mosaic · passes ${S1DATES} · newest on top`}
  s1On=s1;if(map.getLayer("s1"))map.setLayoutProperty("s1","visibility",s1?"visible":"none");
  ["nisar","sci"].forEach(l=>map.setLayoutProperty(l,"visibility",s1?"none":"visible"));if(s1)$("scikey").hidden=true;else sciKeyUpdate()}
 $("r-nisar").onclick=()=>setRadar("nisar");$("r-s1").onclick=()=>setRadar("s1");

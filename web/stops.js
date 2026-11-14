@@ -50,7 +50,7 @@ window.STOPS = [
     kind: "Crops", what: "Irrigated fields change colour pass by pass from June to October.",
     driver: "Cotton and other crops grow leaves and stems all summer, then are defoliated and harvested in September-October. More plant volume means more pulse scattered back tilted.",
     pol: "HV rises as the canopy grows and drops after harvest; HH follows soil moisture after each irrigation.",
-    limit: "These are NASA's colour previews, not calibrated decibels. Field-level numbers need the full files.",
+    limit: "One 30 x 30 km box: fields mix several crops, so the plant share is a valley average, not one farm. Irrigation the day before a pass brightens HH.",
   },
   {
     id: "kyzylorda", chapter: "Water road", place: "Kyzylorda rice fields, Syr Darya, Kazakhstan", title: "Rice: fields that are lakes", lon: 65.5, lat: 44.8, zoom: 10.4,
@@ -100,7 +100,7 @@ window.STOPS = [
     use: "Disaster agencies: a quick map of where slopes failed, even under the rain and cloud that often follow a quake.",
     next: "NISAR interferograms measure the ground shift itself in centimetres; the same area moved in the 2016 Kumamoto quake, so the two can be compared.",
     limit: "Backscatter alone shows surface damage, not the fault movement; that needs interferometry (GUNW), our next step.",
-    event: { name: "USGS earthquake catalog (M 6.8, 2026-07-28)", url: "https://earthquake.usgs.gov/earthquakes/map/" },
+    event: { name: "USGS earthquake catalog (M 6.8, 2026-07-28)", url: "https://earthquake.usgs.gov/earthquakes/eventpage/us6000tgb9" },
   },
   {
     id: "rondonia", chapter: "World", place: "Rondônia, Brazil", title: "The forest edge", lon: -63.0, lat: -9.5, zoom: 9,
@@ -115,7 +115,6 @@ window.STOPS = [
     driver: "New lava is rough, blocky rock. Rough surfaces scatter the pulse back strongly, so new flows look brighter than older smooth ground or snow.",
     pol: "HH: rough lava is bright. Wet snow (dark) and dry snow change the background through the season.",
     limit: "Snow and steep slopes also change brightness; NASA's own NISAR team showed this eruption in frames from Dec 2025 to Aug 2026.",
-    event: { name: "NASA NISAR images", url: "https://www.jpl.nasa.gov/news/us-india-satellite-delivers-data-reveals-hummingbird-in-antarctica/" },
   },
   {
     id: "fire", chapter: "World", place: "Northern Territory, Australia", title: "After the fire", lon: 132.24, lat: -14.68, zoom: 8.6,
