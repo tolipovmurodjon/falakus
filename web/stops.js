@@ -36,7 +36,7 @@ window.STOPS = [
     limit: "We show surface change only; we do not measure how much water the canal takes. Treat this as evidence of land change, not a water budget.",
   },
   {
-    id: "andijan", chapter: "Water road", place: "Andijan reservoir, Uzbekistan-Kyrgyzstan border", title: "Suv yo'li: the water road", lon: 72.88, lat: 40.77, zoom: 10.6,
+    id: "andijan", chapter: "Water road", place: "Andijan reservoir, Uzbekistan-Kyrgyzstan border", title: "The water road (suv yo'li)", lon: 72.88, lat: 40.77, zoom: 10.6,
     kind: "Reservoir",
     what: "The dark lake is the Andijan reservoir on the Kara Darya. Measured dark water swings from 1.5 to 19 km² between passes: on 24 Sep the whole scene is about 2 dB brighter, the mark of wind roughening the lake, not of the water vanishing.",
     driver: "Water is stored in spring, then released June-September for cotton and wheat downstream. Less water means a smaller dark area and a wider bright bank of wet mud.",
@@ -53,7 +53,7 @@ window.STOPS = [
     limit: "One 30 x 30 km box: fields mix several crops, so the plant share is a valley average, not one farm. Irrigation the day before a pass brightens HH.",
   },
   {
-    id: "kyzylorda", chapter: "Water road", place: "Kyzylorda rice fields, Syr Darya, Kazakhstan", title: "Rice: fields that are lakes", lon: 65.5, lat: 44.8, zoom: 10.4,
+    id: "kyzylorda", chapter: "Water road", place: "Shieli rice fields, Syr Darya, Kazakhstan", title: "Rice: fields that are lakes", lon: 66.7, lat: 44.2, zoom: 10.4,
     kind: "Crops",
     what: "Rice paddies sit in standing water, so they start dark and turn bright as the plants grow up through the water.",
     driver: "Paddies are flooded in May-June; rice stems standing in water form corners (double bounce), so HH rises through the summer, then falls at harvest.",

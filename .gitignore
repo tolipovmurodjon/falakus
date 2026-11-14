@@ -2,3 +2,7 @@ data/
 __pycache__/
 *.part
 docs/deck/qa/
+*.local.md
+.env
+*.npz
+*.npy

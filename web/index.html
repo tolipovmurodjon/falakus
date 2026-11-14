@@ -129,6 +129,8 @@ body.touring #powers{display:none}
 .sl{display:inline-flex;align-items:center;gap:6px;font:500 12.5px var(--sans);color:var(--ink2)}
 .sl input{width:110px;accent-color:var(--mint)}
 #opts{border-top:1px solid var(--line);margin-top:10px;padding-top:2px}
+body.opts-open #powers,body.opts-open #howto{display:none}
+#opts{max-height:52vh;overflow:auto}
 </style>
 </head>
 <body>
@@ -244,7 +246,7 @@ const map=new maplibregl.Map({container:"map",hash:true,attributionControl:{comp
   nisar:{type:"raster",tiles:[location.origin+"/tiles/{z}/{x}/{y}.webp?v=7"],tileSize:256,maxzoom:10,attribution:"Radar: NASA-ISRO NISAR GCOV (provisional), ASF DAAC"},
   danceA:{type:"image",url:BLANK,coordinates:Q},danceB:{type:"image",url:BLANK,coordinates:Q},diff:{type:"image",url:BLANK,coordinates:Q}},
  layers:[{id:"sat",type:"raster",source:"sat"},{id:"s2",type:"raster",source:"s2",layout:{visibility:"none"}},{id:"light",type:"raster",source:"light",layout:{visibility:"none"}},
-  {id:"nisar",type:"raster",source:"nisar",paint:{"raster-opacity":0.9,"raster-fade-duration":150}},
+  {id:"nisar",type:"raster",source:"nisar",paint:{"raster-opacity":["interpolate",["linear"],["zoom"],11,0.9,13.5,0.3],"raster-fade-duration":150}},
   {id:"sci",type:"raster",source:"sci",minzoom:10,paint:{"raster-opacity":["interpolate",["linear"],["zoom"],10,0.62,14.8,0.55,15.6,0],"raster-fade-duration":150}},
   {id:"danceA",type:"raster",source:"danceA",paint:{"raster-opacity":0,"raster-opacity-transition":{duration:650},"raster-fade-duration":0}},
   {id:"danceB",type:"raster",source:"danceB",paint:{"raster-opacity":0,"raster-opacity-transition":{duration:650},"raster-fade-duration":0}},
@@ -255,7 +257,7 @@ map.addControl(new maplibregl.ScaleControl({unit:"metric"}),"bottom-right");
 const vis=(id,on)=>map.getLayer(id)&&map.setLayoutProperty(id,"visibility",on?"visible":"none");
 let radarOpacity=0.9;
 
-$("op").oninput=e=>{radarOpacity=e.target.value/100;if(!dance.on)map.setPaintProperty("nisar","raster-opacity",radarOpacity);map.setPaintProperty("sci","raster-opacity",["interpolate",["linear"],["zoom"],10,radarOpacity*0.7,14.8,radarOpacity*0.6,15.6,0])};
+$("op").oninput=e=>{radarOpacity=e.target.value/100;if(!dance.on)map.setPaintProperty("nisar","raster-opacity",radarOp(radarOpacity));map.setPaintProperty("sci","raster-opacity",["interpolate",["linear"],["zoom"],10,radarOpacity*0.7,14.8,radarOpacity*0.6,15.6,0])};
 $("t-radar").onclick=e=>{const on=!e.currentTarget.classList.contains("on");tog(e.currentTarget,on);vis("nisar",on)};
 $("t-frames").onclick=e=>{const on=!e.currentTarget.classList.contains("on");tog(e.currentTarget,on);vis("frames-line",on)};
 $("t-events").onclick=e=>{const on=!e.currentTarget.classList.contains("on");tog(e.currentTarget,on);$("events").hidden=!on};
@@ -267,7 +269,7 @@ function zoomNote(){const z=map.getZoom();$("zoomnote").textContent=z<6.5?`Zoom 
 map.on("zoomend",zoomNote);
 /* the world radar dims only while the playing box is on screen */
 map.on("moveend",()=>{if(!dance.on||!dance.frames.length)return;const b=dance.frames[0].bbox,c=map.getCenter();
- const inside=c.lng>b[0]&&c.lng<b[2]&&c.lat>b[1]&&c.lat<b[3];map.setPaintProperty("nisar","raster-opacity",inside?0.12:radarOpacity)});
+ const inside=c.lng>b[0]&&c.lng<b[2]&&c.lat>b[1]&&c.lat<b[3];map.setPaintProperty("nisar","raster-opacity",radarOp(inside?0.12:radarOpacity))});
 
 function intro(show){$("intro").hidden=!show}
 $("b-intro").onclick=()=>intro(true);$("i-close").onclick=()=>{intro(false);try{localStorage.setItem("seen","1")}catch(e){}};
@@ -280,17 +282,17 @@ let band="rgb";const frameUrl=f=>f.sci?`/science/${f.stop}/img/${f.date}_${band}
 const coords=b=>[[b[0],b[3]],[b[2],b[3]],[b[2],b[1]],[b[0],b[1]]];
 function setMeta(t){const m=$("pmeta");if(m)m.textContent=t}
 async function startDance(lon,lat,label,stopId){
- const tok=++dance.token;stopPlay();
+ const tok=++dance.token;stopPlay();dance.ll=[lon,lat];if(!stopId&&map.getZoom()<8.5)map.flyTo({center:[lon,lat],zoom:9,essential:false});
  $("player").hidden=false;$("pdate").textContent="Loading…";setMeta(`Finding every NISAR pass over ${label||"this spot"}…`);
  let s=null;
  if(stopId)try{const r=await fetch(`/science/${stopId}/frames.json`);if(r.ok){const j=await r.json();s={track:"20 m calibrated",sci:true,frames:j.frames.map(f=>({...f,stop:stopId,time:"",pol:"DHDH",c:"science"}))}}}catch(e){}
  if(!s)try{s=await (await fetch(`/api/series.json?lon=${lon.toFixed(3)}&lat=${lat.toFixed(3)}`)).json()}catch(e){s={frames:[]}}
  if(tok!==dance.token)return;
  if(!s.frames||!s.frames.length){$("pdate").textContent="No passes";setMeta("NISAR has no public pass here yet (open ocean is not imaged).");return}
- dance.frames=s.frames;dance.on=true;dance.i=0;dance.track=s.track||"";
+ if(!s.sci){const ok=s.frames.filter(f=>(f.date||"")>="2026-06-17");if(ok.length)s.frames=ok}dance.frames=s.frames;dance.on=true;dance.i=0;dance.track=s.track||"";
  $("prange").max=s.frames.length-1;$("prange").value=0;
  drawTicks();
- map.setPaintProperty("nisar","raster-opacity",0.12);
+ map.setPaintProperty("nisar","raster-opacity",radarOp(0.12));
  let loaded=0;
  const imgs=s.frames.map(f=>{const im=new Image();im.onload=()=>{loaded++;if(tok===dance.token&&!dance.playing)setMeta(`${dance.frames.length} passes · track ${dance.track.replace(/_/g," ")} · loaded ${loaded}`)};
   im.onerror=()=>{if(tok!==dance.token)return;const k=dance.frames.indexOf(f);if(k>=0){dance.frames.splice(k,1);$("prange").max=Math.max(0,dance.frames.length-1);drawTicks();if(dance.i>=dance.frames.length)dance.i=0}};im.src=frameUrl(f);return im});
@@ -327,7 +329,7 @@ function showChange(){const a=dance.frames[0],b=dance.frames[dance.i];
  legend(b.sci?`<span><i style="background:#E8590C"></i>HH up more than 3 dB since ${fmtDate(a.date)}</span><span><i style="background:#7048E8"></i>down more than 3 dB</span><span>calibrated dB, 20 m</span>`
   :`<span><i style="background:#E8590C"></i>brighter than on ${fmtDate(a.date)}</span><span><i style="background:#7048E8"></i>darker</span><span>preview brightness, not calibrated dB</span>`)}
 $("pchange").onclick=e=>{dance.change=!dance.change;tog(e.currentTarget,dance.change);if(dance.change){stopPlay();if(dance.i===0&&dance.frames.length>1)show(dance.frames.length-1);else showChange()}else{map.setPaintProperty("diff","raster-opacity",0);legend("")}};
-function endDance(){if(typeof swipeStop==="function")swipeStop();dance.token++;stopPlay();dance.on=false;$("player").hidden=true;["danceA","danceB","diff"].forEach(l=>map.setPaintProperty(l,"raster-opacity",0));map.setPaintProperty("nisar","raster-opacity",radarOpacity);dance.change=false;tog($("pchange"),false);legend("")}
+function endDance(){if(typeof swipeStop==="function")swipeStop();dance.token++;stopPlay();dance.on=false;$("player").hidden=true;["danceA","danceB","diff"].forEach(l=>map.setPaintProperty(l,"raster-opacity",0));map.setPaintProperty("nisar","raster-opacity",radarOp(radarOpacity));dance.change=false;tog($("pchange"),false);legend("")}
 document.querySelectorAll("#pband button").forEach(b=>b.onclick=()=>{band=b.dataset.b;document.querySelectorAll("#pband button").forEach(x=>tog(x,x===b));if(dance.on){dance.frames.forEach(f=>{const im=new Image();im.src=frameUrl(f)});show(dance.i)}});
 $("pclose").onclick=()=>{endDance();$("tour").hidden=true};
 
@@ -352,9 +354,9 @@ function tourGo(i){tourI=(i+STOPS.length)%STOPS.length;const s=STOPS[tourI];intr
 
 /* intel: numbers per pass + one sentence */
 function fmtDate(d){return new Date(d+"T00:00Z").toLocaleDateString("en-GB",{day:"numeric",month:"short",timeZone:"UTC"})}
-function spark(pts,key,color,unit){if(pts.length<2)return"";const W=300,H=60,vs=pts.map(p=>p[key]),mn=Math.min(...vs),mx=Math.max(...vs),r=mx-mn||1;
+function spark(pts,key,color,unit){if(pts.length<2)return"";const W=300,H=60,vs=pts.map(p=>p[key]),mn=unit==="km²"?0:Math.min(...vs),mx=Math.max(...vs),r=mx-mn||1,rd=v=>Math.abs(v)>=100?Math.round(v):(+v).toFixed(1);
  const xy=pts.map((p,i)=>[8+i/(pts.length-1)*(W-16),H-8-(p[key]-mn)/r*(H-20)]);
- return `<svg viewBox="0 0 ${W} ${H}" width="100%" height="${H}" role="img" aria-label="${unit} per pass"><polyline fill="none" stroke="${color}" stroke-width="2" points="${xy.map(a=>a.join(",")).join(" ")}"/>${xy.map((a,i)=>`<circle cx="${a[0]}" cy="${a[1]}" r="3" fill="${color}"><title>${pts[i].date}: ${pts[i][key]} ${unit}</title></circle>`).join("")}<text x="8" y="12" font-size="10" font-family="ui-monospace,monospace" fill="#4B5470">${mx} ${unit}</text><text x="8" y="${H-1}" font-size="10" font-family="ui-monospace,monospace" fill="#4B5470">${mn}</text></svg>`}
+ return `<svg viewBox="0 0 ${W} ${H}" width="100%" height="${H}" role="img" aria-label="${unit} per pass"><polyline fill="none" stroke="${color}" stroke-width="2" points="${xy.map(a=>a.join(",")).join(" ")}"/>${xy.map((a,i)=>`<circle cx="${a[0]}" cy="${a[1]}" r="3" fill="${color}"><title>${pts[i].date}: ${rd(pts[i][key])} ${unit}</title></circle>`).join("")}<text x="8" y="12" font-size="10" font-family="ui-monospace,monospace" fill="#4B5470">${rd(mx)} ${unit}</text><text x="8" y="${H-1}" font-size="10" font-family="ui-monospace,monospace" fill="#4B5470">${rd(mn)}</text></svg>`}
 async function loadIntel(s){const tok=tourI;let d=null;
  try{const r=await fetch(`/api/science/${s.id}.json`);if(r.ok){d=await r.json();d.science=true;d.note=`${d.source}; water = HH below -18 dB and HV below -24 dB (fixed rule)`;d.points.forEach(p=>{p.hv=p.hv_db})}}catch(e){}
  if(!d)try{d=await (await fetch(`/api/stats.json?lon=${s.lon}&lat=${s.lat}&km=15`)).json()}catch(e){d=null}
@@ -431,7 +433,7 @@ function sciSwitch(kind){sciKind=kind;map.getSource("sci").setTiles([location.or
 document.querySelectorAll("#skthemes .tog").forEach(b=>b.onclick=()=>sciSwitch(b.dataset.k));
 let SCIBOX=[];fetch("/api/science_boxes.json").then(r=>r.json()).then(b=>{SCIBOX=b;sciKeyUpdate()}).catch(()=>{});
 function sciKeyUpdate(){const z=map.getZoom(),b=map.getBounds();
- const any=z>=10&&SCIBOX.some(x=>x.bbox[0]<b.getEast()&&x.bbox[2]>b.getWest()&&x.bbox[1]<b.getNorth()&&x.bbox[3]>b.getSouth());$("scikey").hidden=!any;if(!dance.on&&map.getLayer("nisar"))map.setPaintProperty("nisar","raster-opacity",any?Math.min(0.15,radarOpacity):radarOpacity)}
+ const any=z>=10&&SCIBOX.some(x=>x.bbox[0]<b.getEast()&&x.bbox[2]>b.getWest()&&x.bbox[1]<b.getNorth()&&x.bbox[3]>b.getSouth());$("scikey").hidden=!any;if(!dance.on&&map.getLayer("nisar"))map.setPaintProperty("nisar","raster-opacity",radarOp(any?Math.min(0.15,radarOpacity):radarOpacity))}
 map.on("moveend",sciKeyUpdate);
 
 let FRAMEBOX=null;fetch("/api/frames.geojson").then(r=>r.json()).then(d=>{FRAMEBOX=d.features}).catch(()=>{});
@@ -498,7 +500,7 @@ let mapReady=false;map.on("load",()=>{mapReady=true});
 map.on("zoomend",()=>{const z=map.getZoom();if(z>15.6&&!$("scikey").hidden)toast("Radar detail is 20 m: zoom out (to ~13) to see it; at this zoom you see the photo.")});
 
 
-$("b-layers").onclick=()=>{const o=$("opts");o.hidden=!o.hidden;tog($("b-layers"),!o.hidden);$("b-layers").setAttribute("aria-expanded",String(!o.hidden))};
+$("b-layers").onclick=()=>{const o=$("opts");if(o.hidden&&document.body.classList.contains("touring")){$("tour").hidden=true;document.body.classList.remove("touring")}o.hidden=!o.hidden;document.body.classList.toggle("opts-open",!o.hidden);tog($("b-layers"),!o.hidden);$("b-layers").setAttribute("aria-expanded",String(!o.hidden))};
 
 if($("nstops"))$("nstops").textContent=STOPS.length;
 
@@ -619,7 +621,10 @@ map.on("moveend",()=>{const T=$("tour");if(T.hidden||!$("fclose")||map.getZoom()
  const src=map.getSource("finds");const d=src&&src._data;const f=d&&d.features&&d.features[0];if(!f)return;const g=f.geometry.coordinates;const pt=Array.isArray(g[0])?g[0][0]:g;
  if(!map.getBounds().contains(pt)){T.hidden=true;document.body.classList.remove("touring");src.setData({type:"FeatureCollection",features:[]})}});
 
+const cleanTitle=t=>String(t||"").replace(/\s+\d{5,}$/,"");
 /* map settings */
+map.on("moveend",()=>{if(!dance.on||!dance.ll||!$("tour").hidden)return;const c=map.getCenter();if(Math.abs(c.lng-dance.ll[0])>3||Math.abs(c.lat-dance.ll[1])>3||map.getZoom()<4)endDance()});
+const radarOp=v=>["interpolate",["linear"],["zoom"],11,v,13.5,v*0.35];
 let playMs=1400;
 $("op-speed").oninput=e=>{playMs=+e.target.value;if(dance.timer){clearInterval(dance.timer);dance.timer=setInterval(()=>show((dance.i+1)%dance.frames.length),playMs)}};
 $("op-base").oninput=e=>{const v=+e.target.value/100;["sat","s2","light"].forEach(l=>map.getLayer(l)&&map.setPaintProperty(l,"raster-brightness-max",v))};
@@ -697,7 +702,7 @@ function renderList(){const list=EV.map((e,i)=>({...e,i})).filter(e=>evCat==="Al
  $("evlist").querySelectorAll(".ev").forEach(b=>b.onclick=()=>openEvent(+b.dataset.i,true))}
 function openEvent(i,fly){const e=EV[i];if(fly)map.flyTo({center:[e.lon,e.lat],zoom:Math.max(map.getZoom(),8),speed:1.6});
  const src=(e.sources||[]).map(u=>{try{return `<a href="${u}" target="_blank" rel="noopener">${new URL(u).hostname.replace("www.","")}</a>`}catch(x){return ""}}).join(" · ");
- pop&&pop.remove();pop=new maplibregl.Popup({offset:10}).setLngLat([e.lon,e.lat]).setHTML(`<div class="pop"><b>${esc(e.title)}</b><div class="m">${esc(e.category)} · ${e.date}${evSize(e)}</div>${src?`<div style="margin-top:6px">News and sources: ${src}</div>`:""}${nisarCovers(e.lon,e.lat)?`<button class="btn" id="pop-play">Play the radar here</button>`:`<div class="m" style="margin-top:6px">No NISAR pass here: NISAR images land, ice and coasts, not the open ocean.</div>`}</div>`).addTo(map);
+ pop&&pop.remove();pop=new maplibregl.Popup({offset:10}).setLngLat([e.lon,e.lat]).setHTML(`<div class="pop"><b>${esc(cleanTitle(e.title))}</b><div class="m">${esc(e.category)} · ${e.date}${evSize(e)}</div>${src?`<div style="margin-top:6px">News and sources: ${src}</div>`:""}${nisarCovers(e.lon,e.lat)?`<button class="btn" id="pop-play">Play the radar here</button>`:`<div class="m" style="margin-top:6px">No NISAR pass here: NISAR images land, ice and coasts, not the open ocean.</div>`}</div>`).addTo(map);
  $("pop-play").onclick=()=>{pop.remove();$("tour").hidden=true;startDance(e.lon,e.lat,e.title)}}
 map.on("click","events",ev=>{ev.preventDefault();openEvent(ev.features[0].properties.i,false)});
 map.on("mouseenter","events",()=>map.getCanvas().style.cursor="pointer");map.on("mouseleave","events",()=>map.getCanvas().style.cursor="");

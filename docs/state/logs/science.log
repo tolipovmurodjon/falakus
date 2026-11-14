@@ -1,13 +1,3 @@
-=== tashkent 22:04
-2026-07-26  box (1500, 1500)  HH median -6.64 dB
-2026-08-19  box (1500, 1500)  HH median -6.35 dB
-2026-08-31  box (1500, 1500)  HH median -6.22 dB
-2026-09-12  box (1500, 1500)  HH median -6.35 dB
-2026-09-24  box (1500, 1500)  HH median -6.38 dB
-2026-10-06  box (1500, 1500)  HH median -5.72 dB
-2026-10-18  box (1500, 1500)  HH median -6.16 dB
-2026-10-30  box (1500, 1500)  HH median -6.77 dB
-water (HH<-18 & HV<-24 dB) | 0.01 km2 (2026-06-20) -> 0.05 km2 (2026-10-30)
-tashkent: 11 passes rendered at 20 m -> D:\10_projects\falakus\data\science\tashkent\img
-tashkent: 422 tiles (z10-14) from 2026-10-30, native 20 m
-=== rogun 22:12
+=== rogun 22:26
+water (HH<-18 & HV<-24 dB) | 96.5 km2 (2026-06-20) -> 1.54 km2 (2026-11-11)
+rogun: 12 passes rendered at 20 m -> D:\10_projects\falakus\data\science\rogun\img
