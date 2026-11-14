@@ -27,26 +27,25 @@ Deck: 7 slides, one per speech part plus "the challenge" and "who acts". Build w
 
 ---
 
-## 2. Status (honest, 15 Nov ~01:00)
+## 2. Status (honest, 15 Nov ~03:00)
 
 | part | state |
 |---|---|
-| Calibrated NISAR reader (HDF5 box reads, no full downloads) | ✅ `tools/gcov_science.py` |
-| **Andijan reservoir water vs Sentinel-2** | ✅ `tools/water_road.py andijan_res`: NISAR **50.5 → 19.3 km²** (14 Jul → 6 Oct) vs Sentinel-2 **40 → 17 km²**; areas agree **r = 0.83** (R² 0.69, 8 passes); map overlap on held-out passes **IoU 0.49-0.71, median 0.58**; radar counts **~8.6 km² too much water**, likely smooth mud left as the lake drains (not yet verified) |
-| How the water rule works | filtered HH < −16.75 dB, learned on ONE pass (20 Jun) and tested on the 7 later passes it never saw; only inside the lake basin (ESA WorldCover water + 1 km, like NASA's OPERA water product). HV is not used: over calm water it sits at NISAR's noise floor (~−23 dB) |
-| **Old bug, fixed** | the first "Andijan" box sat WEST of the reservoir. Its "1.5-19 km² reservoir water" was wrong; the real reservoir is box `andijan_res` (73.135 E, 40.765 N, 18 km) |
-| Fergana fields, Aral through the same check | ⏳ next |
-| Aral 1997 (RADARSAT-1) vs 2026 (NISAR) | ✅ in the app (Compare → Aral) |
-| 0.5 m check of the 10 m ship detector | ✅ Radar finds → Bosphorus. ICEYE 0.5 m image, taken 5 h after the Sentinel-1 pass: **5 of 12** of our dots sit on a ship you can see, 1 on a breakwater (false), 6 on empty water (probably ships that moved on), 5 small boats missed |
-| Before/after swipe, compare anywhere (any layer on either side) | ✅ |
-| Fixed-rule land classes | ⚠️ call 40 % of Tashkent's buildings "plants" (walls turned away from the radar). Now opt-in, with that error printed; the map shows the measured radar by default |
-| World map placement | ⚠️ off by 0.5-4 km. Fix: NASA's own `_LATLON.kml` box per preview (`tools/fetch_kml_boxes.py`, 600 of 16,691 fetched, resumable; the server already uses them) |
-| Judge score (fresh agent, playing the app) | 6.0 / 10 (round 3). Fixed since: wrong Panama metre count removed, physics wording, anomaly method stated |
-| Still open from the judge | case → tour freeze; phone layout; trim the Sentinel-2 photo to the radar box with cloud % inside the box; draw the analysis box |
-| Single story screen | ⏳ next |
-| 30 s video, public link | ⏳ (the public link needs Murodjon's yes) |
+| Story screen: 3 chapters (Andijan reservoir, Fergana fields, Aral) + Explore | ✅ judge rounds 4-6 played it; 6.5-7/10 |
+| Reservoir water | ✅ 50.5 km² (14 Jul) → 19.3 km² (6 Oct); photos 40 → 17; r = 0.83; held-out IoU median 0.58 |
+| Cloudy-day proof | ✅ 24 Sep 2026: photo 100 % cloud, NISAR sees the lake (photo baked locally) |
+| Forecast (ML) | ✅ ridge, walk-forward on 2026: miss 2.3 km², 30 % better than same-month-last-year; 80 % band ±3.5–6 km² |
+| Fergana harvest map | ✅ HV change 2 Jul → 30 Oct: 12.8 % of the box lost plant echo, 9.4 % gained |
+| Aral | ✅ 1,598 km² water in 1997 (Landsat-5) → ≤ 1.1 km² 2026 (Sentinel-2); NISAR HH+HV ≤ 0.93 km² (HH alone is fooled by salt crust) |
+| Flood watch | ⚠️ NASA EONET swaps lat/lon on 49/125 flood points; fixed in `tools/event_coords.py`; old results discarded; **rescan not yet run** |
+| ICESat-2 laser levels vs area | ⏳ reader works (10 Jan 2025: 847.99 m); network timeouts stopped the rest |
+| 30 s video | ✅ `docs/video/falakus-30s.mp4` (shot 2 to be recaptured with textured cloud) |
+| Deck | ✅ `docs/deck/story.html` (7 slides) |
+| Project page text | ✅ `docs/project/page.md` (with AI disclosure) |
+| Public link | ⛔ needs Murodjon's yes |
+| ALOS PALSAR 2006-2009 (L-band history) | ⛔ needs Murodjon to authorize the ASF app on Earthdata |
 
-Full decision log: `docs/state/DECISIONS.md`. Rounds: `docs/state/overnight.md`. Plan: `docs/state/PLAN.md`.
+Restart commands for stopped jobs: `docs/state/handoff.md` (top).
 
 ## 3. Run it on your machine
 
