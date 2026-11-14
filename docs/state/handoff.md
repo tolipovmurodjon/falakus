@@ -18,6 +18,10 @@ Repo: github.com/tolipovmurodjon/falakus (private, branch overnight, Zaynobiddin
 ## Done since
 - Story screen live: top bar 1 Andijan reservoir / 2 Fergana fields / 3 Aral Sea + Explore menu; chapter 1 auto-opens on first visit; chart radar vs Sentinel-2 km2. Task board: docs/state/PLAN.md (bottom).
 
+## WALL for Boss (2 min, his account)
+- ALOS PALSAR (L-band like NISAR, 2006-2011, 28 scenes over the reservoir incl. HH+HV Jun/Aug/Oct 2008) returns 401 "Pre authorization required".
+  Fix: log in at https://urs.earthdata.nasa.gov -> Applications -> Authorized Apps -> approve "Alaska Satellite Facility Data Access"; then open https://search.asf.alaska.edu once and accept the ALOS terms. Then run: python tools/alos_series.py andijan_res 73.135 40.765 73.0279 40.6839 73.2421 40.8461
+
 ## Next steps
 -1. RUNNING: tools/s1_series.py andijan_res (Sentinel-1 monthly Nov 2023-Nov 2026, log docs/state/logs/s1series.log, out data/s1series/andijan_res/*.png + andijan_res.json). When done: serve /s1series/ route, add a 3-year chart (S1 monthly water km2 + NISAR 12-day + S2 points) and a multi-year time-lapse button to story ch.1 (Boss: 'timelapse for all time, 1-2 years, like Google Earth'). Case->tour freeze NOT reproduced (0 errors). Time-lapse button per chapter added (NISAR passes).
 0. DONE: ch.2 colour, Aral box outline, Flood watch view, Andijan stop rewritten (id andijan_res). NEXT: judge bug case->tour freeze (closeCase must leave no hooks), phone 390 px check, then fresh judge round 4 (Opus agent, Chrome, own tab) -> fix lowest.
