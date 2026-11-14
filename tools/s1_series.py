@@ -72,7 +72,7 @@ def main():
             try:
                 best = min(s2, key=lambda x: x["properties"]["eo:cloud_cover"])
                 g = wr.crop("sentinel-2-l2a", best["id"], ["B03", "B08", "SCL"], bbox, 1200)
-                clear = wr.sample(~np.isin(g[2], [0, 1, 3, 8, 9, 10]), lon, lat, bbox) & ok
+                clear = wr.sample(~np.isin(g[2], [0, 1, 3, 8, 9, 10, 11]), lon, lat, bbox) & ok  # 11 = snow/ice: NDWI calls snow water
                 ow = wr.sample((g[0].astype(float) - g[1]) / np.maximum(g[0].astype(float) + g[1], 1) > 0, lon, lat, bbox) & clear
                 if clear.mean() < 0.7:
                     ow = None

@@ -1,0 +1,7 @@
+Flood in Canada 1104143 | read failed: unsupported projection EPSG 3031 | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Japan 1104140 | error: HTTP Error 502: Bad Gateway | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Vietnam 1104141 | error: HTTP Error 502: Bad Gateway | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Peru 1104145 | read failed: unsupported projection EPSG 3031 | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Indonesia 1104146 | error: HTTP Error 502: Bad Gateway | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Maldives 1104155 | read failed: "Unable to synchronously open object (object 'frequencyA' doesn't exist)" | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in India 1104154 | error: HTTP Error 502: Bad Gateway | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None

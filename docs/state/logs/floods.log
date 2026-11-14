@@ -36,3 +36,5 @@ Flood in Algeria 1104179 | mapped | 2026-09-10 -> 2026-09-22 | new water 0.0 km2
 Flood in Türkiye 1104183 | mapped | 2026-09-09 -> 2026-09-21 | new water 0.0 km2 | brighter 0.73 | S2 14 % cloud, IoU 0.0
 Flood in Japan 1104182 | error: HTTP Error 502: Bad Gateway | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
 Flood in Malaysia 1104184 | error: HTTP Error 502: Bad Gateway | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Uganda 1104185 | read failed: "Unable to synchronously open object (object 'frequencyA' doesn't exist)" | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Brazil 1104187 | no NISAR pass before and after | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None

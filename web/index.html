@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Falakus: NASA-ISRO NISAR radar measures Central Asia's water every 12 days, through cloud and at night, checked against photos.">
 <title>Falakus NISAR Live</title>
 <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.0.0/dist/maplibre-gl.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;800&display=swap">
@@ -167,6 +168,13 @@ body.freecmp #swipe .tag{top:104px}
 #cmpchart svg{display:block;width:100%}
 #cmpchart .lg{display:flex;gap:12px;font:500 11px var(--mono);color:var(--ink3);margin:2px 0 6px}
 #cmpchart .lg i{display:inline-block;width:14px;height:3px;border-radius:2px;vertical-align:3px;margin-right:4px}
+@media (max-width:640px){#cases{top:8px!important;bottom:auto!important;left:8px!important;right:8px;transform:none!important;max-width:none!important;flex-wrap:nowrap!important;overflow-x:auto;justify-content:flex-start!important;white-space:nowrap;scrollbar-width:none}#cases .credits{display:none}#cases .case{flex:0 0 auto}#brand{display:none}}
+body.playing #brand,body.playing #powers,body.playing #howto,body.playing #datatime,body.playing #scikey{display:none!important}
+#datatime{position:absolute;left:18px;bottom:116px;z-index:4;max-width:360px;padding:10px 14px;font-size:12.5px;color:var(--ink2)}
+#datatime summary{cursor:pointer;font-weight:600;color:var(--ink)}#datatime ol{margin:8px 0 0;padding-left:18px;display:grid;gap:4px}
+body.comparing #datatime{bottom:28px}body.freecmp #datatime,body.touring #datatime,body.opts-open #datatime{display:none}
+@media (max-width:640px){#datatime{display:none}.maplibregl-ctrl-top-right{top:64px!important}}
+#cmplede{margin:0 0 6px;font-size:13px;line-height:1.4;color:var(--ink2)}#cmplede b{color:var(--ink)}
 </style>
 </head>
 <body>
@@ -199,6 +207,7 @@ body.freecmp #swipe .tag{top:104px}
 </section>
 <section id="cmp" class="panel" hidden aria-label="Before and after">
  <div class="top"><span class="chip" id="cmpchip"></span><button class="tog" id="cmpx" aria-label="Close">✕</button></div>
+ <p id="cmplede"><b>Falakus</b> · NASA-ISRO's new NISAR radar watches Central Asia's water every 12 days, through cloud and at night. Every number is checked against photos.</p>
  <h3 id="cmpt"></h3>
  <div id="cmptabs" class="row"></div>
  <div class="hero"><b id="cmpn"></b><span id="cmps"></span></div>
@@ -370,9 +379,9 @@ function passInfo(i){const el=$("pinfo");if(!el)return;const f=dance.frames[i];l
    if(p.rvi_crop!=null)h+=`<div class="d">crop index RVI ${p.rvi_crop.toFixed(2)}${dr!=null?` (${dr>=0?"+":""}${dr.toFixed(2)})`:""} · ${p.rvi_crop>0.78?"fields full of plants":p.rvi_crop>0.68?"plants thinning (harvest starting)":"mostly bare fields after harvest"} · water ${Math.round(p.water_km2/big.water_km2*100)} % of this season's biggest (${big.date.slice(5)})</div>`}}
  h+=`<div class="learn">${LEARN[typeof band!=="undefined"&&LEARN[band]?band:"rgb"]}</div>`;el.innerHTML=h}
 function setMeta(t){const m=$("pmeta");if(m)m.textContent=t}
-async function startDance(lon,lat,label,stopId){
+async function startDance(lon,lat,label,stopId){hideFlood();
  const tok=++dance.token;stopPlay();dance.ll=[lon,lat];if(!stopId&&map.getZoom()<8.5)map.flyTo({center:[lon,lat],zoom:9,essential:false});
- $("player").hidden=false;$("pdate").textContent="Loading…";map.setMaxZoom(14.5);setMeta(`Finding every NISAR pass over ${label||"this spot"}…`);
+ $("player").hidden=false;$("pdate").textContent="Loading…";map.setMaxZoom(14.5);document.body.classList.add("playing");setMeta(`Finding every NISAR pass over ${label||"this spot"}…`);
  let s=null;
  if(stopId)try{const r=await fetch(`/science/${stopId}/frames.json`);if(r.ok){const j=await r.json();s={track:"20 m calibrated",sci:true,frames:j.frames.map(f=>({...f,stop:stopId,time:"",pol:"DHDH",c:"science"}))}}}catch(e){}
  dance.wr=null;$("pinfo").innerHTML="";if(stopId)try{const r=await fetch(`/waterroad/${stopId.replace(/_all$/,"")}.json`);if(r.ok)dance.wr=await r.json()}catch(e){}
@@ -382,7 +391,7 @@ async function startDance(lon,lat,label,stopId){
  if(!s.sci){const ok=s.frames.filter(f=>(f.date||"")>="2026-06-17");if(ok.length)s.frames=ok}dance.frames=s.frames;dance.on=true;dance.i=0;dance.track=s.track||"";
  $("prange").max=s.frames.length-1;$("prange").value=0;
  drawTicks();
- map.setPaintProperty("nisar","raster-opacity",radarOp(0.12));
+ map.setPaintProperty("nisar","raster-opacity",radarOp(0.55));
  let loaded=0;
  const imgs=s.frames.map(f=>{const im=new Image();im.onload=()=>{loaded++;if(tok===dance.token&&!dance.playing)setMeta(`${dance.frames.length} passes · track ${dance.track.replace(/_/g," ")} · loaded ${loaded}`)};
   im.onerror=()=>{if(tok!==dance.token)return;const k=dance.frames.indexOf(f);if(k>=0){dance.frames.splice(k,1);$("prange").max=Math.max(0,dance.frames.length-1);drawTicks();if(dance.i>=dance.frames.length)dance.i=0}};im.src=frameUrl(f);return im});
@@ -423,7 +432,7 @@ function showChange(){const a=dance.frames[0],b=dance.frames[dance.i];
  legend(b.sci?`<span><i style="background:#E8590C"></i>HH up more than 3 dB since ${fmtDate(a.date)}</span><span><i style="background:#7048E8"></i>down more than 3 dB</span><span>calibrated dB, 20 m</span>`
   :`<span><i style="background:#E8590C"></i>brighter than on ${fmtDate(a.date)}</span><span><i style="background:#7048E8"></i>darker</span><span>preview brightness, not calibrated dB</span>`)}
 $("pchange").onclick=e=>{dance.change=!dance.change;tog(e.currentTarget,dance.change);if(dance.change){stopPlay();if(dance.i===0&&dance.frames.length>1)show(dance.frames.length-1);else showChange()}else{map.setPaintProperty("diff","raster-opacity",0);legend("")}};
-function endDance(){map.setMaxZoom(22);if(typeof swipeStop==="function")swipeStop();dance.token++;stopPlay();dance.on=false;$("player").hidden=true;["danceA","danceB","diff"].forEach(l=>map.setPaintProperty(l,"raster-opacity",0));map.setPaintProperty("nisar","raster-opacity",radarOp(radarOpacity));dance.change=false;tog($("pchange"),false);legend("")}
+function endDance(){map.setMaxZoom(22);document.body.classList.remove("playing");if(typeof swipeStop==="function")swipeStop();dance.token++;stopPlay();dance.on=false;$("player").hidden=true;["danceA","danceB","diff"].forEach(l=>map.setPaintProperty(l,"raster-opacity",0));map.setPaintProperty("nisar","raster-opacity",radarOp(radarOpacity));dance.change=false;tog($("pchange"),false);legend("")}
 document.querySelectorAll("#pband button").forEach(b=>b.onclick=()=>{band=b.dataset.b;if(dance.on)passInfo(dance.i);document.querySelectorAll("#pband button").forEach(x=>tog(x,x===b));if(dance.on){dance.frames.forEach(f=>{const im=new Image();im.src=frameUrl(f)});show(dance.i)}});
 $("pclose").onclick=()=>{endDance();$("tour").hidden=true};
 
@@ -668,7 +677,8 @@ function findsLayers(){if(map.getSource("finds"))return;
 function findsPanel(html){endDance();const T=$("tour");T.hidden=false;document.body.classList.add("touring");T.innerHTML=html;
  $("fclose").onclick=()=>{T.hidden=true;document.body.classList.remove("touring");map.getSource("finds").setData({type:"FeatureCollection",features:[]})}}
 function bars(P,val,col,lab){const mx=Math.max(1,...P.map(val));return `<div class="shipbars">${P.map((p,i)=>`<button class="shipbar" data-i="${i}" title="${lab(p)}"><i style="height:${Math.max(4,Math.round(64*val(p)/mx))}px;background:${col(p)}"></i><span>${p.date.slice(5)}</span></button>`).join("")}</div>`}
-async function openFinds(){let html=`<div class="top"><span class="chip">Radar finds · Sentinel-1</span><div class="nav"><button class="tog" id="fclose" aria-label="Close">✕</button></div></div>
+const hideFlood=()=>{map.getLayer("flood")&&map.setLayoutProperty("flood","visibility","none")};
+async function openFinds(){hideFlood();let html=`<div class="top"><span class="chip">Radar finds · Sentinel-1</span><div class="nav"><button class="tog" id="fclose" aria-label="Close">✕</button></div></div>
  <h3 style="margin-top:8px">What radar finds that a camera can't</h3>
  <div class="grid"><p><button class="btn" id="f-ships">Ships at 7 chokepoints</button> steel hulls are bright points on a dark sea, day and night.</p>
  <p><button class="btn" id="f-hires">Check our ship dots at 0.5 m (Bosphorus)</button> a free ICEYE spotlight image taken 5 h after our Sentinel-1 pass: which dots are real ships?</p>
@@ -719,7 +729,7 @@ map.on("moveend",()=>{const T=$("tour");if(T.hidden||!$("fclose")||map.getZoom()
 const cleanTitle=t=>String(t||"").replace(/\s+\d{5,}$/,"");
 /* map settings */
 map.on("moveend",()=>{if(!dance.on||!dance.ll||!$("tour").hidden)return;const c=map.getCenter();if(Math.abs(c.lng-dance.ll[0])>3||Math.abs(c.lat-dance.ll[1])>3||map.getZoom()<4)endDance()});
-const radarOp=v=>["interpolate",["linear"],["zoom"],11,v,13.5,v*0.35];
+const radarOp=v=>["interpolate",["linear"],["zoom"],11,v,13.5,v*0.7];
 let playMs=2200;
 $("op-speed").oninput=e=>{playMs=+e.target.value;if(dance.timer){clearInterval(dance.timer);dance.timer=setInterval(()=>show((dance.i+1)%dance.frames.length),playMs)}};
 $("op-base").oninput=e=>{const v=+e.target.value/100;["sat","s2","light"].forEach(l=>map.getLayer(l)&&map.setPaintProperty(l,"raster-brightness-max",v))};
@@ -795,7 +805,7 @@ const CASES={
 const AJ=[73.02795,40.68392,73.24205,40.84608];
 CASES.andijan={title:"1 · Source: the Andijan reservoir, the valley's water tank",bbox:AJ,slides:[
   {tab:"Radar | photo, October",colour:true,chart:"andijan",L:{st:"andijan_res",d:"2026-10-18",lab:"NISAR radar · 18 Oct"},R:{s2:["2026-10-12","2026-10-26",1],lab:"Sentinel-2 photo · clearest, mid-Oct"},
-   n:"50 → 19 km²",s:"of open water seen by NISAR from mid-July to early October, as the reservoir was drawn down for the cotton fields. Cloud-free Sentinel-2 photos show the same fall (40 → 17 km²); the two curves move together, r = 0.83.",
+   n:"50 → 19 km²",s:"of open water seen by NISAR on 14 Jul and 6 Oct, as the reservoir was drawn down for the cotton fields; by 30 Oct it was refilling (33 km²). Cloud-free Sentinel-2 photos show the same fall (40 → 17 km²); the two curves move together, r = 0.83.",
    why:"Calm water is a mirror for the 24 cm pulse, so the lake is the darkest thing in the radar picture, through cloud or at night. We learned the darkness cut-off (HH < −16.75 dB) on ONE pass and checked it on 7 passes it never saw: map overlap with the photos IoU 0.49–0.71 (median 0.58).",
    src:"Radar: NASA-ISRO NISAR GCOV gamma0, calibrated dB (provisional), Lee-filtered, 40 m analysis grid. Check: ESA Sentinel-2 L2A NDWI water on clear days; possible-water zone from ESA WorldCover. tools/water_road.py."},
   {tab:"July | October radar",colour:true,chart:"andijan",L:{st:"andijan_res",d:"2026-07-14",lab:"NISAR · 14 Jul"},R:{st:"andijan_res",d:"2026-10-06",lab:"NISAR · 6 Oct"},
@@ -837,7 +847,7 @@ async function cmpRight(){const R=cmp.slide.R,b=cmp.bbox,coords=[[b[0],b[3]],[b[
   const sc=(j.scenes||[]).map(x=>`${fmtDate(x.date)} ${x.cloud_pct} % cloud`).join(" · ");$("cmpsrc").textContent=`Photo: ${j.attribution}. Scenes: ${sc}. `+$("cmpsrc").dataset.base;return}
  map.addSource("cmpR",{type:"image",url:cmpImgUrl(R),coordinates:coords});map.addLayer({id:"cmpR",type:"raster",source:"cmpR",paint:{"raster-fade-duration":0,"raster-resampling":"nearest"}},"labels");
  if(R.over){map.addSource("cmpO",{type:"image",url:R.over,coordinates:coords});map.addLayer({id:"cmpO",type:"raster",source:"cmpO"},"labels")}}
-async function openCase(id,k=0){const c=CASES[id];endDance();if(typeof closeFree==="function"&&fc)closeFree();
+async function openCase(id,k=0){const c=CASES[id];map.getLayer("flood")&&map.setLayoutProperty("flood","visibility","none");endDance();if(typeof closeFree==="function"&&fc)closeFree();
  if(!c.bbox&&c.sci){const j=await (await fetch(`/science/${c.sci}/frames.json`)).json();c.bbox=j.bbox}
  if(!cmp||cmp.id!==id)cmpKind=c.slides[k].colourDefault||"hh";$("tour").hidden=true;document.body.classList.remove("touring");document.body.classList.add("comparing");
  if(!c.bbox&&c.motion){const j=await (await fetch(`/motion/${c.motion}/info.json`)).json();c.bbox=j.bbox}
@@ -900,7 +910,7 @@ function fcText(){const n=fc.s2scenes&&fc.s2scenes.length?` Photo scenes this mo
 async function fcSet(){fc.L=$("fcL").value;fc.R=$("fcR").value;fc.s2scenes=null;
  map.setPaintProperty("nisar","raster-opacity",0);if(map.getLayer("sci"))map.setLayoutProperty("sci","visibility","none");
  await Promise.all([fcPut(map2,"L",fc.L),fcPut(map,"R",fc.R)]);fcText();fcApply()}
-function openFree(){if(cmp)closeCase();endDance();$("tour").hidden=true;document.body.classList.remove("touring");document.body.classList.add("freecmp");
+function openFree(){hideFlood();if(cmp)closeCase();endDance();$("tour").hidden=true;document.body.classList.remove("touring");document.body.classList.add("freecmp");
  fc={L:"nisar",R:"s2"};$("fc").hidden=false;$("fc-open").classList.add("on");
  const opts=Object.entries(FC).map(([k,v])=>`<option value="${k}">${v.name}</option>`).join("");$("fcL").innerHTML=opts;$("fcR").innerHTML=opts;$("fcL").value="nisar";$("fcR").value="s2";
  $("map2").hidden=false;
@@ -957,7 +967,7 @@ const FIRST_VISIT=!location.hash||location.hash==="#2.4/40/64";const firstOpen=(
 
 /* Flood watch: NASA EONET floods mapped with NISAR before vs after (tools/flood_watch.py) */
 async function openFloods(){closeCase();if(fc)closeFree();let L=[];try{L=await (await fetch("/floods/index.json")).json()}catch(e){}
- const M=L.filter(r=>r.status==="mapped"),N=L.length-M.length;findsLayers();
+ const M=L.filter(r=>r.status==="mapped").sort((a,b)=>(b.new_open_water_km2-a.new_open_water_km2)||(b.brighter_km2-a.brighter_km2)),N=L.length-M.length;findsLayers();
  findsPanel(`<div class="top"><span class="chip">Explore · flood watch</span><div class="nav"><button class="tog" id="fclose" aria-label="Close">✕</button></div></div>
  <h3 style="margin-top:8px">NASA's flood events, checked with NISAR before and after</h3>
  <p style="font-size:13px;color:var(--ink2)">${M.length} floods mapped (${N} had no NISAR pass on both sides, or a read error). Blue = new open water (dark after, not before, 3 dB darker, not a lake or river that is always there). Magenta = 3 dB brighter: wetter soil after rain OR water under plants/walls (double bounce); a candidate, not a flood.</p>
@@ -971,6 +981,10 @@ async function openFloods(){closeCase();if(fc)closeFree();let L=[];try{L=await (
 $("x-floods").onclick=openFloods;
 
 map.on("zoomend",()=>{if(dance.on&&map.getZoom()>=14.4)setMeta("Radar detail ends here: each NISAR pixel is 20 m × 20 m (about 2 houses). Zoom out to see more; the photo underneath is about 1 m.")});
+const closeExplore=()=>{const e=$("explore");if(e&&!e.hidden){e.hidden=true;$("b-explore").setAttribute("aria-expanded","false");$("b-explore").textContent="Explore the world ▾"}};
+$("explore").addEventListener("click",e=>{if(e.target.closest("button"))setTimeout(closeExplore,0)});
+document.addEventListener("click",e=>{if(!e.target.closest("#cases"))closeExplore()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeExplore()});
 /* data layers */
 let EV=[],evCat="All",pop=null;
 map.on("load",()=>{
