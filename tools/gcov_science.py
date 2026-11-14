@@ -80,6 +80,14 @@ def read_box(fh, lon, lat, km):
     return db(hh), (db(hv) if hv is not None else None), px, meta
 
 
+def pass_numbers(date, gid, hh, hv, px):
+    cls = sar_colors.classify(hh, hv)
+    km2 = {name: round(float((cls == i).sum() * px / 1e6), 2) for i, name in enumerate(sar_colors.CLASS_NAMES)}
+    return {"date": date, "id": gid, "classes_km2": km2, "water_km2": km2["water"],
+            "hh_db": round(float(np.nanmedian(hh)), 2),
+            "hv_db": round(float(np.nanmedian(hv)), 2) if hv is not None else None}
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("stop"); ap.add_argument("lon", type=float); ap.add_argument("lat", type=float)
@@ -93,7 +101,7 @@ def main():
     if a.stats_only:  # recompute numbers from boxes already on disk, no NASA reads
         for f in sorted(out.glob("*.npz")):
             z = np.load(f)
-            results.append({"date": f.stem, "id": "", "hh": z["hh_db"], "hv": z["hv_db"] if z["hv_db"].size else None, "px": float(z["dx"]) * float(z["dy"]) if "dx" in z.files else 400.0})
+            results.append(pass_numbers(f.stem, "", z["hh_db"], z["hv_db"] if z["hv_db"].size else None, float(z["dx"]) * float(z["dy"]) if "dx" in z.files else 400.0))
         frames = []
     else:
         with urllib.request.urlopen(f"{a.base}/api/series.json?lon={a.lon:.3f}&lat={a.lat:.3f}", timeout=180) as r:
@@ -116,19 +124,14 @@ def main():
             print(f"{f['date']}  skip: {type(err).__name__}: {str(err)[:100]}", flush=True)
             continue
         np.savez_compressed(out / f"{f['date']}.npz", hh_db=hh, hv_db=hv if hv is not None else np.array([]), **meta)
-        results.append({"date": f["date"], "id": f["id"], "hh": hh, "hv": hv, "px": px})
-        print(f"{f['date']}  box {hh.shape}  HH median {np.nanmedian(hh):.1f} dB", flush=True)
+        results.append(pass_numbers(f["date"], f["id"], hh, hv, px))
+        print(f"{f['date']}  box {hh.shape}  HH median {results[-1]['hh_db']} dB", flush=True)
+        del hh, hv
     if not results:
         print("no passes read"); return
     # Fixed physical rule, not Otsu: in a box without a lake Otsu splits city from fields and calls the city "water".
     stats = {"stop": a.stop, "box_km": 2 * a.km, "water_threshold_db": -18, "source": "NISAR GCOV gamma0, calibrated dB (provisional)", "points": []}
-    for r in results:
-        hh = r["hh"]; cls = sar_colors.classify(hh, r["hv"])
-        km2 = {name: round(float((cls == i).sum() * r["px"] / 1e6), 2) for i, name in enumerate(sar_colors.CLASS_NAMES)}
-        stats["points"].append({"date": r["date"], "id": r["id"], "classes_km2": km2,
-                                "water_km2": km2["water"],
-                                "hh_db": round(float(np.nanmedian(hh)), 2),
-                                "hv_db": round(float(np.nanmedian(r["hv"])), 2) if r["hv"] is not None else None})
+    stats["points"] = results
     (out / "stats.json").write_text(json.dumps(stats, indent=1))
     p = stats["points"]
     print(f"water (HH<-18 & HV<-24 dB) | {p[0]['water_km2']} km2 ({p[0]['date']}) -> {p[-1]['water_km2']} km2 ({p[-1]['date']})")

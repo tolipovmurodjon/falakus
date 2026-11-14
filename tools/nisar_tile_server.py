@@ -135,9 +135,9 @@ class LRU(OrderedDict):
         return val
 
 
-THUMBS = LRU(3000)
+THUMBS = LRU(1500)
 POOL = ThreadPoolExecutor(16)
-FULLS = LRU(160)
+FULLS = LRU(24)  # each full preview is ~16 MB in RAM
 FETCH_LOCKS = {}
 FETCH_LOCKS_LOCK = threading.Lock()
 
@@ -185,7 +185,7 @@ def build_canvas():
     have = sum(1 for _ in THUMB.glob("*.png"))
     cache = DATA / f"canvas_z{CANVAS_Z}_{have}.npy"  # a new download count means a rebuild
     if cache.exists():
-        CANVAS["img"] = np.load(cache)
+        CANVAS["img"] = np.load(cache, mmap_mode="r")  # read from disk on demand: 268 MB stays off RAM
         CANVAS["progress"] = len(FRAMES)
         return
     canvas = np.zeros((CANVAS_N, CANVAS_N, 4), np.uint8)
@@ -243,7 +243,7 @@ def render_tile(z, x, y):
     return body
 
 
-@lru_cache(maxsize=4096)
+@lru_cache(maxsize=1024)
 def _render_tile(z, x, y):
     if z <= CANVAS_Z:
         arr = canvas_tile(z, x, y)
@@ -319,7 +319,7 @@ def band_view(rgba, band):
     return out
 
 
-@lru_cache(maxsize=64)
+@lru_cache(maxsize=8)
 def frame_rgba(gid, collection):
     path = FULL / f"{gid}.png"
     if not path.exists():
@@ -333,7 +333,7 @@ def frame_rgba(gid, collection):
     return None if prev is None else prev[0]
 
 
-@lru_cache(maxsize=768)
+@lru_cache(maxsize=96)
 def frame_image(gid, collection, band="rgb"):
     rgba = frame_rgba(gid, collection)
     if rgba is None:
@@ -401,7 +401,7 @@ def _unused_frame_image(gid, collection):
     return buf.getvalue()
 
 
-@lru_cache(maxsize=128)
+@lru_cache(maxsize=32)
 def diff_image(c1, g1, c2, g2):
     """Brightness change between two previews of the same track/frame: red = brighter, blue = darker."""
     a = Image.open(io.BytesIO(frame_image(g1, c1))).convert("RGBA")
@@ -425,6 +425,29 @@ def diff_image(c1, g1, c2, g2):
 JOBS = {}
 JOB_LANE = threading.Semaphore(2)  # at most 2 NASA reads at once; more just queue
 SCI_TILES = DATA / "scitiles"  # cut by tools/science_pyramid.py from calibrated GCOV boxes
+
+
+S1 = {"t": 0, "body": None}
+
+
+def sentinel1_mosaic():
+    """Sentinel-1 RTC (C-band) mosaic of the last ~4 weeks from Microsoft Planetary Computer: no account needed.
+    The mosaic id is registered here (cached 6 h) so the page gets a plain tile URL."""
+    if S1["body"] and time.time() - S1["t"] < 6 * 3600:
+        return S1["body"]
+    end = time.strftime("%Y-%m-%d"); start = time.strftime("%Y-%m-%d", time.gmtime(time.time() - 25 * 86400))
+    req = {"collections": ["sentinel-1-rtc"], "filter-lang": "cql2-json",
+           "filter": {"op": "anyinteracts", "args": [{"property": "datetime"}, {"interval": [f"{start}T00:00:00Z", f"{end}T23:59:59Z"]}]},
+           "sortby": [{"field": "datetime", "direction": "desc"}]}
+    r = urllib.request.Request("https://planetarycomputer.microsoft.com/api/data/v1/mosaic/register",
+                               data=json.dumps(req).encode(), headers={"Content-Type": "application/json"}, method="POST")
+    with urllib.request.urlopen(r, timeout=60) as resp:
+        mid = json.load(resp)["id"]
+    tile = (f"https://planetarycomputer.microsoft.com/api/data/v1/mosaic/{mid}/tiles/WebMercatorQuad/{{z}}/{{x}}/{{y}}@1x"
+            "?collection=sentinel-1-rtc&assets=vv&rescale=0,0.4&colormap_name=gray&format=png")
+    S1.update(t=time.time(), body={"tiles": [tile], "start": start, "end": end,
+                                   "attribution": "Sentinel-1 RTC (Copernicus, ESA) via Microsoft Planetary Computer"})
+    return S1["body"]
 
 
 # ---- small JSON APIs ------------------------------------------------------
@@ -625,6 +648,8 @@ class Handler(SimpleHTTPRequestHandler):
             if not job:
                 return self.send_bytes(b'{"error":"unknown job"}', "application/json", cache="no-store", code=404)
             return self.send_bytes(json.dumps(job).encode(), "application/json", cache="no-store")
+        if path == "/api/s1.json":
+            return self.send_bytes(json.dumps(sentinel1_mosaic()).encode(), "application/json", cache="no-store")
         if path == "/api/science_boxes.json":
             f = SCI_TILES / "boxes.json"
             boxes = list(json.loads(f.read_text()).values()) if f.exists() else []

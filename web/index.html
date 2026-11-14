@@ -122,6 +122,7 @@ body.touring #powers{display:none}
  <div class="row"><button class="btn" id="b-tour">Start the tour</button><button class="tog" id="b-intro">What is this?</button><button class="tog" id="b-draw">Draw an area</button></div>
  <div class="opts">
   <div class="row"><button class="tog on" id="t-radar" aria-pressed="true">Radar</button><input type="range" id="op" min="0" max="100" value="90" aria-label="Radar opacity" style="width:110px"><button class="tog" id="t-frames" aria-pressed="false">Pass outlines</button></div>
+  <div class="row"><span class="eyebrow" style="margin-right:2px">Radar</span><button class="tog on" id="r-nisar">NISAR L-band</button><button class="tog" id="r-s1">Sentinel-1 C-band</button></div>
   <div class="row"><span class="eyebrow" style="margin-right:2px">Base</span><button class="tog on" id="b-sat">Photo</button><button class="tog" id="b-s2">Sentinel-2</button><button class="tog" id="b-light">Map</button><button class="tog" id="t-events">Event list</button><button class="tog" id="t-globe">Globe</button></div>
  </div>
 </section>
@@ -413,6 +414,19 @@ function showArea(r){const ps=r.passes.filter(p=>p.km2),a=ps[0],b=ps[ps.length-1
 
 
 document.querySelectorAll("#powers .lnk").forEach(b=>b.onclick=()=>{const i=STOPS.findIndex(s=>s.id===b.dataset.stop);if(i>=0)tourGo(i)});
+
+
+/* NISAR (L-band, 24 cm) vs Sentinel-1 (C-band, 5.6 cm): same place, two wavelengths */
+let s1On=false;
+async function setRadar(which){const s1=which==="s1";tog($("r-nisar"),!s1);tog($("r-s1"),s1);
+ if(s1&&!map.isStyleLoaded())await new Promise(r=>map.once("idle",r));
+ if(s1&&!map.getSource("s1")){let j;try{j=await (await fetch("/api/s1.json")).json()}catch(e){toast("Sentinel-1 source did not answer.");tog($("r-s1"),false);tog($("r-nisar"),true);return}
+  map.addSource("s1",{type:"raster",tiles:j.tiles,tileSize:256,maxzoom:13,attribution:j.attribution});
+  map.addLayer({id:"s1",type:"raster",source:"s1",paint:{"raster-opacity":0.9}},"sci");
+  toast(`Sentinel-1 C-band, newest pass ${j.start} to ${j.end}. Shorter waves stop at leaves; NISAR's L-band reaches stems and trunks.`)}
+ s1On=s1;if(map.getLayer("s1"))map.setLayoutProperty("s1","visibility",s1?"visible":"none");
+ ["nisar","sci"].forEach(l=>map.setLayoutProperty(l,"visibility",s1?"none":"visible"))}
+$("r-nisar").onclick=()=>setRadar("nisar");$("r-s1").onclick=()=>setRadar("s1");
 
 /* data layers */
 let EV=[],evCat="All",pop=null;
