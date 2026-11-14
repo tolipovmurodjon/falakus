@@ -19,12 +19,12 @@ Status key: ✅ in the app and checked · 🟡 in the app, check or polish missi
 | consideration | where | state |
 |---|---|---|
 | Different polarizations | HH / HV / false colour / Plants (HV) toggles in every view | ✅ |
-| Different frequencies (other sensors) | Sentinel-1 C-band (multi-year series), RADARSAT-1 C-band 1997, ICEYE X-band 0.5 m (Bosphorus) vs NISAR L-band | 🟡 S1 3-year series running, chart not on screen yet |
-| Several dates as a time series | NISAR 12-day passes (11 per place), all-tracks reader (~5-day looks), Sentinel-1 monthly Nov 2023 → Nov 2026 | 🟡 multi-year chart next |
-| Ancillary data: population, vegetation type | ESA WorldCover (cropland, water zone); JRC surface water (flood watch) | ⛔ population layer (WorldPop / GHS-POP) missing |
+| Different frequencies (other sensors) | Sentinel-1 C-band 2023-2026 (autumn: C-band counts drained mud as water, NISAR L-band far less), RADARSAT-1 C-band 1997, ICEYE X-band 0.5 m; ALOS PALSAR L-band 2006-2009 found (28 scenes) but needs Murodjon's ASF authorization | ✅ |
+| Several dates as a time series | NISAR 12-day passes + all orbits (42 looks, every ~3 days, r 0.82), 3-year monthly chart + ML forecast (beats baselines), Landsat-5 1997 vs 2026 | ✅ |
+| Ancillary data: population, vegetation type | ESA WorldCover (cropland, water zone); JRC surface water (flood watch) | ⛔ population: WorldPop API times out from our network; NASA SEDAC GPW needs a download |
 | Human drivers (agriculture, industry) | reservoir release for cotton, harvest in RVI, Aral river diversion | ✅ |
 | Storytelling through data visualisation | 3 chapters, charts radar vs photo, swipe sliders | ✅ |
-| Personal / hometown context | Fergana valley, Uzbekistan team | 🟡 one personal line per chapter |
+| Personal / hometown context | Fergana valley, Uzbekistan team; deck slide 'why us' | ✅ |
 | Interactive summary (sliders, web maps) | swipe compare, compare anywhere, time-lapse | ✅ |
 
 ## 3. Resources tab (all of them)
@@ -50,7 +50,7 @@ Status key: ✅ in the app and checked · 🟡 in the app, check or polish missi
 | Creativity | new, not a small step? | 1997 ⇆ 2026 radar; radar ⇆ cloudy photo; 0.5 m check of our own detector | 8 |
 | Validity | scientific? does what it says? | every number has an outside check: r = 0.83, held-out IoU 0.58; honest failures shown | 7 |
 | Relevance | answers the challenge? complete? easy? | NISAR core; table above | 7 |
-| Presentation | problem → solution → why it matters | story screen; deck + 30 s video still to rebuild | 5 |
+| Presentation | problem → solution → why it matters | story screen with 3 chapters; 7-slide deck rebuilt; video storyboard v2 (record at the end) | 6 |
 
 ## 5. Open items that lift the score most (in order)
 1. Multi-year chart (Sentinel-1 2023-2026 + NISAR + Sentinel-2) in chapter 1, and its time-lapse.
