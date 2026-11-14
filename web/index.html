@@ -125,6 +125,10 @@ body.touring #powers{display:none}
 
 .lastlook{margin:6px 0 0;font:500 12px/1.4 var(--mono);color:var(--ink2)}
 .lastlook .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#16A34A;margin-right:6px;box-shadow:0 0 0 3px rgba(22,163,74,.18)}
+
+.sl{display:inline-flex;align-items:center;gap:6px;font:500 12.5px var(--sans);color:var(--ink2)}
+.sl input{width:110px;accent-color:var(--mint)}
+#opts{border-top:1px solid var(--line);margin-top:10px;padding-top:2px}
 </style>
 </head>
 <body>
@@ -149,9 +153,13 @@ body.touring #powers{display:none}
   <div><b id="st-window">6-17 Oct</b><span>one 12-day cycle</span></div>
   <div><b id="st-revisit">12 days</b><span>NISAR revisit, day or night</span></div>
  </div>
- <div class="row"><button class="btn" id="b-tour">Start the tour</button><button class="tog" id="b-intro">What is this?</button><button class="tog" id="b-draw">Draw an area</button><button class="tog" id="b-layers" aria-expanded="false">Layers</button><button class="tog" id="b-ships">Ship watch</button><button class="tog" id="b-finds">Radar finds</button></div>
+ <div class="row"><button class="btn" id="b-tour">Start the tour</button><button class="tog" id="b-intro">What is this?</button><button class="tog" id="b-draw">Draw an area</button><button class="tog" id="b-layers" aria-expanded="false">⚙ Map settings</button><button class="tog" id="b-ships">Ship watch</button><button class="tog" id="b-finds">Radar finds</button></div>
  <div class="opts" id="opts" hidden>
-  <div class="row"><button class="tog on" id="t-radar" aria-pressed="true">Radar</button><input type="range" id="op" min="0" max="100" value="90" aria-label="Radar opacity" style="width:110px"><button class="tog" id="t-frames" aria-pressed="false">Pass outlines</button></div>
+  <p class="eyebrow" style="margin:10px 0 4px">Map settings</p>
+  <div class="row"><button class="tog on" id="t-radar" aria-pressed="true">Radar</button><label class="sl">radar opacity <input type="range" id="op" min="0" max="100" value="90" aria-label="Radar opacity"></label></div>
+  <div class="row"><label class="sl">photo brightness <input type="range" id="op-base" min="20" max="100" value="100" aria-label="Base map brightness"></label><label class="sl">play speed <input type="range" id="op-speed" min="400" max="3000" step="100" value="1400" aria-label="Time player speed"></label></div>
+  <div class="row"><button class="tog" id="t-frames" aria-pressed="false">Pass outlines</button><button class="tog on" id="t-labels" aria-pressed="true">Place names</button><button class="tog on" id="t-evdots" aria-pressed="true">Event markers</button><button class="tog on" id="t-tracks" aria-pressed="true">Storm tracks</button></div>
+  <div class="row"><span class="eyebrow" style="margin-right:2px">Events</span><button class="tog on evcat" data-c="Earthquakes">Quakes</button><button class="tog on evcat" data-c="Wildfires">Fires</button><button class="tog on evcat" data-c="Floods">Floods</button><button class="tog on evcat" data-c="Severe Storms">Storms</button><button class="tog on evcat" data-c="Sea and Lake Ice">Ice</button></div>
   <div class="row"><span class="eyebrow" style="margin-right:2px">Radar</span><button class="tog on" id="r-nisar">NISAR L-band</button><button class="tog" id="r-s1">Sentinel-1 C-band</button></div>
   <div class="row"><span class="eyebrow" style="margin-right:2px">Base</span><button class="tog on" id="b-sat">Photo</button><button class="tog" id="b-s2">Sentinel-2</button><button class="tog" id="b-light">Map</button><button class="tog" id="t-events">Event list</button><button class="tog" id="t-globe">Globe</button></div>
  </div>
@@ -237,7 +245,7 @@ const map=new maplibregl.Map({container:"map",hash:true,attributionControl:{comp
   danceA:{type:"image",url:BLANK,coordinates:Q},danceB:{type:"image",url:BLANK,coordinates:Q},diff:{type:"image",url:BLANK,coordinates:Q}},
  layers:[{id:"sat",type:"raster",source:"sat"},{id:"s2",type:"raster",source:"s2",layout:{visibility:"none"}},{id:"light",type:"raster",source:"light",layout:{visibility:"none"}},
   {id:"nisar",type:"raster",source:"nisar",paint:{"raster-opacity":0.9,"raster-fade-duration":150}},
-  {id:"sci",type:"raster",source:"sci",minzoom:10,paint:{"raster-opacity":["interpolate",["linear"],["zoom"],10,0.9,14.8,0.85,15.6,0],"raster-fade-duration":150}},
+  {id:"sci",type:"raster",source:"sci",minzoom:10,paint:{"raster-opacity":["interpolate",["linear"],["zoom"],10,0.62,14.8,0.55,15.6,0],"raster-fade-duration":150}},
   {id:"danceA",type:"raster",source:"danceA",paint:{"raster-opacity":0,"raster-opacity-transition":{duration:650},"raster-fade-duration":0}},
   {id:"danceB",type:"raster",source:"danceB",paint:{"raster-opacity":0,"raster-opacity-transition":{duration:650},"raster-fade-duration":0}},
   {id:"diff",type:"raster",source:"diff",paint:{"raster-opacity":0,"raster-opacity-transition":{duration:400}}},
@@ -247,7 +255,7 @@ map.addControl(new maplibregl.ScaleControl({unit:"metric"}),"bottom-right");
 const vis=(id,on)=>map.getLayer(id)&&map.setLayoutProperty(id,"visibility",on?"visible":"none");
 let radarOpacity=0.9;
 
-$("op").oninput=e=>{radarOpacity=e.target.value/100;if(!dance.on)map.setPaintProperty("nisar","raster-opacity",radarOpacity);map.setPaintProperty("sci","raster-opacity",["interpolate",["linear"],["zoom"],10,radarOpacity,14.8,radarOpacity*0.95,15.6,0])};
+$("op").oninput=e=>{radarOpacity=e.target.value/100;if(!dance.on)map.setPaintProperty("nisar","raster-opacity",radarOpacity);map.setPaintProperty("sci","raster-opacity",["interpolate",["linear"],["zoom"],10,radarOpacity*0.7,14.8,radarOpacity*0.6,15.6,0])};
 $("t-radar").onclick=e=>{const on=!e.currentTarget.classList.contains("on");tog(e.currentTarget,on);vis("nisar",on)};
 $("t-frames").onclick=e=>{const on=!e.currentTarget.classList.contains("on");tog(e.currentTarget,on);vis("frames-line",on)};
 $("t-events").onclick=e=>{const on=!e.currentTarget.classList.contains("on");tog(e.currentTarget,on);$("events").hidden=!on};
@@ -308,7 +316,7 @@ function show(i){
  if(dance.change)showChange();
 }
 function play(){if(!dance.on)return;dance.playing=true;$("pplay").textContent="Pause";tog($("pplay"),true);clearInterval(dance.timer);
- dance.timer=setInterval(()=>show((dance.i+1)%dance.frames.length),1400)}
+ dance.timer=setInterval(()=>show((dance.i+1)%dance.frames.length),playMs)}
 function stopPlay(){dance.playing=false;clearInterval(dance.timer);$("pplay").textContent="Play";tog($("pplay"),false)}
 $("pplay").onclick=()=>dance.playing?stopPlay():play();
 $("prange").oninput=e=>{stopPlay();show(+e.target.value)};
@@ -592,6 +600,22 @@ async function openApron(){const j=await (await fetch("/api/ships/apron_tashkent
  document.querySelectorAll(".shipbar").forEach(b=>b.onclick=()=>show(+b.dataset.i));show(P.length-1)}
 $("b-finds").onclick=openFinds;
 
+map.on("moveend",()=>{const T=$("tour");if(T.hidden||!$("fclose")||map.getZoom()<4)return;
+ const src=map.getSource("finds");const d=src&&src._data;const f=d&&d.features&&d.features[0];if(!f)return;const g=f.geometry.coordinates;const pt=Array.isArray(g[0])?g[0][0]:g;
+ if(!map.getBounds().contains(pt)){T.hidden=true;document.body.classList.remove("touring");src.setData({type:"FeatureCollection",features:[]})}});
+
+/* map settings */
+let playMs=1400;
+$("op-speed").oninput=e=>{playMs=+e.target.value;if(dance.timer){clearInterval(dance.timer);dance.timer=setInterval(()=>show((dance.i+1)%dance.frames.length),playMs)}};
+$("op-base").oninput=e=>{const v=+e.target.value/100;["sat","s2","light"].forEach(l=>map.getLayer(l)&&map.setPaintProperty(l,"raster-brightness-max",v))};
+const vis=(ids,on)=>ids.forEach(l=>map.getLayer(l)&&map.setLayoutProperty(l,"visibility",on?"visible":"none"));
+$("t-labels").onclick=e=>{const on=e.target.getAttribute("aria-pressed")!=="true";tog(e.target,on);e.target.setAttribute("aria-pressed",String(on));vis(["labels"],on)};
+$("t-evdots").onclick=e=>{const on=e.target.getAttribute("aria-pressed")!=="true";tog(e.target,on);e.target.setAttribute("aria-pressed",String(on));vis(["events","events-halo"],on)};
+$("t-tracks").onclick=e=>{const on=e.target.getAttribute("aria-pressed")!=="true";tog(e.target,on);e.target.setAttribute("aria-pressed",String(on));vis(["tracks"],on)};
+const evOff=new Set();
+document.querySelectorAll(".evcat").forEach(b=>b.onclick=()=>{const c=b.dataset.c;evOff.has(c)?evOff.delete(c):evOff.add(c);tog(b,!evOff.has(c));
+ const f=["!",["in",["get","cat"],["literal",[...evOff]]]];["events","events-halo"].forEach(l=>map.getLayer(l)&&map.setFilter(l,evOff.size?f:null))});
+
 /* data layers */
 let EV=[],evCat="All",pop=null;
 map.on("load",()=>{
@@ -621,7 +645,7 @@ async function loadEvents(){
  try{EV=await (await fetch("/api/events.json")).json()}catch(e){EV=null}
  if(!Array.isArray(EV)){$("evlist").innerHTML=fail;EV=[];return}
  EV.forEach(e=>e.color=CAT[e.category]||"#6B7280");
- map.getSource("events").setData({type:"FeatureCollection",features:EV.map((e,i)=>({type:"Feature",geometry:{type:"Point",coordinates:[e.lon,e.lat]},properties:{i,color:e.color,icon:"ev-"+(KIND[e.category]||"dot")}}))});
+ map.getSource("events").setData({type:"FeatureCollection",features:EV.map((e,i)=>({type:"Feature",geometry:{type:"Point",coordinates:[e.lon,e.lat]},properties:{i,color:e.color,cat:e.category,icon:"ev-"+(KIND[e.category]||"dot")}}))});
  map.getSource("tracks").setData({type:"FeatureCollection",features:EV.filter(e=>e.track&&e.track.length>1).map(e=>({type:"Feature",geometry:{type:"LineString",coordinates:e.track},properties:{color:e.color}}))});
  const cats=["All",...new Set(EV.map(e=>e.category))];
  $("evfilter").innerHTML=cats.map(c=>`<button class="tog${c==="All"?" on":""}" data-c="${esc(c)}">${esc(c)} <span style="opacity:.7">${c==="All"?EV.length:EV.filter(e=>e.category===c).length}</span></button>`).join("");

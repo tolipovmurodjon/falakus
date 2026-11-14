@@ -73,7 +73,7 @@ def run(job, w, s, e, n, base="http://127.0.0.1:8765"):
     for p in good:
         p.pop("_hh", None)
     job.update(state="cutting 20 m map tiles", progress=0.93)
-    science_pyramid.build(stop)
+    science_pyramid.build(stop, zooms=range(11, 14), themes_on=False)  # 2 tile sets x 3 zooms: ~8x faster than a tour stop
     total = sum(first["km2"].values()) or 1
     share = {k: round(100 * v / total) for k, v in last["km2"].items()}
     main = max(share, key=share.get)

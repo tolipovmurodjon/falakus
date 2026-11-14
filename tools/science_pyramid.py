@@ -42,7 +42,7 @@ def lonlat_tile(lon, lat, z):
     return x, y
 
 
-def build(stop):
+def build(stop, zooms=ZOOMS, themes_on=True):
     files = sorted((SCI / stop).glob("*.npz"))
     files = [f for f in files if "x0" in np.load(f).files]
     if not files:
@@ -58,18 +58,21 @@ def build(stop):
     classed = lut[major]
     # one-theme heatmaps: colour strength = share of that class in the 140 m window (no colour mixing)
     themes = {}
-    for name, rgb in sar_colors.THEME_RGB.items():
+    for name, rgb in (sar_colors.THEME_RGB.items() if themes_on else []):
         f = shares[sar_colors.CLASS_NAMES.index(name)]
         themes[name] = (np.dstack([np.full(f.shape, c, np.uint8) for c in rgb]), (np.clip(f, 0, 1) ** 0.8 * 235).astype(np.uint8))
     del shares
     ok = np.isfinite(hh)
     ny, nx = hh.shape
+    # soft edges: alpha fades over the outer ~6 % of the box, so a science area blends into the map instead of a hard square
+    ry = np.minimum(np.arange(ny), np.arange(ny)[::-1]) / (0.06 * ny); rx = np.minimum(np.arange(nx), np.arange(nx)[::-1]) / (0.06 * nx)
+    feather = np.clip(np.minimum.outer(ry, rx), 0, 1)
     # lon/lat corners of the box, to know which tiles to cut
     from utm_convert import utm_to_lonlat  # noqa: E402
     lons, lats = utm_to_lonlat(np.array([m["x0"], m["x0"] + nx * m["dx"]]), np.array([m["y0"] - ny * m["dy"], m["y0"]]), int(m["zone"]), bool(m["south"]))
     w, e, s_, n_ = lons.min(), lons.max(), lats.min(), lats.max()
     count = 0
-    for z in ZOOMS:
+    for z in zooms:
         x0, y0 = lonlat_tile(w, n_, z); x1, y1 = lonlat_tile(e, s_, z)
         for x in range(x0, x1 + 1):
             for y in range(y0, y1 + 1):
@@ -80,7 +83,7 @@ def build(stop):
                 if not inside.any():
                     continue
                 ixc, iyc = np.clip(ix, 0, nx - 1), np.clip(iy, 0, ny - 1)
-                a = (inside & ok[iyc, ixc]).astype(np.uint8) * 255
+                a = ((inside & ok[iyc, ixc]) * feather[iyc, ixc] * 255).astype(np.uint8)
                 if not a.any():
                     continue
                 for name, img in (("raw", raw), ("class", classed)):
