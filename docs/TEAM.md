@@ -18,7 +18,7 @@ The water starts in the Andijan reservoir, is used by the Fergana fields, and en
 | # | part | what we say | screen |
 |---|---|---|---|
 | 1 | Hook (0-10 s) | Half the valley's water flows out of one reservoir, Andijan. For months a year, clouds hide it from camera satellites. | Sentinel-2 photo, 🟡 % cloudy days |
-| 2 | Twist (10-25 s) | NISAR sends its own 24 cm pulse. Calm water is a mirror, so it goes black. NISAR watched the Andijan reservoir drain from 50 to 19 km² between July and October, the same trend as the cloud-free photos (r = 0.83). | drag photo ⇆ radar |
+| 2 | Twist (10-25 s) | NISAR sends its own 24 cm pulse. Calm water is a mirror, so it goes black. NISAR watched the Andijan reservoir drain from 50.5 km² (14 Jul) to 19.3 km² (6 Oct), the same trend as the cloud-free photos (r = 0.83). | drag photo ⇆ radar |
 | 3 | Follow the water (25-40 s) | Downstream, the Fergana fields drink it. The cross-polarized echo (HV) rises as crops grow and drops at harvest. | heartbeat chart, field RVI 🟡 |
 | 4 | Where it ends (40-50 s) | At the end of the river is the Aral Sea. Canada's 1997 radar shows open sea; NISAR in 2026 finds at most 0.93 km² of water in a 1,600 km² box. | 1997 ⇆ 2026 drag |
 | 5 | Proof + close (50-60 s) | Every number is checked: on passes our rule never saw, the radar water map overlaps Sentinel-2 at IoU 0.58, and we show where it over-counts. Falakus lets water managers watch through any cloud. | proof badge, repo link |
@@ -32,7 +32,7 @@ Deck: 7 slides, one per speech part plus "the challenge" and "who acts". Build w
 | part | state |
 |---|---|
 | Calibrated NISAR reader (HDF5 box reads, no full downloads) | ✅ `tools/gcov_science.py` |
-| **Andijan reservoir water vs Sentinel-2** | ✅ `tools/water_road.py andijan_res`: NISAR **50 → 19 km²** (Jul → Oct) vs Sentinel-2 **40 → 17 km²**; areas agree **r = 0.83** (R² 0.69, 8 passes); map overlap on held-out passes **IoU 0.49-0.71, median 0.58**; radar counts **~8.6 km² too much water**, likely smooth mud left as the lake drains (not yet verified) |
+| **Andijan reservoir water vs Sentinel-2** | ✅ `tools/water_road.py andijan_res`: NISAR **50.5 → 19.3 km²** (14 Jul → 6 Oct) vs Sentinel-2 **40 → 17 km²**; areas agree **r = 0.83** (R² 0.69, 8 passes); map overlap on held-out passes **IoU 0.49-0.71, median 0.58**; radar counts **~8.6 km² too much water**, likely smooth mud left as the lake drains (not yet verified) |
 | How the water rule works | filtered HH < −16.75 dB, learned on ONE pass (20 Jun) and tested on the 7 later passes it never saw; only inside the lake basin (ESA WorldCover water + 1 km, like NASA's OPERA water product). HV is not used: over calm water it sits at NISAR's noise floor (~−23 dB) |
 | **Old bug, fixed** | the first "Andijan" box sat WEST of the reservoir. Its "1.5-19 km² reservoir water" was wrong; the real reservoir is box `andijan_res` (73.135 E, 40.765 N, 18 km) |
 | Fergana fields, Aral through the same check | ⏳ next |
