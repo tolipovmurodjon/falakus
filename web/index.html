@@ -632,10 +632,11 @@ function bars(P,val,col,lab){const mx=Math.max(1,...P.map(val));return `<div cla
 async function openFinds(){let html=`<div class="top"><span class="chip">Radar finds · Sentinel-1</span><div class="nav"><button class="tog" id="fclose" aria-label="Close">✕</button></div></div>
  <h3 style="margin-top:8px">What radar finds that a camera can't</h3>
  <div class="grid"><p><button class="btn" id="f-ships">Ships at 7 chokepoints</button> steel hulls are bright points on a dark sea, day and night.</p>
+ <p><button class="btn" id="f-hires">Check our ship dots at 0.5 m (Bosphorus)</button> a free ICEYE spotlight image taken 5 h after our Sentinel-1 pass: which dots are real ships?</p>
  <p><button class="btn" id="f-slick">Oil-slick candidates off Baku</button> oil calms the waves, so a slick is a long dark streak.</p>
  <p><button class="btn" id="f-quake">The ground moved: Panama M7.7 quake</button> two passes, 12 days apart; each rainbow band = 11.9 cm of ground motion (interferometry).</p>
  <p><button class="btn" id="f-apron">Plane-sized objects at Tashkent airport</button> parked aircraft are metal corner reflectors on smooth concrete.</p></div>`;
- findsLayers();findsPanel(html);$("f-ships").onclick=()=>shipWatch(true);$("f-slick").onclick=openSlick;$("f-quake").onclick=()=>openMotion("panama_m77");$("f-apron").onclick=openApron}
+ findsLayers();findsPanel(html);$("f-ships").onclick=()=>shipWatch(true);$("f-slick").onclick=openSlick;$("f-hires").onclick=openHires;$("f-quake").onclick=()=>openMotion("panama_m77");$("f-apron").onclick=openApron}
 async function openSlick(){const j=await (await fetch("/api/ships/slicks_baku.json")).json();const P=j.passes,w=j.bbox;findsLayers();
  map.fitBounds([[w[0],w[1]],[w[2],w[3]]],{padding:{left:60,right:440,top:60,bottom:80},essential:false});
  const big=P.reduce((m,p)=>p.slick_km2>m.slick_km2?p:m,P[0]);
@@ -672,7 +673,7 @@ async function openApron(){const j=await (await fetch("/api/ships/apron_tashkent
  document.querySelectorAll(".shipbar").forEach(b=>b.onclick=()=>show(+b.dataset.i));show(P.length-1)}
 $("b-finds").onclick=openFinds;
 
-map.on("moveend",()=>{const T=$("tour");if(T.hidden||!$("fclose")||map.getZoom()<4)return;
+map.on("moveend",()=>{const T=$("tour");if(T.hidden||!$("fclose")||map.getZoom()<4)return;if(map.getLayer("hires")&&map.getLayoutProperty("hires","visibility")!=="none")return;
  const src=map.getSource("finds");const d=src&&src._data;const f=d&&d.features&&d.features[0];if(!f)return;const g=f.geometry.coordinates;const pt=Array.isArray(g[0])?g[0][0]:g;
  if(!map.getBounds().contains(pt)){T.hidden=true;document.body.classList.remove("touring");src.setData({type:"FeatureCollection",features:[]})}});
 
@@ -843,6 +844,35 @@ map.on("move",()=>{if(fc&&map2){map2.jumpTo({center:map.getCenter(),zoom:map.get
 map.on("moveend",()=>{if(!fc||!fc.s2box||(fc.L!=="s2"&&fc.R!=="s2"))return;const b=map.getBounds(),x=fc.s2box;
  if(b.getWest()<x[0]||b.getEast()>x[2]||b.getSouth()<x[1]||b.getNorth()>x[3])fcSet()});
 addEventListener("resize",()=>{if(map2&&fc)map2.resize()});
+
+
+/* 0.5 m check of the 10 m ship detector: ICEYE spotlight (CC-BY 4.0) under our Sentinel-1 dots, matched pairs joined by a line */
+async function openHires(){const j=await (await fetch("/hires/bosphorus_anchorage/bosphorus_anchorage_2026-03-22.json")).json();const b=j.bbox,S=j.sentinel1;
+ const P=S.points_in_crop,H=j.hires_ships_auto.points,pairs=S.pairing.pairs_s1_hires_m;
+ const coords=[[b[0],b[3]],[b[2],b[3]],[b[2],b[1]],[b[0],b[1]]];findsLayers();
+ if(!map.getSource("hires")){map.addSource("hires",{type:"image",url:"/hires/bosphorus_anchorage/"+j.png,coordinates:coords});map.addLayer({id:"hires",type:"raster",source:"hires",paint:{"raster-opacity":1}},"finds-fill")}
+ map.setLayoutProperty("hires","visibility","visible");map.setPaintProperty("nisar","raster-opacity",0);
+ if(!map.getSource("hireslines")){map.addSource("hireslines",{type:"geojson",data:{type:"FeatureCollection",features:[]}});
+  map.addLayer({id:"hireslines",type:"line",source:"hireslines",paint:{"line-color":"#FFD43B","line-width":2.5,"line-dasharray":[1,1]}});
+  map.addLayer({id:"hiresships",type:"circle",source:"hireslines",filter:["==",["get","k"],"hires"],paint:{"circle-radius":11,"circle-color":"rgba(0,0,0,0)","circle-stroke-color":"#2EE59D","circle-stroke-width":2.5}})}
+ const feats=pairs.map(([si,hi,m])=>({type:"Feature",geometry:{type:"LineString",coordinates:[P[si],H[hi].slice(0,2)]},properties:{m}}))
+  .concat(H.map(h=>({type:"Feature",geometry:{type:"Point",coordinates:h.slice(0,2)},properties:{k:"hires"}})));
+ map.getSource("hireslines").setData({type:"FeatureCollection",features:feats});
+ map.getSource("finds").setData({type:"FeatureCollection",features:P.map((c,i)=>({type:"Feature",geometry:{type:"Point",coordinates:c},properties:{r:6,c:pairs.some(p=>p[0]===i)?"#E8590C":"#7048E8"}}))});
+ map.fitBounds([[b[0],b[1]],[b[2],b[3]]],{padding:{left:40,right:440,top:70,bottom:40},essential:false});
+ const e=j.by_eye;findsPanel(`<div class="top"><span class="chip">Radar finds · detector check at 0.5 m</span><div class="nav"><button class="tog" id="fclose" aria-label="Close">✕</button></div></div>
+  <h3 style="margin-top:8px">Bosphorus: are our 10 m ship dots real ships?</h3>
+  <div class="hero"><b>${e.s1_blobs_on_a_visible_vessel} of ${S.count_in_crop}</b><span>Sentinel-1 dots sit on a ship you can see in the 0.5 m ICEYE image (checked by eye)</span></div>
+  <div style="display:flex;gap:6px;margin:4px 0 10px"><button class="btn" id="h-zoom">Zoom to the anchorage</button><button class="tog" id="h-all">Whole image</button><button class="tog" id="h-dots">Hide dots</button></div>
+  <div class="grid">
+  <p><span class="lab">What you see</span>Background: ICEYE spotlight radar, ${j.resolution_m.join(" × ")} m, ${j.datetime_utc.slice(0,16).replace("T"," ")} UTC; every hull has a shape. Dots: our detector on Sentinel-1 (10 m), ${Math.abs(S.dt_hours).toFixed(0)} h earlier. Orange dot + yellow line = paired automatically with a ship found in the 0.5 m image (green ring), ${pairs.map(p=>p[2]+" m").join(", ")} apart. Violet = no pair.</p>
+  <p><span class="lab">Score, by eye</span>${e.s1_blobs_on_a_visible_vessel} dots on a visible ship · ${e.s1_blob_on_breakwater_tip} on a breakwater tip (false) · ${e.s1_blobs_on_empty_water} on empty water: in the traffic lanes, most likely ships that sailed on in 5 h · ${e.vessels_without_s1_blob} ships with no dot: small boats under ~40 m or faint ones at the edge.</p>
+  <p><span class="lab">What it tells us</span>A 10 m detector finds the big ships at anchor and misses small boats. Without ship-tracking (AIS) data we cannot prove the 6 lane dots were ships, so we quote the detector as "large ships, about half confirmed here".</p></div>
+  <p style="font-size:11px;color:var(--ink3)">${esc(j.attribution)} · Sentinel-1 RTC via Microsoft Planetary Computer · tools/hires_fetch.py</p>`);
+ $("h-zoom").onclick=()=>map.fitBounds([[28.949,40.992],[28.964,41.0015]],{padding:{left:40,right:440,top:70,bottom:40}});
+ $("h-all").onclick=()=>map.fitBounds([[b[0],b[1]],[b[2],b[3]]],{padding:{left:40,right:440,top:70,bottom:40}});
+ $("h-dots").onclick=e2=>{const on=e2.target.textContent==="Show dots";e2.target.textContent=on?"Hide dots":"Show dots";["finds-pt","hireslines","hiresships"].forEach(l=>map.getLayer(l)&&map.setLayoutProperty(l,"visibility",on?"visible":"none"))};
+ const old=$("fclose").onclick;$("fclose").onclick=()=>{old&&old();["hires","hireslines","hiresships"].forEach(l=>map.getLayer(l)&&map.setLayoutProperty(l,"visibility","none"));map.setPaintProperty("nisar","raster-opacity",radarOp(radarOpacity))}}
 
 /* data layers */
 let EV=[],evCat="All",pop=null;

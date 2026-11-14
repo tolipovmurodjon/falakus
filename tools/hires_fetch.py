@@ -13,14 +13,16 @@ Steps per site:
   3. run tools/ship_count.py (same code, same site box, same 2048 px grid) on the Sentinel-1 pass nearest in time,
      keep its detections inside the crop, and pair them with the hi-res ships (nearest within --match-m).
 Writes data/hires/<site>/<site>_<date>.png (grey, transparent no-data) and .json (source, licence, time,
-resolution, bbox, the Sentinel-1 pass, both point lists, the pairing).
+resolution, bbox, the Sentinel-1 pass, both point lists, the pairing, and the by-eye counts typed into PRESETS
+after looking at each PNG; the auto finder also fires on artefacts and breakwaters, so by_eye is the number to quote).
 Anchored ships stay put for hours; moving ships do not, so the pairing is only fair for a short time gap.
 
 Usage:
   python tools/hires_fetch.py --list                       # the presets
   python tools/hires_fetch.py panama_anchorage             # one preset (or: all)
   python tools/hires_fetch.py mysite --url <cog> --provider iceye --bbox W S E N --when 2025-11-07T03:33:28Z
-         [--s1-bbox W S E N] [--m-per-px 3] [--width 1600] [--no-s1]
+         [--s1-bbox W S E N] [--m-per-px 3] [--width 1600] [--no-s1] [--out <dir>]
+  For a true 0.5 m zoom, pass a ~800 m bbox with --m-per-px 0.5 (the presets trade detail for a whole 5-7 km frame).
 Scene search that found the presets (anonymous, 14 Nov 2026): Umbra s3://umbra-open-data-catalog/sar-data/tasks
 (8,177 scenes), Capella stac/capella-open-data-by-product-type/capella-open-data-geo (2,286 GEO items), ICEYE
 s3://iceye-open-data-catalog/stac-items (711 items).
@@ -61,19 +63,33 @@ PRESETS = {  # ICEYE time, mode and resolution are read from the file itself; s1
         provider="iceye", when="2025-11-07T03:33:41Z", mode="", pol="",
         url=ICEYE + "spot/ICEYE_D1X6QK_20251107T033338Z_6934719_X50_SLH/ICEYE_D1X6QK_20251107T033338Z_6934719_X50_SLH_GRD.tif",
         stac="https://iceye-open-data-catalog.s3.amazonaws.com/stac-items/2025/11/ICEYE_D1X6QK_20251107T033338Z_6934719_X50_SLH.json",
-        bbox=[-79.5504, 8.8359, -79.5037, 8.8824], m_per_px=3.2, s1_bbox=[-79.65, 8.75, -79.4, 8.95], s1_hours=36),
+        bbox=[-79.5504, 8.8359, -79.5037, 8.8824], m_per_px=3.2, s1_bbox=[-79.65, 8.75, -79.4, 8.95], s1_hours=36,
+        by_eye={"vessels": 20, "large_hulls_at_anchor": 14, "small_craft": 6, "moving_with_wake": 2,
+                "not_ships": "bright vertical stripe pattern top-left = processing artefact (the auto finder counts it)",
+                "s1_blobs_on_a_visible_ship": 7, "s1_blobs_on_empty_water": 7,
+                "note": "S1 pass is 31.5 h after ICEYE: 7 of 14 large anchored hulls still carry an S1 blob; the other 7 S1 "
+                        "blobs are ships that arrived later. Not an object-by-object test; a same-place, next-day check."}),
     "bosphorus_anchorage": dict(  # south mouth of the Bosphorus + Ahirkapi anchorage; S1A pass 5 h earlier
         provider="iceye", when="2026-03-22T09:06:12Z", mode="", pol="",
         url=ICEYE + "spot-fine/ICEYE_SXK973_20260322T090605Z_9361035_X66_SLF/ICEYE_SXK973_20260322T090605Z_9361035_X66_SLF_GRD.tif",
         stac="https://iceye-open-data-catalog.s3.amazonaws.com/stac-items/2026/03/ICEYE_SXK973_20260322T090605Z_9361035_X66_SLF.json",
-        bbox=[28.937, 40.976, 29.02, 41.04], m_per_px=4.4, s1_bbox=[28.85, 40.85, 29.15, 41.05], s1_hours=24),
-    "bangkok_airport": dict(  # Suvarnabhumi SAT-1 concourse + south piers; no Tashkent apron scene exists in any of the 3 archives
+        bbox=[28.937, 40.976, 29.02, 41.04], m_per_px=4.4, s1_bbox=[28.85, 40.85, 29.15, 41.05], s1_hours=24,
+        by_eye={"vessels_at_sea": 10, "ambiguous": 2, "s1_blobs_on_a_visible_vessel": 5, "s1_blob_on_breakwater_tip": 1,
+                "s1_blobs_on_empty_water": 6, "vessels_without_s1_blob": 5,
+                "note": "S1 pass is 5 h before ICEYE. The 5 S1 hits sit on the Yenikapi anchorage group and one ship in the "
+                        "strait mouth; the 6 misses are in the traffic lanes (ships that sailed on). The 5 hi-res vessels "
+                        "with no S1 blob are small craft (< ~40 m) or the faint ones at the frame edge. Half the frame is city."}),
+    "bangkok_airport": dict(  # Suvarnabhumi east remote/cargo aprons; no Tashkent apron scene exists in any of the 3 archives
         provider="umbra", when="2025-11-16T04:33:19Z", mode="SPOTLIGHT, GEC (geocoded)", pol="VV", resolution_m=[0.25, 0.125],
         url=UMBRA + "Suvarnabhumi%20International%20Airport%2C%20Thailand/18fdf34a-2743-4eb3-9208-8085c627017b/"
                     "2025-11-16-04-33-19_UMBRA-10/2025-11-16-04-33-19_UMBRA-10_GEC.tif",
         stac=UMBRA + "Suvarnabhumi%20International%20Airport%2C%20Thailand/18fdf34a-2743-4eb3-9208-8085c627017b/"
                      "2025-11-16-04-33-19_UMBRA-10/2025-11-16-04-33-19_UMBRA-10.stac.v2.json",
-        bbox=[100.740, 13.680, 100.758, 13.694], m_per_px=1.2, s1_bbox=None),
+        bbox=[100.7560, 13.6955, 100.7625, 13.7065], m_per_px=0.8, s1_bbox=None, find_ships=False,
+        by_eye={"airliners_clear_silhouette": 13, "smaller_or_ambiguous_bright_objects": 10,
+                "note": "Planes on open stands show as a bright cross (fuselage + wings, engines brightest). Ground "
+                        "vehicles and stairs make bright dots of a similar size at 10 m, which is why the Tashkent "
+                        "Sentinel-1 count is 'plane-sized bright objects', not planes. No Sentinel-1 comparison here."}),
 }
 
 
@@ -147,8 +163,14 @@ def find_ships(db, m_per_px):
     k = max(1, int(round(25 / m_per_px)))  # work at ~25 m for the background
     small = np.nan_to_num(db, nan=np.nanmax(db))[::k, ::k]
     bg = ndimage.median_filter(small, size=max(5, int(1000 / 25)))  # ~1 km local sea level
-    sea_level = np.nanpercentile(db[ok], 30)
-    land = ndimage.binary_dilation(bg > sea_level + 5, iterations=4)  # a median ignores ships (< half the window)
+    # land: at metre scale a city is no brighter than windy sea on average, but far rougher. Local std of dB over
+    # 60 m, then a 500 m median (ignores ships, which fill < half the window); land = > 2x the calm-sea roughness.
+    d = np.nan_to_num(db, nan=float(np.nanmedian(db))); w = max(3, int(round(60 / m_per_px)))
+    mu = ndimage.uniform_filter(d, w)
+    sd = np.sqrt(np.maximum(ndimage.uniform_filter(d * d, w) - mu * mu, 0))[::k, ::k]
+    oks = ok[::k, ::k]
+    msd = ndimage.median_filter(np.where(oks, sd, 99.0), size=20)
+    land = ndimage.binary_dilation(msd > 2 * np.percentile(msd[oks], 15), iterations=4)  # + 100 m shore band
     up = lambda m: np.kron(m, np.ones((k, k)))[: db.shape[0], : db.shape[1]]
     bgu = up(bg); landu = up(land) > 0.5
     cand = ok & ~landu & (db > bgu + 9)
@@ -229,15 +251,17 @@ def run(site, p, max_w, match_m, use_s1, out_root):
     Image.fromarray(np.dstack([grey, np.where(ok, 255, 0).astype(np.uint8)]), "LA").save(dst / f"{name}.png", optimize=True)
     H, W = db.shape
     to_ll = lambda r, c: [round(tr.c + (c + 0.5) * tr.a, 6), round(tr.f + (r + 0.5) * tr.e, 6)]
-    ships = find_ships(db, m)
-    hi_pts = [to_ll(r, c) + [L] for r, c, L in ships]
+    hi_pts = [to_ll(r, c) + [L] for r, c, L in find_ships(db, m)] if p.get("find_ships", True) else []
     rec = {"site": site, "provider": p["provider"], "licence": "CC-BY 4.0", "source_url": p["url"], "stac_item": p.get("stac"),
            "datetime_utc": when, "resolution_m": p.get("resolution_m"), "resolution_note": "[range, azimuth] metres",
            "mode": p["mode"], "pol": p["pol"], "geometry": p.get("geometry"), "bbox": bbox,
            "png": f"{name}.png", "png_px": [W, H], "png_m_per_px": round(m, 2), "overview_factor_read": meta["overview_factor"],
            "stretch_db": [round(float(lo), 1), round(float(hi), 1)], "attribution": ATTRIBUTION[p["provider"]],
-           "hires_ships_auto": {"method": "> 9 dB above 1 km sea median, blobs >= 6 px, land (1 km median > sea + 5 dB) + 100 m band masked",
-                                "count": len(hi_pts), "points": hi_pts, "point_format": "[lon, lat, length_m]"}}
+           "by_eye": p.get("by_eye")}
+    if p.get("find_ships", True):
+        rec["hires_ships_auto"] = {"method": "> 9 dB above 1 km sea median, blobs >= 6 px, land (500 m median of 60 m dB "
+                                             "roughness > 2x calm sea) + 100 m band masked",
+                                   "count": len(hi_pts), "points": hi_pts, "point_format": "[lon, lat, length_m]"}
     if use_s1 and p.get("s1_bbox"):
         s1 = s1_nearest(when, p["s1_bbox"], p.get("s1_hours", 24))
         if s1:
