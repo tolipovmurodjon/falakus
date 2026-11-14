@@ -20,3 +20,4 @@ Flood in Nigeria 1104186 | mapped | 2026-09-12 -> 2026-09-24 | new water 0.0 km2
 Flood in Argentina 1104192 | read failed: "Unable to synchronously open object (object 'frequencyA' doesn't exist)" | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
 Flood in Ukraine 1104193 | mapped | 2026-09-12 -> 2026-09-24 | new water 0.0 km2 | brighter 0.51 | S2 0 % cloud, IoU 0.0
 Flood in Libya 1104195 | mapped | 2026-09-17 -> 2026-09-29 | new water 0.97 km2 | brighter 1.1 | S2 6 % cloud, IoU 0.0
+Flood in Ghana 1104196 | mapped | 2026-09-19 -> 2026-10-01 | new water 0.01 km2 | brighter 0.0 | S2 21 % cloud, IoU None
