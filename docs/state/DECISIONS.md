@@ -16,3 +16,10 @@ Each line: what · why · the option not taken.
 - At most 2 NASA read lanes at once, 3 retries with pauses · 4+ parallel lanes were throttled (every read failed 17:30-19:50) and later the laptop ran out of memory · more lanes.
 - Aral science box 40 km (not 80/100) · an 80 km box at 20 m is 4000x4000 x 2 bands and ran the laptop out of memory · full-basin box.
 - Sentinel-1 no-login test: not done; the research agent stalled after 600 s and is not relaunched without Boss · Planetary Computer anonymous SAS token test is the next try.
+
+## 14 Nov 22:00-23:00
+- Front door = "drag to compare" with 3 curated cases (Boss's playbook v2 goal), not the world map. Not taken: keep the tour as the entry (judges have ~3 min; the tour needs 16 clicks).
+- Aral baseline = RADARSAT-1 1997 ScanSAR (open, no login). Not taken: SAOCOM / RCM (need registration in Boss's name = wall).
+- Langtang change = per-pixel anomaly vs its own pair-to-pair variability. Not taken: whole-box "km² changed by > 3 dB" (event pair 23.7 km² vs 22.8 km² for a no-event pair: indistinguishable, would be a false claim).
+- False colour = R HH, G HV, B HH/HV (NISAR GCOV is dual-pol). Not taken: the UAVSAR R HH / G HV / B VV recipe (no VV in these products).
+- Science lane paused at 83 MB free on D:; Boss frees D: himself (his answer). Not taken: writing to C: or downsampling.

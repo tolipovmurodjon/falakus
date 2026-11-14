@@ -20,3 +20,15 @@ What changed (files): tools/gcov_science.py, tools/science_render.py, tools/scie
 Stopped at 20:30: laptop out of memory, Claude Code stopped the server and both science lanes. Waiting for Boss's "restart". Screenshots for round 1 are in C:\Users\Murodjon\AppData\Local\Temp\claude-chrome-screenshots-34bIVD\ (copy into docs/state/overnight/round-1/ next round).
 
 Lowest line next: 6 (Sentinel-1), then 10 (pitch), then 9 (AI note on the page).
+
+## Round 3 (14 Nov ~22:00-23:00)
+Checker round 2b (fresh judge play-test in Chrome): **6/10** (Impact 6, Creativity 8, Validity 5, Relevance 6, Presentation 5). Page was black for a few minutes before (duplicate const), fixed + parse-check rule in CLAUDE.md.
+Built (lowest lines first: Presentation + Validity):
+- Compare front door (web/index.html "Compare" block): top bar with 3 one-click cases, swipe left image vs right map layer, colour switcher (HH / false colour / HV), number + physics + sources per slide.
+  - Langtang: NISAR 19 Aug vs 31 Aug with per-pixel anomaly map (|change| > 4x the pixel's own pair-to-pair std, 5x5 multilook): 0.9 km² vs 0.0-0.2 km² for summer pairs; same-day Sentinel-2 = 89 % cloud.
+  - Aral: CSA RADARSAT-1 16 Jul 1997 (tools/rs1_fetch.py, EODMS STAC + open AWS bucket, GCP warp) vs NISAR Oct 2026.
+  - Panama: GUNW control pair vs co-event pair.
+- /api/s2.json (Sentinel-2 photo tiles for any box + dates, with per-scene cloud %), /history route.
+- Critic fixes: settings not hidden/covered, radar fades past z11, play-here flies, BETA passes filtered, km² axes from 0, rice box moved to Shieli (WorldCover 27 % cropland vs 7.5 % at the city), English titles.
+- Repo: github.com/tolipovmurodjon/falakus (private, branch overnight), README with figures, MIT.
+Screenshots: docs/state/overnight/round-3/. Checker round 3 running.
