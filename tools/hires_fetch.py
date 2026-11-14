@@ -54,22 +54,26 @@ ATTRIBUTION = {
     "umbra": "Contains Umbra Open Data (c) Umbra Lab, Inc., licensed under CC BY 4.0; cropped, reprojected and stretched by falakus",
     "capella": "Contains Capella Open Data (c) Capella Space, licensed under CC BY 4.0; cropped, reprojected and stretched by falakus",
 }
-ICEYE = "https://iceye-open-data-catalog.s3.amazonaws.com/data/spot/"
+ICEYE = "https://iceye-open-data-catalog.s3.amazonaws.com/data/"
 UMBRA = "https://umbra-open-data-catalog.s3.us-west-2.amazonaws.com/sar-data/tasks/"
-PRESETS = {
-    "panama_anchorage": dict(
-        provider="iceye", when="2025-11-07T03:33:41Z", mode="spotlight (SLH)", pol="VV", resolution_m=[0.93, 1.0],
-        url=ICEYE + "ICEYE_D1X6QK_20251107T033338Z_6934719_X50_SLH/ICEYE_D1X6QK_20251107T033338Z_6934719_X50_SLH_GRD.tif",
+PRESETS = {  # ICEYE time, mode and resolution are read from the file itself; s1_bbox = the box used in data/ships
+    "panama_anchorage": dict(  # one 5 x 5 km frame of 8 over the Pacific anchorage; nearest S1 pass is 31.5 h later
+        provider="iceye", when="2025-11-07T03:33:41Z", mode="", pol="",
+        url=ICEYE + "spot/ICEYE_D1X6QK_20251107T033338Z_6934719_X50_SLH/ICEYE_D1X6QK_20251107T033338Z_6934719_X50_SLH_GRD.tif",
         stac="https://iceye-open-data-catalog.s3.amazonaws.com/stac-items/2025/11/ICEYE_D1X6QK_20251107T033338Z_6934719_X50_SLH.json",
-        bbox=[-79.5505, 8.836, -79.5035, 8.8825], m_per_px=3.2, s1_bbox=[-79.65, 8.75, -79.4, 8.95], s1_hours=36),
-    "bosphorus_anchorage": dict(
-        provider="iceye", when="2026-03-22T09:06:12Z", mode="spotlight (SLF)", pol="VV", resolution_m=None,
-        url=ICEYE + "ICEYE_SXK973_20260322T090605Z_9361035_X66_SLF/ICEYE_SXK973_20260322T090605Z_9361035_X66_SLF_GRD.tif",
+        bbox=[-79.5504, 8.8359, -79.5037, 8.8824], m_per_px=3.2, s1_bbox=[-79.65, 8.75, -79.4, 8.95], s1_hours=36),
+    "bosphorus_anchorage": dict(  # south mouth of the Bosphorus + Ahirkapi anchorage; S1A pass 5 h earlier
+        provider="iceye", when="2026-03-22T09:06:12Z", mode="", pol="",
+        url=ICEYE + "spot-fine/ICEYE_SXK973_20260322T090605Z_9361035_X66_SLF/ICEYE_SXK973_20260322T090605Z_9361035_X66_SLF_GRD.tif",
         stac="https://iceye-open-data-catalog.s3.amazonaws.com/stac-items/2026/03/ICEYE_SXK973_20260322T090605Z_9361035_X66_SLF.json",
         bbox=[28.937, 40.976, 29.02, 41.04], m_per_px=4.4, s1_bbox=[28.85, 40.85, 29.15, 41.05], s1_hours=24),
-    "dubai_airport": dict(
-        provider="umbra", when="2025-12-10T05:59:00Z", mode="SPOTLIGHT (GEC)", pol="VV", resolution_m=[0.5, 0.125],
-        url=UMBRA + "AIR/PLACEHOLDER", stac=None, bbox=[55.34, 25.245, 55.365, 25.27], m_per_px=1.0, s1_bbox=None),
+    "bangkok_airport": dict(  # Suvarnabhumi SAT-1 concourse + south piers; no Tashkent apron scene exists in any of the 3 archives
+        provider="umbra", when="2025-11-16T04:33:19Z", mode="SPOTLIGHT, GEC (geocoded)", pol="VV", resolution_m=[0.25, 0.125],
+        url=UMBRA + "Suvarnabhumi%20International%20Airport%2C%20Thailand/18fdf34a-2743-4eb3-9208-8085c627017b/"
+                    "2025-11-16-04-33-19_UMBRA-10/2025-11-16-04-33-19_UMBRA-10_GEC.tif",
+        stac=UMBRA + "Suvarnabhumi%20International%20Airport%2C%20Thailand/18fdf34a-2743-4eb3-9208-8085c627017b/"
+                     "2025-11-16-04-33-19_UMBRA-10/2025-11-16-04-33-19_UMBRA-10.stac.v2.json",
+        bbox=[100.740, 13.680, 100.758, 13.694], m_per_px=1.2, s1_bbox=None),
 }
 
 
@@ -100,10 +104,12 @@ def read_power(url, bbox, want_m):
                     "overview_factor": f, "tags": ds.tags()}
         kw = {"overview_level": level - 1} if level else {}
         with rasterio.open(path, **kw) as ds:
-            if ds.crs:  # Umbra GEC / Capella GEO: map-projected
+            if ds.crs:  # Umbra GEC / Capella GEO: map-projected (Umbra's grid is rotated, so invert the affine)
                 b = transform_bounds("EPSG:4326", ds.crs, *bbox, densify_pts=21)
-                win = ds.window(*b).round_offsets().round_lengths()
-                win = win.intersection(rasterio.windows.Window(0, 0, ds.width, ds.height))
+                cr = np.array([~ds.transform * (x, y) for x in b[::2] for y in b[1::2]])
+                c0, r0 = np.maximum(0, np.floor(cr.min(0)).astype(int) - 2)
+                c1, r1 = np.minimum([ds.width, ds.height], np.ceil(cr.max(0)).astype(int) + 2)
+                win = rasterio.windows.Window(c0, r0, c1 - c0, r1 - r0)
                 a = ds.read(1, window=win).astype(np.float32)
                 return a ** 2, dict(src_transform=ds.window_transform(win), src_crs=ds.crs), meta
             gcps, gcrs = ds.gcps  # ICEYE GRD: radar geometry + GCPs in lon/lat
@@ -142,7 +148,7 @@ def find_ships(db, m_per_px):
     small = np.nan_to_num(db, nan=np.nanmax(db))[::k, ::k]
     bg = ndimage.median_filter(small, size=max(5, int(1000 / 25)))  # ~1 km local sea level
     sea_level = np.nanpercentile(db[ok], 30)
-    land = ndimage.binary_dilation(ndimage.uniform_filter(small, 5) > sea_level + 6, iterations=4)
+    land = ndimage.binary_dilation(bg > sea_level + 5, iterations=4)  # a median ignores ships (< half the window)
     up = lambda m: np.kron(m, np.ones((k, k)))[: db.shape[0], : db.shape[1]]
     bgu = up(bg); landu = up(land) > 0.5
     cand = ok & ~landu & (db > bgu + 9)
@@ -230,7 +236,7 @@ def run(site, p, max_w, match_m, use_s1, out_root):
            "mode": p["mode"], "pol": p["pol"], "geometry": p.get("geometry"), "bbox": bbox,
            "png": f"{name}.png", "png_px": [W, H], "png_m_per_px": round(m, 2), "overview_factor_read": meta["overview_factor"],
            "stretch_db": [round(float(lo), 1), round(float(hi), 1)], "attribution": ATTRIBUTION[p["provider"]],
-           "hires_ships_auto": {"method": "> 9 dB above 1 km sea median, blobs >= 6 px, land + 100 m band masked",
+           "hires_ships_auto": {"method": "> 9 dB above 1 km sea median, blobs >= 6 px, land (1 km median > sea + 5 dB) + 100 m band masked",
                                 "count": len(hi_pts), "points": hi_pts, "point_format": "[lon, lat, length_m]"}}
     if use_s1 and p.get("s1_bbox"):
         s1 = s1_nearest(when, p["s1_bbox"], p.get("s1_hours", 24))

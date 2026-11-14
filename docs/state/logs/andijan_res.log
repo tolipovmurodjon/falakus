@@ -1,0 +1,23 @@
+2026-06-20  box (900, 900)  HH median -14.15 dB
+2026-07-02  box (900, 900)  HH median -15.61 dB
+2026-07-14  box (900, 900)  HH median -15.82 dB
+2026-07-26  box (900, 900)  HH median -15.71 dB
+2026-08-19  box (900, 900)  HH median -15.26 dB
+2026-08-31  box (900, 900)  HH median -15.19 dB
+2026-09-12  box (900, 900)  HH median -15.43 dB
+2026-09-24  box (900, 900)  HH median -12.26 dB
+2026-10-06  box (900, 900)  HH median -13.63 dB
+2026-10-18  box (900, 900)  HH median -14.84 dB
+2026-10-30  box (900, 900)  HH median -15.65 dB
+water (HH<-18 & HV<-24 dB) | 8.27 km2 (2026-06-20) -> 26.32 km2 (2026-10-30)
+andijan_res {'date': '2026-06-20', 'water_km2': 0.09, 'rvi_crop': 0.788, 'hv_crop_db': -18.25, 's2_date': '2026-06-23', 's2_clear_pct': 99.6, 'radar_water_in_clear_km2': 0.09, 's2_water_km2': 42.11, 'iou': 0.0}
+andijan_res {'date': '2026-07-02', 'water_km2': 0.46, 'rvi_crop': 0.883, 'hv_crop_db': -18.48}
+andijan_res {'date': '2026-07-14', 'water_km2': 0.88, 'rvi_crop': 0.865, 'hv_crop_db': -18.83, 's2_date': '2026-07-11', 's2_clear_pct': 99.6, 'radar_water_in_clear_km2': 0.88, 's2_water_km2': 40.2, 'iou': 0.001}
+andijan_res {'date': '2026-07-26', 'water_km2': 1.55, 'rvi_crop': 0.826, 'hv_crop_db': -18.59, 's2_date': '2026-07-26', 's2_clear_pct': 99.6, 'radar_water_in_clear_km2': 1.55, 's2_water_km2': 31.96, 'iou': 0.008}
+andijan_res {'date': '2026-08-19', 'water_km2': 0.57, 'rvi_crop': 0.828, 'hv_crop_db': -18.57, 's2_date': '2026-08-20', 's2_clear_pct': 99.6, 'radar_water_in_clear_km2': 0.57, 's2_water_km2': 20.07, 'iou': 0.002}
+andijan_res {'date': '2026-08-31', 'water_km2': 0.83, 'rvi_crop': 0.791, 'hv_crop_db': -18.85, 's2_date': '2026-08-30', 's2_clear_pct': 99.6, 'radar_water_in_clear_km2': 0.83, 's2_water_km2': 18.96, 'iou': 0.002}
+andijan_res {'date': '2026-09-12', 'water_km2': 1.66, 'rvi_crop': 0.763, 'hv_crop_db': -19.16, 's2_date': '2026-09-09', 's2_clear_pct': 99.6, 'radar_water_in_clear_km2': 1.66, 's2_water_km2': 18.78, 'iou': 0.004}
+andijan_res {'date': '2026-09-24', 'water_km2': 0.02, 'rvi_crop': 0.593, 'hv_crop_db': -17.9}
+andijan_res {'date': '2026-10-06', 'water_km2': 0.09, 'rvi_crop': 0.61, 'hv_crop_db': -18.78, 's2_date': '2026-10-04', 's2_clear_pct': 93.7, 'radar_water_in_clear_km2': 0.09, 's2_water_km2': 16.97, 'iou': 0.002}
+andijan_res {'date': '2026-10-18', 'water_km2': 1.03, 'rvi_crop': 0.639, 'hv_crop_db': -19.48, 's2_date': '2026-10-19', 's2_clear_pct': 99.5, 'radar_water_in_clear_km2': 1.03, 's2_water_km2': 21.12, 'iou': 0.003}
+andijan_res {'date': '2026-10-30', 'water_km2': 1.96, 'rvi_crop': 0.697, 'hv_crop_db': -19.98}

@@ -2,7 +2,9 @@
 
 For every stored pass of a place (data/science/<place>/*.npz, HH and HV gamma0 in dB on NASA's UTM grid):
   1. Lee speckle filter (7x7, on power, local coefficient of variation) on HH and HV.
-  2. Water mask = filtered HH < -18 dB and HV < -24 dB (calm water is the darkest echo in both channels).
+  2. Water mask = filtered HH < T, only inside the "possible water" zone (ESA WorldCover water/wetland + 1 km). T is learned on the FIRST pass only (best IoU against its Sentinel-2 photo) and then
+     tested on every later pass, which it never saw. HV is not used: over calm water NISAR's HV sits at its noise floor
+     (about -23 dB), so it cannot separate water (measured on the Andijan reservoir, 14 Nov).
   3. Dual-pol radar vegetation index RVI = 4*HV / (HH + HV) (power), averaged over cropland pixels
      (ESA WorldCover class 40); grows as stems and leaves grow, drops when a field is cut.
   4. Outside judge: for each pass, the clearest Sentinel-2 L2A scene within 3 days (cloud < 20 %) gives a water mask
@@ -59,6 +61,7 @@ def place(name):
     files = sorted(f for f in (ROOT / "data" / "science" / name).glob("20*.npz"))
     out = {"place": name, "method": __doc__.split("Writes")[0].strip(), "passes": []}
     lon = lat = bbox = crop_mask = None
+    T = {"t": None, "fit_on": None}
     for f in files:
         z = np.load(f)
         if "x0" not in z.files:
@@ -71,13 +74,19 @@ def place(name):
             bbox = [float(lon.min()), float(lat.min()), float(lon.max()), float(lat.max())]
             wc = stac({"collections": ["esa-worldcover"], "bbox": bbox, "limit": 4})
             wc = sorted(wc, key=lambda x: x["properties"].get("esa_worldcover:product_version", ""))[-1]
-            crop_mask = sample(crop("esa-worldcover", wc["id"], ["map"], bbox, 1500)[0], lon, lat, bbox) == 40
+            wcg = sample(crop("esa-worldcover", wc["id"], ["map"], bbox, 1500)[0], lon, lat, bbox)
+            crop_mask = wcg == 40
+            # where water can be: ESA WorldCover water + wetland, grown by 1 km (OPERA-style "possible water" mask)
+            zone = ndimage.binary_dilation(np.isin(wcg, [80, 90]), iterations=max(1, int(1000 / dx)))
             px_km2 = dx * dy / 1e6
         ok = np.isfinite(hh) & np.isfinite(hv)
         phh = lee(np.where(ok, 10 ** (hh / 10), 0)); phv = lee(np.where(ok, 10 ** (hv / 10), 0))
         with np.errstate(all="ignore"):
-            water = ok & (10 * np.log10(phh) < -18) & (10 * np.log10(phv) < -24)
+            fhh = 10 * np.log10(phh)
             rvi = 4 * phv / (phh + phv)
+        if T["t"] is None:
+            T["t"] = -18.0  # placeholder until the first Sentinel-2 match fits it
+        water = ok & zone & (fhh < T["t"])
         d = f.stem
         rec = {"date": d, "water_km2": round(float(water.sum() * px_km2), 2),
                "rvi_crop": round(float(np.nanmean(rvi[ok & crop_mask])), 3) if (ok & crop_mask).any() else None,
@@ -107,8 +116,15 @@ def place(name):
                     best_day = (day, opt_clear, sample((g - nir) / np.maximum(g + nir, 1) > 0, lon, lat, bbox))
             except Exception as ex:
                 rec["s2_error"] = str(ex)[:100]
+        if best_day and T["fit_on"] is None:
+            day, opt_clear, opt_w = best_day
+            best = max(np.arange(-24, -12, 0.25), key=lambda t: ((ok & zone & (fhh < t) & opt_clear & opt_w).sum() / max(((ok & zone & (fhh < t) & opt_clear) | (opt_w & opt_clear)).sum(), 1)))
+            T.update(t=float(best), fit_on=d); water = ok & zone & (fhh < T["t"])
+            rec.update(water_km2=round(float(water.sum() * px_km2), 2))
+            out["threshold_db"] = T["t"]; out["threshold_fit_on"] = d
         if best_day:
             day, opt_clear, opt_w = best_day
+            rec["held_out"] = d != T["fit_on"]
             rw, ow = water & opt_clear, opt_w & opt_clear
             union = (rw | ow).sum()
             rec.update(s2_date=day, s2_clear_pct=round(float(opt_clear.mean() * 100), 1), radar_water_in_clear_km2=round(float(rw.sum() * px_km2), 2),
