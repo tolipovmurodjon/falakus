@@ -149,26 +149,47 @@ body.comparing #powers,body.comparing #howto,body.comparing #tour,body.comparing
 @media (max-width:640px){#cases{top:auto;bottom:calc(100% - 64px);max-width:calc(100% - 24px);border-radius:16px}#cases .eyebrow{display:none}#cmp{top:auto;right:8px;left:8px;width:auto;bottom:10px;max-height:46vh}#cmp .hero b{font-size:24px}}
 #cases .credits{flex-basis:100%;text-align:center;font:500 10.5px var(--mono);color:var(--ink3);letter-spacing:.02em}
 body.comparing #swipe .tag{top:104px}
+
+#map2{position:fixed;inset:0;z-index:1;pointer-events:none}
+#fc{position:absolute;right:18px;top:74px;width:380px;padding:14px 18px;z-index:6}
+#fc .top{display:flex;justify-content:space-between;align-items:center}
+#fc .fcrow{display:flex;gap:10px;margin:10px 0 4px;align-items:end;flex-wrap:wrap}
+#fc label{display:grid;gap:4px;font:500 11px var(--mono);color:var(--ink3);flex:1;text-transform:uppercase;letter-spacing:.06em}
+#fc select{font:500 13px var(--sans);padding:7px 8px;border-radius:10px;border:1px solid var(--line);background:#fff;color:var(--ink)}
+#fc .why{font-size:13px;color:var(--ink2);margin:8px 0 4px}
+#fc .src{font-size:11px;color:var(--ink3);margin:0}
+body.freecmp #powers,body.freecmp #howto,body.freecmp #tour,body.freecmp #player,body.freecmp #scikey,body.freecmp #brand{display:none!important}
+body.freecmp #swipe .tag{top:104px}
+@media (max-width:640px){#fc{top:auto;right:8px;left:8px;width:auto;bottom:10px;max-height:46vh;overflow:auto}}
 </style>
 </head>
 <body>
 <div id="map" aria-label="World map with NISAR radar"></div>
+<div id="map2" hidden aria-hidden="true"></div>
 <div id="s1chip" hidden></div>
 <div id="scikey" hidden>
  <b>Science mode · 20 m calibrated radar</b>
- <div class="row" id="sciclasses"><span><i style="background:#2563EB"></i>Dark, smooth (mostly calm water)</span><span><i style="background:#E8A33D"></i>Very bright (mostly buildings)</span><span><i style="background:#2E9650"></i>Plants (volume scatter)</span><span><i style="background:transparent;border:1px solid #bbb"></i>Other: photo shows</span></div>
- <div class="row" id="sciraw" hidden><span><i style="background:#ff5aa0"></i>Pink-white: buildings</span><span><i style="background:#3fa34d"></i>Green: plants</span><span><i style="background:#3b5bd6"></i>Blue: bare soil</span><span><i style="background:#111"></i>Dark: water</span></div>
- <div class="sw" id="skthemes"><button class="tog on" data-k="class">What is here</button><button class="tog" data-k="water">Water</button><button class="tog" data-k="built">Built-up</button><button class="tog" data-k="plants">Plants</button><button class="tog" data-k="raw">Radar colours</button></div>
- <small id="skhint">Each area shows its main type within about 140 m. Pick one theme to see where there is more of it (darker = more).</small>
+ <div class="row" id="sciclasses" hidden><span><i style="background:#2563EB"></i>Dark, smooth (mostly calm water)</span><span><i style="background:#E8A33D"></i>Very bright (mostly buildings)</span><span><i style="background:#2E9650"></i>Plants (volume scatter)</span><span><i style="background:transparent;border:1px solid #bbb"></i>Other: photo shows</span></div>
+ <div class="row" id="sciraw"><span><i style="background:#ff5aa0"></i>Pink-white: buildings</span><span><i style="background:#3fa34d"></i>Green: plants</span><span><i style="background:#3b5bd6"></i>Blue: bare soil</span><span><i style="background:#111"></i>Dark: water</span></div>
+ <div class="sw" id="skthemes"><button class="tog on" data-k="raw">Radar, measured</button><button class="tog" data-k="class">Rule guess</button><button class="tog" data-k="water">Water</button><button class="tog" data-k="built">Built-up</button><button class="tog" data-k="plants">Plants</button></div>
+ <small id="skhint">The measurement itself: R = HH, G = HV, B = HH/HV, fixed dB scale. Green means a strong HV echo: leaves, or building walls turned away from the radar.</small>
 </div>
 
 <nav id="cases" aria-label="Compare before and after">
  <span class="eyebrow">Drag to compare</span>
+ <button class="case" id="fc-open">Compare anywhere</button>
  <button class="case" data-c="langtang">Langtang: seen through cloud</button>
  <button class="case" data-c="aral">Aral Sea: a sea that is gone</button>
  <button class="case" data-c="panama">Panama: the ground moved</button>
  <span class="credits">NASA-ISRO NISAR · CSA RADARSAT-1 · ESA Sentinel-1/2 · USGS · NASA EONET</span>
 </nav>
+<section id="fc" class="panel" hidden aria-label="Compare any two layers">
+ <div class="top"><span class="chip">Compare anywhere · pan and zoom freely</span><button class="tog" id="fcx" aria-label="Close">✕</button></div>
+ <div class="fcrow"><label>Left of the bar<select id="fcL"></select></label><label>Right of the bar<select id="fcR"></select></label></div>
+ <div class="fcrow" id="fcmonthrow"><label>Photo month<select id="fcM"><option value="06">Jun 2026</option><option value="07">Jul 2026</option><option value="08">Aug 2026</option><option value="09">Sep 2026</option><option value="10" selected>Oct 2026</option><option value="11">Nov 2026</option></select></label><button class="tog" id="fcswap">⇆ Swap sides</button></div>
+ <p id="fcwhat" class="why"></p>
+ <p id="fcnote" class="src"></p>
+</section>
 <section id="cmp" class="panel" hidden aria-label="Before and after">
  <div class="top"><span class="chip" id="cmpchip"></span><button class="tog" id="cmpx" aria-label="Close">✕</button></div>
  <h3 id="cmpt"></h3>
@@ -276,7 +297,7 @@ const map=new maplibregl.Map({container:"map",hash:true,attributionControl:{comp
   s2:{type:"raster",tiles:["https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/g/{z}/{y}/{x}.jpg"],tileSize:256,maxzoom:14,attribution:"Sentinel-2 cloudless 2023 by EOX (Copernicus Sentinel data 2023)"},
   light:{type:"raster",tiles:["https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}"],tileSize:256,maxzoom:10,attribution:"Map © Esri, HERE, Garmin"},
   labels:{type:"raster",tiles:["https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}"],tileSize:256,maxzoom:18},
-  sci:{type:"raster",tiles:[location.origin+"/scitiles/class/{z}/{x}/{y}.webp?v=3"],tileSize:256,minzoom:10,maxzoom:14,attribution:"Science mode: NISAR GCOV calibrated gamma0, 10-20 m"},
+  sci:{type:"raster",tiles:[location.origin+"/scitiles/raw/{z}/{x}/{y}.webp?v=3"],tileSize:256,minzoom:10,maxzoom:14,attribution:"Science mode: NISAR GCOV calibrated gamma0, 10-20 m"},
   nisar:{type:"raster",tiles:[location.origin+"/tiles/{z}/{x}/{y}.webp?v=7"],tileSize:256,maxzoom:10,attribution:"Radar: NASA-ISRO NISAR GCOV (provisional), ASF DAAC"},
   danceA:{type:"image",url:BLANK,coordinates:Q},danceB:{type:"image",url:BLANK,coordinates:Q},diff:{type:"image",url:BLANK,coordinates:Q}},
  layers:[{id:"sat",type:"raster",source:"sat"},{id:"s2",type:"raster",source:"s2",layout:{visibility:"none"}},{id:"light",type:"raster",source:"light",layout:{visibility:"none"}},
@@ -441,7 +462,7 @@ function swipeStop(){swipeOn=false;tog($("pswipe"),false);$("swipe").hidden=true
 $("pswipe").onclick=()=>swipeOn?swipeStop():swipeStart();
 map.on("move",()=>{if(swipeOn&&!cmp){drawBefore();swipeApply()}});
 (function(){let drag=false;const bar=()=>$("sbar");document.addEventListener("pointerdown",e=>{if(e.target.closest("#sbar")){drag=true;e.preventDefault()}});
- document.addEventListener("pointermove",e=>{if(!drag)return;const r=map.getCanvas().getBoundingClientRect();swipeX=Math.min(.98,Math.max(.02,(e.clientX-r.left)/r.width));(cmp?cmpApply:swipeApply)()});
+ document.addEventListener("pointermove",e=>{if(!drag)return;const r=map.getCanvas().getBoundingClientRect();swipeX=Math.min(.98,Math.max(.02,(e.clientX-r.left)/r.width));(fc?fcApply:cmp?cmpApply:swipeApply)()});
  document.addEventListener("pointerup",()=>drag=false)})();
 
 
@@ -459,11 +480,11 @@ const KIND={"Wildfires":"fire","Floods":"flood","Severe Storms":"storm","Sea and
 
 
 /* science-mode key: shows only when 20 m tiles are on screen; switch between plain classes and raw radar colours */
-let sciKind="class";
+let sciKind="raw";
 function sciSwitch(kind){sciKind=kind;map.getSource("sci").setTiles([location.origin+`/scitiles/${kind}/{z}/{x}/{y}.webp?v=3`]);
  document.querySelectorAll("#skthemes .tog").forEach(b=>tog(b,b.dataset.k===kind));$("sciclasses").hidden=kind!=="class";$("sciraw").hidden=kind!=="raw";
  const T={water:["#2563EB","calm water"],built:["#E8A33D","very bright ground (mostly buildings)"],plants:["#2E9650","plants"]}[kind];
- $("skhint").innerHTML=T?`<span style="display:inline-block;width:90px;height:9px;border-radius:5px;vertical-align:-1px;background:linear-gradient(90deg,transparent,${T[0]})"></span> share of ${T[1]} within ~140 m: darker = more.`:kind==="raw"?"R = HH, G = HV, B = HH/HV ratio, fixed dB scale.":"Each area shows its main type within about 140 m."}
+ $("skhint").innerHTML=T?`<span style="display:inline-block;width:90px;height:9px;border-radius:5px;vertical-align:-1px;background:linear-gradient(90deg,transparent,${T[0]})"></span> share of ${T[1]} within ~140 m: darker = more.`:kind==="raw"?"The measurement itself: R = HH, G = HV, B = HH/HV, fixed dB scale. Green means a strong HV echo: leaves, or building walls turned away from the radar.":"A guess from fixed dB rules, smoothed over ~140 m. Checked against ESA WorldCover: it calls <b>40 % of Tashkent's buildings 'plants'</b> (walls turned away from the radar echo like leaves). Use it for big areas only."}
 document.querySelectorAll("#skthemes .tog").forEach(b=>b.onclick=()=>sciSwitch(b.dataset.k));
 let SCIBOX=[];fetch("/api/science_boxes.json").then(r=>r.json()).then(b=>{SCIBOX=b;sciKeyUpdate()}).catch(()=>{});
 function sciKeyUpdate(){const z=map.getZoom(),b=map.getBounds();
@@ -763,9 +784,65 @@ async function openCase(id,k=0){const c=CASES[id];endDance();$("tour").hidden=tr
  map.once("moveend",()=>{const W=map.getCanvas().clientWidth,b=cmp.bbox,cx=(map.project([b[0],b[3]]).x+map.project([b[2],b[1]]).x)/2;swipeX=Math.min(.9,Math.max(.1,cx/W));cmpDraw();cmpApply()});cmpDraw();cmpApply()}
 function closeCase(){cmp=null;cmpClearRight();$("cmp").hidden=true;$("swipe").hidden=true;document.body.classList.remove("comparing");document.querySelectorAll(".case").forEach(b=>b.classList.remove("on"));
  map.setPaintProperty("nisar","raster-opacity",radarOp(radarOpacity));if(map.getLayer("sci"))map.setLayoutProperty("sci","visibility","visible")}
-document.querySelectorAll(".case").forEach(b=>b.onclick=()=>cmp&&cmp.id===b.dataset.c?closeCase():openCase(b.dataset.c));
+document.querySelectorAll(".case[data-c]").forEach(b=>b.onclick=()=>{closeFree();cmp&&cmp.id===b.dataset.c?closeCase():openCase(b.dataset.c)});
 $("cmpx").onclick=closeCase;
 map.on("move",()=>{if(cmp){cmpDraw();cmpApply()}});
+
+
+/* Compare anywhere: a second map under the white bar shows any layer on the left, the main map shows any layer on the right.
+   Both maps share one camera, so the user pans and zooms freely and every place on Earth can be compared. */
+const FC={
+ nisar:{name:"NISAR world preview · Oct 2026 (approx. placement)",what:"NASA-ISRO NISAR browse previews of one 12-day cycle (6-17 Oct 2026), ~150 m. Placed from NASA's catalogue boxes: measured against the exact 20 m data it is off by 0.5 km at Tashkent and 4.3 km at Andijan and Fergana. Use it for regions, not streets; for exact work use the 20 m layers or click a place."},
+ nisar20:{name:"NISAR 20 m calibrated · science areas",what:"Calibrated NISAR gamma0 at native 10-20 m, newest pass, inside the science areas (zoom 10-14). Grey = HH echo strength in dB."},
+ nisarclass:{name:"NISAR 20 m · what is here",what:"Each 20 m pixel classified from calibrated HH and HV: blue water, amber very bright (buildings), green plants. Inside the science areas."},
+ s1:{name:"Sentinel-1 radar, C-band 5.6 cm · last 25 days",what:"ESA Sentinel-1 VV, newest pass on top. Shorter waves stop at the leaves, so forests look smoother than in NISAR's L-band."},
+ s2:{name:"Sentinel-2 photo · clearest of the chosen month",what:"ESA Sentinel-2 true colour, the least cloudy scene of the month for this view. A camera: no picture through cloud or at night."},
+ photo:{name:"Photo · Esri World Imagery",what:"High-resolution aerial and satellite photo mosaic (mixed dates). Use it to see what the radar pixels are."},
+ s2cl:{name:"Sentinel-2 cloudless 2023 · EOX",what:"A cloud-free Sentinel-2 mosaic of 2023: a calm year-ago baseline."},
+ rs1:{name:"RADARSAT-1 radar 1997 · Aral Sea only",what:"Canada's RADARSAT-1, 16 Jul 1997, C-band HH (open archive). Covers the Aral Sea region only (57.5-62E, 43.6-46.9N)."}};
+let fc=null,map2=null;
+async function fcSpec(kind){const b=map.getBounds(),m=$("fcM").value;
+ if(kind==="nisar")return{type:"raster",tiles:[location.origin+"/tiles/{z}/{x}/{y}.webp?v=7"],tileSize:256,maxzoom:10};
+ if(kind==="nisar20")return{type:"raster",tiles:[location.origin+"/scitiles/raw/{z}/{x}/{y}.webp?v=3"],tileSize:256,minzoom:10,maxzoom:14};
+ if(kind==="nisarclass")return{type:"raster",tiles:[location.origin+"/scitiles/class/{z}/{x}/{y}.webp?v=3"],tileSize:256,minzoom:10,maxzoom:14};
+ if(kind==="photo")return{type:"raster",tiles:["https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"],tileSize:256,maxzoom:18};
+ if(kind==="s2cl")return{type:"raster",tiles:["https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/g/{z}/{y}/{x}.jpg"],tileSize:256,maxzoom:14};
+ if(kind==="rs1")return{type:"image",url:"/history/aral/rs1_19970716_wide.png",coordinates:[[57.5,46.9],[62.0,46.9],[62.0,43.6],[57.5,43.6]]};
+ if(kind==="s1"){const j=await (await fetch("/api/s1.json")).json();return{type:"raster",tiles:j.tiles,tileSize:256}}
+ if(kind==="s2"){const pad=0.25,w=b.getWest(),e=b.getEast(),so=b.getSouth(),n=b.getNorth(),dx=(e-w)*pad,dy=(n-so)*pad;fc.s2box=[w-dx,so-dy,e+dx,n+dy];
+  const last={"06":30,"07":31,"08":31,"09":30,"10":31,"11":30}[m];
+  const j=await (await fetch(`/api/s2.json?w=${fc.s2box[0]}&s=${fc.s2box[1]}&e=${fc.s2box[2]}&n=${fc.s2box[3]}&start=2026-${m}-01&end=2026-${m}-${last}&clearest=1`)).json();
+  fc.s2scenes=j.scenes||[];return{type:"raster",tiles:j.tiles,tileSize:256}}}
+async function fcPut(target,side,kind){const id="fc"+side;if(target.getLayer(id))target.removeLayer(id);if(target.getSource(id))target.removeSource(id);
+ const spec=await fcSpec(kind);if(!fc)return;target.addSource(id,spec);target.addLayer({id,type:"raster",source:id,paint:{"raster-fade-duration":100}},target.getLayer("labels")?"labels":undefined)}
+function fcApply(){if(!fc)return;const W=map.getCanvas().clientWidth,x=swipeX*W;$("sbar").style.left=x+"px";$("stagL").style.left=Math.max(8,x-260)+"px";$("stagR").style.left=(x+12)+"px";
+ $("stagL").textContent=FC[fc.L].name;$("stagR").textContent=FC[fc.R].name;$("map2").style.clipPath=`inset(0 ${W-x}px 0 0)`}
+function fcText(){const n=fc.s2scenes&&fc.s2scenes.length?` Photo scenes this month: ${fc.s2scenes.slice(0,8).map(x=>`${fmtDate(x.date)} ${x.cloud_pct} % cloud`).join(" · ")}${fc.s2scenes.length>8?" …":""}.`:"";
+ $("fcwhat").innerHTML=`<b>Left:</b> ${FC[fc.L].what}<br><b>Right:</b> ${FC[fc.R].what}`;$("fcnote").textContent="Drag the white bar. Pan and zoom anywhere: both sides move together."+n;
+ $("fcmonthrow").querySelector("label").style.visibility=fc.L==="s2"||fc.R==="s2"?"visible":"hidden"}
+async function fcSet(){fc.L=$("fcL").value;fc.R=$("fcR").value;fc.s2scenes=null;
+ map.setPaintProperty("nisar","raster-opacity",0);if(map.getLayer("sci"))map.setLayoutProperty("sci","visibility","none");
+ await Promise.all([fcPut(map2,"L",fc.L),fcPut(map,"R",fc.R)]);fcText();fcApply()}
+function openFree(){if(cmp)closeCase();endDance();$("tour").hidden=true;document.body.classList.remove("touring");document.body.classList.add("freecmp");
+ fc={L:"nisar",R:"s2"};$("fc").hidden=false;$("fc-open").classList.add("on");
+ const opts=Object.entries(FC).map(([k,v])=>`<option value="${k}">${v.name}</option>`).join("");$("fcL").innerHTML=opts;$("fcR").innerHTML=opts;$("fcL").value="nisar";$("fcR").value="s2";
+ $("map2").hidden=false;
+ if(!map2){map2=new maplibregl.Map({container:"map2",interactive:false,attributionControl:false,center:map.getCenter(),zoom:map.getZoom(),bearing:map.getBearing(),pitch:map.getPitch(),
+  style:{version:8,sources:{sat:{type:"raster",tiles:["https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"],tileSize:256,maxzoom:18},
+   labels:{type:"raster",tiles:["https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}"],tileSize:256,maxzoom:18}},
+   layers:[{id:"sat",type:"raster",source:"sat",paint:{"raster-brightness-max":0.55}},{id:"labels",type:"raster",source:"labels"}]}});
+  map2.once("load",()=>fc&&fcSet())}else{map2.resize();map2.jumpTo({center:map.getCenter(),zoom:map.getZoom()});fcSet()}
+ let cv=$("swipeimg");if(cv)cv.style.clipPath="inset(0 100% 0 0)";$("swipe").hidden=false;swipeX=0.5;fcApply()}
+function closeFree(){if(!fc)return;["fcR"].forEach(id=>{if(map.getLayer(id))map.removeLayer(id);if(map.getSource(id))map.removeSource(id)});fc=null;
+ $("fc").hidden=true;$("map2").hidden=true;$("swipe").hidden=true;$("fc-open").classList.remove("on");document.body.classList.remove("freecmp");
+ map.setPaintProperty("nisar","raster-opacity",radarOp(radarOpacity));if(map.getLayer("sci"))map.setLayoutProperty("sci","visibility","visible")}
+$("fc-open").onclick=()=>fc?closeFree():openFree();$("fcx").onclick=closeFree;
+$("fcL").onchange=$("fcR").onchange=$("fcM").onchange=()=>fcSet();
+$("fcswap").onclick=()=>{const a=$("fcL").value;$("fcL").value=$("fcR").value;$("fcR").value=a;fcSet()};
+map.on("move",()=>{if(fc&&map2){map2.jumpTo({center:map.getCenter(),zoom:map.getZoom(),bearing:map.getBearing(),pitch:map.getPitch()});fcApply()}});
+map.on("moveend",()=>{if(!fc||!fc.s2box||(fc.L!=="s2"&&fc.R!=="s2"))return;const b=map.getBounds(),x=fc.s2box;
+ if(b.getWest()<x[0]||b.getEast()>x[2]||b.getSouth()<x[1]||b.getNorth()>x[3])fcSet()});
+addEventListener("resize",()=>{if(map2&&fc)map2.resize()});
 
 /* data layers */
 let EV=[],evCat="All",pop=null;

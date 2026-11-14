@@ -23,3 +23,9 @@ Each line: what · why · the option not taken.
 - Langtang change = per-pixel anomaly vs its own pair-to-pair variability. Not taken: whole-box "km² changed by > 3 dB" (event pair 23.7 km² vs 22.8 km² for a no-event pair: indistinguishable, would be a false claim).
 - False colour = R HH, G HV, B HH/HV (NISAR GCOV is dual-pol). Not taken: the UAVSAR R HH / G HV / B VV recipe (no VV in these products).
 - Science lane paused at 83 MB free on D:; Boss frees D: himself (his answer). Not taken: writing to C: or downsampling.
+
+## 14 Nov 23:10 · first-principles truth audit (Boss: "water in a different location")
+- Measured: world preview mosaic vs exact 20 m science data (cross-correlation): Andijan 4.25 km, Fergana 4.25 km (+1 km N), Tashkent 0.24/0.48 km. Cause: each browse PNG is cropped to its data and stretched onto NASA's catalogue bounding box, which is not the image's true extent.
+- Measured: fixed-rule class map calls 40 % of Tashkent's WorldCover buildings "plants" (Fergana 72 %); ML 81 % right. Cause: walls turned away from the radar depolarize (high HV like leaves).
+- Done now: science layer default = measured radar (not the guess); guess labelled with its error; world preview labelled "approx. placement" with the measured offsets.
+- Next: register each preview frame against geocoded Sentinel-1 RTC (same physics, exact grid) and store a per-frame shift; Central Asia frames first. Not taken: hiding the world map (it is the only global NISAR layer).
