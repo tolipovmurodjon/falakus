@@ -168,7 +168,7 @@ body.freecmp #swipe .tag{top:104px}
 #cmpchart svg{display:block;width:100%}
 #cmpchart .lg{display:flex;gap:12px;font:500 11px var(--mono);color:var(--ink3);margin:2px 0 6px}
 #cmpchart .lg i{display:inline-block;width:14px;height:3px;border-radius:2px;vertical-align:3px;margin-right:4px}
-@media (max-width:640px){#cases{top:8px!important;bottom:auto!important;left:8px!important;right:8px;transform:none!important;max-width:none!important;flex-wrap:nowrap!important;overflow-x:auto;justify-content:flex-start!important;white-space:nowrap;scrollbar-width:none}#cases .credits{display:none}#cases .case{flex:0 0 auto}#brand{display:none}}
+@media (max-width:640px){#cases{top:8px!important;bottom:auto!important;left:8px!important;right:8px;transform:none!important;max-width:none!important;flex-wrap:nowrap!important;overflow-x:auto;justify-content:flex-start!important;white-space:nowrap;scrollbar-width:none}#cases .credits{display:none}#cases .case{flex:0 0 auto}#brand{display:none}body.opts-open #brand{display:block!important;top:64px;bottom:auto;max-height:70vh;overflow:auto}body.opts-open #brand #opts{display:block!important}body.opts-open #scikey{display:none!important}}
 body.playing #brand,body.playing #powers,body.playing #howto,body.playing #datatime,body.playing #scikey{display:none!important}
 #datatime{position:absolute;left:18px;bottom:116px;z-index:4;max-width:360px;padding:10px 14px;font-size:12.5px;color:var(--ink2)}
 #datatime summary{cursor:pointer;font-weight:600;color:var(--ink)}#datatime ol{margin:8px 0 0;padding-left:18px;display:grid;gap:4px}
@@ -195,7 +195,7 @@ body.comparing #datatime{bottom:28px}body.freecmp #datatime,body.touring #datati
  <button class="case" data-c="fergana">2 · Fergana fields</button>
  <button class="case" data-c="aral">3 · Aral Sea</button>
  <button class="case ghost" id="b-explore" aria-expanded="false">Explore the world ▾</button>
- <span id="explore" hidden><button class="case" id="fc-open">Compare anywhere</button><button class="case" data-c="langtang">Langtang landslide</button><button class="case" data-c="panama">Panama quake</button><button class="case" id="x-floods">Flood watch</button><button class="case" id="x-tour">Guided tour (16 places)</button><button class="case" id="x-finds">Radar finds</button></span>
+ <span id="explore" hidden><button class="case" id="fc-open">Compare anywhere</button><button class="case" data-c="langtang">Langtang landslide</button><button class="case" data-c="panama">Panama quake</button><button class="case" id="x-floods">Flood watch</button><button class="case" id="x-tour">Guided tour (16 places)</button><button class="case" id="x-finds">Radar finds</button><button class="case" id="x-ships">Ship watch</button><button class="case" id="x-draw">Draw an area</button><button class="case" id="x-settings">Map settings</button><button class="case" id="x-intro">What is this?</button></span>
  <span class="credits">NASA-ISRO NISAR · CSA RADARSAT-1 · ESA Sentinel-1/2 · ESA WorldCover · USGS · NASA EONET</span>
 </nav>
 <section id="fc" class="panel" hidden aria-label="Compare any two layers">
@@ -985,6 +985,7 @@ const closeExplore=()=>{const e=$("explore");if(e&&!e.hidden){e.hidden=true;$("b
 $("explore").addEventListener("click",e=>{if(e.target.closest("button"))setTimeout(closeExplore,0)});
 document.addEventListener("click",e=>{if(!e.target.closest("#cases"))closeExplore()});
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeExplore()});
+[["x-ships","b-ships"],["x-draw","b-draw"],["x-settings","b-layers"],["x-intro","b-intro"]].forEach(([x,b])=>$(x).onclick=()=>{if(dance.on)endDance();if(cmp)closeCase();setTimeout(()=>$(b).click(),0)});
 /* data layers */
 let EV=[],evCat="All",pop=null;
 map.on("load",()=>{

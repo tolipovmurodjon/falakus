@@ -5,3 +5,4 @@ Flood in Peru 1104145 | read failed: unsupported projection EPSG 3031 | None -> 
 Flood in Indonesia 1104146 | error: HTTP Error 502: Bad Gateway | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
 Flood in Maldives 1104155 | read failed: "Unable to synchronously open object (object 'frequencyA' doesn't exist)" | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
 Flood in India 1104154 | error: HTTP Error 502: Bad Gateway | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Democratic Republic of Congo 1104166 | read failed: "Unable to synchronously open object (object 'frequencyA' doesn't exist)" | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
