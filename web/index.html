@@ -795,6 +795,8 @@ async function cmpDraw(){if(!cmp)return;const cv=$("swipeimg"),L=cmp.slide.L;if(
  const b=cmp.bbox,tl=map.project([b[0],b[3]]),br=map.project([b[2],b[1]]),ctx=cv.getContext("2d");ctx.clearRect(0,0,W,H);ctx.drawImage(im,tl.x,tl.y,br.x-tl.x,br.y-tl.y)}
 function cmpApply(){if(!cmp)return;const W=map.getCanvas().clientWidth,x=swipeX*W;$("sbar").style.left=x+"px";$("stagL").style.left=Math.max(8,x-230)+"px";$("stagR").style.left=(x+12)+"px";
  $("stagL").textContent=cmp.slide.L.lab;$("stagR").textContent=cmp.slide.R.lab;$("swipeimg").style.clipPath=`inset(0 ${W-x}px 0 0)`}
+function cmpBox(b){const d={type:"FeatureCollection",features:b?[{type:"Feature",geometry:{type:"LineString",coordinates:[[b[0],b[1]],[b[2],b[1]],[b[2],b[3]],[b[0],b[3]],[b[0],b[1]]]},properties:{}}]:[]};
+ if(!map.getSource("cmpbox")){map.addSource("cmpbox",{type:"geojson",data:d});map.addLayer({id:"cmpbox",type:"line",source:"cmpbox",paint:{"line-color":"#FFD43B","line-width":2,"line-dasharray":[2,1.5]}})}else map.getSource("cmpbox").setData(d)}
 function cmpClearRight(){["cmpR","cmpO","cmpS2"].forEach(id=>{if(map.getLayer(id))map.removeLayer(id);if(map.getSource(id))map.removeSource(id)})}
 async function cmpRight(){const R=cmp.slide.R,b=cmp.bbox,coords=[[b[0],b[3]],[b[2],b[3]],[b[2],b[1]],[b[0],b[1]]];cmpClearRight();
  if(R.layer==="nisar"){map.setPaintProperty("nisar","raster-opacity",0.95);return}
@@ -805,7 +807,7 @@ async function cmpRight(){const R=cmp.slide.R,b=cmp.bbox,coords=[[b[0],b[3]],[b[
  if(R.over){map.addSource("cmpO",{type:"image",url:R.over,coordinates:coords});map.addLayer({id:"cmpO",type:"raster",source:"cmpO"},"labels")}}
 async function openCase(id,k=0){const c=CASES[id];endDance();if(typeof closeFree==="function"&&fc)closeFree();
  if(!c.bbox&&c.sci){const j=await (await fetch(`/science/${c.sci}/frames.json`)).json();c.bbox=j.bbox}
- if(c.slides[k].colourDefault&&!cmp)cmpKind=c.slides[k].colourDefault;$("tour").hidden=true;document.body.classList.remove("touring");document.body.classList.add("comparing");
+ if(!cmp||cmp.id!==id)cmpKind=c.slides[k].colourDefault||"hh";$("tour").hidden=true;document.body.classList.remove("touring");document.body.classList.add("comparing");
  if(!c.bbox&&c.motion){const j=await (await fetch(`/motion/${c.motion}/info.json`)).json();c.bbox=j.bbox}
  cmp={id,c,slide:c.slides[k],bbox:c.slides[k].bbox||c.bbox};document.querySelectorAll(".case").forEach(b=>b.classList.toggle("on",b.dataset.c===id));
  map.setPaintProperty("nisar","raster-opacity",0);if(map.getLayer("sci"))map.setLayoutProperty("sci","visibility","none");if(map.getLayer("motion"))map.setLayoutProperty("motion","visibility","none");
@@ -819,9 +821,9 @@ async function openCase(id,k=0){const c=CASES[id];endDance();if(typeof closeFree
  $("cmpsrc").dataset.base=S.src||("Radar: NASA-ISRO NISAR "+(S.L.img?"GUNW interferograms (provisional)":"GCOV gamma0, calibrated dB (provisional)")+", ASF DAAC.");$("cmpsrc").textContent=$("cmpsrc").dataset.base;
  map.fitBounds([[cmp.bbox[0],cmp.bbox[1]],[cmp.bbox[2],cmp.bbox[3]]],{padding:innerWidth<640?{top:70,bottom:330,left:12,right:12}:{top:80,bottom:40,left:40,right:450},duration:800,essential:false});
  let cv=$("swipeimg");if(!cv){cv=document.createElement("canvas");cv.id="swipeimg";cv.style.cssText="position:absolute;inset:0;width:100%;height:100%;pointer-events:none";$("swipe").prepend(cv)}
- $("swipe").hidden=false;swipeX=0.5;cmp.imgL=null;await cmpRight();
+ $("swipe").hidden=false;swipeX=0.5;cmp.imgL=null;await cmpRight();cmpBox(cmp.slide.bbox&&c.bbox?c.bbox:null);
  map.once("moveend",()=>{const W=map.getCanvas().clientWidth,b=cmp.bbox,cx=(map.project([b[0],b[3]]).x+map.project([b[2],b[1]]).x)/2;swipeX=Math.min(.9,Math.max(.1,cx/W));cmpDraw();cmpApply()});cmpDraw();cmpApply()}
-function closeCase(){cmp=null;cmpClearRight();$("cmp").hidden=true;$("swipe").hidden=true;document.body.classList.remove("comparing");document.querySelectorAll(".case").forEach(b=>b.classList.remove("on"));
+function closeCase(){cmp=null;cmpClearRight();cmpBox(null);$("cmp").hidden=true;$("swipe").hidden=true;document.body.classList.remove("comparing");document.querySelectorAll(".case").forEach(b=>b.classList.remove("on"));
  map.setPaintProperty("nisar","raster-opacity",radarOp(radarOpacity));if(map.getLayer("sci"))map.setLayoutProperty("sci","visibility","visible")}
 document.querySelectorAll(".case[data-c]").forEach(b=>b.onclick=()=>{closeFree();cmp&&cmp.id===b.dataset.c?closeCase():openCase(b.dataset.c)});
 $("cmpx").onclick=closeCase;
