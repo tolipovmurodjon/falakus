@@ -402,7 +402,7 @@ function passInfo(i){const el=$("pinfo");if(!el)return;const f=dance.frames[i];l
    const big=P.reduce((a,b)=>b.water_km2>a.water_km2?b:a,P[0]),crops=/fergana/.test(f.stop||"");
    if(crops){const stage=p.rvi_crop>0.78?"fields full of plants":p.rvi_crop>0.68?"plants thinning, harvest starting":"mostly bare fields after harvest";
     h+=`<div><span class="k">RVI ${p.rvi_crop.toFixed(2)}</span> crop index on this pass${dr!=null?` · <span class="${dr>=0?"up":"dn"}">${dr>=0?"+":""}${dr.toFixed(2)} since ${q.date.slice(5)}</span>`:""} · ${stage}</div>`;el.innerHTML=h+learnTog();return}
-   h+=`<div><span class="k">${p.water_km2.toFixed(1)} km²</span> open water on this pass${dw!=null?` · <span class="${dw>=0?"up":"dn"}">${dw>=0?"+":""}${dw.toFixed(1)} km² since ${q.date.slice(5)}</span>`:""}${p.s2_water_km2!=null?` · photo check ${p.s2_water_km2.toFixed(1)} km²${p.iou!=null?`, overlap IoU ${p.iou.toFixed(2)}`:""}`:" · no clear photo this week (clouds): radar only"}</div>`;
+   h+=`<div class="d">white line = the radar shoreline (the dark area joined to the lake); in July it spills into the wet river valley, so read the km² below, not the line</div><div><span class="k">${p.water_km2.toFixed(1)} km²</span> open water on this pass${dw!=null?` · <span class="${dw>=0?"up":"dn"}">${dw>=0?"+":""}${dw.toFixed(1)} km² since ${q.date.slice(5)}</span>`:""}${p.s2_water_km2!=null?` · photo check ${p.s2_water_km2.toFixed(1)} km²${p.iou!=null?`, overlap IoU ${p.iou.toFixed(2)}`:""}`:" · no clear photo this week (clouds): radar only"}</div>`;
    if(false)h+=`<div class="d">crop index RVI ${p.rvi_crop.toFixed(2)}${dr!=null?` (${dr>=0?"+":""}${dr.toFixed(2)})`:""} · ${p.rvi_crop>0.78?"fields full of plants":p.rvi_crop>0.68?"plants thinning (harvest starting)":"mostly bare fields after harvest"} · water ${Math.round(p.water_km2/big.water_km2*100)} % of this season's biggest (${big.date.slice(5)})</div>`}}
  el.innerHTML=h+learnTog()}
 function learnTog(){const t=LEARN[typeof band!=="undefined"&&LEARN[band]?band:"rgb"];return `<details class="learn"><summary>What do the colours mean?</summary>${t}</details>`}
@@ -446,8 +446,12 @@ function show(i){
  setMeta(f.sci?`pass ${i+1} of ${dance.frames.length} · science mode · ${f.res||20} m pixels · calibrated dB (provisional) · HH + HV`:`pass ${i+1} of ${dance.frames.length} · ${f.time} UTC · ${pol} · track ${dance.track.replace(/_/g," ")} · ${f.sci?"science mode · 20 m pixels · calibrated dB":f.c.includes("PROVISIONAL")?"preview · ~150 m · provisional":"preview · ~150 m · validated"}`);
  [...$("pticks").children].forEach((t,k)=>t.classList.toggle("on",k===i));
  if(dance.change)showChange();
- passInfo(i);
+ passInfo(i);wlShow(f);
 }
+function wlShow(f){const on=f&&f.stop==="andijan_res";if(!on){if(map.getLayer("wl"))map.setLayoutProperty("wl","visibility","none");return}
+ const url=`/waterroad/wl_andijan_res_${f.date}.png`,co=coords(f.bbox);
+ if(!map.getSource("wl")){map.addSource("wl",{type:"image",url,coordinates:co});map.addLayer({id:"wl",type:"raster",source:"wl",paint:{"raster-fade-duration":0,"raster-resampling":"nearest"}})}
+ else map.getSource("wl").updateImage({url,coordinates:co});map.setLayoutProperty("wl","visibility","visible");map.moveLayer("wl")}
 const stepPlay=()=>{if(dance.i>=dance.frames.length-1){stopPlay();$("pplay").textContent="Replay";return}show(dance.i+1)};
 function play(){if(!dance.on)return;if(dance.i>=dance.frames.length-1)show(0);dance.playing=true;$("pplay").textContent="Pause";tog($("pplay"),true);clearInterval(dance.timer);
  dance.timer=setInterval(stepPlay,playMs)}
@@ -461,7 +465,7 @@ function showChange(){const a=dance.frames[0],b=dance.frames[dance.i];
  legend(b.sci?`<span><i style="background:#E8590C"></i>HH up more than 3 dB since ${fmtDate(a.date)}</span><span><i style="background:#7048E8"></i>down more than 3 dB</span><span>calibrated dB, 20 m</span>`
   :`<span><i style="background:#E8590C"></i>brighter than on ${fmtDate(a.date)}</span><span><i style="background:#7048E8"></i>darker</span><span>preview brightness, not calibrated dB</span>`)}
 $("pchange").onclick=e=>{dance.change=!dance.change;tog(e.currentTarget,dance.change);if(dance.change){stopPlay();if(dance.i===0&&dance.frames.length>1)show(dance.frames.length-1);else showChange()}else{map.setPaintProperty("diff","raster-opacity",0);legend("")}};
-function endDance(){map.setMaxZoom(22);document.body.classList.remove("playing");if(typeof swipeStop==="function")swipeStop();dance.token++;stopPlay();dance.on=false;$("player").hidden=true;["danceA","danceB","diff"].forEach(l=>map.setPaintProperty(l,"raster-opacity",0));map.setPaintProperty("nisar","raster-opacity",radarOp(radarOpacity));dance.change=false;tog($("pchange"),false);legend("")}
+function endDance(){if(map.getLayer("wl"))map.setLayoutProperty("wl","visibility","none");map.setMaxZoom(22);document.body.classList.remove("playing");if(typeof swipeStop==="function")swipeStop();dance.token++;stopPlay();dance.on=false;$("player").hidden=true;["danceA","danceB","diff"].forEach(l=>map.setPaintProperty(l,"raster-opacity",0));map.setPaintProperty("nisar","raster-opacity",radarOp(radarOpacity));dance.change=false;tog($("pchange"),false);legend("")}
 document.querySelectorAll("#pband button").forEach(b=>b.onclick=()=>{band=b.dataset.b;if(dance.on)passInfo(dance.i);document.querySelectorAll("#pband button").forEach(x=>tog(x,x===b));if(dance.on){dance.frames.forEach(f=>{const im=new Image();im.src=frameUrl(f)});show(dance.i)}});
 $("pclose").onclick=()=>{const back=dance.from;dance.from=null;endDance();$("tour").hidden=true;if(back)openCase(back)};
 
@@ -892,8 +896,8 @@ function cmpBox(b){const d={type:"FeatureCollection",features:b?[{type:"Feature"
 function cmpClearRight(){["cmpR","cmpO","cmpS2"].forEach(id=>{if(map.getLayer(id))map.removeLayer(id);if(map.getSource(id))map.removeSource(id)})}
 async function cmpRight(){const R=cmp.slide.R,b=cmp.bbox,coords=[[b[0],b[3]],[b[2],b[3]],[b[2],b[1]],[b[0],b[1]]];cmpClearRight();
  if(R.layer==="nisar"){map.setPaintProperty("nisar","raster-opacity",0.95);return}
- if(R.baked){try{const pj=await (await fetch("/waterroad/photos.json")).json(),m=pj[R.baked];if(m&&(await fetch(`/waterroad/photo_${R.baked}.png`,{method:"HEAD"})).ok){if(!cmp||cmp.slide.R!==R)return;
-  map.addSource("cmpS2",{type:"image",url:`/waterroad/photo_${R.baked}.png`,coordinates:coords});map.addLayer({id:"cmpS2",type:"raster",source:"cmpS2",paint:{"raster-fade-duration":0}},"labels");
+ if(R.baked){try{const pj=await (await fetch("/waterroad/photos.json")).json(),m=pj[R.baked];if(m&&(await fetch(`/waterroad/photo_${R.baked}.jpg`,{method:"HEAD"})).ok){if(!cmp||cmp.slide.R!==R)return;
+  map.addSource("cmpS2",{type:"image",url:`/waterroad/photo_${R.baked}.jpg`,coordinates:coords});map.addLayer({id:"cmpS2",type:"raster",source:"cmpS2",paint:{"raster-fade-duration":0}},"labels");
   $("cmpsrc").textContent=`Photo: Sentinel-2 L2A (Copernicus, ESA) via Microsoft Planetary Computer, ${fmtDate(m.date)}: ${m.box_cloud_pct!=null?m.box_cloud_pct+" % cloud inside the box, ":""}${m.scene_cloud_pct} % in the whole scene. `+$("cmpsrc").dataset.base;return}}catch(e){}}
  if(R.s2){const q=`w=${b[0]}&s=${b[1]}&e=${b[2]}&n=${b[3]}&start=${R.s2[0]}&end=${R.s2[1]}&clearest=${R.s2[2]}`;const j=await (await fetch("/api/s2.json?"+q)).json();if(!cmp||cmp.slide.R!==R||!j.tiles)return;
   if(j.box)map.addSource("cmpS2",{type:"image",url:j.box.url,coordinates:coords});else map.addSource("cmpS2",{type:"raster",tiles:j.tiles,tileSize:256,bounds:b,attribution:j.attribution});

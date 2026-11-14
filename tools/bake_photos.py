@@ -18,7 +18,7 @@ JOBS = {"andijan_oct6": (AJ, "2026-10-04", "2026-10-08", True), "andijan_cloudy"
         "andijan_midoct": (AJ, "2026-10-12", "2026-10-26", True), "fergana_oct": (FG, "2026-10-12", "2026-10-29", True)}
 out = json.loads((ROOT / "data/waterroad/photos.json").read_text()) if (ROOT / "data/waterroad/photos.json").exists() else {}
 for key, (b, a, z, clear) in JOBS.items():
-    f = ROOT / "data/waterroad" / f"photo_{key}.png"
+    f = ROOT / "data/waterroad" / f"photo_{key}.jpg"
     if f.exists() and key in out:
         continue
     try:
@@ -26,7 +26,9 @@ for key, (b, a, z, clear) in JOBS.items():
         box = j.get("box")
         if not box:
             print(key, "no scene"); continue
-        f.write_bytes(urllib.request.urlopen(box["url"], timeout=180).read())
+        import io
+        from PIL import Image
+        Image.open(io.BytesIO(urllib.request.urlopen(box["url"], timeout=180).read())).convert("RGB").save(f, quality=84, optimize=True, progressive=True)
         out[key] = {k: v for k, v in box.items() if k != "url"}; out[key]["bbox"] = b
         print(key, out[key], f.stat().st_size // 1024, "KB", flush=True)
     except Exception as ex:
