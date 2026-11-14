@@ -597,7 +597,8 @@ def eonet_events():
     if EVENTS["t"]:
         return EVENTS["body"]
     raw = EONET_CACHE.read_bytes() if EONET_CACHE.exists() else refresh_eonet()
-    items = json.loads(raw)
+    import event_coords  # NASA EONET lists some GDACS polygons as [lat, lon]; check each point against its country
+    items = [e for e in (event_coords.fix(x) for x in json.loads(raw)) if e.get("coords") != "unverified"]
     try:
         items += usgs_quakes()
     except Exception as ex:

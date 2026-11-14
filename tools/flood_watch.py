@@ -38,7 +38,9 @@ NISAR_START = "2026-06-17"
 def events():
     d = json.load(open(ROOT / "data" / "eonet_v2.json"))
     ev = d.get("events", d) if isinstance(d, dict) else d
-    fl = [e for e in ev if "lood" in str(e.get("category", "")) and e.get("date", "") >= NISAR_START]
+    import event_coords  # swapped [lat, lon] points in the EONET feed are repaired or dropped here
+    fl = [event_coords.fix(e) for e in ev if "lood" in str(e.get("category", "")) and e.get("date", "") >= NISAR_START]
+    fl = [e for e in fl if e["coords"] in ("ok", "swapped_fixed")]
     home = lambda e: 0 if (55 <= e["lon"] <= 80 and 35 <= e["lat"] <= 48) else 1  # Central Asia first
     return sorted(fl, key=lambda e: (home(e), e["date"]), reverse=False)
 
@@ -122,12 +124,16 @@ def main():
     idx = OUT / "index.json"
     done = {r["id"]: r for r in json.loads(idx.read_text())} if idx.exists() else {}
     for e in events()[: a.max]:
+        old = done.get(e["id"])
+        if old and (abs(old.get("lon", 0) - e["lon"]) > 0.01 or abs(old.get("lat", 0) - e["lat"]) > 0.01):
+            done.pop(e["id"])  # measured at a swapped point: throw the result away and measure again
         if e["id"] in done and not str(done[e["id"]].get("status", "")).startswith(("error", "read failed")):
             continue  # retry only events that failed on a network error
         try:
             r = one(e, a.km, earthaccess)
         except Exception as ex:
             r = {"id": e["id"], "title": e["title"], "date": e["date"], "lon": e["lon"], "lat": e["lat"], "status": f"error: {str(ex)[:80]}"}
+        r["coords"] = e["coords"]
         done[e["id"]] = r
         (OUT / f"{e['id']}.json").write_text(json.dumps(r, indent=1))
         idx.write_text(json.dumps(list(done.values()), indent=1))
