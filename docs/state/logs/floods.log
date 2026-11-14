@@ -1,0 +1,5 @@
+Flood in Islamic Republic of Iran 1104206 | mapped | 2026-09-25 -> 2026-10-07 | new water 0.0 km2 | brighter 32.11 | S2 0 % cloud, IoU 0.002
+Flood in Canada 1104143 | read failed: unsupported projection EPSG 3031 | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Brazil 1104148 | no NISAR pass before and after | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Japan 1104140 | error: HTTP Error 502: Bad Gateway | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Vietnam 1104141 | error: HTTP Error 502: Bad Gateway | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None

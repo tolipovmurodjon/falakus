@@ -1,17 +1,24 @@
 # START HERE (falakus, NASA Space Apps 2026 "Dancing with the SARs")
 
-Deadline: Sun 15 Nov 2026 23:59 local. Plan: docs/state/PLAN.md (approved 14 Nov evening). Decisions: docs/state/DECISIONS.md.
+Deadline: Sun 15 Nov 2026 23:59 local. Team guide (story, status, rules): docs/TEAM.md. Decisions: docs/state/DECISIONS.md.
+Repo: github.com/tolipovmurodjon/falakus (private, branch overnight, Zaynobiddin33 invited).
 
-## Running
-- Server: `cd D:/10_projects/falakus && python -I tools/nisar_tile_server.py --port 8765` → http://127.0.0.1:8765
-- Data: data/index.json (16,691 GCOV frames, 6-17 Oct 2026), data/thumb (all 16,691 small previews), data/full (big previews, cache), data/eonet_v2.json.
-- Prewarm tour: `python -I tools/prewarm.py`
+## State 15 Nov ~01:30
+- STORY (Boss): one screen "Where the valley's water goes": Andijan reservoir -> Fergana -> Aral; rest behind "Explore". Only measured numbers.
+- Water pipeline tools/water_road.py (Lee, HH<T fit on ONE pass, held-out IoU vs Sentinel-2, WorldCover water+1 km zone):
+  - andijan_res (real reservoir 73.135E 40.765N): NISAR 50->19 km2 vs S2 40->17, r=0.83, held-out IoU median 0.58, +8.6 km2 over-count.
+  - fergana: IoU 0.05-0.17 (canals narrower than 20 m pixels). aral: FAILS (salt flats look like water, IoU ~0) -> show Aral only via 1997 vs 2026 RADARSAT, not water km2.
+  - OLD andijan stop text is WRONG (box west of reservoir) -> rewrite web/stops.js andijan before demo.
+- Flood watch tools/flood_watch.py running in background (40 EONET floods, log docs/state/logs/floods.log, out data/floods/). First: Iran 0 km2 new water, 32 km2 brighter, S2 clear -> 'brighter' = wetter soil OR flooded vegetation candidates (label honestly).
+- 0.5 m check (Radar finds -> Bosphorus): 5/12 S1 dots on visible ships.
+- Server box (AWS i-0854c64194a77b2a6, us-east-2) RUNNING as c7i.4xlarge (16 CPU, no GPU, ~$0.71/h; GPU capacity refused). User zaynobiddin added (key on Desktop\zaynobiddin-gpu-access, tested login, no sudo, /srv/falakus shared). Boss stops it himself.
+- KML exact preview boxes: tools/fetch_kml_boxes.py paused at 600/16691 (resumable); server uses them when present.
+- Judge round 3: 6.0/10. Open: case->tour freeze, phone layout, S2 trimmed to box + cloud % in box, draw analysis box.
 
-## State at handoff (updated 14 Nov ~16:50, context 60 % save)
-- Server: tools/nisar_tile_server.py: world mosaic (all 16,691 frames, disk tile cache data/tilecache), /api/series (provisional+validated, no Beta, partial frames rejected), /api/frame?band=hh|hv (fixed scale), /api/diff, /api/stats (preview water km2 + HV), /api/science/<stop>.json (calibrated, when present), /api/events (EONET cache data/eonet_v2.json).
-- Page web/index.html: intro, 10-stop tour (web/stops.js) in a right panel, time player with NASA/HH/HV views, Before|after swipe, Change map, measured card with sparklines, drawn event icons + animated storm tracks, nav/geolocate/fullscreen.
-- Science mode: tools/gcov_science.py ready (earthaccess 0.19 + h5py installed; run with plain `python`, not -I). Boss is logged in to Earthdata in Chrome; ASF access already granted. WAITING: Boss runs earthaccess interactive login in his own PowerShell (writes the netrc). Never type his password or tokens.
-- QA: docs/state/qa/round-1.md. Aral preview estimate: water 51.1 -> 4.5 km2 (-91 %), unconfirmed until calibrated.
+## Next steps
+1. When flood_watch finishes: look at 3 PNGs by eye, add "Flood watch" list+map in Explore (label: new open water vs wetter/flooded-vegetation candidates; S2 check).
+2. Build the one-screen story (Andijan reservoir chart r=0.83 + photo/radar swipe; Fergana HV/RVI heartbeat; Aral 1997 vs 2026).
+3. Rewrite Andijan stop text; fix judge open problems; fresh judge; deck + 30 s video; public link needs Boss yes.
 
 ## State (updated 14 Nov ~22:15, context 60 % save)
 - Server: python tools/nisar_tile_server.py --port 8765 (plain python, not -I). Memory-safe caches. World radar = grayscale HH (data/tilecache_hh).
