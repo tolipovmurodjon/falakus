@@ -21,3 +21,15 @@ Flood in Nepal 1104157 | no NISAR pass before and after | None -> None | new wat
 Flood in Sri Lanka 1104160 | no NISAR pass before and after | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
 Flood in Senegal 1104161 | mapped | 2026-09-10 -> 2026-09-22 | new water 0.94 km2 | brighter 0.0 | S2 0 % cloud, IoU 0.155
 Flood in Democratic Republic of Congo 1104166 | read failed: "Unable to synchronously open object (object 'frequencyA' doesn't exist)" | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Ecuador 1104167 | read failed: unsupported projection EPSG 3031 | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Indonesia 1104168 | error: HTTP Error 502: Bad Gateway | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Somalia 1104170 | mapped | 2026-09-13 -> 2026-09-25 | new water 0.0 km2 | brighter 0.01 | S2 0 % cloud, IoU None
+Flood in Honduras 1104173 | no NISAR pass before and after | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in South Africa 1104177 | no NISAR pass before and after | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Cambodia 1104174 | error: HTTP Error 502: Bad Gateway | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Tunisia 1104180 | mapped | 2026-09-10 -> 2026-09-22 | new water 0.0 km2 | brighter 2.94 | S2 73 % cloud, IoU None
+Flood in Mali 1104181 | no NISAR pass before and after | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Cyprus 1104175 | mapped | 2026-09-16 -> 2026-09-28 | new water 0.0 km2 | brighter 0.0 | S2 19 % cloud, IoU None
+Flood in Guinea 1104178 | no NISAR pass before and after | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Philippines 1104176 | error: HTTP Error 502: Bad Gateway | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Algeria 1104179 | mapped | 2026-09-10 -> 2026-09-22 | new water 0.0 km2 | brighter 0.0 | S2 7 % cloud, IoU None
