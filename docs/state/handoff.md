@@ -7,13 +7,13 @@ Deadline: Sun 15 Nov 2026 23:59 local. Plan: docs/state/PLAN.md (approved 14 Nov
 - Data: data/index.json (16,691 GCOV frames, 6-17 Oct 2026), data/thumb (all 16,691 small previews), data/full (big previews, cache), data/eonet_v2.json.
 - Prewarm tour: `python -I tools/prewarm.py`
 
-## State at handoff
-- Phase 0 done: world map, events list, time player + 10-stop tour (web/index.html, web/stops.js) written, NOT yet walked in Chrome.
-- Known bug: some passes 404 / partial frames get stretched → P1 fix in load_preview (reject partial frames) + client skips failed frames.
-- Boss will log in to Earthdata himself (earthaccess) → P2 calibrated dB. No ANTHROPIC_API_KEY set; text = numbers first; "labs" proxy for polish if reachable.
-- Walls: no money, no sign-ups, nothing published/pushed, never delete data, no R2, no secrets.
+## State at handoff (updated 14 Nov ~16:50, context 60 % save)
+- Server: tools/nisar_tile_server.py: world mosaic (all 16,691 frames, disk tile cache data/tilecache), /api/series (provisional+validated, no Beta, partial frames rejected), /api/frame?band=hh|hv (fixed scale), /api/diff, /api/stats (preview water km2 + HV), /api/science/<stop>.json (calibrated, when present), /api/events (EONET cache data/eonet_v2.json).
+- Page web/index.html: intro, 10-stop tour (web/stops.js) in a right panel, time player with NASA/HH/HV views, Before|after swipe, Change map, measured card with sparklines, drawn event icons + animated storm tracks, nav/geolocate/fullscreen.
+- Science mode: tools/gcov_science.py ready (earthaccess 0.19 + h5py installed; run with plain `python`, not -I). Boss is logged in to Earthdata in Chrome; ASF access already granted. WAITING: Boss runs earthaccess interactive login in his own PowerShell (writes the netrc). Never type his password or tokens.
+- QA: docs/state/qa/round-1.md. Aral preview estimate: water 51.1 -> 4.5 km2 (-91 %), unconfirmed until calibrated.
 
 ## Next 3 steps
-1. P1: reject partial/failed passes, prewarm 10 stops to 0 fails, first frame < 2 s.
-2. Walk the tour in Chrome (1440 + 390 px), write docs/state/qa/round-1.md (bugs, scores, 5+ suggestions).
-3. Rebuild UI per QA (zoom buttons, search, collapsible panels), then P2 intel card.
+1. After "done": `python tools/gcov_science.py aral 60.3 45.4`, then rogun 69.79 38.69, fergana 71.8 40.6, nepal 84.63 27.99; compare calibrated vs preview numbers; write the result in DECISIONS.md.
+2. Chrome QA round 2 at 1440 + 390 px (phone untested), Rogun eye check, docs/state/qa/round-2.md.
+3. Fresh checker agent on the challenge checklist; then P3: Central Asia river story, draw-a-box analysis, GIF export.
