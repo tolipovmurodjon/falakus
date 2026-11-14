@@ -33,3 +33,9 @@ Judging (1-5 each): Impact · Creativity · Validity · Relevance (NASA data as 
 - `tools/fetch_browse.py` — find granules over points via CMR, download browse PNGs.
 - `tools/build_deck.py` — inline images, font and world outline into the deck.
 - `docs/deck/deck.src.html` → `docs/deck/nisar-field-guide.html` (team brief, Eye Run style). Check with `python D:\30_library\taste\templates\slides-eye-run\render.py <deck>`.
+
+## Gotchas (learned the hard way)
+- After every edit to web/index.html run the parse check before reloading: `node -e "const h=require('fs').readFileSync('web/index.html','utf8');new Function(h.match(/<script>([\s\S]*)<\/script>\s*<\/body>/)[1])"`. A duplicate `const` once killed the whole page silently (14 Nov).
+- Max 2 parallel NASA read lanes; more get throttled (every read failed for 2 h) and run the laptop out of RAM.
+- Write stop texts only after the calibrated numbers exist (Aral and Andijan texts were wrong and had to be rewritten).
+- Drive D: is nearly full; keep outputs small (16-bit science files).

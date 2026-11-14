@@ -363,16 +363,30 @@ async function loadIntel(s){const tok=tourI;let d=null;
  const p=d.points,a=p[0],b=p.at(-1),dw=b.water_km2-a.water_km2,pct=a.water_km2>1?Math.round(dw/a.water_km2*100):null,dhv=d.science?(b.hv-a.hv):Math.round((b.hv-a.hv)/Math.max(a.hv,1)*100),dhvTxt=d.science?`${dhv>0?"+":""}${dhv.toFixed(1)} dB`:`${dhv>0?"+":""}${dhv} %`;
  const wmax=p.reduce((m,x)=>x.water_km2>m.water_km2?x:m,p[0]),wmin=p.reduce((m,x)=>x.water_km2<m.water_km2?x:m,p[0]);
  const sent=`In a ${d.box_km} × ${d.box_km} km box, dark open water ranged from <b>${wmin.water_km2} km²</b> (${fmtDate(wmin.date)}) to <b>${wmax.water_km2} km²</b> (${fmtDate(wmax.date)}) over ${p.length} passes; first pass ${a.water_km2} km², last ${b.water_km2} km². Plant signal (HV) first to last: ${dhvTxt}.${d.science?"":" Preview-based: wind on water and dry smooth sand also look dark, so read the range, not one date."}`;
- const hero=d.science&&p[0].classes_km2?(()=>{const theme={Reservoir:"water",Water:"water",Wetland:"water",Flood:"water",Canal:"plants",Crops:"plants","Forest loss":"plants",Wildfire:"plants",City:"built"}[s.kind];
-  const k=theme?[theme,b.classes_km2[theme]-a.classes_km2[theme]]:["water","built","plants"].map(c=>[c,b.classes_km2[c]-a.classes_km2[c]]).sort((x,y)=>Math.abs(y[1])-Math.abs(x[1]))[0];
-  const nm={water:"calm water",built:"very bright ground",plants:"plant cover"}[k[0]];
-  if(k[0]==="water"){const mx=p.reduce((m,x)=>x.classes_km2.water>m.classes_km2.water?x:m,p[0]),mn=p.reduce((m,x)=>x.classes_km2.water<m.classes_km2.water?x:m,p[0]);
-   return `<div class="hero"><b>${mx.classes_km2.water.toFixed(1)} km²</b><span>calm water at its largest (${fmtDate(mx.date)}); smallest ${mn.classes_km2.water.toFixed(1)} km² (${fmtDate(mn.date)}) · ${d.box_km} × ${d.box_km} km box · ${p.length} calibrated passes</span></div>`}
-  return `<div class="hero"><b>${k[1]>=0?"+":"−"}${Math.abs(k[1]).toFixed(1)} km²</b><span>${nm}, ${fmtDate(a.date)} → ${fmtDate(b.date)} · ${d.box_km} × ${d.box_km} km box · ${p.length} calibrated passes</span></div>`})():"";
- $("intel").innerHTML=hero+`<p class="eyebrow">Measured from the radar · ${p.length} passes · ${d.science?"calibrated dB":"preview estimate"}</p><p style="font-size:13.5px;margin:4px 0 8px">${sent}</p>
-  <p class="eyebrow" style="text-transform:none;letter-spacing:0">Open water, km²</p>${spark(p,"water_km2","#2563EB","km²")}
-  <p class="eyebrow" style="text-transform:none;letter-spacing:0">Plant signal (HV)${d.science?", dB":", 0-255"}</p>${spark(p,"hv","#1C7E69","")}
-  <p style="font-size:11px;color:var(--ink3);margin-top:4px">${esc(d.note)}.</p>`}
+  if(d.science&&p[0].classes_km2){
+   /* theme-aware card: each stop answers its own question (city -> built-up, reservoir -> water, fields/forest -> plants) */
+   const T={Reservoir:"water",Water:"water",Wetland:"water",Flood:"water",Canal:"plants",Crops:"plants","Forest loss":"plants",Wildfire:"plants",Glacier:"water",City:"built",Landslide:"plants",Earthquake:"plants",Volcano:"built"}[s.kind]||"plants";
+   const NM={water:"calm open water",built:"very bright ground (mostly buildings)",plants:"plant cover"}[T],COL={water:"#2563EB",built:"#E8A33D",plants:"#2E9650"}[T];
+   const tot=x=>Object.values(x.classes_km2).reduce((u,v)=>u+v,0)||1;
+   p.forEach(x=>{x._km2=x.classes_km2[T];x._pct=100*x._km2/tot(x)});
+   const hi=p.reduce((m,x)=>x._pct>m._pct?x:m,p[0]),lo=p.reduce((m,x)=>x._pct<m._pct?x:m,p[0]),spread=hi._pct-lo._pct;
+   const noise=2.5; /* percentage points: pass-to-pass wobble from wind, rain and soil moisture seen on our stable city control */
+   let hero,sent;
+   if(T==="water"){hero=`<div class="hero"><b>${hi._km2.toFixed(1)} km²</b><span>calm water at its largest (${fmtDate(hi.date)}); smallest ${lo._km2.toFixed(1)} km² (${fmtDate(lo.date)}) · ${d.box_km} × ${d.box_km} km box · ${p.length} calibrated passes</span></div>`;
+    sent=`Open water ranged from <b>${lo._km2.toFixed(1)}</b> to <b>${hi._km2.toFixed(1)} km²</b> over ${p.length} passes. Wind makes water look like land to radar, so the calm-day maximum is the best estimate of the water extent.`}
+   else{hero=`<div class="hero"><b>${b._pct.toFixed(0)} %</b><span>of the ${d.box_km} × ${d.box_km} km box is ${NM} (${fmtDate(b.date)}) · ${spread<noise?"stable":"changed"}: ${lo._pct.toFixed(0)}–${hi._pct.toFixed(0)} % over ${p.length} calibrated passes</span></div>`;
+    sent=spread<noise?`${NM[0].toUpperCase()+NM.slice(1)} stays between ${lo._pct.toFixed(1)} % and ${hi._pct.toFixed(1)} % of the box in every pass: a change under ${noise} points is normal pass-to-pass noise, so this place is <b>stable</b>${s.kind==="City"?" — exactly why it is our control":""}.`
+     :`${NM[0].toUpperCase()+NM.slice(1)} moved from <b>${p[0]._pct.toFixed(0)} %</b> (${fmtDate(p[0].date)}) to <b>${b._pct.toFixed(0)} %</b> (${fmtDate(b.date)}); lowest ${lo._pct.toFixed(0)} % on ${fmtDate(lo.date)}, highest ${hi._pct.toFixed(0)} % on ${fmtDate(hi.date)}. That is ${spread.toFixed(0)} points, well above the ~${noise}-point noise seen on the stable city.`}
+   p.forEach(x=>x._hh=x.hh_db);
+   $("intel").innerHTML=hero+`<p class="eyebrow">Measured from the radar · ${p.length} passes · calibrated dB</p><p style="font-size:13.5px;margin:4px 0 8px">${sent}</p>
+    <p class="eyebrow" style="text-transform:none;letter-spacing:0">${NM[0].toUpperCase()+NM.slice(1)}, km²</p>${spark(p,"_km2",COL,"km²")}
+    <p class="eyebrow" style="text-transform:none;letter-spacing:0">${T==="built"?"Brightness (HH median), dB":"Plant signal (HV median), dB"}</p>${spark(p,T==="built"?"_hh":"hv","#4B5470","")}
+    <p style="font-size:11px;color:var(--ink3);margin-top:4px">NISAR GCOV gamma0, calibrated dB (provisional). Classes: water HH &lt; −18 and HV &lt; −24 dB; very bright HH &gt; −5 dB; plants HV &gt; −17 dB.</p>`;
+   return}
+  $("intel").innerHTML=`<p class="eyebrow">Measured from the radar · ${p.length} passes · preview estimate</p><p style="font-size:13.5px;margin:4px 0 8px">${sent}</p>
+   <p class="eyebrow" style="text-transform:none;letter-spacing:0">Open water, km²</p>${spark(p,"water_km2","#2563EB","km²")}
+   <p class="eyebrow" style="text-transform:none;letter-spacing:0">Plant signal (HV), 0-255</p>${spark(p,"hv","#1C7E69","")}
+   <p style="font-size:11px;color:var(--ink3);margin-top:4px">${esc(d.note)}.</p>`}
 
 
 /* before | after swipe: left of the bar shows the first pass, right shows the current pass */
@@ -608,10 +622,10 @@ map.on("moveend",()=>{const T=$("tour");if(T.hidden||!$("fclose")||map.getZoom()
 let playMs=1400;
 $("op-speed").oninput=e=>{playMs=+e.target.value;if(dance.timer){clearInterval(dance.timer);dance.timer=setInterval(()=>show((dance.i+1)%dance.frames.length),playMs)}};
 $("op-base").oninput=e=>{const v=+e.target.value/100;["sat","s2","light"].forEach(l=>map.getLayer(l)&&map.setPaintProperty(l,"raster-brightness-max",v))};
-const vis=(ids,on)=>ids.forEach(l=>map.getLayer(l)&&map.setLayoutProperty(l,"visibility",on?"visible":"none"));
-$("t-labels").onclick=e=>{const on=e.target.getAttribute("aria-pressed")!=="true";tog(e.target,on);e.target.setAttribute("aria-pressed",String(on));vis(["labels"],on)};
-$("t-evdots").onclick=e=>{const on=e.target.getAttribute("aria-pressed")!=="true";tog(e.target,on);e.target.setAttribute("aria-pressed",String(on));vis(["events","events-halo"],on)};
-$("t-tracks").onclick=e=>{const on=e.target.getAttribute("aria-pressed")!=="true";tog(e.target,on);e.target.setAttribute("aria-pressed",String(on));vis(["tracks"],on)};
+const setVis=(ids,on)=>ids.forEach(l=>map.getLayer(l)&&map.setLayoutProperty(l,"visibility",on?"visible":"none"));
+$("t-labels").onclick=e=>{const on=e.target.getAttribute("aria-pressed")!=="true";tog(e.target,on);e.target.setAttribute("aria-pressed",String(on));setVis(["labels"],on)};
+$("t-evdots").onclick=e=>{const on=e.target.getAttribute("aria-pressed")!=="true";tog(e.target,on);e.target.setAttribute("aria-pressed",String(on));setVis(["events","events-halo"],on)};
+$("t-tracks").onclick=e=>{const on=e.target.getAttribute("aria-pressed")!=="true";tog(e.target,on);e.target.setAttribute("aria-pressed",String(on));setVis(["tracks"],on)};
 const evOff=new Set();
 document.querySelectorAll(".evcat").forEach(b=>b.onclick=()=>{const c=b.dataset.c;evOff.has(c)?evOff.delete(c):evOff.add(c);tog(b,!evOff.has(c));
  const f=["!",["in",["get","cat"],["literal",[...evOff]]]];["events","events-halo"].forEach(l=>map.getLayer(l)&&map.setFilter(l,evOff.size?f:null))});
