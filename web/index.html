@@ -643,14 +643,16 @@ async function openMotion(name){const j=await (await fetch(`/motion/${name}/info
  findsPanel(`<div class="top"><span class="chip">Radar finds · ground motion</span><div class="nav"><button class="tog" id="fclose" aria-label="Close">✕</button></div></div>
   <h3 style="margin-top:8px">The ground moved: Panama M7.7, 9 Oct 2026</h3>
   <div class="hero"><b>~${Math.round(j.toward_cm_p99)} cm</b><span>largest motion toward the satellite in the clear (coherent) area, between ${fd(j.ref)} and ${fd(j.sec)} · ${j.pixel_m} m pixels</span></div>
-  <div class="sw" style="display:flex;gap:6px;margin:4px 0 10px"><button class="tog on" id="m-fr">Rainbow fringes</button><button class="tog" id="m-cm">Centimetres</button><button class="tog" id="m-off">Hide</button></div>
+  <div class="sw" style="display:flex;gap:6px;margin:4px 0 10px"><button class="tog on" id="m-fr">Quake pair: fringes</button><button class="tog" id="m-cm">Quake pair: cm</button><button class="tog" id="m-pre">Before quake (control)</button><button class="tog" id="m-off">Hide</button></div>
+  <p style="font-size:12.5px;margin:0 0 8px"><b>How we know it is real:</b> the control pair (20 Sep → 2 Oct, no quake) shows straight, evenly spaced bands across the whole frame: a smooth tilt from the ionosphere and orbit, not ground motion. The quake pair (2 → 14 Oct) bends into curved, bunched bands that tighten toward the epicentre, the fingerprint of a fault slipping. Same orbit track, same 12-day gap, so the only new thing is the quake.</p>
   <div class="grid"><p><span class="lab">What you see</span>Each full rainbow band (red → yellow → green → blue → violet → red) is <b>11.9 cm</b> of ground motion along the radar's line of sight. Bands bunch up where the ground moved most: count the bands toward the epicentre to read the motion.</p>
   <p><span class="lab">How radar measures it</span>NISAR measures the <b>phase</b> of its 23.8 cm wave. Image the same ground twice; if it moved toward the satellite, the round trip is shorter and the phase shifts. Half a wavelength of motion = one full band. NASA's GUNW product compares two passes 12 days apart (${fd(j.ref)} and ${fd(j.sec)}), which bracket the quake.</p>
   <p><span class="lab">Who acts on it</span>Earthquake scientists map which fault slipped and by how much; emergency teams see where the ground broke, through cloud, within days.</p>
   <p><span class="lab">Honest limit</span>Only ${j.coherent_pct} % of the box keeps a clean signal (coherence ≥ 0.3); dense jungle, water and broken ground lose it (blank). Motion is along the line of sight, not straight up; the ionosphere and air moisture add a few cm.</p></div>
   <p style="font-size:11px;color:var(--ink3)">${esc(j.granule)} · ${esc(j.method)}</p>`);
- const set=k=>{["m-fr","m-cm","m-off"].forEach(id=>tog($(id),id===k));if(k==="m-off"){map.setLayoutProperty("motion","visibility","none");return}
-  map.setLayoutProperty("motion","visibility","visible");map.getSource("motion").updateImage({url:`/motion/${name}/${k==="m-fr"?"fringes":"los"}.png`,coordinates:coords})};
+ const set=k=>{["m-fr","m-cm","m-pre","m-off"].forEach(id=>tog($(id),id===k));if(k==="m-off"){map.setLayoutProperty("motion","visibility","none");return}
+  map.setLayoutProperty("motion","visibility","visible");map.getSource("motion").updateImage({url:k==="m-pre"?"/motion/panama_pre/fringes.png":`/motion/${name}/${k==="m-fr"?"fringes":"los"}.png`,coordinates:coords})};
+ $("m-pre").onclick=()=>set("m-pre");
  $("m-fr").onclick=()=>set("m-fr");$("m-cm").onclick=()=>set("m-cm");$("m-off").onclick=()=>set("m-off");
  const old=$("fclose").onclick;$("fclose").onclick=()=>{old&&old();map.getLayer("motion")&&map.setLayoutProperty("motion","visibility","none")}}
 
