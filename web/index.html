@@ -157,7 +157,7 @@ const Q=[[0,1],[1,1],[1,0],[0,0]];
 function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
 function tog(btn,on){btn.classList.toggle("on",on);btn.setAttribute("aria-pressed",on)}
 
-const map=new maplibregl.Map({container:"map",hash:true,attributionControl:{compact:true},center:[64,40],zoom:2.4,maxZoom:12,
+const map=new maplibregl.Map({container:"map",hash:true,attributionControl:{compact:true},center:[64,40],zoom:2.4,maxZoom:18,
  style:{version:8,sources:{
   sat:{type:"raster",tiles:["https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"],tileSize:256,maxzoom:18,attribution:"Photo © Esri, Maxar, Earthstar Geographics"},
   s2:{type:"raster",tiles:["https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2023_3857/default/g/{z}/{y}/{x}.jpg"],tileSize:256,maxzoom:15,attribution:"Sentinel-2 cloudless 2023 by EOX (Copernicus Sentinel data 2023)"},
@@ -184,8 +184,11 @@ function base(k){[["sat","b-sat"],["s2","b-s2"],["light","b-light"]].forEach(([l
 $("b-sat").onclick=()=>base("sat");$("b-s2").onclick=()=>base("s2");$("b-light").onclick=()=>base("light");
 function setGlobe(on){try{map.setProjection({type:on?"globe":"mercator"});tog($("t-globe"),on)}catch(err){console.warn(err)}}
 $("t-globe").onclick=()=>setGlobe(!$("t-globe").classList.contains("on"));
-function zoomNote(){const z=map.getZoom();$("zoomnote").textContent=z<6.5?`Zoom ${z.toFixed(1)} · world mosaic of small NISAR previews (~3 km pixels)`:`Zoom ${z.toFixed(1)} · full NISAR previews streamed from NASA (~150 m pixels)`}
+function zoomNote(){const z=map.getZoom();$("zoomnote").textContent=z<6.5?`Zoom ${z.toFixed(1)} · world mosaic of small NISAR previews (~3 km pixels)`:z<12.5?`Zoom ${z.toFixed(1)} · full NISAR previews streamed from NASA (~150 m pixels)`:`Zoom ${z.toFixed(1)} · past the preview detail; tour places use science mode at 10-20 m`}
 map.on("zoomend",zoomNote);
+/* the world radar dims only while the playing box is on screen */
+map.on("moveend",()=>{if(!dance.on||!dance.frames.length)return;const b=dance.frames[0].bbox,c=map.getCenter();
+ const inside=c.lng>b[0]&&c.lng<b[2]&&c.lat>b[1]&&c.lat<b[3];map.setPaintProperty("nisar","raster-opacity",inside?0.12:radarOpacity)});
 
 function intro(show){$("intro").hidden=!show}
 $("b-intro").onclick=()=>intro(true);$("i-close").onclick=()=>{intro(false);try{localStorage.setItem("seen","1")}catch(e){}};
@@ -194,13 +197,15 @@ try{if(!localStorage.getItem("seen")&&!location.hash.includes("/"))intro(true)}c
 
 /* time player ("the dance") */
 const dance={on:false,frames:[],i:0,playing:false,front:"danceA",timer:null,token:0,change:false,track:""};
-let band="rgb";const frameUrl=f=>`/api/frame/${f.c}/${f.id}.webp${band==="rgb"?"":"?band="+band}`;
+let band="rgb";const frameUrl=f=>f.sci?`/science/${f.stop}/img/${f.date}_${band}.webp`:`/api/frame/${f.c}/${f.id}.webp${band==="rgb"?"":"?band="+band}`;
 const coords=b=>[[b[0],b[3]],[b[2],b[3]],[b[2],b[1]],[b[0],b[1]]];
 function setMeta(t){const m=$("pmeta");if(m)m.textContent=t}
-async function startDance(lon,lat,label){
+async function startDance(lon,lat,label,stopId){
  const tok=++dance.token;stopPlay();
  $("player").hidden=false;$("pdate").textContent="Loading…";setMeta(`Finding every NISAR pass over ${label||"this spot"}…`);
- let s;try{s=await (await fetch(`/api/series.json?lon=${lon.toFixed(3)}&lat=${lat.toFixed(3)}`)).json()}catch(e){s={frames:[]}}
+ let s=null;
+ if(stopId)try{const r=await fetch(`/science/${stopId}/frames.json`);if(r.ok){const j=await r.json();s={track:"20 m calibrated",sci:true,frames:j.frames.map(f=>({...f,stop:stopId,time:"",pol:"DHDH",c:"science"}))}}}catch(e){}
+ if(!s)try{s=await (await fetch(`/api/series.json?lon=${lon.toFixed(3)}&lat=${lat.toFixed(3)}`)).json()}catch(e){s={frames:[]}}
  if(tok!==dance.token)return;
  if(!s.frames||!s.frames.length){$("pdate").textContent="No passes";setMeta("NISAR has no public pass here yet (open ocean is not imaged).");return}
  dance.frames=s.frames;dance.on=true;dance.i=0;dance.track=s.track||"";
@@ -225,7 +230,7 @@ function show(i){
  map.setPaintProperty(back,"raster-opacity",0.95);map.setPaintProperty(dance.front,"raster-opacity",0);dance.front=back;
  $("pdate").textContent=new Date(f.date+"T00:00Z").toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric",timeZone:"UTC"});
  const pol=f.pol==="DHDH"?"HH + HV":f.pol==="SHSH"?"HH only":f.pol;
- setMeta(`pass ${i+1} of ${dance.frames.length} · ${f.time} UTC · ${pol} · track ${dance.track.replace(/_/g," ")} · ${f.c.includes("PROVISIONAL")?"provisional":f.c.includes("BETA")?"beta":"validated"}`);
+ setMeta(f.sci?`pass ${i+1} of ${dance.frames.length} · science mode · ${f.res||20} m pixels · calibrated dB · HH + HV`:`pass ${i+1} of ${dance.frames.length} · ${f.time} UTC · ${pol} · track ${dance.track.replace(/_/g," ")} · ${f.sci?"science mode · 20 m pixels · calibrated dB":f.c.includes("PROVISIONAL")?"preview · ~150 m · provisional":"preview · ~150 m · validated"}`);
  [...$("pticks").children].forEach((t,k)=>t.classList.toggle("on",k===i));
  if(dance.change)showChange();
 }
@@ -237,8 +242,8 @@ $("prange").oninput=e=>{stopPlay();show(+e.target.value)};
 function legend(extra){const meta=$("pmeta")?$("pmeta").textContent:"";$("plegend").innerHTML=(extra||"")+`<span id="pmeta">${esc(meta)}</span>`}
 function showChange(){const a=dance.frames[0],b=dance.frames[dance.i];
  if(!a||!b||a===b){map.setPaintProperty("diff","raster-opacity",0);legend(`<span>Pick a later pass to compare with ${a?a.date:"the first pass"}</span>`);return}
- map.getSource("diff").updateImage({url:`/api/diff/${a.c}/${a.id}/${b.c}/${b.id}.webp`,coordinates:coords(a.bbox)});map.setPaintProperty("diff","raster-opacity",0.9);
- legend(`<span><i style="background:#ff5028"></i>brighter than on ${a.date}</span><span><i style="background:#2878ff"></i>darker than on ${a.date}</span><span>from NASA previews, not calibrated dB</span>`)}
+ map.getSource("diff").updateImage({url:b.sci?`/science/${b.stop}/img/${b.date}_change.webp`:`/api/diff/${a.c}/${a.id}/${b.c}/${b.id}.webp`,coordinates:coords(a.bbox)});map.setPaintProperty("diff","raster-opacity",0.9);
+ legend(`<span><i style="background:#ff5028"></i>HH up more than 3 dB since ${a.date}</span><span><i style="background:#2878ff"></i>down more than 3 dB</span><span>${b.sci?"calibrated dB, 20 m":"from NASA previews, not calibrated"}</span>`)}
 $("pchange").onclick=e=>{dance.change=!dance.change;tog(e.currentTarget,dance.change);if(dance.change){stopPlay();if(dance.i===0&&dance.frames.length>1)show(dance.frames.length-1);else showChange()}else{map.setPaintProperty("diff","raster-opacity",0);legend("")}};
 function endDance(){if(typeof swipeStop==="function")swipeStop();dance.token++;stopPlay();dance.on=false;$("player").hidden=true;["danceA","danceB","diff"].forEach(l=>map.setPaintProperty(l,"raster-opacity",0));map.setPaintProperty("nisar","raster-opacity",radarOpacity);dance.change=false;tog($("pchange"),false);legend("")}
 document.querySelectorAll("#pband button").forEach(b=>b.onclick=()=>{band=b.dataset.b;document.querySelectorAll("#pband button").forEach(x=>tog(x,x===b));if(dance.on){dance.frames.forEach(f=>{const im=new Image();im.src=frameUrl(f)});show(dance.i)}});
@@ -257,7 +262,7 @@ function tourGo(i){tourI=(i+STOPS.length)%STOPS.length;const s=STOPS[tourI];intr
  $("tprev").onclick=()=>tourGo(tourI-1);$("tnext").onclick=()=>tourGo(tourI+1);$("tclose").onclick=()=>{$("tour").hidden=true;document.body.classList.remove("touring");endDance()};
  endDance();$("player").hidden=false;$("pdate").textContent="Flying…";
  map.flyTo({center:[s.lon,s.lat],zoom:s.zoom,speed:1.4,curve:1.5,essential:true});
- map.once("moveend",()=>startDance(s.lon,s.lat,s.place));
+ map.once("moveend",()=>startDance(s.lon,s.lat,s.place,s.id));
  loadIntel(s);
 }
 

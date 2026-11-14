@@ -62,9 +62,24 @@ def read_box(fh, lon, lat, km):
         if ix.size < 4 or iy.size < 4:
             raise RuntimeError("box outside this frame")
         sl = (slice(iy[0], iy[-1] + 1), slice(ix[0], ix[-1] + 1))
-        hh = g["HHHH"][sl].astype(np.float32)
-        hv = g["HVHV"][sl].astype(np.float32) if "HVHV" in g else None
-        px = abs(float(x[1] - x[0])) * abs(float(y[1] - y[0]))
+        dx, dy = abs(float(x[1] - x[0])), abs(float(y[1] - y[0]))
+        nx, ny = int(round(2 * r / dx)), int(round(2 * r / dy))
+        # pad to the full requested box so the image always sits exactly on cx +- r, cy +- r
+        ox = int(round((x[ix[0]] - (cx - r)) / dx)); oy = int(round(((cy + r) - y[iy[0]]) / dy)) if y[1] < y[0] else int(round((y[iy[0]] - (cy - r)) / dy))
+        def padded(name):
+            a = np.full((ny, nx), np.nan, np.float32)
+            v = g[name][sl].astype(np.float32)
+            if y[1] > y[0]:
+                v = v[::-1]
+                oyy = int(round(((cy + r) - y[iy[-1]]) / dy))
+            else:
+                oyy = oy
+            h, w = min(v.shape[0], ny - max(oyy, 0)), min(v.shape[1], nx - max(ox, 0))
+            a[max(oyy, 0):max(oyy, 0) + h, max(ox, 0):max(ox, 0) + w] = v[:h, :w]
+            return a
+        hh = padded("HHHH")
+        hv = padded("HVHV") if "HVHV" in g else None
+        px = dx * dy
     db = lambda a: 10 * np.log10(np.where(a > 0, a, np.nan))
     return db(hh), (db(hv) if hv is not None else None), px
 

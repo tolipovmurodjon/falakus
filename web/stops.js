@@ -9,8 +9,8 @@ window.STOPS = [
     limit: "A city barely changes in 4 months. That stability is the point: it is our control, so any change elsewhere is real.",
   },
   {
-    id: "aral", place: "Aral Sea, Karakalpakstan", title: "A sea that breathes", lon: 60.3, lat: 45.4, zoom: 8.2,
-    kind: "Water", what: "Play the passes: the dark water in the middle grows and shrinks between June and October.",
+    id: "aral", place: "Aral Sea, Karakalpakstan", title: "A sea that breathes", lon: 59.4, lat: 45.1, zoom: 8.3,
+    kind: "Water", what: "The 100 km box covers the deep western basin (dark water, stable) and the shallow eastern basin (dry seabed that floods and dries). Play the passes and watch the eastern edge.",
     driver: "The shallow eastern basin fills only when the Amu Darya brings water, then evaporates in the desert heat. Calm water acts like a mirror and sends the pulse away, so it looks dark.",
     pol: "HH shows water best: dark water, brighter wet mud and salt crust around it.",
     limit: "Wind ripples can make open water look bright. Compare several dates before calling a shoreline.",

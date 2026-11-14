@@ -523,6 +523,12 @@ class Handler(SimpleHTTPRequestHandler):
             except Exception as e:
                 return self.send_bytes(json.dumps({"error": str(e)}).encode(), "application/json", code=502)
             return self.send_bytes(body, "application/json", cache="max-age=3600")
+        m5 = re.match(r"^/science/([a-z_]+)/(frames\.json|img/[0-9-]+_(?:rgb|hh|hv|change)\.webp)$", path)
+        if m5:
+            f = DATA / "science" / m5.group(1) / m5.group(2)
+            if not f.exists():
+                return self.send_bytes(b"", "text/plain", cache="no-store", code=404)
+            return self.send_bytes(f.read_bytes(), "application/json" if f.suffix == ".json" else "image/webp", cache="no-cache")
         m4 = re.match(r"^/api/science/([a-z_]+)\.json$", path)
         if m4:
             f = DATA / "science" / m4.group(1) / "stats.json"
