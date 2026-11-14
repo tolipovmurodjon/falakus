@@ -82,12 +82,21 @@ body.touring #brand .opts{display:none}
 #swipe .knob{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:38px;height:38px;border-radius:50%;background:#fff;box-shadow:0 6px 18px -6px rgba(15,22,48,.6);display:grid;place-items:center;font:600 13px/1 var(--sans);color:var(--ink)}
 #swipe .tag{position:absolute;top:70px;font:500 11px/1 var(--mono);background:rgba(15,22,48,.75);color:#fff;padding:6px 9px;border-radius:999px}
 
-#scikey{position:absolute;left:18px;bottom:96px;z-index:5;background:var(--glass,rgba(255,255,255,.86));backdrop-filter:blur(14px);border-radius:16px;padding:10px 12px;box-shadow:0 10px 30px -12px rgba(15,22,48,.35);font:500 12px/1.35 var(--sans);color:var(--ink);max-width:300px}
+#scikey{position:absolute;right:66px;bottom:30px;z-index:5;background:var(--glass,rgba(255,255,255,.86));backdrop-filter:blur(14px);border-radius:16px;padding:10px 12px;box-shadow:0 10px 30px -12px rgba(15,22,48,.35);font:500 12px/1.35 var(--sans);color:var(--ink);max-width:300px}
 #scikey .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
 #scikey i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
 #scikey .sw{display:flex;gap:6px;margin-top:8px}
 #scikey small{display:block;color:var(--ink3);margin-top:6px;font-size:11px}
+body.touring #scikey{right:430px}
 @media (max-width:640px){#scikey{left:8px;right:8px;bottom:150px;max-width:none}}
+
+#powers{position:absolute;left:18px;bottom:72px;z-index:4;max-width:360px}
+#powers ol{margin:8px 0 2px;padding-left:18px;font:500 12.5px/1.45 var(--sans);color:var(--ink2)}
+#powers li{margin:4px 0}
+#powers .lnk{all:unset;cursor:pointer;color:var(--mint);font-weight:650;margin-right:4px}
+#powers .lnk:hover{text-decoration:underline}
+body.touring #powers{display:none}
+@media (max-width:640px){#powers{display:none}}
 </style>
 </head>
 <body>
@@ -117,6 +126,19 @@ body.touring #brand .opts{display:none}
  </div>
 </section>
 
+<details id="powers" class="panel">
+ <summary>What radar sees that a camera can't</summary>
+ <ol>
+  <li><button class="lnk" data-stop="nepal">Through monsoon cloud</button> radar brings its own pulse; cloud and night do not stop it.</li>
+  <li><button class="lnk" data-stop="langtang">A disaster the next day</button> the 26 Aug Langtang debris flow, under cloud.</li>
+  <li><button class="lnk" data-stop="andijan">Water area, every 12 days</button> calm water is the darkest thing radar sees.</li>
+  <li><button class="lnk" data-stop="kyzylorda">Rice in standing water</button> stems + water make a corner reflector.</li>
+  <li><button class="lnk" data-stop="rondonia">Inside the forest</button> 24 cm waves reach the trunks, not just the leaves.</li>
+  <li><button class="lnk" data-stop="tashkent">Buildings by their walls</button> double bounce makes cities shine.</li>
+  <li><button class="lnk" data-stop="fedchenko">Wet vs dry snow</button> melt water absorbs the pulse.</li>
+  <li><button class="lnk" data-stop="kumamoto">Earthquakes</button> landslide scars now; centimetre ground shift with interferometry next.</li>
+ </ol>
+</details>
 <details id="howto" class="panel">
  <summary>How to read the radar (30 s)</summary>
  <ul>
@@ -388,6 +410,9 @@ function showArea(r){const ps=r.passes.filter(p=>p.km2),a=ps[0],b=ps[ps.length-1
  $("aplay").onclick=()=>{const c=map.getCenter();startDance(c.lng,c.lat)};
  map.getSource("sci").setTiles([location.origin+`/scitiles/${sciKind}/{z}/{x}/{y}.webp?v=${Date.now()}`]);
  fetch("/api/science_boxes.json").then(x=>x.json()).then(x=>{SCIBOX=x;sciKeyUpdate()})}
+
+
+document.querySelectorAll("#powers .lnk").forEach(b=>b.onclick=()=>{const i=STOPS.findIndex(s=>s.id===b.dataset.stop);if(i>=0)tourGo(i)});
 
 /* data layers */
 let EV=[],evCat="All",pop=null;

@@ -2272,3 +2272,15 @@ no passes read
 no passes
 langtang: no pass with position metadata yet
 === andijan 19:54
+2026-06-20  box (1500, 1500)  HH median -11.1 dB
+2026-07-02  box (1500, 1500)  HH median -11.8 dB
+2026-07-14  box (1500, 1500)  HH median -11.5 dB
+2026-07-26  box (1500, 1500)  HH median -10.9 dB
+2026-08-19  box (1500, 1500)  HH median -10.7 dB
+2026-08-31  box (1500, 1500)  HH median -10.8 dB
+2026-09-12  box (1500, 1500)  HH median -10.9 dB
+2026-09-24  box (1500, 1500)  HH median -9.2 dB
+2026-10-06  box (1500, 1500)  HH median -10.0 dB
+2026-10-18  box (1500, 1500)  HH median -10.8 dB
+2026-10-30  box (1500, 1500)  HH median -11.8 dB
+threshold -10.46 dB | water 502.32 km2 (2026-06-20) -> 547.39 km2 (2026-10-30)

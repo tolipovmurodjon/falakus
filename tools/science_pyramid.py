@@ -14,7 +14,7 @@ import numpy as np
 from PIL import Image
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from science_tiles import lonlat_to_utm  # noqa: E402
+from utm_convert import lonlat_to_utm  # noqa: E402
 import sar_colors  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -57,7 +57,7 @@ def build(stop):
     ok = np.isfinite(hh)
     ny, nx = hh.shape
     # lon/lat corners of the box, to know which tiles to cut
-    from science_tiles import utm_to_lonlat  # noqa: E402
+    from utm_convert import utm_to_lonlat  # noqa: E402
     lons, lats = utm_to_lonlat(np.array([m["x0"], m["x0"] + nx * m["dx"]]), np.array([m["y0"] - ny * m["dy"], m["y0"]]), int(m["zone"]), bool(m["south"]))
     w, e, s_, n_ = lons.min(), lons.max(), lats.min(), lats.max()
     count = 0
