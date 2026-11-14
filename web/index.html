@@ -178,7 +178,7 @@ body.freecmp #swipe .tag{top:104px}
  <div class="row" id="sciclasses" hidden><span><i style="background:#2563EB"></i>Dark, smooth (mostly calm water)</span><span><i style="background:#E8A33D"></i>Very bright (mostly buildings)</span><span><i style="background:#2E9650"></i>Plants (volume scatter)</span><span><i style="background:transparent;border:1px solid #bbb"></i>Other: photo shows</span></div>
  <div class="row" id="sciraw"><span><i style="background:#ff5aa0"></i>Pink-white: buildings</span><span><i style="background:#3fa34d"></i>Green: plants</span><span><i style="background:#3b5bd6"></i>Blue: bare soil</span><span><i style="background:#111"></i>Dark: water</span></div>
  <div class="sw" id="skthemes"><button class="tog on" data-k="raw">Radar, measured</button><button class="tog" data-k="class">Rule guess</button><button class="tog" data-k="water">Water</button><button class="tog" data-k="built">Built-up</button><button class="tog" data-k="plants">Plants</button></div>
- <small id="skhint">The measurement itself: R = HH, G = HV, B = HH/HV, fixed dB scale. Green means a strong HV echo: leaves, or building walls turned away from the radar.</small>
+ <small id="skhint"><b>What the colours mean.</b> The satellite sends a flat wave and listens twice. <b>HH</b> = the echo that came back flat (strong from rough ground and walls) → red. <b>HV</b> = the echo that came back turned sideways (leaves and branches turn it) → green. Blue = how much more flat than turned. <b>Black</b> = calm water, a mirror. <b>dB</b> = a loudness scale for the echo, like for sound. Careful: building walls turned away from the radar can also look green.</small>
 </div>
 
 <nav id="cases" aria-label="The story">
@@ -234,14 +234,14 @@ body.freecmp #swipe .tag{top:104px}
 <details id="powers" class="panel">
  <summary>What radar sees that a camera can't</summary>
  <ol>
-  <li><button class="lnk" data-stop="nepal">Through monsoon cloud</button> radar brings its own pulse; cloud and night do not stop it.</li>
-  <li><button class="lnk" data-stop="langtang">A disaster the next day</button> the 26 Aug Langtang debris flow, under cloud.</li>
-  <li><button class="lnk" data-stop="andijan">Water area, every 12 days</button> calm water is the darkest thing radar sees.</li>
-  <li><button class="lnk" data-stop="kyzylorda">Rice in standing water</button> stems + water make a corner reflector.</li>
-  <li><button class="lnk" data-stop="rondonia">Inside the forest</button> 24 cm waves reach the trunks, not just the leaves.</li>
-  <li><button class="lnk" data-stop="tashkent">Buildings by their walls</button> double bounce makes cities shine.</li>
-  <li><button class="lnk" data-stop="fedchenko">Wet vs dry snow</button> melt water absorbs the pulse.</li>
-  <li><button class="lnk" data-stop="kumamoto">Earthquakes</button> landslide scars now; centimetre ground shift with interferometry next.</li>
+  <li><button class="lnk" data-stop="nepal">Through clouds and at night</button> A camera needs sunlight. Radar is like a torch: it sends its own invisible pulse (a microwave, 24 cm long) and listens for the echo, so clouds and darkness do not stop it.</li>
+  <li><button class="lnk" data-stop="langtang">A disaster, seen the next day</button> On 26 Aug a mud and rock flood (debris flow) hit Langtang, Nepal, under thick cloud. Radar saw the new scar; cameras saw only cloud.</li>
+  <li><button class="lnk" data-stop="andijan_res">How much water is in a lake</button> Calm water is a mirror: the pulse bounces away and never comes back, so lakes look black. Count the black pixels every 12 days and you know if the lake is shrinking.</li>
+  <li><button class="lnk" data-stop="kyzylorda">Rice fields full of water</button> The pulse hits the water, then bounces off the rice stems straight back, like a ball off a wall and floor (a corner reflector), so flooded rice shines.</li>
+  <li><button class="lnk" data-stop="rondonia">Inside the forest</button> NISAR's long wave slips between the leaves and touches the tree trunks, so it can tell a real forest from a field of bushes.</li>
+  <li><button class="lnk" data-stop="tashkent">Buildings</button> The pulse hits the street, then a wall, then comes back (double bounce), so cities are the brightest thing on a radar map.</li>
+  <li><button class="lnk" data-stop="fedchenko">Wet snow vs dry snow</button> Water drinks the pulse. Melting (wet) snow goes dark; dry snow lets the pulse through.</li>
+  <li><button class="lnk" data-stop="kumamoto">Earthquakes</button> Radar sees landslide scars now. Comparing the wave's timing on two dates (interferometry) can show the ground moved by a few centimetres.</li>
  </ol>
 </details>
 <details id="howto" class="panel">
@@ -311,10 +311,10 @@ const map=new maplibregl.Map({container:"map",hash:true,attributionControl:{comp
   nisar:{type:"raster",tiles:[location.origin+"/tiles/{z}/{x}/{y}.webp?v=7"],tileSize:256,maxzoom:10,attribution:"Radar: NASA-ISRO NISAR GCOV (provisional), ASF DAAC"},
   danceA:{type:"image",url:BLANK,coordinates:Q},danceB:{type:"image",url:BLANK,coordinates:Q},diff:{type:"image",url:BLANK,coordinates:Q}},
  layers:[{id:"sat",type:"raster",source:"sat"},{id:"s2",type:"raster",source:"s2",layout:{visibility:"none"}},{id:"light",type:"raster",source:"light",layout:{visibility:"none"}},
-  {id:"nisar",type:"raster",source:"nisar",paint:{"raster-opacity":["interpolate",["linear"],["zoom"],11,0.9,13.5,0.3],"raster-fade-duration":150}},
-  {id:"sci",type:"raster",source:"sci",minzoom:10,paint:{"raster-opacity":["interpolate",["linear"],["zoom"],10,0.62,14.8,0.55,15.6,0],"raster-fade-duration":150}},
-  {id:"danceA",type:"raster",source:"danceA",paint:{"raster-opacity":0,"raster-opacity-transition":{duration:650},"raster-fade-duration":0}},
-  {id:"danceB",type:"raster",source:"danceB",paint:{"raster-opacity":0,"raster-opacity-transition":{duration:650},"raster-fade-duration":0}},
+  {id:"nisar",type:"raster",source:"nisar",paint:{"raster-opacity":["interpolate",["linear"],["zoom"],11,0.9,13.5,0.3],"raster-fade-duration":150,"raster-resampling":"nearest"}},
+  {id:"sci",type:"raster",source:"sci",minzoom:10,paint:{"raster-opacity":["interpolate",["linear"],["zoom"],10,0.62,14.8,0.55,15.6,0],"raster-fade-duration":150,"raster-resampling":"nearest"}},
+  {id:"danceA",type:"raster",source:"danceA",paint:{"raster-opacity":0,"raster-opacity-transition":{duration:650},"raster-fade-duration":0,"raster-resampling":"nearest"}},
+  {id:"danceB",type:"raster",source:"danceB",paint:{"raster-opacity":0,"raster-opacity-transition":{duration:650},"raster-fade-duration":0,"raster-resampling":"nearest"}},
   {id:"diff",type:"raster",source:"diff",paint:{"raster-opacity":0,"raster-opacity-transition":{duration:400}}},
   {id:"labels",type:"raster",source:"labels"}]}});
 map.addControl(new maplibregl.NavigationControl({visualizePitch:true}),"top-right");map.addControl(new maplibregl.FullscreenControl(),"top-right");
@@ -361,7 +361,7 @@ function passInfo(i){const el=$("pinfo");if(!el)return;const f=dance.frames[i];l
 function setMeta(t){const m=$("pmeta");if(m)m.textContent=t}
 async function startDance(lon,lat,label,stopId){
  const tok=++dance.token;stopPlay();dance.ll=[lon,lat];if(!stopId&&map.getZoom()<8.5)map.flyTo({center:[lon,lat],zoom:9,essential:false});
- $("player").hidden=false;$("pdate").textContent="Loading…";setMeta(`Finding every NISAR pass over ${label||"this spot"}…`);
+ $("player").hidden=false;$("pdate").textContent="Loading…";map.setMaxZoom(14.5);setMeta(`Finding every NISAR pass over ${label||"this spot"}…`);
  let s=null;
  if(stopId)try{const r=await fetch(`/science/${stopId}/frames.json`);if(r.ok){const j=await r.json();s={track:"20 m calibrated",sci:true,frames:j.frames.map(f=>({...f,stop:stopId,time:"",pol:"DHDH",c:"science"}))}}}catch(e){}
  dance.wr=null;$("pinfo").innerHTML="";if(stopId)try{const r=await fetch(`/waterroad/${stopId.replace(/_all$/,"")}.json`);if(r.ok)dance.wr=await r.json()}catch(e){}
@@ -412,7 +412,7 @@ function showChange(){const a=dance.frames[0],b=dance.frames[dance.i];
  legend(b.sci?`<span><i style="background:#E8590C"></i>HH up more than 3 dB since ${fmtDate(a.date)}</span><span><i style="background:#7048E8"></i>down more than 3 dB</span><span>calibrated dB, 20 m</span>`
   :`<span><i style="background:#E8590C"></i>brighter than on ${fmtDate(a.date)}</span><span><i style="background:#7048E8"></i>darker</span><span>preview brightness, not calibrated dB</span>`)}
 $("pchange").onclick=e=>{dance.change=!dance.change;tog(e.currentTarget,dance.change);if(dance.change){stopPlay();if(dance.i===0&&dance.frames.length>1)show(dance.frames.length-1);else showChange()}else{map.setPaintProperty("diff","raster-opacity",0);legend("")}};
-function endDance(){if(typeof swipeStop==="function")swipeStop();dance.token++;stopPlay();dance.on=false;$("player").hidden=true;["danceA","danceB","diff"].forEach(l=>map.setPaintProperty(l,"raster-opacity",0));map.setPaintProperty("nisar","raster-opacity",radarOp(radarOpacity));dance.change=false;tog($("pchange"),false);legend("")}
+function endDance(){map.setMaxZoom(22);if(typeof swipeStop==="function")swipeStop();dance.token++;stopPlay();dance.on=false;$("player").hidden=true;["danceA","danceB","diff"].forEach(l=>map.setPaintProperty(l,"raster-opacity",0));map.setPaintProperty("nisar","raster-opacity",radarOp(radarOpacity));dance.change=false;tog($("pchange"),false);legend("")}
 document.querySelectorAll("#pband button").forEach(b=>b.onclick=()=>{band=b.dataset.b;if(dance.on)passInfo(dance.i);document.querySelectorAll("#pband button").forEach(x=>tog(x,x===b));if(dance.on){dance.frames.forEach(f=>{const im=new Image();im.src=frameUrl(f)});show(dance.i)}});
 $("pclose").onclick=()=>{endDance();$("tour").hidden=true};
 
@@ -824,7 +824,7 @@ async function cmpRight(){const R=cmp.slide.R,b=cmp.bbox,coords=[[b[0],b[3]],[b[
  if(R.s2){const q=`w=${b[0]}&s=${b[1]}&e=${b[2]}&n=${b[3]}&start=${R.s2[0]}&end=${R.s2[1]}&clearest=${R.s2[2]}`;const j=await (await fetch("/api/s2.json?"+q)).json();if(!cmp||cmp.slide.R!==R||!j.tiles)return;
   map.addSource("cmpS2",{type:"raster",tiles:j.tiles,tileSize:256,bounds:b,attribution:j.attribution});map.addLayer({id:"cmpS2",type:"raster",source:"cmpS2"},"labels");
   const sc=(j.scenes||[]).map(x=>`${fmtDate(x.date)} ${x.cloud_pct} % cloud`).join(" · ");$("cmpsrc").textContent=`Photo: ${j.attribution}. Scenes: ${sc}. `+$("cmpsrc").dataset.base;return}
- map.addSource("cmpR",{type:"image",url:cmpImgUrl(R),coordinates:coords});map.addLayer({id:"cmpR",type:"raster",source:"cmpR",paint:{"raster-fade-duration":0}},"labels");
+ map.addSource("cmpR",{type:"image",url:cmpImgUrl(R),coordinates:coords});map.addLayer({id:"cmpR",type:"raster",source:"cmpR",paint:{"raster-fade-duration":0,"raster-resampling":"nearest"}},"labels");
  if(R.over){map.addSource("cmpO",{type:"image",url:R.over,coordinates:coords});map.addLayer({id:"cmpO",type:"raster",source:"cmpO"},"labels")}}
 async function openCase(id,k=0){const c=CASES[id];endDance();if(typeof closeFree==="function"&&fc)closeFree();
  if(!c.bbox&&c.sci){const j=await (await fetch(`/science/${c.sci}/frames.json`)).json();c.bbox=j.bbox}
@@ -959,6 +959,7 @@ async function openFloods(){closeCase();if(fc)closeFree();let L=[];try{L=await (
  const old=$("fclose").onclick;$("fclose").onclick=()=>{old&&old();map.getLayer("flood")&&map.setLayoutProperty("flood","visibility","none")}}
 $("x-floods").onclick=openFloods;
 
+map.on("zoomend",()=>{if(dance.on&&map.getZoom()>=14.4)setMeta("Radar detail ends here: each NISAR pixel is 20 m × 20 m (about 2 houses). Zoom out to see more; the photo underneath is about 1 m.")});
 /* data layers */
 let EV=[],evCat="All",pop=null;
 map.on("load",()=>{

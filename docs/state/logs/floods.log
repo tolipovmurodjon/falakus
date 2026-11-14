@@ -19,3 +19,5 @@ Flood in Kenya 1104159 | mapped | 2026-08-31 -> 2026-09-12 | new water 0.01 km2 
 Flood in Albania 1104164 | mapped | 2026-09-05 -> 2026-09-17 | new water 0.0 km2 | brighter 0.02 | S2 0 % cloud, IoU None
 Flood in Nepal 1104157 | no NISAR pass before and after | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
 Flood in Sri Lanka 1104160 | no NISAR pass before and after | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
+Flood in Senegal 1104161 | mapped | 2026-09-10 -> 2026-09-22 | new water 0.94 km2 | brighter 0.0 | S2 0 % cloud, IoU 0.155
+Flood in Democratic Republic of Congo 1104166 | read failed: "Unable to synchronously open object (object 'frequencyA' doesn't exist)" | None -> None | new water None km2 | brighter None | S2 None % cloud, IoU None
