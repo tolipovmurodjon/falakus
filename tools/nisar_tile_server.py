@@ -451,6 +451,36 @@ def sentinel1_mosaic():
     return S1["body"]
 
 
+S2 = {}
+
+
+def sentinel2_photo(w, s, e, n, start, end, clearest):
+    """True-colour Sentinel-2 L2A photo tiles for a box and dates (Microsoft Planetary Computer, no account).
+    clearest=True picks the least cloudy scene in the window; False keeps the scenes of exactly that window (to show clouds).
+    Returns the tile URL plus each scene's date and cloud %, so the page can say what the camera saw."""
+    key = (round(w, 3), round(s, 3), round(e, 3), round(n, 3), start, end, clearest)
+    if key in S2:
+        return S2[key]
+    when = {"op": "anyinteracts", "args": [{"property": "datetime"}, {"interval": [f"{start}T00:00:00Z", f"{end}T23:59:59Z"]}]}
+    where = {"op": "s_intersects", "args": [{"property": "geometry"}, {"type": "Polygon", "coordinates": [[[w, s], [e, s], [e, n], [w, n], [w, s]]]}]}
+    body = {"collections": ["sentinel-2-l2a"], "bbox": [w, s, e, n], "datetime": f"{start}T00:00:00Z/{end}T23:59:59Z", "limit": 50}
+    r = urllib.request.Request("https://planetarycomputer.microsoft.com/api/stac/v1/search", data=json.dumps(body).encode(),
+                               headers={"Content-Type": "application/json"}, method="POST")
+    with urllib.request.urlopen(r, timeout=60) as resp:
+        scenes = sorted({(f["properties"]["datetime"][:10], round(f["properties"]["eo:cloud_cover"])) for f in json.load(resp)["features"]})
+    req = {"collections": ["sentinel-2-l2a"], "filter-lang": "cql2-json", "filter": {"op": "and", "args": [when, where]},
+           "sortby": [{"field": "eo:cloud_cover", "direction": "asc"}] if clearest else [{"field": "datetime", "direction": "desc"}]}
+    r = urllib.request.Request("https://planetarycomputer.microsoft.com/api/data/v1/mosaic/register",
+                               data=json.dumps(req).encode(), headers={"Content-Type": "application/json"}, method="POST")
+    with urllib.request.urlopen(r, timeout=60) as resp:
+        mid = json.load(resp)["id"]
+    tile = (f"https://planetarycomputer.microsoft.com/api/data/v1/mosaic/{mid}/tiles/WebMercatorQuad/{{z}}/{{x}}/{{y}}@1x"
+            "?collection=sentinel-2-l2a&assets=visual&nodata=0&format=png")
+    S2[key] = {"tiles": [tile], "scenes": [{"date": d, "cloud_pct": c} for d, c in scenes], "start": start, "end": end, "clearest": clearest,
+               "attribution": "Sentinel-2 L2A (Copernicus, ESA) via Microsoft Planetary Computer"}
+    return S2[key]
+
+
 LASTLOOK = {}
 
 
@@ -690,6 +720,10 @@ class Handler(SimpleHTTPRequestHandler):
             except (KeyError, ValueError):
                 return self.send_bytes(b"{}", "application/json", code=400)
             return self.send_bytes(json.dumps(last_look(lon, lat)).encode(), "application/json", cache="no-store")
+        mh = re.match(r"^/history/([a-z0-9_]+)/([a-z0-9_]+\.(?:png|json))$", path)
+        if mh:
+            f = DATA / "history" / mh.group(1) / mh.group(2)
+            return self.send_bytes(f.read_bytes(), "application/json" if f.suffix == ".json" else "image/png", cache="max-age=86400") if f.exists() else self.send_bytes(b"", "text/plain", code=404)
         mm = re.match(r"^/motion/([a-z0-9_]+)/(fringes\.png|los\.png|info\.json)$", path)
         if mm:
             f = DATA / "motion" / mm.group(1) / mm.group(2)
@@ -707,6 +741,13 @@ class Handler(SimpleHTTPRequestHandler):
         if mship:
             f = DATA / "ships" / f"{mship.group(1)}.json"
             return self.send_bytes(f.read_bytes(), "application/json", cache="no-store") if f.exists() else self.send_bytes(b"{}", "application/json", code=404)
+        if path == "/api/s2.json":
+            q = {k: v[0] for k, v in parse_qs(urlparse(self.path).query).items()}
+            try:
+                body = sentinel2_photo(float(q["w"]), float(q["s"]), float(q["e"]), float(q["n"]), q["start"], q["end"], q.get("clearest") == "1")
+            except Exception as ex:
+                body = {"error": f"{type(ex).__name__}: {ex}"[:200]}
+            return self.send_bytes(json.dumps(body).encode(), "application/json", cache="no-store")
         if path == "/api/s1.json":
             return self.send_bytes(json.dumps(sentinel1_mosaic()).encode(), "application/json", cache="no-store")
         if path == "/api/science_boxes.json":

@@ -131,6 +131,24 @@ body.touring #powers{display:none}
 #opts{border-top:1px solid var(--line);margin-top:10px;padding-top:2px}
 body.opts-open #powers,body.opts-open #howto{display:none}
 #opts{max-height:52vh;overflow:auto}
+
+#cases{position:absolute;top:14px;left:50%;transform:translateX(-50%);z-index:7;display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:center;
+ background:rgba(255,255,255,.86);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:999px;padding:6px 8px 6px 14px;box-shadow:0 10px 30px -18px rgba(15,22,48,.5);max-width:calc(100% - 140px)}
+#cases .eyebrow{margin-right:4px}
+.case{font:600 13px var(--sans);border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:999px;padding:7px 12px;cursor:pointer}
+.case.on{background:var(--mint);color:#fff;border-color:var(--mint)}
+#cmp{position:absolute;right:18px;top:74px;width:400px;max-height:calc(100% - 100px);overflow:auto;padding:14px 18px;z-index:6}
+body.comparing #brand{display:none}
+#cmp .top{display:flex;justify-content:space-between;align-items:center}
+#cmp h3{margin:6px 0 8px;font-size:19px}
+#cmp .row{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 8px}
+#cmp .hero b{font-size:30px}
+#cmp .why{font-size:13px;color:var(--ink2);margin:6px 0}
+#cmp .src{font-size:11px;color:var(--ink3);margin:4px 0 0}
+body.comparing #powers,body.comparing #howto,body.comparing #tour,body.comparing #player,body.comparing #scikey{display:none!important}
+@media (max-width:640px){#cases{top:auto;bottom:calc(100% - 64px);max-width:calc(100% - 24px);border-radius:16px}#cases .eyebrow{display:none}#cmp{top:auto;right:8px;left:8px;width:auto;bottom:10px;max-height:46vh}#cmp .hero b{font-size:24px}}
+#cases .credits{flex-basis:100%;text-align:center;font:500 10.5px var(--mono);color:var(--ink3);letter-spacing:.02em}
+body.comparing #swipe .tag{top:104px}
 </style>
 </head>
 <body>
@@ -144,6 +162,22 @@ body.opts-open #powers,body.opts-open #howto{display:none}
  <small id="skhint">Each area shows its main type within about 140 m. Pick one theme to see where there is more of it (darker = more).</small>
 </div>
 
+<nav id="cases" aria-label="Compare before and after">
+ <span class="eyebrow">Drag to compare</span>
+ <button class="case" data-c="langtang">Langtang: seen through cloud</button>
+ <button class="case" data-c="aral">Aral Sea: a sea that is gone</button>
+ <button class="case" data-c="panama">Panama: the ground moved</button>
+ <span class="credits">NASA-ISRO NISAR · CSA RADARSAT-1 · ESA Sentinel-1/2 · USGS · NASA EONET</span>
+</nav>
+<section id="cmp" class="panel" hidden aria-label="Before and after">
+ <div class="top"><span class="chip" id="cmpchip"></span><button class="tog" id="cmpx" aria-label="Close">✕</button></div>
+ <h3 id="cmpt"></h3>
+ <div id="cmptabs" class="row"></div>
+ <div class="hero"><b id="cmpn"></b><span id="cmps"></span></div>
+ <p id="cmpwhy" class="why"></p>
+ <div id="cmpcol" class="row"></div>
+ <p id="cmpsrc" class="src"></p>
+</section>
 <div id="swipe" hidden><div class="bar" id="sbar"><div class="knob">⇆</div></div><span class="tag" id="stagL">before</span><span class="tag" id="stagR">after</span></div>
 
 <section id="brand" class="panel" aria-label="Map controls">
@@ -405,9 +439,9 @@ async function drawBefore(){const a=dance.frames[0];const cv=$("swipeimg");if(!c
  const tl=map.project([a.bbox[0],a.bbox[3]]),br=map.project([a.bbox[2],a.bbox[1]]);ctx.drawImage(im,tl.x,tl.y,br.x-tl.x,br.y-tl.y)}
 function swipeStop(){swipeOn=false;tog($("pswipe"),false);$("swipe").hidden=true}
 $("pswipe").onclick=()=>swipeOn?swipeStop():swipeStart();
-map.on("move",()=>{if(swipeOn){drawBefore();swipeApply()}});
+map.on("move",()=>{if(swipeOn&&!cmp){drawBefore();swipeApply()}});
 (function(){let drag=false;const bar=()=>$("sbar");document.addEventListener("pointerdown",e=>{if(e.target.closest("#sbar")){drag=true;e.preventDefault()}});
- document.addEventListener("pointermove",e=>{if(!drag)return;const r=map.getCanvas().getBoundingClientRect();swipeX=Math.min(.98,Math.max(.02,(e.clientX-r.left)/r.width));swipeApply()});
+ document.addEventListener("pointermove",e=>{if(!drag)return;const r=map.getCanvas().getBoundingClientRect();swipeX=Math.min(.98,Math.max(.02,(e.clientX-r.left)/r.width));(cmp?cmpApply:swipeApply)()});
  document.addEventListener("pointerup",()=>drag=false)})();
 
 
@@ -433,7 +467,7 @@ function sciSwitch(kind){sciKind=kind;map.getSource("sci").setTiles([location.or
 document.querySelectorAll("#skthemes .tog").forEach(b=>b.onclick=()=>sciSwitch(b.dataset.k));
 let SCIBOX=[];fetch("/api/science_boxes.json").then(r=>r.json()).then(b=>{SCIBOX=b;sciKeyUpdate()}).catch(()=>{});
 function sciKeyUpdate(){const z=map.getZoom(),b=map.getBounds();
- const any=z>=10&&SCIBOX.some(x=>x.bbox[0]<b.getEast()&&x.bbox[2]>b.getWest()&&x.bbox[1]<b.getNorth()&&x.bbox[3]>b.getSouth());$("scikey").hidden=!any;if(!dance.on&&map.getLayer("nisar"))map.setPaintProperty("nisar","raster-opacity",radarOp(any?Math.min(0.15,radarOpacity):radarOpacity))}
+ const any=z>=10&&SCIBOX.some(x=>x.bbox[0]<b.getEast()&&x.bbox[2]>b.getWest()&&x.bbox[1]<b.getNorth()&&x.bbox[3]>b.getSouth());$("scikey").hidden=!any;if(!dance.on&&!cmp&&map.getLayer("nisar"))map.setPaintProperty("nisar","raster-opacity",radarOp(any?Math.min(0.15,radarOpacity):radarOpacity))}
 map.on("moveend",sciKeyUpdate);
 
 let FRAMEBOX=null;fetch("/api/frames.geojson").then(r=>r.json()).then(d=>{FRAMEBOX=d.features}).catch(()=>{});
@@ -660,6 +694,78 @@ async function openMotion(name){const j=await (await fetch(`/motion/${name}/info
  $("m-pre").onclick=()=>set("m-pre");
  $("m-fr").onclick=()=>set("m-fr");$("m-cm").onclick=()=>set("m-cm");$("m-off").onclick=()=>set("m-off");
  const old=$("fclose").onclick;$("fclose").onclick=()=>{old&&old();map.getLayer("motion")&&map.setLayoutProperty("motion","visibility","none")}}
+
+
+/* Compare: the front door. One drag answers "what changed here?". Left of the white bar = one image drawn on a canvas,
+   right of it = the map (an image layer, or Sentinel-2 photo tiles), so radar is always compared with radar or with a photo. */
+const LT=[85.24669,28.04486,85.55331,28.31514],AR=[59.74384,45.11982,60.25616,45.48018];
+const sci=(st,d,k)=>`/science/${st}/img/${d}_${k}.webp`;
+const CASES={
+ langtang:{title:"Langtang, Nepal: a landslide seen through monsoon cloud",bbox:LT,slides:[
+  {tab:"Before | after the collapse",colour:true,L:{st:"langtang",d:"2026-08-19",lab:"NISAR 19 Aug · before"},R:{st:"langtang",d:"2026-08-31",lab:"NISAR 31 Aug · after",over:"/science/langtang/img/anomaly_2026-08-19_2026-08-31.png"},
+   n:"0.9 km²",s:"changed more than 4× its normal 12-day wobble across the 26 Aug collapse: a 4 km streak in the north-east (orange = brighter, violet = darker). Summer pairs before it: 0.0–0.2 km².",
+   why:"Fresh rock and ice debris is rough, so it throws the 24 cm pulse back (brighter); scoured slopes change texture (darker). We flag a pixel only when its change is 4× bigger than its own usual pass-to-pass change."},
+  {tab:"Radar | camera, same day",colour:true,L:{st:"langtang",d:"2026-08-31",lab:"NISAR radar · 31 Aug"},R:{s2:["2026-08-31","2026-08-31",0],lab:"Sentinel-2 camera · 31 Aug"},
+   n:"89 % cloud",s:"in the Sentinel-2 photo taken the same day as the NISAR pass. The camera sees cloud; the radar sees the valley.",
+   why:"Radar is a flashlight, not a camera: it sends its own microwave pulse, and 24 cm waves pass through cloud and work at night."}]},
+ aral:{title:"Aral Sea, Uzbekistan–Kazakhstan: a sea that is gone",bbox:AR,slides:[
+  {tab:"1997 | 2026 radar",bbox:[57.5,43.6,62.0,46.9],L:{img:"/history/aral/rs1_19970716_wide.png",lab:"RADARSAT-1 (Canada) · 16 Jul 1997"},R:{layer:"nisar",lab:"NISAR (NASA-ISRO) · Oct 2026"},
+   n:"29 years",s:"Left, 1997: the Large Aral Sea is one body of water around Vozrozhdeniya Island. Right, 2026: the eastern basin is dry seabed; in our 40 × 40 km box, at most 0.93 km² was water in any NISAR pass.",
+   why:"Both are radar, both look straight through cloud, so the comparison is fair: open water is smooth (dark), dry seabed and salt crust are rough and bright. RADARSAT-1 used 5.6 cm C-band; NISAR uses 24 cm L-band.",
+   src:"Radar: CSA RADARSAT-1 ScanSAR Wide (Open Government Licence – Canada, open archive on AWS; uncalibrated, relative brightness, placed with 15 ground control points) and NASA-ISRO NISAR GCOV previews (provisional), ASF DAAC."},
+  {tab:"1997 radar | 2026 photo",bbox:[57.5,43.6,62.0,46.9],L:{img:"/history/aral/rs1_19970716_wide.png",lab:"RADARSAT-1 · 16 Jul 1997"},R:{s2:["2026-10-12","2026-10-29",1],lab:"Sentinel-2 photo · Oct 2026"},
+   n:"a sea → a desert",s:"Drag the bar: the 1997 shoreline on the left sits tens of kilometres out in today's white salt flats on the right.",
+   why:"Upstream irrigation (cotton, rice) on the Amu Darya and Syr Darya took the rivers' water; since the 1960s the sea has shrunk to a few small lakes.",
+   src:"Radar: CSA RADARSAT-1 (Open Government Licence – Canada)."},
+  {tab:"Radar | photo",colour:true,L:{st:"aral",d:"2026-10-22",lab:"NISAR radar · 22 Oct 2026"},R:{s2:["2026-10-12","2026-10-29",1],lab:"Sentinel-2 photo · clearest, Oct 2026"},
+   n:"≤ 0.93 km²",s:"of open water in this 1,600 km² box in any of 10 NISAR passes (Jun–Oct 2026). About 84 % is bare former seabed. In 1960 all of it was sea.",
+   why:"Calm water is a mirror: it sends the pulse away, so it is the darkest thing radar sees. Salt crust and dry seabed return a weak, even echo."},
+  {tab:"June | October 2026",colour:true,L:{st:"aral",d:"2026-06-24",lab:"NISAR 24 Jun"},R:{st:"aral",d:"2026-10-22",lab:"NISAR 22 Oct"},
+   n:"0.03–0.93 km²",s:"open water across 10 passes: the eastern basin barely holds water even in early summer, when the Amu Darya runs highest.",
+   why:"Wet ground and puddles raise the dielectric constant (more echo); as the basin dries the echo stays low and even."}]},
+ panama:{title:"Panama M7.7, 9 Oct 2026: the ground moved about a metre",bbox:null,motion:"panama_m77",slides:[
+  {tab:"Before the quake | across the quake",L:{img:"/motion/panama_pre/fringes.png",lab:"20 Sep → 2 Oct · control"},R:{img:"/motion/panama_m77/fringes.png",lab:"2 → 14 Oct · quake"},
+   n:"~1 m",s:"of ground motion toward the satellite near the epicentre. Each rainbow band = 11.9 cm. Left (no quake): straight, even bands from the ionosphere. Right: bands bend and bunch toward the fault.",
+   why:"NISAR measures the phase of its 23.8 cm wave. If the ground moves toward the satellite between two passes, the echo comes back a little early: half a wavelength = one full colour band (interferometry)."},
+  {tab:"Fringes | photo",L:{img:"/motion/panama_m77/fringes.png",lab:"NISAR interferogram"},R:{s2:["2026-10-10","2026-10-31",1],lab:"Sentinel-2 photo · clearest after the quake"},
+   n:"no visible change",s:"in the photo: a 1 m shift of a whole landscape is invisible to a camera, but radar phase measures it to centimetres.",
+   why:"A camera records colour and brightness; it cannot see a hillside move by a metre. Radar records the travel time of its own wave."}]}};
+let cmp=null,cmpKind="hh";
+function cmpImgUrl(side){return side.img||sci(side.st,side.d,cmpKind)}
+async function cmpDraw(){if(!cmp)return;const cv=$("swipeimg"),L=cmp.slide.L;if(!cv)return;const W=map.getCanvas().clientWidth,H=map.getCanvas().clientHeight;cv.width=W;cv.height=H;
+ const im=cmp.imgL&&cmp.imgL.src.endsWith(cmpImgUrl(L))?cmp.imgL:new Image();if(im!==cmp.imgL){im.src=cmpImgUrl(L);cmp.imgL=im;await im.decode().catch(()=>{})}
+ const b=cmp.bbox,tl=map.project([b[0],b[3]]),br=map.project([b[2],b[1]]),ctx=cv.getContext("2d");ctx.clearRect(0,0,W,H);ctx.drawImage(im,tl.x,tl.y,br.x-tl.x,br.y-tl.y)}
+function cmpApply(){if(!cmp)return;const W=map.getCanvas().clientWidth,x=swipeX*W;$("sbar").style.left=x+"px";$("stagL").style.left=Math.max(8,x-230)+"px";$("stagR").style.left=(x+12)+"px";
+ $("stagL").textContent=cmp.slide.L.lab;$("stagR").textContent=cmp.slide.R.lab;$("swipeimg").style.clipPath=`inset(0 ${W-x}px 0 0)`}
+function cmpClearRight(){["cmpR","cmpO","cmpS2"].forEach(id=>{if(map.getLayer(id))map.removeLayer(id);if(map.getSource(id))map.removeSource(id)})}
+async function cmpRight(){const R=cmp.slide.R,b=cmp.bbox,coords=[[b[0],b[3]],[b[2],b[3]],[b[2],b[1]],[b[0],b[1]]];cmpClearRight();
+ if(R.layer==="nisar"){map.setPaintProperty("nisar","raster-opacity",0.95);return}
+ if(R.s2){const q=`w=${b[0]}&s=${b[1]}&e=${b[2]}&n=${b[3]}&start=${R.s2[0]}&end=${R.s2[1]}&clearest=${R.s2[2]}`;const j=await (await fetch("/api/s2.json?"+q)).json();if(!cmp||cmp.slide.R!==R||!j.tiles)return;
+  map.addSource("cmpS2",{type:"raster",tiles:j.tiles,tileSize:256,bounds:b,attribution:j.attribution});map.addLayer({id:"cmpS2",type:"raster",source:"cmpS2"},"labels");
+  const sc=(j.scenes||[]).map(x=>`${fmtDate(x.date)} ${x.cloud_pct} % cloud`).join(" · ");$("cmpsrc").textContent=`Photo: ${j.attribution}. Scenes: ${sc}. `+$("cmpsrc").dataset.base;return}
+ map.addSource("cmpR",{type:"image",url:cmpImgUrl(R),coordinates:coords});map.addLayer({id:"cmpR",type:"raster",source:"cmpR",paint:{"raster-fade-duration":0}},"labels");
+ if(R.over){map.addSource("cmpO",{type:"image",url:R.over,coordinates:coords});map.addLayer({id:"cmpO",type:"raster",source:"cmpO"},"labels")}}
+async function openCase(id,k=0){const c=CASES[id];endDance();$("tour").hidden=true;document.body.classList.remove("touring");document.body.classList.add("comparing");
+ if(!c.bbox&&c.motion){const j=await (await fetch(`/motion/${c.motion}/info.json`)).json();c.bbox=j.bbox}
+ cmp={id,c,slide:c.slides[k],bbox:c.slides[k].bbox||c.bbox};document.querySelectorAll(".case").forEach(b=>b.classList.toggle("on",b.dataset.c===id));
+ map.setPaintProperty("nisar","raster-opacity",0);if(map.getLayer("sci"))map.setLayoutProperty("sci","visibility","none");if(map.getLayer("motion"))map.setLayoutProperty("motion","visibility","none");
+ const S=cmp.slide;$("cmp").hidden=false;$("cmpchip").textContent="Before | after · drag the white bar";$("cmpt").textContent=c.title;
+ $("cmptabs").innerHTML=c.slides.map((x,i)=>`<button class="tog${i===k?" on":""}" data-k="${i}">${x.tab}</button>`).join("");
+ $("cmptabs").querySelectorAll("button").forEach(b=>b.onclick=()=>openCase(id,+b.dataset.k));
+ $("cmpn").textContent=S.n;$("cmps").textContent=S.s;$("cmpwhy").innerHTML=`<b>Why it looks like this:</b> ${S.why}`;
+ $("cmpcol").innerHTML=S.colour?`<span class="eyebrow" style="align-self:center">Radar colours</span>`+[["hh","Grey (HH echo)"],["rgb","False colour"],["hv","Plants (HV)"]].map(([v,t])=>`<button class="tog${cmpKind===v?" on":""}" data-v="${v}">${t}</button>`).join("")
+  +`<span style="font-size:11.5px;color:var(--ink3);flex-basis:100%">False colour: red = HH (walls, rough ground), green = HV (leaves, branches), blue = HH/HV ratio. NISAR measures HH and HV, so the ratio stands in for the VV channel of the UAVSAR recipe.</span>`:"";
+ $("cmpcol").querySelectorAll("button").forEach(b=>b.onclick=()=>{cmpKind=b.dataset.v;openCase(id,k)});
+ $("cmpsrc").dataset.base=S.src||("Radar: NASA-ISRO NISAR "+(S.L.img?"GUNW interferograms (provisional)":"GCOV gamma0, calibrated dB (provisional)")+", ASF DAAC.");$("cmpsrc").textContent=$("cmpsrc").dataset.base;
+ map.fitBounds([[cmp.bbox[0],cmp.bbox[1]],[cmp.bbox[2],cmp.bbox[3]]],{padding:innerWidth<640?{top:70,bottom:330,left:12,right:12}:{top:80,bottom:40,left:40,right:450},duration:800,essential:false});
+ let cv=$("swipeimg");if(!cv){cv=document.createElement("canvas");cv.id="swipeimg";cv.style.cssText="position:absolute;inset:0;width:100%;height:100%;pointer-events:none";$("swipe").prepend(cv)}
+ $("swipe").hidden=false;swipeX=0.5;cmp.imgL=null;await cmpRight();
+ map.once("moveend",()=>{const W=map.getCanvas().clientWidth,b=cmp.bbox,cx=(map.project([b[0],b[3]]).x+map.project([b[2],b[1]]).x)/2;swipeX=Math.min(.9,Math.max(.1,cx/W));cmpDraw();cmpApply()});cmpDraw();cmpApply()}
+function closeCase(){cmp=null;cmpClearRight();$("cmp").hidden=true;$("swipe").hidden=true;document.body.classList.remove("comparing");document.querySelectorAll(".case").forEach(b=>b.classList.remove("on"));
+ map.setPaintProperty("nisar","raster-opacity",radarOp(radarOpacity));if(map.getLayer("sci"))map.setLayoutProperty("sci","visibility","visible")}
+document.querySelectorAll(".case").forEach(b=>b.onclick=()=>cmp&&cmp.id===b.dataset.c?closeCase():openCase(b.dataset.c));
+$("cmpx").onclick=closeCase;
+map.on("move",()=>{if(cmp){cmpDraw();cmpApply()}});
 
 /* data layers */
 let EV=[],evCat="All",pop=null;

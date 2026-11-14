@@ -1,3 +1,17 @@
 === rogun 22:26
 water (HH<-18 & HV<-24 dB) | 96.5 km2 (2026-06-20) -> 1.54 km2 (2026-11-11)
 rogun: 12 passes rendered at 20 m -> D:\10_projects\falakus\data\science\rogun\img
+rogun: 307 tiles (z10-14) from 2026-11-11, native 10 m
+=== qoshtepa 22:31
+2026-06-17  box (3000, 3000)  HH median -17.65 dB
+2026-06-29  box (3000, 3000)  HH median -18.01 dB
+2026-07-11  box (3000, 3000)  HH median -17.87 dB
+2026-07-23  box (3000, 3000)  HH median -17.78 dB
+2026-08-16  box (3000, 3000)  HH median -17.35 dB
+2026-08-28  box (3000, 3000)  HH median -17.07 dB
+2026-09-09  box (3000, 3000)  HH median -17.41 dB
+2026-09-21  box (3000, 3000)  HH median -17.22 dB
+2026-10-03  box (3000, 3000)  HH median -17.56 dB
+2026-10-15  box (3000, 3000)  HH median -17.1 dB
+2026-10-27  box (3000, 3000)  HH median -18.04 dB
+water (HH<-18 & HV<-24 dB) | 207.32 km2 (2026-06-17) -> 217.52 km2 (2026-10-27)
