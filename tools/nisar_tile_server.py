@@ -97,6 +97,26 @@ def kml_box(gid):
     return KML["boxes"].get(gid)
 
 
+def harmonize(im, mask):
+    """Display only (the numbers never come from browse PNGs): every NASA browse image has its own contrast
+    stretch, so neighbouring frames jump in brightness, and the soft dark rim of each frame draws a seam line.
+    Trim the rim (about 0.5 % of the width) and move each frame's own 2-98 % brightness half-way to one common range."""
+    k = max(2, round(im.shape[1] * 0.005))
+    m = mask.copy()
+    for _ in range(k):  # erode by k pixels with shifts (no scipy on the server)
+        m[1:, :] &= m[:-1, :]; m[:-1, :] &= m[1:, :]; m[:, 1:] &= m[:, :-1]; m[:, :-1] &= m[:, 1:]
+    if m.sum() < 1000:
+        return im, m
+    lum = im.mean(axis=2)
+    lo, hi = np.percentile(lum[m][:: max(1, int(m.sum() // 200000))], [2, 98])
+    if hi - lo < 5:
+        return im, m
+    f = im.astype(np.float32)
+    norm = (f - lo) * (150.0 / (hi - lo)) + 50  # this frame's 2-98 % onto 50..200
+    out = np.clip(0.5 * f + 0.5 * norm, 0, 255).astype(np.uint8)  # half-way: evens jumps without flattening real contrast
+    return out, m
+
+
 def load_preview(path, frame):
     """Return (rgba array, georef) or None. With NASA's KML box the whole picture is placed exactly;
     without it, the old fallback crops to data and stretches onto the catalogue box (0.5-4 km off, measured)."""
@@ -105,6 +125,7 @@ def load_preview(path, frame):
     except Exception:
         return None
     mask = im.max(axis=2) > 6
+    im, mask = harmonize(im, mask)
     box = kml_box(frame["id"])
     if box:
         if mask.mean() < 0.05:

@@ -353,7 +353,7 @@ const map=new maplibregl.Map({container:"map",hash:true,attributionControl:{comp
   light:{type:"raster",tiles:["https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}"],tileSize:256,maxzoom:10,attribution:"Map © Esri, HERE, Garmin"},
   labels:{type:"raster",tiles:["https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}"],tileSize:256,maxzoom:18},
   sci:{type:"raster",tiles:[location.origin+"/scitiles/raw/{z}/{x}/{y}.webp?v=3"],tileSize:256,minzoom:10,maxzoom:14,attribution:"Science mode: NISAR GCOV calibrated gamma0, 10-20 m"},
-  nisar:{type:"raster",tiles:[location.origin+"/tiles/{z}/{x}/{y}.webp?v=7"],tileSize:256,maxzoom:10,attribution:"Radar: NASA-ISRO NISAR GCOV (provisional), ASF DAAC"},
+  nisar:{type:"raster",tiles:[location.origin+"/tiles/{z}/{x}/{y}.webp?v=9"],tileSize:256,maxzoom:10,attribution:"Radar: NASA-ISRO NISAR GCOV (provisional), ASF DAAC"},
   danceA:{type:"image",url:BLANK,coordinates:Q},danceB:{type:"image",url:BLANK,coordinates:Q},diff:{type:"image",url:BLANK,coordinates:Q}},
  layers:[{id:"sat",type:"raster",source:"sat"},{id:"s2",type:"raster",source:"s2",layout:{visibility:"none"}},{id:"light",type:"raster",source:"light",layout:{visibility:"none"}},
   {id:"nisar",type:"raster",source:"nisar",paint:{"raster-opacity":["interpolate",["linear"],["zoom"],11,0.9,13.5,0.3],"raster-fade-duration":150,"raster-resampling":"nearest"}},
@@ -949,7 +949,7 @@ const FC={
  rs1:{name:"RADARSAT-1 radar 1997 · Aral Sea only",what:"Canada's RADARSAT-1, 16 Jul 1997, C-band HH (open archive). Covers the Aral Sea region only (57.5-62E, 43.6-46.9N)."}};
 let fc=null,map2=null;
 async function fcSpec(kind){const b=map.getBounds(),m=$("fcM").value;
- if(kind==="nisar")return{type:"raster",tiles:[location.origin+"/tiles/{z}/{x}/{y}.webp?v=7"],tileSize:256,maxzoom:10};
+ if(kind==="nisar")return{type:"raster",tiles:[location.origin+"/tiles/{z}/{x}/{y}.webp?v=9"],tileSize:256,maxzoom:10};
  if(kind==="nisar20")return{type:"raster",tiles:[location.origin+"/scitiles/raw/{z}/{x}/{y}.webp?v=3"],tileSize:256,minzoom:10,maxzoom:14};
  if(kind==="nisarclass")return{type:"raster",tiles:[location.origin+"/scitiles/class/{z}/{x}/{y}.webp?v=3"],tileSize:256,minzoom:10,maxzoom:14};
  if(kind==="photo")return{type:"raster",tiles:["https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"],tileSize:256,maxzoom:18};

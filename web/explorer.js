@@ -47,11 +47,16 @@ const LAYERS=[
   info:"USGS earthquakes of magnitude 5 or more since NISAR's first science passes. Each step up in magnitude doubles the weight, so an M7 counts four times an M5. Not tied to the timeline date.",
   src:"USGS earthquake catalogue, M5+"},
 
- {key:"nisar_mosaic",group:"radar",title:"NISAR radar mosaic",gid:"NISAR GCOV browse images",short:"Every NISAR pass side by side. Dark means water.",
+ {key:"nisar_mosaic",group:"radar",title:"NISAR radar mosaic",gid:"NISAR GCOV browse images",short:"Every NISAR pass side by side. Dark means water.",rail:["NISAR","radar"],
   info:"Every NISAR pass laid side by side. Radar sees through cloud and at night: dark is smooth water, bright is rough ground, towns and forest. Recent passes, newest on top. Not tied to the timeline date.",
   src:"NASA-ISRO NISAR L2 GCOV (provisional), ASF DAAC browse images",static:"Not tied to the timeline date.",
-  url:()=>HERE+"tiles/{z}/{x}/{y}.webp?v=7",maxz:10,resampling:"nearest",
+  // browse images are ~100-120 m per pixel, so detail ends at z10: MapLibre over-zooms z10 beyond that
+  url:()=>HERE+"tiles/{z}/{x}/{y}.webp?v=9",maxz:10,
   legend:{keys:[["#0b0b0b","smooth water"],["#7a7a7a","fields, bare soil"],["#f2f2f2","towns, forest"]]}},
+ {key:"s1",group:"radar",title:"Sentinel-1 radar (C-band), last 12 days",short:"ESA C-band radar, VV. Compare with NISAR L-band. Zoom 8+.",rail:["Sentinel-1","C-band"],
+  info:"Copernicus Sentinel-1 radiometrically terrain corrected backscatter (VV), newest scene on top, from the last 12 days. C-band (5.6 cm) is shorter than NISAR's L-band (24 cm): it bounces off leaves and crops where L-band reaches the branches and ground. The mosaic service only draws it from zoom 8.",
+  src:"Copernicus Sentinel-1 RTC (ESA), via Microsoft Planetary Computer",static:"Visible from zoom 8. Tiles take a few seconds.",
+  url:()=>S1URL,minz:8,maxz:14,legend:{keys:[["#0b0b0b","smooth water"],["#f2f2f2","rough, built-up"]]}},
  {key:"nisar_sci",group:"radar",title:"NISAR calibrated radar (20 m)",gid:"NISAR_L2_GCOV_PROVISIONAL_V1 HHHH, HVHV",short:"Calibrated radar inside our study boxes. Zoom past 10.",
   info:"Calibrated backscatter at 10-20 m inside our study boxes. Red = HH, green = HV, blue = HH minus HV. HH -25..+5 dB, HV -30..-5 dB, HH-HV 0..16 dB. Box dates: see the box card.",
   src:"NASA-ISRO NISAR GCOV gamma0, our Lee-filtered science tiles",static:"Visible from zoom 10.",
@@ -63,11 +68,13 @@ const LAYERS=[
   info:"Water surface of the Andijan reservoir from every NISAR pass, June to November 2026, checked against Sentinel-2 photos. One value per NISAR pass.",
   src:"Falakus water road (NISAR HH threshold) + gradient-boosting water model"},
 
- {key:"events",group:"events",title:"Natural events",kind:"events",short:"Events near the timeline date. Click one for a briefing.",
+ {key:"quakes_live",group:"events",title:"Earthquakes, live",kind:"live",short:"USGS feed: M4.5+ this week and M2.5+ today. Pulsing: last 24 h.",rail:["Quakes","live"],
+  info:"Straight from the USGS real-time feeds (4.5_week and 2.5_day), refreshed every 5 minutes. Circle size is magnitude; pulsing rings are the last 24 hours.",src:"USGS Earthquake Hazards Program, real-time GeoJSON feeds"},
+ {key:"events",group:"events",title:"Natural events",kind:"events",short:"Events near the timeline date. Click one for a briefing.",rail:["Disasters","NASA"],
   info:"Fires, floods, storms, ice and earthquakes within the date window. Pick types and the window in the Events tab.",src:"NASA EONET v3, USGS earthquakes (M5+)"},
  {key:"tracks",group:"events",title:"Storm tracks",kind:"tracks",short:"The path each tropical storm has taken.",info:"Storm positions reported to NASA EONET by JTWC and NHC, joined in time order.",src:"NASA EONET v3"},
 
- {key:"fires_viirs",group:"context",title:"Fires (VIIRS 375 m)",gid:"VIIRS_NOAA20_Thermal_Anomalies_375m_All",wms:true,maxz:12,step:"d",short:"Hot spots seen from orbit on the timeline date.",
+ {key:"fires_viirs",group:"context",rail:["Fires","FIRMS"],title:"Fires (VIIRS 375 m)",gid:"VIIRS_NOAA20_Thermal_Anomalies_375m_All",wms:true,maxz:12,step:"d",short:"Hot spots seen from orbit on the timeline date.",
   info:"Hot spots seen by VIIRS on NOAA-20 in the 24 h of the date, day and night passes. Each red mark is a 375 m pixel burning.",
   src:"NASA FIRMS / LANCE VIIRS, via GIBS WMS",legend:{keys:[["#EE2626","fire pixel, 375 m"]]}},
  {key:"fires_modis",group:"context",title:"Fires (MODIS 1 km)",gid:"MODIS_Combined_Thermal_Anomalies_All",wms:true,maxz:12,step:"d",short:"Coarser fire record, back to the year 2000.",
@@ -98,9 +105,11 @@ const LAYERS=[
   info:"Afternoon true colour from VIIRS on NOAA-20, wider swaths than MODIS, so fewer gaps near the equator. Black wedges are gaps between passes.",
   src:"NASA VIIRS NOAA-20 corrected reflectance, via GIBS",legend:{keys:TC_KEYS}},
 
- {key:"labels",group:"base",pos:"top",title:"Place names and borders",short:"Country and city names, borders.",info:"Esri light grey reference layer. (The GIBS label layer returns empty tiles today, so it was replaced.)",
-  src:"Esri, HERE, Garmin, © OpenStreetMap contributors",static:"Static reference.",url:()=>ESRI+"Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}",maxz:16},
+ {key:"labels",group:"base",pos:"top",rail:["Labels","places"],title:"Place names and borders",short:"Country and city names, borders.",info:"Esri boundaries and places reference layer, light text for the dark globe.",
+  src:"Esri, HERE, Garmin, © OpenStreetMap contributors",static:"Static reference.",url:()=>ESRI+"Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",maxz:13},
  {key:"ref_coast",group:"base",pos:"top",title:"Coastlines",gid:"Coastlines_15m",wms:true,maxz:13,short:"Thin coastline outline.",info:"Coastline and lake shore outline from OpenStreetMap, drawn by GIBS.",src:"OpenStreetMap, via GIBS WMS",static:"Static reference."},
+ {key:"base_sat",group:"base",pos:"bottom",title:"Satellite photo (dimmed)",short:"Photo base under the radar, so the map never goes empty.",info:"Esri World Imagery, desaturated and dimmed so the grey NISAR radar stands out. Shows through where NISAR has no frame and at street zoom.",src:"Esri, Maxar, Earthstar Geographics",static:"Static base map.",url:()=>ESRI+"World_Imagery/MapServer/tile/{z}/{y}/{x}",maxz:18,paint:{"raster-saturation":-0.75,"raster-brightness-max":0.62,"raster-contrast":0.05}},
+ {key:"base_dark",group:"base",pos:"bottom",title:"Dark map",short:"Plain dark land and sea.",info:"Esri World Dark Gray Canvas: land, water and borders only.",src:"Esri, HERE, Garmin, © OpenStreetMap contributors",static:"Static base map.",url:()=>ESRI+"Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}",maxz:16},
  {key:"base_light",group:"base",pos:"bottom",title:"Light grey map",short:"Calm grey base map so the data stands out.",info:"Esri World Light Gray Canvas: land, water and borders only.",src:"Esri, HERE, Garmin, © OpenStreetMap contributors",static:"Static base map.",url:()=>ESRI+"Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",maxz:16},
  {key:"bluemarble",group:"base",pos:"bottom",title:"Blue Marble relief",gid:"BlueMarble_ShadedRelief_Bathymetry",tms:"GoogleMapsCompatible_Level8",maxz:8,ext:"jpeg",short:"Cloud-free shaded relief and sea floor.",
   info:"NASA Blue Marble: cloud-free shaded relief and sea floor, a calm base under the daily layers.",src:"NASA Blue Marble, via GIBS",static:"Static base map."}
@@ -123,7 +132,7 @@ const catOf=c=>CAT[c]||{c:"#6B7280",k:"dot",on:true,say:c,g:[["f","M12 12m-4 0a4
 const glyphSVG=c=>`<svg viewBox="0 0 24 24" aria-hidden="true">${catOf(c).g.map(([m,d])=>m==="f"?`<path d="${d}" fill="currentColor" stroke="none"/>`:`<path d="${d}"/>`).join("")}</svg>`;
 
 // ---------- state + URL hash ----------
-const S={date:addDays(TODAY,-1),hhmm:"12:00",step:"d",active:["labels","nisar_mosaic","heat_events","events","tracks","base_light"],op:{},cmp:false,dateB:null,win:7,cats:null,view:null,swipe:.5};
+const S={date:addDays(TODAY,-1),hhmm:"12:00",step:"d",active:["labels","nisar_mosaic","quakes_live","events","tracks","base_sat"],op:{},cmp:false,dateB:null,win:7,cats:null,view:null,swipe:.5,flat:false,terrain:false,tl:false,go:null};
 function readHash(){const h=new URLSearchParams(location.hash.slice(1));
  if(h.get("d")&&/^\d{4}-\d\d-\d\d$/.test(h.get("d")))S.date=h.get("d");
  if(/^\d\d:\d\d$/.test(h.get("t")||""))S.hhmm=h.get("t");
@@ -132,13 +141,16 @@ function readHash(){const h=new URLSearchParams(location.hash.slice(1));
  if(h.get("b")&&/^\d{4}-\d\d-\d\d$/.test(h.get("b"))){S.cmp=true;S.dateB=h.get("b")}
  if(h.get("w"))S.win=+h.get("w")||7;
  if(h.has("ev"))S.cats=new Set(h.get("ev").split(",").filter(Boolean));
- if(h.get("m")){const [z,la,lo]=h.get("m").split("/").map(Number);if([z,la,lo].every(isFinite))S.view={zoom:z,center:[lo,la]}}}
-let hashT=0;
-function writeHash(){clearTimeout(hashT);hashT=setTimeout(()=>{const c=map.getCenter();
- const p=[`m=${map.getZoom().toFixed(2)}/${c.lat.toFixed(4)}/${c.lng.toFixed(4)}`,`d=${S.date}`,`l=${S.active.map(k=>S.op[k]!=null&&S.op[k]!==1?k+"~"+Math.round(S.op[k]*100):k).join(",")}`];
+ if(h.get("m")){const [z,la,lo,b,pi]=h.get("m").split("/").map(Number);if([z,la,lo].every(isFinite))S.view={zoom:z,center:[lo,la],bearing:b||0,pitch:pi||0}}
+ if(h.get("g")==="f")S.flat=true;if(h.get("t3")==="1")S.terrain=true;
+ // deep links for the presentation: ?go=aral or #go=aral
+ const go=new URLSearchParams(location.search).get("go")||h.get("go");if(go)S.go=go.toLowerCase()}
+let hashT=0;const SPIN={on:false},TOUR={on:false,i:0,t:0};
+function writeHash(){clearTimeout(hashT);if(SPIN.on||TOUR.on)return;hashT=setTimeout(()=>{const c=map.getCenter();
+ const p=[`m=${map.getZoom().toFixed(2)}/${c.lat.toFixed(4)}/${c.lng.toFixed(4)}${map.getPitch()>1||Math.abs(map.getBearing())>1?"/"+map.getBearing().toFixed(0)+"/"+map.getPitch().toFixed(0):""}`,`d=${S.date}`,`l=${S.active.map(k=>S.op[k]!=null&&S.op[k]!==1?k+"~"+Math.round(S.op[k]*100):k).join(",")}`];
  if(S.active.includes("imerg_30"))p.push(`t=${S.hhmm}`);if(S.step==="h")p.push("s=h");
  if(S.cmp&&S.dateB)p.push(`b=${S.dateB}`);if(S.win!==7)p.push(`w=${S.win}`);
- if(S.cats)p.push(`ev=${[...S.cats].join(",")}`);
+ if(S.cats)p.push(`ev=${[...S.cats].join(",")}`);if(S.flat)p.push("g=f");if(S.terrain)p.push("t3=1");
  history.replaceState(null,"","#"+p.join("&"))},250)}
 readHash();
 if(!S.cats)S.cats=new Set(Object.keys(CAT).filter(c=>CAT[c].on));
@@ -159,11 +171,18 @@ function tileURL(l,date,hhmm){if(l.url)return l.url();const t=l.step?snap(l,date
 
 // ---------- map ----------
 const isRaster=k=>!LK[k].kind;
-const baseStyle={version:8,sources:{},layers:[{id:"bg",type:"background",paint:{"background-color":"#EFEAE0"}},{id:"anchor",type:"background",paint:{"background-opacity":0}}]};
+// Ocean colour on the globe; space around it is the page background (CSS), the atmosphere is MapLibre's sky.
+const baseStyle={version:8,sources:{},layers:[{id:"bg",type:"background",paint:{"background-color":"#0B1622"}},{id:"anchor",type:"background",paint:{"background-opacity":0}}]};
 const narrow=()=>innerWidth<=760;
-const map=new maplibregl.Map({container:"map",style:baseStyle,center:S.view?.center||[66,38],zoom:S.view?.zoom??(narrow()?2.3:3.3),maxZoom:16,attributionControl:{compact:true},dragRotate:false,pitchWithRotate:false});
-map.touchZoomRotate.disableRotation();
-map.addControl(new maplibregl.NavigationControl({showCompass:false}),"top-right");
+// the same tiles from two S3 host names, so the browser can fetch twice as many at once
+const TERR=["https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png","https://elevation-tiles-prod.s3.amazonaws.com/terrarium/{z}/{x}/{y}.png"];
+let S1URL=null;// Sentinel-1 tile template, registered at Planetary Computer on load
+const HOME={center:[52,24],zoom:narrow()?1.15:Math.min(2.45,Math.log2(Math.min(innerWidth,innerHeight)/300)+1.1)};
+// slow NISAR tiles (rendered on demand) must not hold up the photo base and labels from other hosts
+try{maplibregl.setMaxParallelImageRequests(64)}catch(e){}
+const map=new maplibregl.Map({container:"map",style:baseStyle,center:S.view?.center||HOME.center,zoom:S.view?.zoom??HOME.zoom,bearing:S.view?.bearing||0,pitch:S.view?.pitch||0,
+ maxZoom:17,maxPitch:70,attributionControl:{compact:true},fadeDuration:120,renderWorldCopies:true});
+map.addControl(new maplibregl.NavigationControl({visualizePitch:true}),"top-right");
 map.addControl(new maplibregl.ScaleControl({unit:"metric"}),"bottom-right");
 let mapB=null;
 
@@ -185,34 +204,55 @@ function addHeat(m,id,ramp,o){const empty={type:"FeatureCollection",features:[]}
  m.addLayer({id:id+"-pt",type:"circle",source:id,minzoom:o.z-2,paint:{
   "circle-radius":o.pr||4,"circle-color":ramp[3],"circle-stroke-color":"#fff","circle-stroke-width":1,
   "circle-opacity":["interpolate",["linear"],["zoom"],o.z-2,0,o.z-1,0.85],"circle-stroke-opacity":["interpolate",["linear"],["zoom"],o.z-2,0,o.z-1,1]}})}
+const QCOL=["step",["get","age"],"#FF3B30",24,"#FF8A3D",72,"#FFC23D"];// quake colour by hours since it struck
 function addOverlays(m){makeIcons(m);
+ // relief shading from the AWS Terrarium DEM, above the imagery, under labels-on-top and markers; off until "3D terrain"
+ // DEM up to z12 (~30 m, enough for relief; fewer, faster requests). MapLibre wants separate sources for hillshade and
+ // terrain; both ask for the same URLs, so the second one is mostly served from the browser cache.
+ for(const id of ["dem","dem-hs"])if(!m.getSource(id))m.addSource(id,{type:"raster-dem",tiles:TERR,encoding:"terrarium",tileSize:256,maxzoom:12,attribution:"Mapzen/AWS Terrain Tiles"});
+ m.addLayer({id:"hs",type:"hillshade",source:"dem-hs",layout:{visibility:"none"},paint:{"hillshade-exaggeration":0.45,"hillshade-shadow-color":"#000","hillshade-highlight-color":"#fff","hillshade-accent-color":"#222"}});
  addHeat(m,"hn",HEAT.nisar,{z:7,i:[0.1,0.8],r:[9,40],pr:3.5,op:0.82});
  addHeat(m,"he",HEAT.events,{z:6,i:[0.9,2],r:[9,30],pr:5});
  addHeat(m,"hq",HEAT.quakes,{z:6,i:[0.5,1.5],r:[8,26],weight:["^",2,["-",["min",["get","mag"],8.5],5]],pr:["interpolate",["linear"],["get","mag"],5,3.5,8,11]});
  for(const s of ["boxes","water","evs","trk","sel"])m.addSource(s,{type:"geojson",data:{type:"FeatureCollection",features:[]}});
+ m.addSource("lq",{type:"geojson",data:{type:"FeatureCollection",features:[]},attribution:"Earthquakes: USGS real-time feeds"});
  m.addLayer({id:"boxes-fill",type:"fill",source:"boxes",paint:{"fill-color":"#17515F","fill-opacity":0.08}});
- m.addLayer({id:"boxes-line",type:"line",source:"boxes",paint:{"line-color":"#17515F","line-width":1.6}});
+ m.addLayer({id:"boxes-line",type:"line",source:"boxes",paint:{"line-color":"#7FD3E0","line-width":1.6}});
  m.addLayer({id:"water-fill",type:"fill",source:"water",paint:{"fill-color":"#2F6FD1","fill-opacity":0.10}});
- m.addLayer({id:"water-line",type:"line",source:"water",paint:{"line-color":"#2F6FD1","line-width":2,"line-dasharray":[2,1]}});
+ m.addLayer({id:"water-line",type:"line",source:"water",paint:{"line-color":"#6FA8FF","line-width":2,"line-dasharray":[2,1]}});
  m.addLayer({id:"trk",type:"line",source:"trk",layout:{"line-cap":"round","line-join":"round"},paint:{"line-color":["get","color"],"line-width":2.2,"line-opacity":0.85}});
- m.addLayer({id:"sel",type:"circle",source:"sel",paint:{"circle-radius":17,"circle-color":"rgba(0,0,0,0)","circle-stroke-color":"#14120D","circle-stroke-width":2}});
- m.addLayer({id:"evs",type:"symbol",source:"evs",layout:{"icon-image":["get","icon"],"icon-size":["interpolate",["linear"],["zoom"],1,.62,6,.9,10,1.05],"icon-allow-overlap":true,"symbol-sort-key":["get","rank"]}});}
+ m.addLayer({id:"lq-pulse",type:"circle",source:"lq",filter:["<",["get","age"],24],paint:{"circle-radius":10,"circle-color":"rgba(0,0,0,0)","circle-stroke-color":QCOL,"circle-stroke-width":2,"circle-stroke-opacity":0.8,"circle-pitch-alignment":"map"}});
+ m.addLayer({id:"lq",type:"circle",source:"lq",layout:{"circle-sort-key":["get","mag"]},paint:{
+  "circle-radius":["interpolate",["exponential",1.6],["get","mag"],2.5,2.2,4.5,4.5,6,9,7.5,17],
+  "circle-color":QCOL,"circle-opacity":0.88,"circle-stroke-color":"rgba(0,0,0,.55)","circle-stroke-width":1}});
+ m.addLayer({id:"sel",type:"circle",source:"sel",paint:{"circle-radius":17,"circle-color":"rgba(0,0,0,0)","circle-stroke-color":"#fff","circle-stroke-width":2.2}});
+ m.addLayer({id:"evs",type:"symbol",source:"evs",layout:{"icon-image":["get","icon"],"icon-size":["interpolate",["linear"],["zoom"],1,.55,6,.9,10,1.05],"icon-allow-overlap":true,"symbol-sort-key":["get","rank"]}});}
 
-const OVER={nisar_boxes:["boxes-fill","boxes-line"],water_andijan:["water-fill","water-line"],events:["evs","sel"],tracks:["trk"],heat_nisar:["hn-heat","hn-pt"],heat_events:["he-heat","he-pt"],heat_quakes:["hq-heat","hq-pt"]};
+const OVER={nisar_boxes:["boxes-fill","boxes-line"],water_andijan:["water-fill","water-line"],events:["evs","sel"],tracks:["trk"],quakes_live:["lq","lq-pulse"],heat_nisar:["hn-heat","hn-pt"],heat_events:["he-heat","he-pt"],heat_quakes:["hq-heat","hq-pt"]};
 function rasterIds(m){return m.getStyle().layers.filter(l=>l.type==="raster").map(l=>l.id)}
 function overlayVis(m){for(const [k,ids] of Object.entries(OVER))ids.forEach(id=>m.getLayer(id)&&m.setLayoutProperty(id,"visibility",S.active.includes(k)?"visible":"none"))}
 // Sync one map's rasters to the active list: add, remove, retime, restyle, reorder.
+// Each source's maxzoom is where its real detail ends, so MapLibre over-zooms the last real tile instead of asking for empty ones.
 function syncRasters(m,date){if(!m||!m.getSource("evs"))return;
- const want=S.active.filter(isRaster);
+ const want=S.active.filter(k=>isRaster(k)&&tileURL(LK[k],date,S.hhmm));
  for(const id of rasterIds(m))if(!want.includes(id)){m.removeLayer(id);m.removeSource(id)}
  for(const k of want){const l=LK[k],u=tileURL(l,date,S.hhmm);
   if(!m.getSource(k)){m.addSource(k,{type:"raster",tiles:[u],tileSize:256,maxzoom:l.maxz||9,minzoom:l.minz||0,attribution:l.src});
-   m.addLayer({id:k,type:"raster",source:k,minzoom:l.minz||0,paint:{"raster-fade-duration":120,"raster-resampling":l.resampling||"linear"}},"anchor")}
+   m.addLayer({id:k,type:"raster",source:k,minzoom:Math.max(0,(l.minz||0)-0.5),paint:{"raster-fade-duration":80,"raster-resampling":l.resampling||"linear",...(l.paint||{})}},"anchor")}
   else{const s=m.getSource(k);if(s.tiles&&s.tiles[0]!==u)s.setTiles([u])}
   m.setPaintProperty(k,"raster-opacity",S.op[k]??1)}
  [...want].reverse().forEach(k=>m.moveLayer(k,"anchor"));
  overlayVis(m)}
-function syncAll(){syncRasters(map,S.date);if(mapB)syncRasters(mapB,S.dateB);renderPanelState();renderMapLegend();drawStrip();writeHash();
+// Globe or flat, terrain on or off; both maps follow.
+function applyView(m){if(!m)return;try{m.setProjection({type:S.flat?"mercator":"globe"})}catch(e){}
+ try{m.setSky({"sky-color":"#0B1730","horizon-color":"#3A6EA5","sky-horizon-blend":0.6,"atmosphere-blend":["interpolate",["linear"],["zoom"],0,1,5,1,8,0]})}catch(e){}}
+function setTerrain(on){S.terrain=on;
+ map.setTerrain(on?{source:"dem",exaggeration:1.5}:null);
+ if(map.getLayer("hs"))map.setLayoutProperty("hs","visibility",on?"visible":"none");
+ if(on&&map.getPitch()<25&&!TOUR.on)map.easeTo({pitch:55,duration:900});
+ renderRail();writeHash()}
+function setFlat(f){S.flat=f;applyView(map);applyView(mapB);renderRail();writeHash()}
+function syncAll(){syncRasters(map,S.date);if(mapB)syncRasters(mapB,S.dateB);renderPanelState();renderMapLegend();renderRail();setTL();drawStrip();writeHash();
  if(EV)renderEvents()}
 
 // ---------- panel ----------
@@ -293,15 +333,15 @@ document.addEventListener("keydown",e=>{if(e.target.closest("input,select,textar
 
 function drawStrip(){const cv=$("strip"),w=cv.clientWidth,h=cv.clientHeight;if(!w)return;const dpr=devicePixelRatio||1;cv.width=w*dpr;cv.height=h*dpr;
  const x=cv.getContext("2d");x.scale(dpr,dpr);x.clearRect(0,0,w,h);const n=dayIdx(TN)+1,px=w/n;
- x.fillStyle="#EFEAE0";x.fillRect(0,0,w,h);
+ x.fillStyle="#1A2330";x.fillRect(0,0,w,h);
  // event count per day (filtered categories), small bars along the top
  if(EV){const cnt=new Array(n).fill(0);for(const e of EV){if(!S.cats.has(e.category))continue;const i=dayIdx(e.date);if(i>=0&&i<n)cnt[i]++}
-  const mx=Math.max(1,...cnt);x.fillStyle="rgba(194,65,12,.5)";cnt.forEach((c,i)=>{if(c){const bh=Math.max(1.5,c/mx*11);x.fillRect(i*px,12-bh,Math.max(1,px-.5),bh)}})}
+  const mx=Math.max(1,...cnt);x.fillStyle="rgba(255,138,61,.6)";cnt.forEach((c,i)=>{if(c){const bh=Math.max(1.5,c/mx*11);x.fillRect(i*px,12-bh,Math.max(1,px-.5),bh)}})}
  // availability rows for each active timed layer
- const timed=S.active.filter(k=>LK[k].step).slice(0,4);timed.forEach((k,r)=>{const l=LK[k],y=14+r*2.5;x.fillStyle=r%2?"#3F8797":"#17515F";
+ const timed=S.active.filter(k=>LK[k].step).slice(0,4);timed.forEach((k,r)=>{const l=LK[k],y=14+r*2.5;x.fillStyle=r%2?"#93DAE5":"#55B8C9";
   for(let i=0;i<n;i++)if(hasData(l,addDays(T0,i)))x.fillRect(i*px,y,Math.max(1,px),1.8)});
  const ni=dayIdx("2026-06-17");if(ni>=0){x.fillStyle="#B54708";x.fillRect(ni*px,0,1.5,h)}
- if(S.cmp&&S.dateB){const bi=dayIdx(S.dateB);x.fillStyle="#14120D";x.fillRect(bi*px-1,0,2,h)}
+ if(S.cmp&&S.dateB){const bi=dayIdx(S.dateB);x.fillStyle="#fff";x.fillRect(bi*px-1,0,2,h)}
  const lab=[];for(let i=0;i<n;i++){const d=addDays(T0,i);if(d.endsWith("-01"))lab.push(`<span style="left:${(i/n*100).toFixed(2)}%">${new Date(d).toLocaleString("en",{month:"short",timeZone:"UTC"})}${d.slice(5,7)==="01"?" "+d.slice(0,4):""}</span>`)}
  if(ni>=0)lab.push(`<span class="nis" style="left:${(ni/n*100).toFixed(2)}%">NISAR</span>`);
  $("tlab").innerHTML=lab.join("")}
@@ -311,14 +351,14 @@ addEventListener("resize",()=>{drawStrip();placeSwipe()});
 function placeSwipe(){if(!S.cmp)return;const W=$("maps").clientWidth,x=Math.round(W*S.swipe);$("swipe").style.left=x+"px";$("mapB").style.clipPath=`inset(0 0 0 ${x}px)`}
 function setCompare(on){S.cmp=on;$("cmp").setAttribute("aria-pressed",on);$("dateB").hidden=!on;$("swipe").hidden=!on;$("mapB").hidden=!on;
  if(on){if(!S.dateB)S.dateB=addDays(S.date,-30);$("dateB").value=S.dateB;$("tagB").textContent=S.dateB;$("tagA").textContent=S.date;
-  if(!mapB){mapB=new maplibregl.Map({container:"mapB",style:baseStyle,center:map.getCenter(),zoom:map.getZoom(),interactive:false,attributionControl:false,fadeDuration:0});
-   mapB.on("load",()=>{addOverlays(mapB);pushData(mapB);syncRasters(mapB,S.dateB)});}
+  if(!mapB){mapB=new maplibregl.Map({container:"mapB",style:baseStyle,center:map.getCenter(),zoom:map.getZoom(),bearing:map.getBearing(),pitch:map.getPitch(),maxPitch:70,interactive:false,attributionControl:false,fadeDuration:0});
+   mapB.on("load",()=>{applyView(mapB);addOverlays(mapB);pushData(mapB);syncRasters(mapB,S.dateB)});}
   placeSwipe();toast("Left: "+S.date+". Right: "+S.dateB+". Drag the handle.")}
  else if(mapB){mapB.remove();mapB=null}
- fixRange();drawStrip();writeHash()}
+ fixRange();setTL();drawStrip();writeHash()}
 $("cmp").onclick=()=>setCompare(!S.cmp);
 $("dateB").onchange=e=>{S.dateB=e.target.value;$("tagB").textContent=S.dateB;fixRange();syncAll()};
-map.on("move",()=>{if(mapB)mapB.jumpTo({center:map.getCenter(),zoom:map.getZoom()})});
+map.on("move",()=>{if(mapB)mapB.jumpTo({center:map.getCenter(),zoom:map.getZoom(),bearing:map.getBearing(),pitch:map.getPitch()})});
 (()=>{const k=$("swipe").querySelector(".knob");let drag=false;
  k.addEventListener("pointerdown",e=>{drag=true;k.setPointerCapture(e.pointerId)});
  k.addEventListener("pointermove",e=>{if(!drag)return;const r=$("maps").getBoundingClientRect();S.swipe=Math.min(.97,Math.max(.03,(e.clientX-r.left)/r.width));placeSwipe()});
@@ -349,7 +389,7 @@ function buildHeat(){const ev=(EV||[]).map((e,i)=>({e,i}));
  if(FR)HM.heat_nisar=`${nf(FR.count)} frames · ${fmtRange(FR.first,FR.last)}`;
  const eo=ev.filter(({e})=>e.category!=="Earthquakes"),eq=ev.filter(({e})=>e.category==="Earthquakes");
  if(EV){HM.heat_events=`${nf(eo.length)} events · ${span(eo)}`;HM.heat_quakes=`${nf(eq.length)} quakes, M${Math.min(...eq.map(x=>x.e.mag))}–${Math.max(...eq.map(x=>x.e.mag))} · ${span(eq)}`}}
-function pushData(m){if(!m||!m.getSource("evs"))return;m.getSource("evs").setData(evFC());m.getSource("trk").setData(trkFC());m.getSource("boxes").setData(boxFC());m.getSource("water").setData(waterFC());
+function pushData(m){if(!m||!m.getSource("evs"))return;m.getSource("evs").setData(evFC());m.getSource("trk").setData(trkFC());m.getSource("boxes").setData(boxFC());m.getSource("water").setData(waterFC());m.getSource("lq").setData(lqFC());
  if(HFC)for(const k of ["hn","he","hq"])m.getSource(k).setData(HFC[k])}
 // Which NISAR frames in the index cover a point: returns their dates, oldest first.
 function nisarDates(lon,lat){if(!FR)return null;const out=[];
@@ -367,6 +407,7 @@ function nisarLine(lon,lat){const d=nisarDates(lon,lat);if(!d)return "";
 async function loadData(){
  const [ev,bx,wr,wm,fr]=await Promise.all(["api/events.json","api/science_boxes.json","waterroad/andijan_res.json","ml/water_model.json","explorer/nisar_passes.json"].map(u=>fetch(HERE+u).then(r=>r.ok?r.json():null).catch(()=>null)));
  // tools/event_coords.py marks a point "unverified" when neither the given nor the swapped lat/lon fits the country in its title
+ LOCAL_IDS=new Set(Array.isArray(ev)?ev.map(e=>e.id):[]);
  EV=Array.isArray(ev)?ev.filter(e=>isFinite(e.lon)&&isFinite(e.lat)&&e.coords!=="unverified"&&e.coords!=="unchecked_bad"):[];
  BOXES=Array.isArray(bx)?bx.filter(b=>Array.isArray(b.bbox)):[];WATER=wr&&wr.bbox?wr:null;WML=wm&&wm.series?wm:null;
  FR=fr&&Array.isArray(fr.f)?fr:null;
@@ -374,7 +415,7 @@ async function loadData(){
  if(!Array.isArray(ev)){$("evlist").innerHTML='<p class="empty">The events feed did not answer. Reload to try again.</p>';HM.heat_events=HM.heat_quakes="Events feed did not load."}
  // calibrated science tiles and study boxes exist only where tools/science_pyramid.py was run: hide both rows when there are none
  if(!BOXES.length){for(const k of ["nisar_sci","nisar_boxes"]){$("groups").querySelector(`.ly[data-k="${k}"]`)?.remove();S.active=S.active.filter(x=>x!==k)}syncRasters(map,S.date);if(mapB)syncRasters(mapB,S.dateB)}
- buildHeat();buildCats();pushData(map);pushData(mapB);renderEvents();renderPanelState();renderMapLegend();drawStrip()}
+ mergeLive();buildHeat();buildCats();pushData(map);pushData(mapB);renderEvents();renderPanelState();renderMapLegend();renderLive();drawStrip()}
 function buildCats(){const n=c=>EV.filter(e=>e.category===c).length;const cats=[...new Set(EV.map(e=>e.category))].sort((a,b)=>n(b)-n(a));
  $("evcats").innerHTML=cats.map(c=>`<button class="chip" data-c="${esc(c)}" aria-pressed="${S.cats.has(c)}"><span class="ic" style="background:${catOf(c).c}">${glyphSVG(c)}</span>${esc(c)} <span class="mono">${n(c)}</span></button>`).join("");
  $("evcats").querySelectorAll(".chip").forEach(b=>b.onclick=()=>{const c=b.dataset.c;S.cats.has(c)?S.cats.delete(c):S.cats.add(c);b.setAttribute("aria-pressed",S.cats.has(c));renderEvents();drawStrip();writeHash()})}
@@ -434,10 +475,10 @@ function waterCard(){if(!WATER)return;const P=WATER.passes.filter(p=>isFinite(p.
  <div class="acts"><button class="btn ghost" id="w-day">Set timeline to nearest pass</button></div>`);
  $("w-day").onclick=()=>setDate(near.date)}
 
-const CLICKABLE=["evs","he-pt","hq-pt","hn-pt","water-fill","boxes-fill"];
+const CLICKABLE=["lq","evs","he-pt","hq-pt","hn-pt","water-fill","boxes-fill"];
 const visibleIds=m=>CLICKABLE.filter(id=>m.getLayer(id)&&m.getLayoutProperty(id,"visibility")!=="none");
 map.on("click",ev=>{const f=map.queryRenderedFeatures(ev.point,{layers:visibleIds(map)});
- const e=f.find(x=>["evs","he-pt","hq-pt"].includes(x.layer.id));if(e)return openEvent(e.properties.i,false);
+ const e=f.find(x=>["lq","evs","he-pt","hq-pt"].includes(x.layer.id));if(e)return openEvent(e.properties.i,false);
  if(f.find(x=>x.layer.id==="water-fill"))return waterCard();
  const b=f.find(x=>x.layer.id==="boxes-fill");if(b){const B=BOXES[b.properties.i];
   card(`<h3>NISAR study box: ${esc(B.stop.replace(/_/g," "))}</h3><div class="m">Full NISAR file read and calibrated</div><dl class="kv"><dt>Pass date</dt><dd class="mono">${B.date}</dd><dt>Pixel</dt><dd class="mono">${B.res} m</dd></dl><div class="acts"><button class="btn" id="b-zoom">Zoom to calibrated radar</button></div>`);
@@ -470,6 +511,145 @@ $("q").addEventListener("input",()=>{const q=$("q").value.trim();clearTimeout(qT
 $("q").addEventListener("keydown",e=>{if(e.key==="Enter"){const b=$("qres").querySelector("button");b&&b.click()}if(e.key==="Escape"){$("qres").hidden=true}});
 document.addEventListener("click",e=>{if(!e.target.closest(".search"))$("qres").hidden=true});
 
+// ---------- live feeds, no keys: USGS earthquakes, NASA EONET open events ----------
+// If a live fetch fails, the page keeps the server's copy (api/events.json) and says so on the badge.
+const LIVE={q:null,e:null,t:null,week:null};let LOCAL_IDS=new Set(),LIVEP=null;
+const USGS="https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/";
+const getJ=(u,ms=20000)=>{const c=new AbortController(),t=setTimeout(()=>c.abort(),ms);return fetch(u,{signal:c.signal}).then(r=>{clearTimeout(t);if(!r.ok)throw new Error("HTTP "+r.status);return r.json()})};
+const quakeItem=f=>({id:f.id,title:f.properties.title||("M "+f.properties.mag),category:"Earthquakes",date:iso(f.properties.time),time:f.properties.time,lon:f.geometry.coordinates[0],lat:f.geometry.coordinates[1],
+ depth_km:f.geometry.coordinates[2],track:[],closed:"",mag:Math.round(f.properties.mag*10)/10,unit:"M",tsunami:f.properties.tsunami||0,sources:[f.properties.url].filter(Boolean),live:"usgs"});
+function eonetItem(e){const g=(e.geometry||[]).filter(x=>x&&x.coordinates);if(!g.length)return null;const last=g[g.length-1];let lon,lat;
+ if(last.type==="Point")[lon,lat]=last.coordinates;else{const r=(last.coordinates[0]||[]).filter(p=>p.length>1);if(!r.length)return null;lon=r.reduce((a,p)=>a+p[0],0)/r.length;lat=r.reduce((a,p)=>a+p[1],0)/r.length}
+ if(!isFinite(lon)||!isFinite(lat))return null;const pts=g.filter(x=>x.type==="Point").map(x=>x.coordinates);
+ return {id:e.id,title:e.title,category:e.categories?.[0]?.title||"Other",date:String(last.date).slice(0,10),lon,lat,track:pts.length>1?pts:[],closed:e.closed||"",
+  mag:last.magnitudeValue??null,unit:last.magnitudeUnit||"",sources:(e.sources||[]).map(x=>x.url).filter(Boolean),live:"eonet"}}
+function loadLive(){return Promise.all([getJ(USGS+"4.5_week.geojson"),getJ(USGS+"2.5_day.geojson"),getJ("https://eonet.gsfc.nasa.gov/api/v3/events?status=open&days=30",30000)].map(p=>p.catch(()=>null))).then(([w,d,eo])=>{
+ if(w||d){const seen=new Map();for(const f of [...(w?.features||[]),...(d?.features||[])])if(f.geometry&&isFinite(f.properties?.mag))seen.set(f.id,quakeItem(f));LIVE.q=[...seen.values()];LIVE.week=w?w.features.length:null;LIVE.day=d?d.features.length:null}
+ if(eo&&Array.isArray(eo.events))LIVE.e=eo.events.map(eonetItem).filter(Boolean);
+ LIVE.t=new Date();mergeLive();renderLive()})}
+// live items join the event list (cards, search); the server copy wins where both have the event (its coordinates are checked)
+function mergeLive(){if(!EV)return;EV=EV.filter(e=>!e.live);const have=new Set(EV.map(e=>e.id));
+ for(const e of [...(LIVE.q||[]),...(LIVE.e||[])])if(!have.has(e.id)&&!LOCAL_IDS.has(e.id)){EV.push(e);have.add(e.id)}
+ buildHeat();buildCats();renderEvents();renderMapLegend()}
+const recentQuakes=()=>LIVE.q?(EV||[]).map((e,i)=>({e,i})).filter(x=>x.e.live==="usgs"):(EV||[]).map((e,i)=>({e,i})).filter(x=>x.e.category==="Earthquakes"&&x.e.date>=addDays(TODAY,-7));
+function lqFC(){const now=Date.now();return FC(recentQuakes().map(({e,i})=>pt(e.lon,e.lat,{i,mag:+e.mag||0,age:(now-(e.time||Date.parse(e.date+"T12:00:00Z")))/36e5})))}
+function strongestQuake(){const wk=recentQuakes().filter(x=>(x.e.time||Date.parse(x.e.date))>=Date.now()-7*DAY);return wk.length?wk.reduce((a,b)=>b.e.mag>a.e.mag?b:a):null}
+const hhmmNow=d=>d.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"});
+function renderLive(){const b=$("live");b.hidden=false;
+ const nq=LIVE.week??(LIVE.q?LIVE.q.length:recentQuakes().length),ne=LIVE.e?LIVE.e.length:null;
+ b.classList.toggle("off",!LIVE.q&&!LIVE.e);
+ $("liveTxt").innerHTML=(LIVE.q||LIVE.e?`<span class="mono lt">${hhmmNow(LIVE.t)}</span>`:`<span>offline copy</span>`)+
+  `<span><b class="mono">${nf(nq)}</b> quakes<em>${LIVE.week!=null?" M4.5+":""} this week</em></span>`+(ne!=null?`<span><b class="mono">${nf(ne)}</b><em> open</em> NASA events</span>`:"");
+ b.title=`USGS real-time feeds${LIVE.day!=null?` (${LIVE.day} quakes M2.5+ in the last 24 h)`:""} and NASA EONET open events, refreshed every 5 minutes.`}
+// pulse the quakes of the last 24 h (10 frames a second, only while the layer is on)
+const QRAD=["interpolate",["exponential",1.6],["get","mag"],2.5,2.2,4.5,4.5,6,9,7.5,17];
+setInterval(()=>{if(document.hidden||!S.active.includes("quakes_live")||!map.getLayer("lq-pulse"))return;const t=(performance.now()%1800)/1800;
+ map.setPaintProperty("lq-pulse","circle-radius",["+",QRAD,3+t*20]);map.setPaintProperty("lq-pulse","circle-stroke-opacity",0.95*(1-t))},100);
+setInterval(()=>{if(!document.hidden)loadLive()},5*60e3);
+
+// ---------- Sentinel-1 C-band, live mosaic of the last 12 days (Microsoft Planetary Computer, anonymous) ----------
+const PC="https://planetarycomputer.microsoft.com/api/data/v1/mosaic/";
+const s1Tiles=id=>`${PC}${id}/tiles/WebMercatorQuad/{z}/{x}/{y}@1x?collection=sentinel-1-rtc&assets=vv&rescale=0,0.5&colormap_name=gray&format=png`;
+async function loadS1(){const end=new Date(),start=new Date(Date.now()-12*DAY),z=d=>d.toISOString().slice(0,19)+"Z";
+ // 1) a mosaic registered by tools/s1_register.py (PC ids expire after 24 h, so only a fresh one is used)
+ try{const j=await getJ(HERE+"explorer/s1_mosaic.json",8000);if(j.tiles&&Date.now()-Date.parse(j.registered)<20*36e5){S1URL=j.tiles[0];LK.s1.static=`${fmtRange(j.start,j.end)}. Visible from zoom 8; tiles take a few seconds.`;return syncAll()}}catch(e){}
+ // 2) register one from the browser; 3) the server's copy
+ try{const reg=()=>fetch(PC+"register",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({collections:["sentinel-1-rtc"],"filter-lang":"cql2-json",
+   filter:{op:"anyinteracts",args:[{property:"datetime"},{interval:[z(start),z(end)]}]},sortby:[{field:"datetime",direction:"desc"}]})}).then(r=>{if(!r.ok)throw new Error("HTTP "+r.status);return r.json()});
+  const j=await reg().catch(()=>reg());const id=j.searchid||j.id;if(!id)throw new Error("no mosaic id");S1URL=s1Tiles(id);LK.s1.static=`${fmtRange(iso(start),iso(end))}. Visible from zoom 8; tiles take a few seconds.`}
+ catch(e){// the server registers the same mosaic for a 25-day window
+  try{const j=await getJ(HERE+"api/s1.json");if(j.tiles){S1URL=j.tiles[0];LK.s1.title="Sentinel-1 radar (C-band), recent";LK.s1.static=`${fmtRange(j.start,j.end)}. Visible from zoom 8.`}}catch(e2){}}
+ if(!S1URL){LK.s1.static="Sentinel-1 service did not answer.";LK.s1.off=true}
+ syncAll()}
+
+// ---------- layer bar ----------
+const IC={radar:'<path d="M4 18a10 10 0 0 1 16 0"/><path d="M7.5 18a6 6 0 0 1 9 0"/><circle cx="12" cy="18" r="1.4" fill="currentColor"/><path d="M12 18L18 6"/>',
+ sat:'<path d="M5 13l6 6M3.5 14.5l3-3 6 6-3 3zM14.5 3.5l6 6-3 3-6-6z"/><path d="M12.5 11.5l-1 1"/><path d="M16 20a4 4 0 0 0 4-4"/>',
+ quake:'<path d="M2.5 12h4l2.2-6 3.6 12 2.4-8 1.8 2h5"/>',
+ alert:'<path d="M12 3l9.5 17h-19z"/><path d="M12 10v4.5"/><path d="M12 17.3v.01" stroke-width="2.6"/>',
+ fire:'<path d="M12 3c1.2 3.4 5 5.2 5 10a5 5 0 0 1-10 0c0-2.4 1.3-3.9 2.5-5 0 2 .8 3.3 2 3.6C11.8 9 11 6.4 12 3z"/>',
+ mtn:'<path d="M2.5 19.5l6.5-11 4 6.5 2.5-3.5 6 8z"/><path d="M7 12.5l2 1.5 1.5-1"/>',
+ tag:'<path d="M4 6h10M4 11h16M4 16h7"/>',
+ globe:'<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.6 3.6 5.5 3.6 8.5s-1.1 5.9-3.6 8.5c-2.5-2.6-3.6-5.5-3.6-8.5S9.5 6.1 12 3.5z"/>',
+ flat:'<path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/>',
+ clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
+ more:'<path d="M4 7h16M4 12h16M4 17h16"/>'};
+const RAIL=[["nisar_mosaic","radar"],["s1","sat"],["quakes_live","quake"],["events","alert"],["fires_viirs","fire"],["@terrain","mtn"],["labels","tag"],null,["@globe","globe"],["@time","clock"],["@more","more"]];
+const tlVisible=()=>!S.tlHide&&(S.tl||S.cmp||S.active.some(k=>LK[k].step));
+function railState(k){if(k==="@terrain")return [S.terrain,"Terrain","3D","3D terrain and relief shading (Mapzen/AWS Terrain Tiles). Tilts the view."];
+ if(k==="@globe")return [false,S.flat?"Globe":"Flat",S.flat?"3D":"map",S.flat?"Back to the 3D globe":"Switch to a flat map"];
+ if(k==="@time")return [tlVisible(),"Time","line","Show the date timeline for the daily NASA layers"];
+ if(k==="@more")return [$("panel").classList.contains("open"),"More","layers","All layers, legends and the event list"];
+ const l=LK[k];return [S.active.includes(k),l.rail[0],l.rail[1],l.title+": "+l.short+(l.off?" (unavailable now)":"")]}
+function renderRail(){const R=$("rail");if(!R.firstChild)R.innerHTML=RAIL.map(r=>r?`<button class="rb" data-r="${r[0]}"><svg viewBox="0 0 24 24" aria-hidden="true">${IC[r[1]]}</svg><b></b><small></small></button>`:'<span class="rsep"></span>').join("");
+ R.querySelectorAll(".rb").forEach(b=>{const k=b.dataset.r,[on,name,sub,tip]=railState(k);b.classList.toggle("on",on);b.setAttribute("aria-pressed",on);b.title=tip;b.setAttribute("aria-label",tip);
+  b.querySelector("b").textContent=name;b.querySelector("small").textContent=sub;if(k==="@globe")b.querySelector("svg").innerHTML=IC[S.flat?"globe":"flat"];
+  b.disabled=k==="s1"&&!!LK.s1.off})}
+$("rail").addEventListener("click",e=>{const b=e.target.closest(".rb");if(!b)return;const k=b.dataset.r;stopSpin();
+ if(k==="@terrain")return setTerrain(!S.terrain);
+ if(k==="@globe")return setFlat(!S.flat);
+ if(k==="@time"){const v=tlVisible();S.tl=!v;S.tlHide=v;setTL();renderRail();return}
+ if(k==="@more"){$("panel").classList.toggle("open");renderRail();return}
+ const on=!S.active.includes(k);
+ if(k==="events"){if(on!==S.active.includes("tracks"))setLayer("tracks",on)}
+ if(k==="s1"&&on&&map.getZoom()<8)toast("Sentinel-1 appears from zoom 8. Zoom in on a place.");
+ if(k==="fires_viirs"&&on)toast(`Fires seen by VIIRS on ${fmtD(snap(LK.fires_viirs,S.date,S.hhmm)||S.date)}. Zoom in to see single fire pixels.`);
+ setLayer(k,on)});
+function setTL(){const on=tlVisible();document.documentElement.classList.toggle("tl-on",on);if(on)drawStrip()}
+$("tlx").onclick=()=>{S.tl=false;S.tlHide=true;setTL();renderRail()};
+$("panelx").onclick=e=>{e.stopPropagation();$("panel").classList.remove("open");renderRail()};
+
+// ---------- slow spin of the globe until someone touches it ----------
+function startSpin(){if(SPIN.on||TOUR.on||S.flat)return;SPIN.on=true;spinStep()}
+function spinStep(){if(!SPIN.on)return;if(map.getZoom()>4){SPIN.on=false;return}const c=map.getCenter();
+ map.easeTo({center:[c.lng-4,c.lat],duration:1000,easing:t=>t})}
+function stopSpin(){if(!SPIN.on)return;SPIN.on=false;map.stop();writeHash()}
+map.on("moveend",()=>{if(SPIN.on)spinStep()});
+for(const ev of ["mousedown","touchstart","wheel","keydown"])map.getCanvasContainer().addEventListener(ev,()=>{stopSpin();if(TOUR.on&&TOUR.auto)tourHold()},{passive:true});
+
+// ---------- guided tour: six stops, one short line each; captions claim only what the map shows ----------
+const STOPS=[
+ {id:"world",name:"World",v:()=>({center:HOME.center,zoom:HOME.zoom,pitch:0,bearing:0}),
+  cap:()=>`Every grey stripe is a NISAR radar pass: ${nf(FR?.count||16691)} frames from one 12-day orbit cycle, ${fmtRange(FR?.first||"2026-10-06",FR?.last||"2026-10-17")}.`},
+ {id:"tashkent",name:"Tashkent",v:()=>({center:[69.26,41.31],zoom:10.3,pitch:45,bearing:-12}),cap:()=>"Tashkent in L-band radar: buildings bounce the signal back, so the city shows up bright."},
+ {id:"aral",name:"Aral Sea",v:()=>({center:[59.9,45.15],zoom:6.7,pitch:25,bearing:0}),cap:()=>"The Aral Sea: where the map still says “sea”, the radar finds mostly dry, rough ground."},
+ {id:"newyork",name:"New York",v:()=>({center:[-73.97,40.74],zoom:10.3,pitch:38,bearing:28}),cap:()=>"New York: buildings bounce the radar straight back, so the city glows against the dark water."},
+ {id:"amazon",name:"Amazon",v:()=>({center:[-60.1,-3.1],zoom:8.4,pitch:35,bearing:0}),cap:()=>"The Amazon at Manaus: calm rivers show black; the rainforest bounces the radar back bright."},
+ {id:"quake",name:"Strongest quake",v:()=>{const q=strongestQuake();return q?{center:[q.e.lon,q.e.lat],zoom:6.2,pitch:30,bearing:0}:null},
+  cap:()=>{const q=strongestQuake();if(!q)return "The live earthquake feed did not answer.";const e=q.e,h=(Date.now()-(e.time||Date.parse(e.date)))/36e5;
+   return `Live: the strongest earthquake this week, M ${e.mag}, ${esc((e.title.split(" - ")[1]||e.title))}, ${h<48?Math.max(1,Math.round(h))+" h":Math.round(h/24)+" days"} ago (USGS).`}}];
+const HOLD=5500;
+// warm the NISAR tiles of the next stop while the current one is on screen (the server renders z7+ on first ask;
+// the browser then has them in its cache), so the flight lands on sharp radar instead of over-zoomed blur
+function prefetchStop(j){const st=STOPS[j];if(!st||st.id==="quake")return;const v=st.v(),u=LK.nisar_mosaic.url();
+ for(let z=Math.max(3,Math.floor(v.zoom)-2);z<=Math.min(10,Math.floor(v.zoom));z++){const n=2**z,x=Math.floor((v.center[0]+180)/360*n),
+  y=Math.floor((1-Math.asinh(Math.tan(v.center[1]*Math.PI/180))/Math.PI)/2*n),r=z>=Math.floor(v.zoom)?2:1;
+  for(let dx=-r;dx<=r;dx++)for(let dy=-r;dy<=r;dy++)fetch(u.replace("{z}",z).replace("{x}",((x+dx)%n+n)%n).replace("{y}",y+dy),{priority:"low"}).catch(()=>{})}}
+function tourDots(){$("tdots").innerHTML=STOPS.map((s,j)=>`<button class="${j===TOUR.i?"on":""}" data-j="${j}" title="${esc(s.name)}" aria-label="Stop ${j+1}: ${esc(s.name)}"><i></i><span>${esc(s.name)}</span></button>`).join("");
+ $("tdots").querySelectorAll("button").forEach(b=>b.onclick=()=>tourGo(+b.dataset.j,false))}
+function tourHold(){TOUR.auto=false;clearTimeout(TOUR.t);$("tour").classList.remove("run");$("tnext").textContent="Next ›"}
+async function tourGo(i,auto,jump){if(i>=STOPS.length)return tourEnd(true);if(i<0)i=0;
+ stopSpin();clearTimeout(TOUR.t);TOUR.on=true;TOUR.i=i;TOUR.auto=auto;const st=STOPS[i];
+ $("tour").hidden=false;$("tourbtn").hidden=true;$("card").hidden=true;if(narrow())$("panel").classList.remove("open");
+ $("tour").classList.remove("run");$("tnext").textContent=auto?"Skip ›":"Next ›";$("tprev").disabled=i===0;tourDots();
+ if(!S.active.includes("nisar_mosaic"))setLayer("nisar_mosaic",true);
+ if(st.id==="quake"){if(!S.active.includes("quakes_live"))setLayer("quakes_live",true);$("tcap").textContent="Reading the live USGS feed…";if(LIVEP)await LIVEP;if(TOUR.i!==i||!TOUR.on)return}
+ $("tcap").innerHTML=st.cap();
+ const v=st.v();const done=()=>{if(TOUR.i!==i||!TOUR.on)return;
+  if(st.id==="quake"){const q=strongestQuake();if(q)map.getSource("sel")?.setData(FC([pt(q.e.lon,q.e.lat,{})]))}
+  prefetchStop(i+1);
+  if(TOUR.auto){void $("tprog").offsetWidth;$("tour").classList.add("run");TOUR.t=setTimeout(()=>tourGo(i+1,true),HOLD)}};
+ if(!v)return done();
+ if(jump){map.jumpTo(v);done();return}
+ map.flyTo({...v,duration:i===0?3500:6000,curve:1.5,essential:true});map.once("moveend",done)}
+function tourEnd(home){TOUR.on=false;clearTimeout(TOUR.t);$("tour").hidden=true;$("tourbtn").hidden=false;$("tour").classList.remove("run");map.getSource("sel")?.setData(FC([]));
+ if(home){map.flyTo({...STOPS[0].v(),duration:3500,essential:true});map.once("moveend",()=>{if(!TOUR.on)startSpin()})}else writeHash()}
+$("tourbtn").onclick=()=>{prefetchStop(1);tourGo(0,true)};
+$("tnext").onclick=()=>tourGo(TOUR.i+1,TOUR.auto);
+$("tprev").onclick=()=>tourGo(TOUR.i-1,false);
+$("tstop").onclick=()=>tourEnd(false);
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&TOUR.on)tourEnd(false)});
+
 // ---------- tabs + mobile sheet ----------
 document.querySelectorAll(".tab").forEach(t=>t.onclick=ev=>{ev.stopPropagation();document.querySelectorAll(".tab").forEach(x=>{x.classList.toggle("on",x===t);x.setAttribute("aria-selected",x===t)});
  $("tab-layers").hidden=t.dataset.tab!=="layers";$("tab-events").hidden=t.dataset.tab!=="events";$("panel").classList.add("open")});
@@ -479,6 +659,14 @@ $("evwin").value=String(S.win);$("evwin").onchange=e=>{S.win=+e.target.value;ren
 // ---------- boot ----------
 buildPanel();
 $("date").value=S.date;$("hhmm").value=S.hhmm;$("step").value=S.step;fixRange();
-map.on("load",()=>{addOverlays(map);syncRasters(map,S.date);renderPanelState();renderMapLegend();loadData();if(S.cmp)setCompare(true);drawStrip()});
+renderRail();setTL();
+LIVEP=loadLive();
+// keep the credits folded into the (i) button until someone opens it (MapLibre unfolds them whenever sources change)
+let attribOpened=false;
+document.addEventListener("click",e=>{if(e.target.closest(".maplibregl-ctrl-attrib-button"))attribOpened=true},true);
+map.on("data",()=>{if(!attribOpened)document.querySelector(".maplibregl-ctrl-attrib.maplibregl-compact-show")?.classList.remove("maplibregl-compact-show")});
+map.on("load",()=>{applyView(map);addOverlays(map);syncRasters(map,S.date);renderPanelState();renderMapLegend();renderRail();loadData();loadS1();if(S.cmp)setCompare(true);if(S.terrain)setTerrain(true);drawStrip();
+ const gi=S.go?STOPS.findIndex(s=>s.id===S.go||s.name.toLowerCase().replace(/\s+/g,"")===S.go):-1;
+ if(gi>=0)tourGo(gi,false,true);else if(!S.view)setTimeout(startSpin,1500)});
 map.on("error",e=>{// GIBS answers 400/404 for a tile outside a granule swath; MapLibre reports it here, so keep it quiet
  if(e&&e.sourceId&&e.error&&/40[04]|50\d|Failed to fetch/.test(String(e.error.status||e.error.message)))return;console.warn(e&&e.error)});

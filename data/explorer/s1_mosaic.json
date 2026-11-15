@@ -1,0 +1,10 @@
+{
+ "tiles": [
+  "https://planetarycomputer.microsoft.com/api/data/v1/mosaic/pc1.1794815746.34c0d0c8b283417792be6936a153018c/tiles/WebMercatorQuad/{z}/{x}/{y}@1x?collection=sentinel-1-rtc&assets=vv&rescale=0,0.5&colormap_name=gray&format=png"
+ ],
+ "start": "2026-11-03",
+ "end": "2026-11-15",
+ "minzoom": 8,
+ "registered": "2026-11-15T07:55:06Z",
+ "attribution": "Copernicus Sentinel-1 RTC (ESA), via Microsoft Planetary Computer"
+}

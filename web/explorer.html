@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Falakus Explorer</title>
-<meta name="description" content="Where NISAR looked, where disasters struck: NISAR radar, NASA GIBS layers, EONET events and USGS earthquakes on one map.">
+<title>Falakus Live Earth</title>
+<meta name="description" content="The whole planet in NASA-ISRO NISAR L-band radar on a 3D globe, with live USGS earthquakes, NASA EONET events, FIRMS fires and Sentinel-1 C-band radar.">
 <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.0.0/dist/maplibre-gl.css">
 <link rel="stylesheet" href="site.css">
 <link rel="stylesheet" href="explorer.css">
@@ -12,7 +12,7 @@
 <body>
 <script src="site.js"></script>
 <div id="maps">
- <div id="map" role="region" aria-label="Map"></div>
+ <div id="map" role="region" aria-label="Globe"></div>
  <div id="mapB" hidden aria-hidden="true"></div>
  <div id="swipe" hidden><div class="knob" aria-label="Drag to compare" role="slider" tabindex="0"></div><span class="tagA mono" id="tagA"></span><span class="tagB mono" id="tagB"></span></div>
 </div>
@@ -20,23 +20,27 @@
 <div id="top">
  <div class="search">
   <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg>
-  <input id="q" type="search" placeholder="Search a place or lat, lon" autocomplete="off" aria-label="Search places">
+  <input id="q" type="search" placeholder="Search a place" autocomplete="off" aria-label="Search places">
   <div id="qres" class="qres" hidden></div>
  </div>
+ <div id="live" class="live" hidden><i aria-hidden="true"></i><b>LIVE</b><span id="liveTxt"></span></div>
 </div>
 
-<aside id="panel" aria-label="Layers and events">
+<nav id="rail" aria-label="Layers"></nav>
+
+<aside id="panel" aria-label="All layers and events">
  <div class="ph" id="ph">
   <span class="grab" aria-hidden="true"></span>
   <div class="tabs" role="tablist">
    <button role="tab" class="tab on" data-tab="layers" aria-selected="true">Layers <span class="mono" id="nLayers">0</span></button>
    <button role="tab" class="tab" data-tab="events" aria-selected="false">Events <span class="mono" id="nEvents">0</span></button>
   </div>
+  <button class="px" id="panelx" aria-label="Close" title="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
  </div>
  <div class="pb" id="tab-layers">
   <div id="groups"></div>
   <details class="order"><summary>Drawing order of image layers</summary><ol id="order"></ol></details>
-  <p class="foot">Data: NASA-ISRO NISAR (ASF DAAC), NASA GIBS, NASA EONET, USGS.</p>
+  <p class="foot">Data: NASA-ISRO NISAR (ASF DAAC), NASA GIBS / FIRMS, NASA EONET, USGS, Copernicus Sentinel-1 (Microsoft Planetary Computer), Mapzen/AWS Terrain Tiles, Esri.</p>
  </div>
  <div class="pb" id="tab-events" hidden>
   <div class="evtools">
@@ -50,6 +54,14 @@
  </div>
 </aside>
 <div id="mapleg" class="mapleg" aria-label="Map key" hidden></div>
+
+<button id="tourbtn" class="tourbtn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7z" fill="currentColor"/></svg>Tour the planet</button>
+<div id="tour" class="tour" hidden role="status" aria-live="polite">
+ <div class="tdots" id="tdots"></div>
+ <p id="tcap"></p>
+ <div class="tbar"><i id="tprog"></i></div>
+ <div class="tacts"><button id="tprev" aria-label="Previous stop">‹</button><button id="tnext">Next ›</button><button id="tstop">End tour</button></div>
+</div>
 
 <div id="card" class="card" hidden><button class="x" id="cardx" aria-label="Close" title="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button><div id="cardbody"></div></div>
 <div id="toast" class="toast" hidden></div>
@@ -65,6 +77,7 @@
   <span class="sep"></span>
   <button class="tg" id="cmp" aria-pressed="false" title="Swipe between two dates">Compare</button>
   <input type="date" id="dateB" class="mono" aria-label="Compare date" hidden>
+  <button class="ib" id="tlx" title="Hide timeline" aria-label="Hide timeline"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></button>
  </div>
  <div class="tls">
   <canvas id="strip" aria-hidden="true"></canvas>
