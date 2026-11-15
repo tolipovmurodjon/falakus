@@ -200,7 +200,7 @@ const ICON={
 /* ---------- one-site shell: hash tabs ---------- */
 const VIEWS={dashboard:"v-dashboard",timelapse:"v-timelapse",explorer:"v-explorer"};
 function route(){
- const v=VIEWS[location.hash.slice(1)]?location.hash.slice(1):"dashboard";
+ const v=VIEWS[location.hash.slice(1)]?location.hash.slice(1):"explorer";
  for(const [k,id] of Object.entries(VIEWS))$(id).hidden=k!==v;
  document.querySelectorAll(".fk-tabs a[data-tab]").forEach(a=>{const on=a.dataset.tab===v;a.classList.toggle("on",on);on?a.setAttribute("aria-current","page"):a.removeAttribute("aria-current")});
  if(v!=="dashboard"){const s=$(VIEWS[v]);if(!s.firstChild){const f=document.createElement("iframe");f.src=`${v}.html?embed=1`;f.title=v;f.setAttribute("allow","fullscreen");s.appendChild(f)}stopPlay()}
@@ -241,7 +241,7 @@ const LEG={
  rgb:'<span class="k"><i style="background:#6bbf59"></i>plants</span><span class="k"><i style="background:#f3c9d9"></i>towns</span><span class="k"><i style="background:#6b4fd0"></i>bare soil</span><span class="k"><i style="background:#111"></i>water</span><span>R = HH · G = HV · B = HH/HV</span>',
  hh:'<span><b>Dark</b> = smooth (water) · <b>bright</b> = rough (towns, rocks). NISAR HH, 20 m</span>',
  surface:'<span class="k"><i style="background:#2563eb"></i>water</span><span class="k"><i style="background:#e8a33d"></i>towns, walls</span><span class="k"><i style="background:#2e9650"></i>plants</span><span>blue on hillsides = radar shadow, not water</span>',
- water:'<span class="k"><i style="background:#2f6fd1"></i>open water on this pass</span><span>learned map · IoU 0.63 vs photos</span>',
+ water:'<span class="k"><i style="background:#2f6fd1"></i>open water on this pass</span><span>learned map · IoU 0.78 on unseen photo days</span>',
  heat:'<span>water on</span><span class="ramp" style="background:linear-gradient(90deg,#f5a623,#e9d84c,#5ec4b6,#2f6fd1,#143a8c)"></span><span><b>1</b> → <b id="lg-n">all</b> passes</span>',
  change:'<span class="k"><i style="background:#e8590c"></i>brighter: water gone, mud or ground</span><span class="k"><i style="background:#7048e8"></i>darker: wetter or new water</span><span id="lg-ch">vs the first pass, lake area only</span>',
  photo:'<span>Satellite photo (Esri mosaic, undated). Clouds often hide it; radar does not care.</span>',
@@ -315,7 +315,13 @@ async function loadData(){
   getJ("science/andijan_res/frames.json"),getJ("ml/water_model.json"),getJ("ml/water_freq.json"),getJ("intel/andijan_res.json"),
   getJ("forecast/andijan_res_v2.json"),getJ("waterroad/population.json"),getJ("waterroad/fergana_hvchange.json"),getJ("waterroad/photos.json")]);
  const ferg=await getJ("waterroad/fergana.json");
+ // speckle-cleaned learned map (tools/ml_water_clean.py): same model, drops water pieces < 0.2 km2; scored on the same unseen days
+ const cl=await getJ("ml/water_clean.json");
+ if(cl&&model){const cs=new Map(cl.series.map(x=>[x.date,x.km2])),ch=new Map(cl.held_out.map(x=>[x.date,x.clean_km2]));
+  model.series.forEach(x=>{if(cs.has(x.date))x.ml_km2=cs.get(x.date)});model.held_out.forEach(x=>{if(ch.has(x.date))x.ml_km2=ch.get(x.date)});
+  model.summary.ml_iou=cl.summary.clean_iou;model.summary.ml_area_mae_km2=cl.summary.clean_area_mae_km2}
  D={frames,model,freq,intel,fc,pop,harv,photos,ferg};
+ D.clean=!!(cl&&model);
  const ml=new Map((model?.series||[]).map(s=>[s.date,s]));
  const photo=new Map((model?.held_out||[]).map(r=>[r.date,r]));
  D.passes=(frames?.frames||[]).map(f=>({date:f.date,bbox:f.bbox,ml:ml.get(f.date)?.ml_km2,photo:photo.get(f.date)}));
@@ -343,7 +349,7 @@ async function thumbs(){
    if(id==="photo"){const img=await loadImg("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/12/1539/2879");crop(img,.1,.2,.8);continue}
    if(id==="harvest"){const img=await loadImg("waterroad/fergana_hvchange.png");x.fillStyle="#3b3a33";x.fillRect(0,0,cv.width,cv.height);crop(img,.3,.3,.4);continue}
    if(id==="heat"){const img=await loadImg("ml/water_freq.png");crop(img);continue}
-   if(id==="water"){const img=await loadImg(`ml/water_pred_${p.date}.png`);crop(img);continue}
+   if(id==="water"){const img=await loadImg(`ml/${D.clean?"water_clean":"water_pred"}_${p.date}.png`);crop(img);continue}
    if(id==="change"){const q=p.date===D.passes[0].date?D.passes[D.passes.length-1]:p;const img=await loadImg(await maskedChange(q));crop(img);continue}
    const f=FILTERS.find(z=>z.id===id);
    const img=await loadImg(`science/andijan_res/img/${p.date}_${f.img||"rgb"}.webp`);
@@ -364,7 +370,7 @@ async function render(){
  try{
   if(f.photo){hideLayers()}
   else if(f.heat){ensureLayer("ovheat","ml/water_freq.png",D.freq.bbox,.95);hideLayers("ovheat");$("lg-n")&&($("lg-n").textContent=D.freq.passes)}
-  else if(f.ml){ensureLayer("ovml",`ml/water_pred_${p.date}.png`,D.model.bbox,.95);hideLayers("ovml")}
+  else if(f.ml){ensureLayer("ovml",`ml/${D.clean?"water_clean":"water_pred"}_${p.date}.png`,D.model.bbox,.95);hideLayers("ovml")}
   else if(f.img==="change"){
    if(S.i===0){hideLayers();$("lg-ch").textContent="first pass: nothing to compare yet, press play"}
    else{const u=await maskedChange(p);if(seq!==renderSeq)return;ensureLayer("ov",u,p.bbox,1);hideLayers("ov");$("lg-ch").textContent=`vs ${fmtD(D.passes[0].date)}, lake area only (±3 dB)`}}
@@ -376,7 +382,7 @@ async function render(){
 }
 function preloadNext(){const ni=(S.i+1)%D.passes.length,n=D.passes[ni];if(!n)return;if(S.filter==="change"&&ni===0)return;const f=FILTERS.find(z=>z.id===S.filter);
  if(f?.calc)loadImg(`science/andijan_res/img/${n.date}_rgb.webp`).then(img=>filterURL(`${n.date}:${f.calc}`,img,PAL[f.calc])).catch(()=>{});
- else if(f?.ml)loadImg(`ml/water_pred_${n.date}.png`).catch(()=>{});
+ else if(f?.ml)loadImg(`ml/${D.clean?"water_clean":"water_pred"}_${n.date}.png`).catch(()=>{});
  else if(f?.img)loadImg(`science/andijan_res/img/${n.date}_${f.img}.webp`).catch(()=>{})}
 function bigNumber(){
  const p=D.passes[S.i],b=$("big");b.hidden=false;
@@ -454,14 +460,14 @@ function rail(){
  ].map(([ic,h,p])=>`<div class="row3"><div class="ic">${ICON[ic]}</div><div><h3>${h}</h3><p>${esc(p)}</p></div></div>`).join("");
  const WHO={
   "Farmer":`By ${low?fmtD(low.photo):""} the lake held half its June water. If it refills to the forecast by spring, first irrigation should be near normal; if not, plan a tighter start.`,
-  "Water agency":"Lake area every 12 days, cloud or not. The learned map matches clear-day photos at IoU 0.63; typical miss 7.6 km², mostly wet mud.",
+  "Water agency":"Lake area every 12 days, cloud or not. The learned map matches clear-day photos it never saw at IoU 0.78; typical miss 3.2 km².",
   "Family":"10.9 million people live in the three valley regions this water reaches. A smaller winter lake means less to share in spring."
  };
  $("who").innerHTML=`<div class="head" style="display:flex;justify-content:space-between;align-items:center;gap:8px"><p class="eyebrow">What it means for</p><div class="seg" id="who-seg">${Object.keys(WHO).map((k,i)=>`<button class="${i?"":"on"}" data-w="${k}">${k}</button>`).join("")}</div></div><p id="who-p">${esc(WHO.Farmer)}</p>`;
  $("who-seg").querySelectorAll("button").forEach(b=>b.onclick=()=>{$("who-seg").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));$("who-p").textContent=WHO[b.dataset.w]});
  const s=D.model?.summary||{};
- $("trust").innerHTML=`<div><b>${(s.ml_iou??.627).toFixed(2)}</b><span>map vs photos it never saw (IoU)</span></div><div><b>0.95</b><span>agrees with ICESat-2 laser levels</span></div><div><b>${(s.ml_area_mae_km2??7.6).toFixed(1)}</b><span>km² typical miss (wet mud)</span></div>`;
- $("sources").innerHTML=`Radar: NASA-ISRO NISAR L2 GCOV (provisional before 21 Oct 2026), ASF DAAC, 11 passes, 20 m. Water map: gradient boosting on HH/HV, scored leave-one-date-out against Sentinel-2 photos (shuffled-label control 0.07). Laser: ICESat-2 ATL13, Spearman 0.95, n = 9. Forecast: 95 clear Sentinel-2 months since 2017, walk-forward tested. Population: National Statistics Committee of Uzbekistan, 1 Oct 2025. Heatmap: <code>tools/water_frequency.py</code>. AI (Claude) helped write the code and short texts; every number comes from our measured files. <a href="https://github.com/tolipovmurodjon/falakus" target="_blank" rel="noopener">Code on GitHub</a>.`;
+ $("trust").innerHTML=`<div><b>${(s.ml_iou??.627).toFixed(2)}</b><span>map vs photos it never saw (IoU)</span></div><div><b>0.95</b><span>agrees with ICESat-2 laser levels</span></div><div><b>${(s.ml_area_mae_km2??7.6).toFixed(1)}</b><span>km² typical area miss</span></div>`;
+ $("sources").innerHTML=`Radar: NASA-ISRO NISAR L2 GCOV (provisional before 21 Oct 2026), ASF DAAC, 11 passes, 20 m. Water map: gradient boosting on HH/HV, scored leave-one-date-out against Sentinel-2 photos (shuffled-label control 0.07); pieces under 0.2 km² dropped as speckle (<code>tools/ml_water_clean.py</code>: IoU 0.63 → 0.78; 0.74–0.80 for 0.05–1 km²). Laser: ICESat-2 ATL13, Spearman 0.95, n = 9. Forecast: 95 clear Sentinel-2 months since 2017, walk-forward tested. Population: National Statistics Committee of Uzbekistan, 1 Oct 2025. Heatmap: <code>tools/water_frequency.py</code>. AI (Claude) helped write the code and short texts; every number comes from our measured files. <a href="https://github.com/tolipovmurodjon/falakus" target="_blank" rel="noopener">Code on GitHub</a>.`;
 }
 function railFergana(){
  const h=D.harv;
@@ -508,7 +514,7 @@ function chart(){
   g+=ser.map(s=>`<circle cx="${X(s.date)}" cy="${Y(s.ml_km2)}" r="2.6" fill="#fff" stroke="#2f6fd1" stroke-width="1.6"><title>${fmtDY(s.date)} radar ${f1(s.ml_km2)} km²</title></circle>`).join("");
   g+=ho.map(r=>`<rect x="${X(r.photo)-3.2}" y="${Y(r.photo_water_km2)-3.2}" width="6.4" height="6.4" fill="var(--photo)" transform="rotate(45 ${X(r.photo)} ${Y(r.photo_water_km2)})"><title>${fmtDY(r.photo)} clear photo ${f1(r.photo_water_km2)} km²</title></rect>`).join("");
   const late=ho.filter(r=>r.photo>="2026-08-01"),gap=late.length?late.reduce((a,r)=>a+(r.ml_km2-r.photo_water_km2),0)/late.length:null;
-  $("c-note").textContent=gap!=null?`From August the radar reads about ${Math.round(gap)} km² above the photos: it counts the wet mud of the drying shore as water. We quote the photo numbers for the fall.`:"";
+  $("c-note").textContent=gap!=null?`From August the radar reads about ${Math.round(gap)} km² above the photos: wet mud on the drying shore looks like water. We quote the photo numbers for the fall.`:"";
   keys=`<span><i style="background:#2f6fd1"></i>NISAR radar (learned map)</span><span><i class="dot" style="background:var(--photo)"></i>clear-day photo</span><span><i style="background:#c2410c"></i>forecast, 8-in-10 band</span>`;
  }else{
   g+=`<path d="M${rec.map(r=>`${X(r.month)},${Y(r.km2)}`).join(" L")}" fill="none" stroke="#2f6fd1" stroke-width="1.6" stroke-linejoin="round"/>`;

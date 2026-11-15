@@ -129,7 +129,7 @@ async function loadOptical(id){
    detail:`<b>${x.year}</b>: ${esc(x.source)}, ${x.scene_count} scenes, ${dlong(x.dates[0])} to ${dlong(x.dates[1])}, scene cloud ${x.scene_cloud_pct} %`+(x.from_other_years_pct>0?`, ${x.from_other_years_pct} % of area from ${(x.other_years||[]).join(", ")}`:"")}))}}
 async function loadRadar(id){
  const fj=await getJSON(`science/${id}/frames.json`);let wr={},wm="";
- try{const w=await getJSON("ml/water_model.json");(w.series||[]).forEach(p=>wr[p.date]=p.ml_km2);wm=(w.method||"").split("\n")[0]}catch(e){}  // learned map: the same numbers as the dashboard
+ try{const w=await getJSON("ml/water_model.json");(w.series||[]).forEach(p=>wr[p.date]=p.ml_km2);try{const c=await getJSON("ml/water_clean.json");(c.series||[]).forEach(p=>wr[p.date]=p.km2)}catch(e){}wm=(w.method||"").split("\n")[0]}catch(e){}  // learned map: the same numbers as the dashboard
  const f=(fj.frames||[]).filter(x=>x.sci!==false);
  return{mode:"radar",chip:"NISAR L-band radar · HH",
   sub:f.length?`radar · ${f[0].date.slice(0,4)}`:"",range:f.length?`${dlong(f[0].date)} → ${dlong(f[f.length-1].date)}`:"",

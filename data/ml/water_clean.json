@@ -1,0 +1,180 @@
+{
+ "method": "Speckle clean-up for the learned NISAR water map, scored on the same held-out days.\n\nThe learned map (tools/ml_water.py) finds ~94 % of the photo water (median recall 0.94) but also calls small dark\nradar blobs on dry land water (speckle, radar shadow). Rule, fixed in advance and using no labels: a water body must\nbe at least MIN_KM2 (8-connected pieces of the map). Smaller pieces are dropped.\n\nScoring uses the held-out error maps written by ml_water.py (data/ml/water_err_<date>.png: blue = both say water,\norange = radar only, magenta = photo only), so every score is still on a day the model never saw. Thresholds 0.05,\n0.2 and 1 km2 are all reported, so the choice is visible. Writes data/ml/water_clean.json and\ndata/ml/water_clean_<date>.png (cleaned map for every pass) plus its km2 series.\nUsage: python tools/ml_water_clean.py",
+ "summary": {
+  "raw_iou": 0.627,
+  "clean_iou": 0.78,
+  "recall": 0.936,
+  "raw_precision": 0.661,
+  "sensitivity": {
+   "0.05": 0.736,
+   "0.2": 0.78,
+   "1.0": 0.796
+  },
+  "clean_area_mae_km2": 3.17,
+  "min_km2": 0.2,
+  "days": 8
+ },
+ "held_out": [
+  {
+   "date": "2026-06-20",
+   "photo": "2026-06-23",
+   "photo_km2": 42.11,
+   "raw_iou": 0.763,
+   "raw_precision": 0.867,
+   "recall": 0.865,
+   "iou_0.05": 0.82,
+   "iou_0.2": 0.832,
+   "clean_km2": 37.74,
+   "clean_area_err_km2": -4.36,
+   "iou_1.0": 0.853
+  },
+  {
+   "date": "2026-07-14",
+   "photo": "2026-07-11",
+   "photo_km2": 40.2,
+   "raw_iou": 0.767,
+   "raw_precision": 0.827,
+   "recall": 0.913,
+   "iou_0.05": 0.847,
+   "iou_0.2": 0.856,
+   "clean_km2": 38.89,
+   "clean_area_err_km2": -1.31,
+   "iou_1.0": 0.864
+  },
+  {
+   "date": "2026-07-26",
+   "photo": "2026-07-26",
+   "photo_km2": 31.96,
+   "raw_iou": 0.673,
+   "raw_precision": 0.708,
+   "recall": 0.931,
+   "iou_0.05": 0.753,
+   "iou_0.2": 0.765,
+   "clean_km2": 36.13,
+   "clean_area_err_km2": 4.17,
+   "iou_1.0": 0.769
+  },
+  {
+   "date": "2026-08-19",
+   "photo": "2026-08-20",
+   "photo_km2": 20.07,
+   "raw_iou": 0.59,
+   "raw_precision": 0.613,
+   "recall": 0.941,
+   "iou_0.05": 0.691,
+   "iou_0.2": 0.705,
+   "clean_km2": 25.19,
+   "clean_area_err_km2": 5.12,
+   "iou_1.0": 0.721
+  },
+  {
+   "date": "2026-08-31",
+   "photo": "2026-08-30",
+   "photo_km2": 18.96,
+   "raw_iou": 0.611,
+   "raw_precision": 0.634,
+   "recall": 0.942,
+   "iou_0.05": 0.727,
+   "iou_0.2": 0.749,
+   "clean_km2": 22.37,
+   "clean_area_err_km2": 3.42,
+   "iou_1.0": 0.771
+  },
+  {
+   "date": "2026-09-12",
+   "photo": "2026-09-09",
+   "photo_km2": 18.78,
+   "raw_iou": 0.57,
+   "raw_precision": 0.589,
+   "recall": 0.947,
+   "iou_0.05": 0.693,
+   "iou_0.2": 0.733,
+   "clean_km2": 22.94,
+   "clean_area_err_km2": 4.16,
+   "iou_1.0": 0.745
+  },
+  {
+   "date": "2026-10-06",
+   "photo": "2026-10-04",
+   "photo_km2": 16.97,
+   "raw_iou": 0.612,
+   "raw_precision": 0.633,
+   "recall": 0.948,
+   "iou_0.05": 0.723,
+   "iou_0.2": 0.794,
+   "clean_km2": 19.17,
+   "clean_area_err_km2": 2.2,
+   "iou_1.0": 0.821
+  },
+  {
+   "date": "2026-10-18",
+   "photo": "2026-10-19",
+   "photo_km2": 21.12,
+   "raw_iou": 0.641,
+   "raw_precision": 0.687,
+   "recall": 0.905,
+   "iou_0.05": 0.745,
+   "iou_0.2": 0.797,
+   "clean_km2": 21.72,
+   "clean_area_err_km2": 0.6,
+   "iou_1.0": 0.827
+  }
+ ],
+ "series": [
+  {
+   "date": "2026-06-20",
+   "km2": 39.62,
+   "raw_km2": 43.23
+  },
+  {
+   "date": "2026-07-02",
+   "km2": 39.93,
+   "raw_km2": 44.92
+  },
+  {
+   "date": "2026-07-14",
+   "km2": 39.45,
+   "raw_km2": 45.12
+  },
+  {
+   "date": "2026-07-26",
+   "km2": 36.01,
+   "raw_km2": 42.2
+  },
+  {
+   "date": "2026-08-19",
+   "km2": 24.75,
+   "raw_km2": 30.33
+  },
+  {
+   "date": "2026-08-31",
+   "km2": 22.55,
+   "raw_km2": 28.49
+  },
+  {
+   "date": "2026-09-12",
+   "km2": 22.58,
+   "raw_km2": 29.68
+  },
+  {
+   "date": "2026-09-24",
+   "km2": 20.59,
+   "raw_km2": 24.65
+  },
+  {
+   "date": "2026-10-06",
+   "km2": 21.32,
+   "raw_km2": 26.48
+  },
+  {
+   "date": "2026-10-18",
+   "km2": 22.36,
+   "raw_km2": 28.53
+  },
+  {
+   "date": "2026-10-30",
+   "km2": 23.88,
+   "raw_km2": 32.28
+  }
+ ]
+}

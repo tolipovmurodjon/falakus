@@ -61,10 +61,11 @@ def main():
     paths |= {"/waterroad/andijan_res.json", "/forecast/andijan_res.json", "/ml/water_model.json", "/science/andijan_res/frames.json",
               "/waterroad/population.json", "/waterroad/photo_andijan_cloudy.jpg", "/api/events.json", "/api/science_boxes.json",
               # one-site dashboard (web/index.html uses relative paths, so list its files here)
-              "/ml/water_freq.png", "/ml/water_freq.json", "/intel/andijan_res.json", "/intel/index.json", "/forecast/andijan_res_v2.json",
+              "/ml/water_freq.png", "/ml/water_freq.json", "/ml/water_clean.json", "/intel/andijan_res.json", "/intel/index.json", "/forecast/andijan_res_v2.json",
               "/waterroad/photos.json", "/waterroad/fergana.json", "/waterroad/fergana_hvchange.png", "/waterroad/fergana_hvchange.json",
               "/hires/fergana_fields/fergana_fields_2026-08-04.json", "/hires/fergana_fields/fergana_fields_2026-08-04.png",
               "/hires/fergana_zoom/fergana_zoom_2026-08-04.json", "/hires/fergana_zoom/fergana_zoom_2026-08-04.png"}
+    paths |= {f"/ml/{f.name}" for f in (ROOT / "data" / "ml").glob("water_clean_*.png")}
     # explorer heatmaps and any other small files the explorer reads from data/explorer/
     paths |= {"/" + f.relative_to(ROOT / "data").as_posix() for f in (ROOT / "data" / "explorer").rglob("*") if f.is_file()}
     # time-lapse frames
