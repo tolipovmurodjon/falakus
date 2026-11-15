@@ -35,6 +35,20 @@ Run the app: `python tools/nisar_tile_server.py --port 8765` → http://127.0.0.
 - [ ] All members registered for the same local event and on the Members tab (max 6). No photos or video of anyone under 18.
 - [ ] Tick terms + "work is original" → **Submit for judging before 23:59 Tashkent**. Only the last submission counts.
 
+### What is left, in order (Boss, 15 Nov 11:30)
+1. **One website, not separate HTML pages.** Today each part is its own page (`intel.html`, `timelapse.html`, `explorer.html`, `index.html`, `dash.html`) with its own look and nav. Make one site:
+   - one shared header and nav, and one style (Falak tokens: paper #F6F3ED, ink #14120D, teal #17515F);
+   - `index.html` = the briefings front door; the time-lapse and explorer as sections or tabs;
+   - the old classic map moves to `app.html`;
+   - every page loads cold with 0 console errors, at 1440 and 390 px.
+2. Briefings page: cut it down (Boss: "too much"): headline, 3 short sections, one chart.
+3. Time-lapse: the whole play in 10–15 s, starting at once.
+4. Explorer: check every layer loads; add live movement and plain-language event briefings.
+5. Network: NASA, GitHub and Planetary Computer drop out from here; every tool retries. Check the public link from another network or phone.
+6. Public link: `python tools/export_static.py` → push `dist/` to a `gh-pages` branch → enable Pages (`gh api -X POST repos/tolipovmurodjon/falakus/pages -f source[branch]=gh-pages -f source[path]=/`). Test logged out.
+7. Deck: team name + 6 names in `tools/build_deck7.py` (TEAM), rebuild, export to PDF, upload publicly.
+8. Fill the form: see `docs/project/submission-rules.md` (every field, our drafts, the disqualifiers). Submit before 23:59.
+
 ### Walls
 ALOS 2008 still needs the ASF app approval in Murodjon's Earthdata account (`tools/alos_series.py`, command below). Laptop RAM is about 0.8 GB free: one heavy job at a time.
 
