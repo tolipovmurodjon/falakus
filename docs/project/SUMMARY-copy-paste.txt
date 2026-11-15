@@ -1,11 +1,1 @@
-On 1 May 2020, after days of storms, the Sardoba dam in Uzbekistan burst. Six people died and about 70,000 were evacuated. Disasters like this, and floods, earthquakes and failing water supplies, build up under cloud or in the dark, where satellite cameras see nothing. About two-thirds of Earth is cloudy at any moment (NASA).
-
-NISAR, the new NASA-ISRO radar satellite, sees through both, everywhere, every 12 days. Falakus turns its images into warnings and answers anyone can read:
-Water: calm water is a mirror for radar, so reservoirs and floods stay visible under storm clouds.
-Ground: the radar's timing can catch dams, slopes and faults moving by centimetres, warning signs no camera sees; we show it after an earthquake.
-Crops: leaves twist the radar wave, so harvests show field by field.
-Ships: metal hulls shine on dark water, day or night.
-
-We proved it at home. In Uzbekistan, 10.9 million people depend on reservoirs that cameras lost to cloud in 15 of 24 winter photos. Our machine-learning model maps that water on every pass, and NASA's ICESat-2 laser confirms it (correlation 0.95).
-
-Explore it worldwide, and read a plain briefing: what changed, why, and what comes next.
+We built Falakus to track changes on Earth's surface that are easy to miss. Clouds cover about two-thirds of the planet at any time, so optical satellites often can't see what is happening below. NISAR, the new NASA-ISRO radar mission, can. It sees through cloud and at night and comes back to the same place every 12 days. We use its data to map water, crops and ground motion, follow how each site changes from pass to pass, and forecast reservoir levels a month ahead. Our water maps agree closely with NASA's ICESat-2 laser measurements (correlation 0.95). We tested it on reservoirs in our home country, Uzbekistan, but it works anywhere NISAR flies.
