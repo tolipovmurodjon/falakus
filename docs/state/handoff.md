@@ -1,7 +1,42 @@
 # START HERE (falakus, NASA Space Apps 2026 "Dancing with the SARs")
 
 Deadline: Sun 15 Nov 2026 23:59 local. Team guide (story, status, rules): docs/TEAM.md. Decisions: docs/state/DECISIONS.md.
-Repo: github.com/tolipovmurodjon/falakus (private, branch overnight, Zaynobiddin33 invited).
+Repo: github.com/tolipovmurodjon/falakus (PUBLIC since 15 Nov 09:00, branch overnight → merged to main by PR).
+
+## STATE 15 Nov ~11:00: handoff for Zaynobiddin (Murodjon works on the presentation)
+Run the app: `python tools/nisar_tile_server.py --port 8765` → http://127.0.0.1:8765/
+- `intel.html`: **new front door.** Water briefings per water body: map, plain-language "what happened / why / what next", tabs for farmer / water agency / family, and how sure we are. Works, with 0 console errors (Andijan). Boss: "too much on it, make it clean". NEXT: cut to headline + 3 short sections + one chart, one style.
+- `timelapse.html`: Google Earth-style 1985–2026 Landsat summers + NISAR weeks (`tools/bake_timelapse.py`, frames in `data/timelapse/<place>/`). Boss: too slow; must play in 10–15 s, start at once, never stall. The builder agent was told this; check it.
+- `explorer.html` (+ .js, .css): NASA Worldview-style layers (GIBS: MODIS, IMERG rain, fires, SMAP, snow) + EONET events + NISAR. Loads with 0 errors. The agent stalled before finishing "live movement" + plain-language event briefings. NEXT: test each layer, add those two.
+- `dash.html`: first dashboard version (superseded by `intel.html`). `index.html`: the old classic map; Play bug fixed (the pulse rests while a chapter or the player is open).
+
+### ML and science measured today (all in data/, reproducible by tools/)
+| what | tool | result |
+|---|---|---|
+| Learned water map (gradient boosting, 10 radar features) | `tools/ml_water.py` | Leave-one-date-out on 8 photo days: IoU **0.63** vs 0.59 rule + water map, 0.30 rule alone; null 0.07. Area miss 7.6 vs 8.8 km². Error maps `data/ml/water_err_<date>.png`: it adds 6–12 km² of wet mud and misses 1–6 km². |
+| Same model at new places | `tools/ml_water_transfer.py rogun qoshtepa` | Copernicus DEM slope > 12° mask added (radar shadow). **Rogun: FAILS, IoU 0.02** (gorge, n = 3 photo days): do not show Rogun km² as fact. Qosh Tepa: was running (flat, mask 0 %). |
+| Laser check | `tools/icesat2_levels.py` | ICESat-2 level vs area: Spearman **0.95**, Pearson 0.85, n = 9 |
+| 10-year record | `tools/s2_history.py andijan_res 73.028 40.684 73.242 40.846` | Sentinel-2 monthly 2017→2026, resumable (was at 2018-12) |
+| Forecast v2 | `tools/forecast_v2.py andijan_res` | Run AFTER s2_history finishes: walk-forward vs persistence / seasonal / climatology, 1 and 3 months ahead, band from its own misses |
+| Briefings | `tools/water_intel.py` (`PYTHONIOENCODING=utf-8`) | `data/intel/<place>.json`; every number comes from files |
+| Tuyamuyun radar | `tools/gcov_science.py tuyamuyun 61.40 41.22 --km 15` | Was downloading (2 passes); network flaps, rerun resumes |
+| Population | `data/waterroad/population.json` | 10.9 M people in the 3 valley regions (stat.uz, 1 Oct 2025), 28.6 % of Uzbekistan |
+
+### Deck
+- `docs/deck/falakus-7.html` (`tools/build_deck7.py`): 7 slides in the guide's order: Title, Problem, Solution + change map, How it works, Results, Data, Impact. Pictures from `tools/make_deck_images.py` (`img/change_map.jpg`, `img/before_after.jpg`). **TODO: team name + 6 member names** in `TEAM` at the top of `build_deck7.py`. Murodjon owns the deck now.
+
+### Submission checklist (from the official guide video)
+- [ ] Project name + summary of 50–200 words (what we built, how it answers the challenge, why it matters): start from `docs/project/page.md`.
+- [ ] Demo link: ≤ 7 slides (incl. title) OR video ≤ 30 s; public, no login (GitHub / Drive / YouTube). English (a video may use another language with English subtitles).
+- [ ] Final project link: public, no login. Plan: GitHub Pages from `tools/export_static.py` → `dist/` → `gh-pages` branch, or the repo link.
+- [ ] Details: what it does, how it works, benefits, impact, tools/languages, creativity, factors considered.
+- [ ] SI (AI) use: tick the options. Code + text by Claude, disclosed in text. No AI images, so no watermark needed. No NASA logos.
+- [ ] NASA data used (required): NISAR GCOV + GUNW (ASF DAAC), ICESat-2 ATL13, EONET, GIBS (MODIS, IMERG), CMR / Earthdata. Partner data: ESA Sentinel-1/2, WorldCover, Copernicus DEM, USGS Landsat, CSA RADARSAT-1, ICEYE, stat.uz.
+- [ ] All members registered for the same local event and on the Members tab (max 6). No photos or video of anyone under 18.
+- [ ] Tick terms + "work is original" → **Submit for judging before 23:59 Tashkent**. Only the last submission counts.
+
+### Walls
+ALOS 2008 still needs the ASF app approval in Murodjon's Earthdata account (`tools/alos_series.py`, command below). Laptop RAM is about 0.8 GB free: one heavy job at a time.
 
 ## State 15 Nov ~01:30
 - STORY (Boss): one screen "Where the valley's water goes": Andijan reservoir -> Fergana -> Aral; rest behind "Explore". Only measured numbers.

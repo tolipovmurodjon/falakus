@@ -1,0 +1,21 @@
+2026-06-20 label from 2026-06-23 clear 100%
+2026-07-14 label from 2026-07-11 clear 100%
+2026-07-26 label from 2026-07-26 clear 100%
+2026-08-19 label from 2026-08-20 clear 100%
+2026-08-31 label from 2026-08-30 clear 100%
+2026-09-12 label from 2026-09-09 clear 100%
+2026-10-06 label from 2026-10-04 clear 94%
+2026-10-18 label from 2026-10-19 clear 100%
+D:\10_projects\falakus\tools\ml_water.py:108: RuntimeWarning: All-NaN slice encountered
+  smin, smed, smax = np.nanmin(stack, 0), np.nanmedian(stack, 0), np.nanmax(stack, 0)
+photo-labelled dates: ['2026-06-20', '2026-07-14', '2026-07-26', '2026-08-19', '2026-08-31', '2026-09-12', '2026-10-06', '2026-10-18'] threshold -16.75
+{'date': '2026-06-20', 'photo': '2026-06-23', 'clear_pct': 99.6, 'photo_water_km2': 42.11, 'ml_km2': 42.01, 'rule_km2': 53.24, 'ml_iou': 0.763, 'rule_iou': 0.615, 'null_iou': 0.094}
+{'date': '2026-07-14', 'photo': '2026-07-11', 'clear_pct': 99.6, 'photo_water_km2': 40.2, 'ml_km2': 44.38, 'rule_km2': 105.89, 'ml_iou': 0.767, 'rule_iou': 0.324, 'null_iou': 0.134}
+{'date': '2026-07-26', 'photo': '2026-07-26', 'clear_pct': 99.6, 'photo_water_km2': 31.96, 'ml_km2': 42.0, 'rule_km2': 101.96, 'ml_iou': 0.673, 'rule_iou': 0.274, 'null_iou': 0.141}
+{'date': '2026-08-19', 'photo': '2026-08-20', 'clear_pct': 99.6, 'photo_water_km2': 20.07, 'ml_km2': 30.81, 'rule_km2': 82.94, 'ml_iou': 0.59, 'rule_iou': 0.209, 'null_iou': 0.02}
+{'date': '2026-08-31', 'photo': '2026-08-30', 'clear_pct': 99.6, 'photo_water_km2': 18.96, 'ml_km2': 28.17, 'rule_km2': 78.91, 'ml_iou': 0.611, 'rule_iou': 0.201, 'null_iou': 0.072}
+{'date': '2026-09-12', 'photo': '2026-09-09', 'clear_pct': 99.6, 'photo_water_km2': 18.78, 'ml_km2': 30.19, 'rule_km2': 84.37, 'ml_iou': 0.57, 'rule_iou': 0.191, 'null_iou': 0.045}
+{'date': '2026-10-06', 'photo': '2026-10-04', 'clear_pct': 93.7, 'photo_water_km2': 16.97, 'ml_km2': 25.42, 'rule_km2': 22.63, 'ml_iou': 0.612, 'rule_iou': 0.565, 'null_iou': 0.047}
+{'date': '2026-10-18', 'photo': '2026-10-19', 'clear_pct': 99.5, 'photo_water_km2': 21.12, 'ml_km2': 27.82, 'rule_km2': 50.84, 'ml_iou': 0.641, 'rule_iou': 0.324, 'null_iou': 0.061}
+SUMMARY (median over held-out dates): {'ml_iou': 0.627, 'rule_iou': 0.299, 'null_iou': 0.067, 'ml_area_mae_km2': 7.6, 'rule_area_mae_km2': 46.33}
+wrote data/ml/water_model.json
