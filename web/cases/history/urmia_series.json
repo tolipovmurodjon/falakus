@@ -1,0 +1,58 @@
+{
+ "place": "Lake Urmia, north-central lake and causeway (Iran)",
+ "bbox": [
+  45.25,
+  37.58,
+  46.1,
+  38.25
+ ],
+ "width": 1400,
+ "rs1_stretch_db": null,
+ "rs1_note": "20*log10(DN), relative dB, uncalibrated; stretch fixed from the 1998 frame and reused for 1999",
+ "nisar_note": "GIBS NISAR GCOV display PNG, R channel (HH), 2-98 % stretch; not calibrated",
+ "frames": [
+  {
+   "date": "1998-05-19",
+   "sensor": "RADARSAT-1 (CSA), C-band HH",
+   "file": "urmia_rs1_1998-05-19.jpg",
+   "beam": "F1",
+   "orbit": "descending",
+   "scenes": [
+    "s3://radarsat-r1-l1-cog/1998/5/RS1_13242_FN1_F354_19980519_030031_HH_GRF.tif",
+    "s3://radarsat-r1-l1-cog/1998/5/RS1_13242_FN1_F355_19980519_030038_HH_GRF.tif",
+    "s3://radarsat-r1-l1-cog/1998/5/RS1_13242_FN1_F356_19980519_030045_HH_GRF.tif"
+   ],
+   "coverage_pct": 44.9
+  },
+  {
+   "date": "1999-08-08",
+   "sensor": "RADARSAT-1 (CSA), C-band HH",
+   "file": "urmia_rs1_1999-08-08.jpg",
+   "beam": "S7",
+   "orbit": "descending",
+   "scenes": [
+    "s3://radarsat-r1-l1-cog/1999/8/RS1_19616_ST7_F353_19990808_025206_HH_GRF.tif",
+    "s3://radarsat-r1-l1-cog/1999/8/RS1_19616_ST7_F355_19990808_025220_HH_GRF.tif",
+    "s3://radarsat-r1-l1-cog/1999/8/RS1_19616_ST7_F357_19990808_025234_HH_GRF.tif"
+   ],
+   "coverage_pct": 100.0
+  },
+  {
+   "date": "2026-10-30",
+   "sensor": "NISAR (NASA-ISRO), L-band, NASA GIBS",
+   "file": "urmia_nisar_2026-10-30.jpg",
+   "granules": [
+    "NISAR_L2_PR_GCOV_034_093_D_070_2005_DHDH_A_20261030T155045_20261030T155120_P05036_N_F_J_001",
+    "NISAR_L2_PR_GCOV_034_093_D_069_2005_DHDH_M_20261030T155011_20261030T155046_P05036_N_F_J_001",
+    "NISAR_L2_PR_GCOV_034_085_A_021_2005_DHDH_M_20261030T020337_20261030T020412_P05036_N_F_J_001"
+   ],
+   "tiles": {
+    "ok": 28,
+    "ok_after_3_retries": 1,
+    "empty_after_retries": 1
+   },
+   "coverage_pct": 95.7,
+   "zoom": 11
+  }
+ ]
+}

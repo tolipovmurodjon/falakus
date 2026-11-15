@@ -1,0 +1,626 @@
+{
+ "id": "panama",
+ "title": "Panama M7.7: what changed at the surface",
+ "place": "Herrera / Azuero, Panama",
+ "date": "2026-10-09",
+ "bbox": [
+  -80.9502,
+  7.4061,
+  -80.5878,
+  7.7679
+ ],
+ "center": [
+  -80.769,
+  7.587
+ ],
+ "zoom": 10,
+ "before": "2026-09-27",
+ "after": "2026-10-09",
+ "track": "141D",
+ "finding": "10.89 km2 changed more than 4x the normal radar wobble six hours after the quake (quiet pair 0.35 km2), but later passes on other tracks flag far less, so most of it may be short-lived (e.g. wet ground): screening candidates, not confirmed damage.",
+ "sections": {
+  "what": "A magnitude 7.7 earthquake struck at 17:56 UTC on 9 Oct 2026 (USGS us6000u18k). NISAR flew over the same spot about six hours later.",
+  "why": "Strong shaking can loosen slopes and damage ground cover, and both change how the surface returns radar. Rain does the same thing, so every flagged patch is a candidate to check.",
+  "radar": "We compared passes on the same track and direction (141D): 2026-09-27 and 2026-10-09. A pixel is flagged only if its HH change is more than 4 times the normal 12-day wobble, measured on 2026-09-15 to 2026-09-27. Ground motion needs GUNW interferometry: next step (a GUNW pair for these dates is in CMR).",
+  "validation": "Quiet pair: 0.35 km2. Other tracks after the quake: 040D 0.82 vs quiet 0.37 km2; 076A 0.54 vs quiet 0.3 km2. OPERA DIST-ALERT: 10.6 % of radar flags agree (chance 8.5 %).",
+  "limits": "Display-scaled GIBS radar, not calibrated dB; screening only. Rain-wetted soil and crops also brighten HH. No field report confirms these patches.",
+  "sources": [
+   {
+    "name": "USGS event us6000u18k",
+    "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u18k"
+   },
+   {
+    "name": "NASA CMR pass search (NISAR GCOV)",
+    "url": "https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C2854338529-ASF&bounding_box=-80.9502%2C7.4061%2C-80.5878%2C7.7679&temporal=2026-08-01T00%3A00%3A00Z%2C2026-11-15T00%3A00%3A00Z&sort_key=-start_date"
+   },
+   {
+    "name": "NASA CMR GUNW pairs (interferograms)",
+    "url": "https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C2854335566-ASF&bounding_box=-80.9502,7.4061,-80.5878,7.7679&temporal=2026-09-20T00:00:00Z,2026-10-31T00:00:00Z"
+   },
+   {
+    "name": "GIBS NISAR GCOV layer",
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/NISAR_L2_Geocoded_Polarimetric_Covariance/default/{date}/GoogleMapsCompatible_Level13/{z}/{y}/{x}.png"
+   },
+   {
+    "name": "GIBS OPERA DIST-ALERT layer",
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/OPERA_L3_DIST-ALERT-HLS_Color_Index/default/{date}/GoogleMapsCompatible_Level12/{z}/{y}/{x}.png"
+   },
+   {
+    "name": "Change test script",
+    "url": "https://github.com/tolipovmurodjon/falakus/blob/main/tools/case_change.py"
+   },
+   {
+    "name": "Case builder",
+    "url": "https://github.com/tolipovmurodjon/falakus/blob/main/tools/case_build.py"
+   }
+  ]
+ },
+ "numbers": [
+  {
+   "label": "Radar-flagged area (HH change > 4x quiet wobble)",
+   "value": 10.89,
+   "unit": "km2",
+   "source": "data/cases/panama.json radar (tools/case_build.py)"
+  },
+  {
+   "label": "Same test on a quiet pair (false-alarm baseline)",
+   "value": 0.35,
+   "unit": "km2",
+   "source": "data/cases/panama.json radar (tools/case_build.py)"
+  },
+  {
+   "label": "Of which brighter",
+   "value": 10.47,
+   "unit": "km2",
+   "source": "data/cases/panama.json radar (tools/case_build.py)"
+  },
+  {
+   "label": "Of which darker",
+   "value": 0.42,
+   "unit": "km2",
+   "source": "data/cases/panama.json radar (tools/case_build.py)"
+  },
+  {
+   "label": "Box seen on all 3 dates",
+   "value": 1459.7,
+   "unit": "km2",
+   "source": "data/cases/panama.json radar (tools/case_build.py)"
+  },
+  {
+   "label": "Hours from quake to the after pass",
+   "value": 6.0,
+   "unit": "h",
+   "source": "NASA CMR granule start time"
+  },
+  {
+   "label": "Check on track 004A (2026-09-30 -> 2026-10-12): flagged / quiet",
+   "value": "None / None",
+   "unit": "km2",
+   "source": "data/cases/panama.json radar (tools/case_build.py)"
+  },
+  {
+   "label": "Check on track 040D (2026-10-02 -> 2026-10-14): flagged / quiet",
+   "value": "0.82 / 0.37",
+   "unit": "km2",
+   "source": "data/cases/panama.json radar (tools/case_build.py)"
+  },
+  {
+   "label": "Check on track 076A (2026-10-05 -> 2026-10-17): flagged / quiet",
+   "value": "0.54 / 0.3",
+   "unit": "km2",
+   "source": "data/cases/panama.json radar (tools/case_build.py)"
+  },
+  {
+   "label": "Radar flags that OPERA DIST-ALERT also flags (chance level)",
+   "value": "10.6 (8.5)",
+   "unit": "%",
+   "source": "data/cases/panama.json radar (tools/case_build.py)"
+  },
+  {
+   "label": "DIST-ALERT new disturbance that radar also flags (chance level)",
+   "value": "3.0 (2.1)",
+   "unit": "%",
+   "source": "data/cases/panama.json radar (tools/case_build.py)"
+  }
+ ],
+ "quality": "screening",
+ "quality_note": "screening only: display-scaled GIBS tiles, not calibrated gamma0",
+ "image": {
+  "png": "data/cases/img/panama_change.png",
+  "bbox": [
+   -80.9502,
+   7.4061,
+   -80.5878,
+   7.7679
+  ],
+  "legend": "orange = brighter, blue = darker, faint white = compared"
+ },
+ "radar": {
+  "bbox": [
+   -80.9502,
+   7.4061,
+   -80.5878,
+   7.7679
+  ],
+  "cmr": [
+   "https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C3622241360-ASF&bounding_box=-80.9502%2C7.4061%2C-80.5878%2C7.7679&sort_key=start_date&page_size=2000&temporal=2026-07-26T17%3A56%3A00Z%2C2026-11-15T09%3A43%3A52Z",
+   "https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C2854338529-ASF&bounding_box=-80.9502%2C7.4061%2C-80.5878%2C7.7679&sort_key=start_date&page_size=2000&temporal=2026-07-26T17%3A56%3A00Z%2C2026-11-15T09%3A43%3A52Z"
+  ],
+  "tracks": [
+   {
+    "bbox": [
+     -80.9502,
+     7.4061,
+     -80.5878,
+     7.7679
+    ],
+    "dates": {
+     "prior": "2026-09-15",
+     "before": "2026-09-27",
+     "after": "2026-10-09"
+    },
+    "zoom": 11,
+    "channel": "HH",
+    "k": 4.0,
+    "min_group_px": 4,
+    "pixel_m": 75.8,
+    "tiles": {
+     "prior": {
+      "ok": 8,
+      "empty": 0,
+      "missing": 0,
+      "scrambled": 1
+     },
+     "before": {
+      "ok": 8,
+      "empty": 1,
+      "missing": 0,
+      "scrambled": 0
+     },
+     "after": {
+      "ok": 8,
+      "empty": 0,
+      "missing": 0,
+      "scrambled": 1
+     }
+    },
+    "valid_km2": 1459.7,
+    "r_minus_b_abs_median": 62.0,
+    "quiet_sigma": 8.07,
+    "threshold": 32.29,
+    "threshold_from": "4 x robust spread (1.4826 x MAD) of the quiet pair 2026-09-15 -> 2026-09-27",
+    "quiet_flag_km2": 0.35,
+    "quiet_flag_pct": 0.024,
+    "brighter_km2": 10.47,
+    "darker_km2": 0.42,
+    "flag_km2": 10.89,
+    "flag_pct": 0.746,
+    "event_spread": 11.37,
+    "ratio_vs_quiet": 31.11,
+    "png": "data/cases/img/panama_change.png",
+    "label": "display-scaled GIBS radar, not calibrated dB; screening only",
+    "track": "141D",
+    "passes": {
+     "prior": {
+      "id": "NISAR_L2_PR_GCOV_030_141_D_084_4005_DHDH_A_20260915T235307_20260915T235336_P05023_N_F_J_001",
+      "start": "2026-09-15T23:53:07.000Z",
+      "track": "141",
+      "direction": "descending",
+      "frame": "084",
+      "collection": "C2854338529-ASF",
+      "incidence_deg": null,
+      "incidence_note": "not in CMR granule metadata (UMM AdditionalAttributes)"
+     },
+     "before": {
+      "id": "NISAR_L2_PR_GCOV_031_141_D_084_4005_DHDH_A_20260927T235307_20260927T235336_P05023_N_F_J_001",
+      "start": "2026-09-27T23:53:07.000Z",
+      "track": "141",
+      "direction": "descending",
+      "frame": "084",
+      "collection": "C2854338529-ASF",
+      "incidence_deg": null,
+      "incidence_note": "not in CMR granule metadata (UMM AdditionalAttributes)"
+     },
+     "after": {
+      "id": "NISAR_L2_PR_GCOV_032_141_D_084_4005_DHDH_A_20261009T235308_20261009T235336_P05023_N_F_J_001",
+      "start": "2026-10-09T23:53:08.000Z",
+      "track": "141",
+      "direction": "descending",
+      "frame": "084",
+      "collection": "C2854338529-ASF",
+      "incidence_deg": null,
+      "incidence_note": "not in CMR granule metadata (UMM AdditionalAttributes)"
+     }
+    },
+    "dist_check": {
+     "product": "OPERA_L3_DIST-ALERT-HLS_Color_Index (GIBS)",
+     "before_window_days": [
+      "2026-09-27",
+      "2026-09-26",
+      "2026-09-24",
+      "2026-09-21"
+     ],
+     "after_window_days": [
+      "2026-10-09",
+      "2026-10-10",
+      "2026-10-12",
+      "2026-10-16"
+     ],
+     "seen_by_both_pct": 99.4,
+     "tolerance_px": 1,
+     "disturbed_def": "any DIST class 1-8 after, class 0 before",
+     "radar_flag_px": 1897,
+     "dist_new_px": 4337,
+     "dist_new_share_of_seen_pct": 1.72,
+     "radar_flag_share_of_seen_pct": 0.75,
+     "radar_flags_also_dist_pct": 10.6,
+     "dist_new_also_radar_pct": 3.0,
+     "chance_radar_flags_also_dist_pct": 8.5,
+     "chance_dist_new_also_radar_pct": 2.1
+    }
+   },
+   {
+    "bbox": [
+     -80.9502,
+     7.4061,
+     -80.5878,
+     7.7679
+    ],
+    "dates": {
+     "prior": "2026-09-18",
+     "before": "2026-09-30",
+     "after": "2026-10-12"
+    },
+    "zoom": 11,
+    "channel": "HH",
+    "k": 4.0,
+    "min_group_px": 4,
+    "pixel_m": 75.8,
+    "tiles": {
+     "prior": {
+      "ok": 1,
+      "empty": 8,
+      "missing": 0,
+      "scrambled": 0
+     },
+     "before": {
+      "ok": 1,
+      "empty": 8,
+      "missing": 0,
+      "scrambled": 0
+     },
+     "after": {
+      "ok": 1,
+      "empty": 8,
+      "missing": 0,
+      "scrambled": 0
+     }
+    },
+    "valid_km2": 0.0,
+    "error": "too few valid pixels on all dates",
+    "track": "004A",
+    "passes": {
+     "prior": {
+      "id": "NISAR_L2_PR_GCOV_031_004_A_005_4005_DHDH_A_20260918T110419_20260918T110435_P05023_F_P_J_001",
+      "start": "2026-09-18T11:04:19.000Z",
+      "track": "004",
+      "direction": "ascending",
+      "frame": "005",
+      "collection": "C2854338529-ASF",
+      "incidence_deg": null,
+      "incidence_note": "not in CMR granule metadata (UMM AdditionalAttributes)"
+     },
+     "before": {
+      "id": "NISAR_L2_PR_GCOV_032_004_A_005_4005_DHDH_A_20260930T110420_20260930T110435_P05023_N_P_J_001",
+      "start": "2026-09-30T11:04:20.000Z",
+      "track": "004",
+      "direction": "ascending",
+      "frame": "005",
+      "collection": "C2854338529-ASF",
+      "incidence_deg": null,
+      "incidence_note": "not in CMR granule metadata (UMM AdditionalAttributes)"
+     },
+     "after": {
+      "id": "NISAR_L2_PR_GCOV_033_004_A_005_4005_DHDH_A_20261012T110420_20261012T110436_P05023_N_P_J_001",
+      "start": "2026-10-12T11:04:20.000Z",
+      "track": "004",
+      "direction": "ascending",
+      "frame": "005",
+      "collection": "C2854338529-ASF",
+      "incidence_deg": null,
+      "incidence_note": "not in CMR granule metadata (UMM AdditionalAttributes)"
+     }
+    }
+   },
+   {
+    "bbox": [
+     -80.9502,
+     7.4061,
+     -80.5878,
+     7.7679
+    ],
+    "dates": {
+     "prior": "2026-09-20",
+     "before": "2026-10-02",
+     "after": "2026-10-14"
+    },
+    "zoom": 11,
+    "channel": "HH",
+    "k": 4.0,
+    "min_group_px": 4,
+    "pixel_m": 75.8,
+    "tiles": {
+     "prior": {
+      "ok": 6,
+      "empty": 3,
+      "missing": 0,
+      "scrambled": 0
+     },
+     "before": {
+      "ok": 5,
+      "empty": 3,
+      "missing": 0,
+      "scrambled": 1
+     },
+     "after": {
+      "ok": 6,
+      "empty": 3,
+      "missing": 0,
+      "scrambled": 0
+     }
+    },
+    "valid_km2": 653.2,
+    "r_minus_b_abs_median": 69.0,
+    "quiet_sigma": 7.91,
+    "threshold": 31.63,
+    "threshold_from": "4 x robust spread (1.4826 x MAD) of the quiet pair 2026-09-20 -> 2026-10-02",
+    "quiet_flag_km2": 0.37,
+    "quiet_flag_pct": 0.057,
+    "brighter_km2": 0.79,
+    "darker_km2": 0.02,
+    "flag_km2": 0.82,
+    "flag_pct": 0.125,
+    "event_spread": 8.4,
+    "ratio_vs_quiet": 2.22,
+    "label": "display-scaled GIBS radar, not calibrated dB; screening only",
+    "track": "040D",
+    "passes": {
+     "prior": {
+      "id": "NISAR_L2_PR_GCOV_031_040_D_085_4005_DHDH_A_20260920T234516_20260920T234532_P05023_N_P_J_001",
+      "start": "2026-09-20T23:45:16.000Z",
+      "track": "040",
+      "direction": "descending",
+      "frame": "085",
+      "collection": "C2854338529-ASF",
+      "incidence_deg": null,
+      "incidence_note": "not in CMR granule metadata (UMM AdditionalAttributes)"
+     },
+     "before": {
+      "id": "NISAR_L2_PR_GCOV_032_040_D_085_4005_DHDH_A_20261002T234516_20261002T234533_P05023_N_P_J_001",
+      "start": "2026-10-02T23:45:16.000Z",
+      "track": "040",
+      "direction": "descending",
+      "frame": "085",
+      "collection": "C2854338529-ASF",
+      "incidence_deg": null,
+      "incidence_note": "not in CMR granule metadata (UMM AdditionalAttributes)"
+     },
+     "after": {
+      "id": "NISAR_L2_PR_GCOV_033_040_D_085_4005_DHDH_A_20261014T234516_20261014T234533_P05023_N_P_J_001",
+      "start": "2026-10-14T23:45:16.000Z",
+      "track": "040",
+      "direction": "descending",
+      "frame": "085",
+      "collection": "C2854338529-ASF",
+      "incidence_deg": null,
+      "incidence_note": "not in CMR granule metadata (UMM AdditionalAttributes)"
+     }
+    }
+   },
+   {
+    "bbox": [
+     -80.9502,
+     7.4061,
+     -80.5878,
+     7.7679
+    ],
+    "dates": {
+     "prior": "2026-09-11",
+     "before": "2026-10-05",
+     "after": "2026-10-17"
+    },
+    "zoom": 11,
+    "channel": "HH",
+    "k": 4.0,
+    "min_group_px": 4,
+    "pixel_m": 75.8,
+    "tiles": {
+     "prior": {
+      "ok": 8,
+      "empty": 1,
+      "missing": 0,
+      "scrambled": 0
+     },
+     "before": {
+      "ok": 8,
+      "empty": 1,
+      "missing": 0,
+      "scrambled": 0
+     },
+     "after": {
+      "ok": 8,
+      "empty": 1,
+      "missing": 0,
+      "scrambled": 0
+     }
+    },
+    "valid_km2": 951.6,
+    "r_minus_b_abs_median": 48.0,
+    "quiet_sigma": 7.25,
+    "threshold": 28.99,
+    "threshold_from": "4 x robust spread (1.4826 x MAD) of the quiet pair 2026-09-11 -> 2026-10-05",
+    "quiet_flag_km2": 0.3,
+    "quiet_flag_pct": 0.031,
+    "brighter_km2": 0.51,
+    "darker_km2": 0.03,
+    "flag_km2": 0.54,
+    "flag_pct": 0.057,
+    "event_spread": 7.58,
+    "ratio_vs_quiet": 1.8,
+    "label": "display-scaled GIBS radar, not calibrated dB; screening only",
+    "track": "076A",
+    "passes": {
+     "prior": {
+      "id": "NISAR_L2_PR_GCOV_030_076_A_005_4005_DHDH_A_20260911T105603_20260911T105616_P05023_N_P_J_001",
+      "start": "2026-09-11T10:56:03.000Z",
+      "track": "076",
+      "direction": "ascending",
+      "frame": "005",
+      "collection": "C2854338529-ASF",
+      "incidence_deg": null,
+      "incidence_note": "not in CMR granule metadata (UMM AdditionalAttributes)"
+     },
+     "before": {
+      "id": "NISAR_L2_PR_GCOV_032_076_A_005_4005_DHDH_A_20261005T105604_20261005T105616_P05023_N_P_J_001",
+      "start": "2026-10-05T10:56:04.000Z",
+      "track": "076",
+      "direction": "ascending",
+      "frame": "005",
+      "collection": "C2854338529-ASF",
+      "incidence_deg": null,
+      "incidence_note": "not in CMR granule metadata (UMM AdditionalAttributes)"
+     },
+     "after": {
+      "id": "NISAR_L2_PR_GCOV_033_076_A_005_4005_DHDH_A_20261017T105604_20261017T105616_P05023_N_P_J_001",
+      "start": "2026-10-17T10:56:04.000Z",
+      "track": "076",
+      "direction": "ascending",
+      "frame": "005",
+      "collection": "C2854338529-ASF",
+      "incidence_deg": null,
+      "incidence_note": "not in CMR granule metadata (UMM AdditionalAttributes)"
+     }
+    }
+   }
+  ],
+  "best": {
+   "bbox": [
+    -80.9502,
+    7.4061,
+    -80.5878,
+    7.7679
+   ],
+   "dates": {
+    "prior": "2026-09-15",
+    "before": "2026-09-27",
+    "after": "2026-10-09"
+   },
+   "zoom": 11,
+   "channel": "HH",
+   "k": 4.0,
+   "min_group_px": 4,
+   "pixel_m": 75.8,
+   "tiles": {
+    "prior": {
+     "ok": 8,
+     "empty": 0,
+     "missing": 0,
+     "scrambled": 1
+    },
+    "before": {
+     "ok": 8,
+     "empty": 1,
+     "missing": 0,
+     "scrambled": 0
+    },
+    "after": {
+     "ok": 8,
+     "empty": 0,
+     "missing": 0,
+     "scrambled": 1
+    }
+   },
+   "valid_km2": 1459.7,
+   "r_minus_b_abs_median": 62.0,
+   "quiet_sigma": 8.07,
+   "threshold": 32.29,
+   "threshold_from": "4 x robust spread (1.4826 x MAD) of the quiet pair 2026-09-15 -> 2026-09-27",
+   "quiet_flag_km2": 0.35,
+   "quiet_flag_pct": 0.024,
+   "brighter_km2": 10.47,
+   "darker_km2": 0.42,
+   "flag_km2": 10.89,
+   "flag_pct": 0.746,
+   "event_spread": 11.37,
+   "ratio_vs_quiet": 31.11,
+   "png": "data/cases/img/panama_change.png",
+   "label": "display-scaled GIBS radar, not calibrated dB; screening only",
+   "track": "141D",
+   "passes": {
+    "prior": {
+     "id": "NISAR_L2_PR_GCOV_030_141_D_084_4005_DHDH_A_20260915T235307_20260915T235336_P05023_N_F_J_001",
+     "start": "2026-09-15T23:53:07.000Z",
+     "track": "141",
+     "direction": "descending",
+     "frame": "084",
+     "collection": "C2854338529-ASF",
+     "incidence_deg": null,
+     "incidence_note": "not in CMR granule metadata (UMM AdditionalAttributes)"
+    },
+    "before": {
+     "id": "NISAR_L2_PR_GCOV_031_141_D_084_4005_DHDH_A_20260927T235307_20260927T235336_P05023_N_F_J_001",
+     "start": "2026-09-27T23:53:07.000Z",
+     "track": "141",
+     "direction": "descending",
+     "frame": "084",
+     "collection": "C2854338529-ASF",
+     "incidence_deg": null,
+     "incidence_note": "not in CMR granule metadata (UMM AdditionalAttributes)"
+    },
+    "after": {
+     "id": "NISAR_L2_PR_GCOV_032_141_D_084_4005_DHDH_A_20261009T235308_20261009T235336_P05023_N_F_J_001",
+     "start": "2026-10-09T23:53:08.000Z",
+     "track": "141",
+     "direction": "descending",
+     "frame": "084",
+     "collection": "C2854338529-ASF",
+     "incidence_deg": null,
+     "incidence_note": "not in CMR granule metadata (UMM AdditionalAttributes)"
+    }
+   },
+   "dist_check": {
+    "product": "OPERA_L3_DIST-ALERT-HLS_Color_Index (GIBS)",
+    "before_window_days": [
+     "2026-09-27",
+     "2026-09-26",
+     "2026-09-24",
+     "2026-09-21"
+    ],
+    "after_window_days": [
+     "2026-10-09",
+     "2026-10-10",
+     "2026-10-12",
+     "2026-10-16"
+    ],
+    "seen_by_both_pct": 99.4,
+    "tolerance_px": 1,
+    "disturbed_def": "any DIST class 1-8 after, class 0 before",
+    "radar_flag_px": 1897,
+    "dist_new_px": 4337,
+    "dist_new_share_of_seen_pct": 1.72,
+    "radar_flag_share_of_seen_pct": 0.75,
+    "radar_flags_also_dist_pct": 10.6,
+    "dist_new_also_radar_pct": 3.0,
+    "chance_radar_flags_also_dist_pct": 8.5,
+    "chance_dist_new_also_radar_pct": 2.1
+   }
+  }
+ },
+ "gunw": {
+  "exists_in_cmr": true,
+  "query": "https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C2854335566-ASF&bounding_box=-80.9502,7.4061,-80.5878,7.7679&temporal=2026-09-20T00:00:00Z,2026-10-31T00:00:00Z",
+  "processed": false,
+  "note": "Ground motion needs GUNW interferometry: next step."
+ },
+ "generated": "2026-11-15"
+}

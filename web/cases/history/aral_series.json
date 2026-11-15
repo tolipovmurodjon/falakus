@@ -1,0 +1,82 @@
+{
+ "place": "Aral Sea, east basin of the Large Aral (Uzbekistan/Kazakhstan)",
+ "bbox": [
+  59.6,
+  44.6,
+  60.9,
+  46.0
+ ],
+ "width": 1400,
+ "rs1_stretch_db": [
+  25.07,
+  36.13
+ ],
+ "rs1_note": "20*log10(DN), relative dB, uncalibrated; one fixed stretch for all RADARSAT-1 frames of this place",
+ "nisar_note": "GIBS NISAR GCOV display PNG, R channel (HH), 2-98 % stretch; not calibrated",
+ "frames": [
+  {
+   "date": "1997-07-16",
+   "sensor": "RADARSAT-1 (CSA), C-band HH",
+   "file": "aral_rs1_1997-07-16.jpg",
+   "beam": "SCWB",
+   "orbit": "descending",
+   "scenes": [
+    "s3://radarsat-r1-l1-cog/1997/7/RS1_M0357343_SCWB_19970716_021238_HH_SCW.tif"
+   ],
+   "coverage_pct": 100.0
+  },
+  {
+   "date": "1999-05-02",
+   "sensor": "RADARSAT-1 (CSA), C-band HH",
+   "file": "aral_rs1_1999-05-02.jpg",
+   "beam": "SCNB",
+   "orbit": "descending",
+   "scenes": [
+    "s3://radarsat-r1-l1-cog/1999/5/RS1_18215_SNB_F337_19990502_020824_HH_GRF.tif"
+   ],
+   "coverage_pct": 100.0
+  },
+  {
+   "date": "2001-02-22",
+   "sensor": "RADARSAT-1 (CSA), C-band HH",
+   "file": "aral_rs1_2001-02-22.jpg",
+   "beam": "S7",
+   "orbit": "descending",
+   "scenes": [
+    "s3://radarsat-r1-l1-cog/2001/2/RS1_27676_ST7_F335_20010222_015916_HH_GRF.tif",
+    "s3://radarsat-r1-l1-cog/2001/2/RS1_27676_ST7_F337_20010222_015931_HH_GRF.tif",
+    "s3://radarsat-r1-l1-cog/2001/2/RS1_27676_ST7_F339_20010222_015943_HH_GRF.tif"
+   ],
+   "coverage_pct": 64.3
+  },
+  {
+   "date": "2004-02-10",
+   "sensor": "RADARSAT-1 (CSA), C-band HH",
+   "file": "aral_rs1_2004-02-10.jpg",
+   "beam": "SCWB",
+   "orbit": "descending",
+   "scenes": [
+    "s3://radarsat-r1-l1-cog/2004/2/RS1_P0359823_SCWB_20040210_021102_HH_SCW.tif"
+   ],
+   "coverage_pct": 100.0
+  },
+  {
+   "date": "2026-10-31",
+   "sensor": "NISAR (NASA-ISRO), L-band, NASA GIBS",
+   "file": "aral_nisar_2026-10-31.jpg",
+   "granules": [
+    "NISAR_L2_PR_GCOV_034_107_D_066_2005_DHDH_A_20261031T150652_20261031T150727_P05036_N_F_J_001",
+    "NISAR_L2_PR_GCOV_034_107_D_065_2005_DHDH_A_20261031T150618_20261031T150653_P05036_N_F_J_001"
+   ],
+   "tiles": {
+    "ok": 86,
+    "missing": 3,
+    "ok_after_5_retries": 4,
+    "ok_after_2_retries": 2,
+    "ok_after_4_retries": 1
+   },
+   "coverage_pct": 97.2,
+   "zoom": 11
+  }
+ ]
+}

@@ -1,0 +1,5752 @@
+{
+ "event": {
+  "usgs_id": "us6000u18k",
+  "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u18k",
+  "mag": 7.7,
+  "lon": -80.7566,
+  "lat": 7.6069,
+  "depth_km": 10,
+  "time_utc": "2026-10-09T17:56:05.537",
+  "finite_fault": {
+   "model-strike": "295.0",
+   "model-dip": "60.0",
+   "model-rake": "-16.0",
+   "model-length": "55.0",
+   "model-width": "33.6",
+   "maximum-slip": "11.0582"
+  },
+  "finite_fault_geojson": "https://earthquake.usgs.gov/product/finite-fault/us6000u18k_1/us/1792710177789/FFM.geojson",
+  "model_surface_displacement": "https://earthquake.usgs.gov/product/finite-fault/us6000u18k_1/us/1792710177789/surface_deformation.disp",
+  "usgs_range_offsets_zip": "https://earthquake.usgs.gov/product/finite-fault/us6000u18k_1/us/1792710177789/resampled_interferograms.zip",
+  "model_max_surface_motion": {
+   "max_horizontal_m": 4.81,
+   "max_abs_vertical_m": 0.92
+  }
+ },
+ "physics": {
+  "wavelength_m": 0.2384,
+  "fringe_cm_los": 11.92,
+  "note": "1 colour cycle = lambda/2 of line-of-sight motion. Ascending and descending tracks look from opposite sides, so the same ground motion gives different fringe patterns."
+ },
+ "method": [
+  "CMR search of GUNW provisional + validated collections over the rupture box",
+  "event pairs span 2026-10-09T17:56Z; controls = same track/direction, secondary date before the quake",
+  "browse PNG georeferenced by matching alpha extremes to the CMR UMM polygon (residual reported per frame)",
+  "colour -> wrapped phase via cyclic colour loop (PCA angle, histogram-equalised on coherent pixels)",
+  "pseudo-coherence = consistency of phase steps in a 7x7 window; coherent if > 0.5",
+  "planar ramp = median fringe gradient 60-110 km from the epicentre; 'deramped' removes it",
+  "transects +/-60 km through the epicentre; fringes counted only inside coherent runs >= 2 km, so counts are LOWER BOUNDS; +/-1 fringe reading uncertainty",
+  "independent check: USGS finite-fault surface displacement projected on the NISAR look vector (USGS range-offset files give the descending vector; ascending mirrored)"
+ ],
+ "look_vectors_usgs_convention": {
+  "D": [
+   0.57,
+   -0.149,
+   -0.808
+  ],
+  "A": [
+   -0.57,
+   -0.149,
+   -0.808
+  ]
+ },
+ "comparison_event_vs_control": {
+  "coherent_frac_within_30km": {
+   "event_median": 0.826,
+   "control_median": 0.942
+  },
+  "coherent_frac_60_110km": {
+   "event_median": 0.426,
+   "control_median": 0.55
+  },
+  "fringe_rate_near_cyc_per_km": {
+   "event_median": 0.357,
+   "control_median": 0.051
+  },
+  "fringe_rate_far_cyc_per_km": {
+   "event_median": 0.1,
+   "control_median": 0.041
+  },
+  "deramped_rate_near": {
+   "event_median": 0.362,
+   "control_median": 0.042
+  },
+  "deramped_rate_far": {
+   "event_median": 0.059,
+   "control_median": 0.034
+  },
+  "ramp_fringes_per_100km": {
+   "event_median": 6.5,
+   "control_median": 1.3
+  }
+ },
+ "usgs_nisar_range_offsets": {
+  "040": {
+   "file": "nisar-rngoff-p040-20261002-20261014_resampled_1000m.txt",
+   "points": 3260,
+   "los_m_p5_p95": [
+    -2.74,
+    0.02
+   ],
+   "median_abs_los_m_within_20km": 1.92,
+   "median_abs_los_m_beyond_50km": 0.95
+  },
+  "141": {
+   "file": "nisar-rngoff-p141-20260927-20261009_resampled_1000m.txt",
+   "points": 1375,
+   "los_m_p5_p95": [
+    -3.69,
+    0.44
+   ],
+   "median_abs_los_m_within_20km": 2.67,
+   "median_abs_los_m_beyond_50km": 1.47
+  }
+ },
+ "pairs": [
+  {
+   "kind": "control",
+   "track": "004",
+   "dir": "A",
+   "direction": "ascending",
+   "ref_date": "2026-06-26",
+   "sec_date": "2026-07-08",
+   "days": 12,
+   "frames": [
+    {
+     "name": "NISAR_L2_PR_GUNW_024_004_A_005_025_4000_SH_20260626T110422_20260626T110438_20260708T110421_20260708T110438_P05023_N_P_J_001",
+     "frame": "005",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_024_004_A_005_025_4000_SH_20260626T110422_20260626T110438_20260708T110421_20260708T110438_P05023_N_P_J_001/NISAR_L2_PR_GUNW_024_004_A_005_025_4000_SH_20260626T110422_20260626T110438_20260708T110421_20260708T110438_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_024_004_A_005_025_4000_SH_20260626T110422_20260626T110438_20260708T110421_20260708T110438_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -80.72727,
+       7.1384
+      ],
+      [
+       -80.96163,
+       8.15178
+      ],
+      [
+       -83.19185,
+       7.63495
+      ],
+      [
+       -82.95457,
+       6.62517
+      ],
+      [
+       -80.72727,
+       7.1384
+      ]
+     ],
+     "georef": {
+      "ox": -83.4271945,
+      "sx": 0.0021791,
+      "oy": 8.3639896,
+      "sy": -0.0021654,
+      "residual_deg": 0.0035123,
+      "ok": true
+     }
+    }
+   ],
+   "stats": {
+    "valid_px_within_30km": 351,
+    "coherent_frac_within_30km": 0.897,
+    "coherent_frac_60_110km": 0.717,
+    "fringe_rate_near_cyc_per_km": 0.099,
+    "fringe_rate_far_cyc_per_km": 0.027,
+    "ramp_cyc_per_km_east_north": [
+     -0.006,
+     -0.011
+    ],
+    "ramp_fringes_per_100km": 1.3,
+    "deramped_rate_near": 0.103,
+    "deramped_rate_far": 0.023
+   },
+   "transects": {
+    "along-strike": {
+     "azimuth_deg": 115.0,
+     "raw": {
+      "abs_fringes": 0.5,
+      "coherent_km": 14.4,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "deramped": {
+      "abs_fringes": 0.5,
+      "coherent_km": 14.4,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "segments_deramped": [
+      {
+       "from_km": -60.0,
+       "to_km": -50.2,
+       "net_fringes": -0.16
+      },
+      {
+       "from_km": -34.6,
+       "to_km": -30.0,
+       "net_fringes": -0.35
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      17.9
+     ],
+     "usgs_model_fringes_along_line": 32.4,
+     "usgs_model_los_span_cm": 184.1
+    },
+    "across-strike": {
+     "azimuth_deg": 25.0,
+     "raw": {
+      "abs_fringes": 0,
+      "coherent_km": 0,
+      "length_km": 120.0,
+      "segments": 0
+     },
+     "deramped": {
+      "abs_fringes": 0,
+      "coherent_km": 0,
+      "length_km": 120.0,
+      "segments": 0
+     },
+     "segments_deramped": [],
+     "los_cm_range_deramped": [
+      0.0,
+      11.9
+     ],
+     "usgs_model_fringes_along_line": 23.3,
+     "usgs_model_los_span_cm": 147.1
+    },
+    "N-S": {
+     "azimuth_deg": 0.0,
+     "raw": {
+      "abs_fringes": 0,
+      "coherent_km": 0,
+      "length_km": 120.0,
+      "segments": 0
+     },
+     "deramped": {
+      "abs_fringes": 0,
+      "coherent_km": 0,
+      "length_km": 120.0,
+      "segments": 0
+     },
+     "segments_deramped": [],
+     "los_cm_range_deramped": [
+      0.0,
+      11.9
+     ],
+     "usgs_model_fringes_along_line": 11.6,
+     "usgs_model_los_span_cm": 72.4
+    }
+   },
+   "note": null
+  },
+  {
+   "kind": "control",
+   "track": "004",
+   "dir": "A",
+   "direction": "ascending",
+   "ref_date": "2026-07-08",
+   "sec_date": "2026-07-20",
+   "days": 12,
+   "frames": [
+    {
+     "name": "NISAR_L2_PR_GUNW_025_004_A_005_026_4000_SH_20260708T110421_20260708T110438_20260720T110421_20260720T110437_P05023_N_P_J_001",
+     "frame": "005",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_025_004_A_005_026_4000_SH_20260708T110421_20260708T110438_20260720T110421_20260720T110437_P05023_N_P_J_001/NISAR_L2_PR_GUNW_025_004_A_005_026_4000_SH_20260708T110421_20260708T110438_20260720T110421_20260720T110437_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_025_004_A_005_026_4000_SH_20260708T110421_20260708T110438_20260720T110421_20260720T110437_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -80.72211,
+       7.11323
+      ],
+      [
+       -80.97015,
+       8.18624
+      ],
+      [
+       -83.20061,
+       7.66922
+      ],
+      [
+       -82.94934,
+       6.60004
+      ],
+      [
+       -80.72211,
+       7.11323
+      ]
+     ],
+     "georef": {
+      "ox": -83.4296967,
+      "sx": 0.0021818,
+      "oy": 8.3636867,
+      "sy": -0.002164,
+      "residual_deg": 0.0040021,
+      "ok": true
+     }
+    }
+   ],
+   "stats": {
+    "valid_px_within_30km": 475,
+    "coherent_frac_within_30km": 0.914,
+    "coherent_frac_60_110km": 0.706,
+    "fringe_rate_near_cyc_per_km": 0.062,
+    "fringe_rate_far_cyc_per_km": 0.048,
+    "ramp_cyc_per_km_east_north": [
+     0.026,
+     -0.002
+    ],
+    "ramp_fringes_per_100km": 2.6,
+    "deramped_rate_near": 0.056,
+    "deramped_rate_far": 0.04
+   },
+   "transects": {
+    "along-strike": {
+     "azimuth_deg": 115.0,
+     "raw": {
+      "abs_fringes": 0.6,
+      "coherent_km": 15.4,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "deramped": {
+      "abs_fringes": 0.2,
+      "coherent_km": 15.4,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "segments_deramped": [
+      {
+       "from_km": -60.0,
+       "to_km": -50.4,
+       "net_fringes": 0.03
+      },
+      {
+       "from_km": -34.1,
+       "to_km": -28.3,
+       "net_fringes": 0.15
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      14.3
+     ],
+     "usgs_model_fringes_along_line": 32.4,
+     "usgs_model_los_span_cm": 184.1
+    },
+    "across-strike": {
+     "azimuth_deg": 25.0,
+     "raw": {
+      "abs_fringes": 0,
+      "coherent_km": 0,
+      "length_km": 120.0,
+      "segments": 0
+     },
+     "deramped": {
+      "abs_fringes": 0,
+      "coherent_km": 0,
+      "length_km": 120.0,
+      "segments": 0
+     },
+     "segments_deramped": [],
+     "los_cm_range_deramped": [
+      0.0,
+      11.9
+     ],
+     "usgs_model_fringes_along_line": 23.3,
+     "usgs_model_los_span_cm": 147.1
+    },
+    "N-S": {
+     "azimuth_deg": 0.0,
+     "raw": {
+      "abs_fringes": 0,
+      "coherent_km": 0,
+      "length_km": 120.0,
+      "segments": 0
+     },
+     "deramped": {
+      "abs_fringes": 0,
+      "coherent_km": 0,
+      "length_km": 120.0,
+      "segments": 0
+     },
+     "segments_deramped": [],
+     "los_cm_range_deramped": [
+      0.0,
+      11.9
+     ],
+     "usgs_model_fringes_along_line": 11.6,
+     "usgs_model_los_span_cm": 72.4
+    }
+   },
+   "note": null
+  },
+  {
+   "kind": "control",
+   "track": "004",
+   "dir": "A",
+   "direction": "ascending",
+   "ref_date": "2026-07-20",
+   "sec_date": "2026-08-13",
+   "days": 24,
+   "frames": [
+    {
+     "name": "NISAR_L2_PR_GUNW_026_004_A_005_028_4000_SH_20260720T110421_20260720T110437_20260813T110420_20260813T110436_P05023_N_P_J_001",
+     "frame": "005",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_026_004_A_005_028_4000_SH_20260720T110421_20260720T110437_20260813T110420_20260813T110436_P05023_N_P_J_001/NISAR_L2_PR_GUNW_026_004_A_005_028_4000_SH_20260720T110421_20260720T110437_20260813T110420_20260813T110436_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_026_004_A_005_028_4000_SH_20260720T110421_20260720T110437_20260813T110420_20260813T110436_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -80.73217,
+       7.15794
+      ],
+      [
+       -80.96667,
+       8.17129
+      ],
+      [
+       -83.19686,
+       7.65438
+      ],
+      [
+       -82.95952,
+       6.64461
+      ],
+      [
+       -80.73217,
+       7.15794
+      ]
+     ],
+     "georef": {
+      "ox": -83.4278566,
+      "sx": 0.0021792,
+      "oy": 8.3640198,
+      "sy": -0.0021655,
+      "residual_deg": 0.003463,
+      "ok": true
+     }
+    }
+   ],
+   "stats": {
+    "valid_px_within_30km": 246,
+    "coherent_frac_within_30km": 0.874,
+    "coherent_frac_60_110km": 0.729,
+    "fringe_rate_near_cyc_per_km": 0.105,
+    "fringe_rate_far_cyc_per_km": 0.03,
+    "ramp_cyc_per_km_east_north": [
+     -0.009,
+     -0.003
+    ],
+    "ramp_fringes_per_100km": 0.9,
+    "deramped_rate_near": 0.106,
+    "deramped_rate_far": 0.028
+   },
+   "transects": {
+    "along-strike": {
+     "azimuth_deg": 115.0,
+     "raw": {
+      "abs_fringes": 0.1,
+      "coherent_km": 11.6,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "deramped": {
+      "abs_fringes": 0.0,
+      "coherent_km": 11.6,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "segments_deramped": [
+      {
+       "from_km": -60.0,
+       "to_km": -50.6,
+       "net_fringes": 0.0
+      },
+      {
+       "from_km": -34.6,
+       "to_km": -32.4,
+       "net_fringes": 0.01
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      11.9
+     ],
+     "usgs_model_fringes_along_line": 32.4,
+     "usgs_model_los_span_cm": 184.1
+    },
+    "across-strike": {
+     "azimuth_deg": 25.0,
+     "raw": {
+      "abs_fringes": 0,
+      "coherent_km": 0,
+      "length_km": 120.0,
+      "segments": 0
+     },
+     "deramped": {
+      "abs_fringes": 0,
+      "coherent_km": 0,
+      "length_km": 120.0,
+      "segments": 0
+     },
+     "segments_deramped": [],
+     "los_cm_range_deramped": [
+      0.0,
+      11.9
+     ],
+     "usgs_model_fringes_along_line": 23.3,
+     "usgs_model_los_span_cm": 147.1
+    },
+    "N-S": {
+     "azimuth_deg": 0.0,
+     "raw": {
+      "abs_fringes": 0,
+      "coherent_km": 0,
+      "length_km": 120.0,
+      "segments": 0
+     },
+     "deramped": {
+      "abs_fringes": 0,
+      "coherent_km": 0,
+      "length_km": 120.0,
+      "segments": 0
+     },
+     "segments_deramped": [],
+     "los_cm_range_deramped": [
+      0.0,
+      11.9
+     ],
+     "usgs_model_fringes_along_line": 11.6,
+     "usgs_model_los_span_cm": 72.4
+    }
+   },
+   "note": null
+  },
+  {
+   "kind": "control",
+   "track": "004",
+   "dir": "A",
+   "direction": "ascending",
+   "ref_date": "2026-08-13",
+   "sec_date": "2026-08-25",
+   "days": 12,
+   "frames": [
+    {
+     "name": "NISAR_L2_PR_GUNW_028_004_A_005_029_4000_SH_20260813T110420_20260813T110436_20260825T110420_20260825T110435_P05023_N_P_J_001",
+     "frame": "005",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_028_004_A_005_029_4000_SH_20260813T110420_20260813T110436_20260825T110420_20260825T110435_P05023_N_P_J_001/NISAR_L2_PR_GUNW_028_004_A_005_029_4000_SH_20260813T110420_20260813T110436_20260825T110420_20260825T110435_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_028_004_A_005_029_4000_SH_20260813T110420_20260813T110436_20260825T110420_20260825T110435_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -80.73473,
+       7.17155
+      ],
+      [
+       -80.96904,
+       8.18494
+      ],
+      [
+       -83.19947,
+       7.668
+      ],
+      [
+       -82.96212,
+       6.65822
+      ],
+      [
+       -80.73473,
+       7.17155
+      ]
+     ],
+     "georef": {
+      "ox": -83.4284945,
+      "sx": 0.0021812,
+      "oy": 8.3646815,
+      "sy": -0.0021656,
+      "residual_deg": 0.0042389,
+      "ok": true
+     }
+    }
+   ],
+   "stats": {
+    "valid_px_within_30km": 236,
+    "coherent_frac_within_30km": 0.869,
+    "coherent_frac_60_110km": 0.715,
+    "fringe_rate_near_cyc_per_km": 0.048,
+    "fringe_rate_far_cyc_per_km": 0.032,
+    "ramp_cyc_per_km_east_north": [
+     0.002,
+     0.007
+    ],
+    "ramp_fringes_per_100km": 0.7,
+    "deramped_rate_near": 0.048,
+    "deramped_rate_far": 0.031
+   },
+   "transects": {
+    "along-strike": {
+     "azimuth_deg": 115.0,
+     "raw": {
+      "abs_fringes": 0.0,
+      "coherent_km": 9.6,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 0.0,
+      "coherent_km": 9.6,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -60.0,
+       "to_km": -50.4,
+       "net_fringes": 0.03
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      11.9
+     ],
+     "usgs_model_fringes_along_line": 32.4,
+     "usgs_model_los_span_cm": 184.1
+    },
+    "across-strike": {
+     "azimuth_deg": 25.0,
+     "raw": {
+      "abs_fringes": 0,
+      "coherent_km": 0,
+      "length_km": 120.0,
+      "segments": 0
+     },
+     "deramped": {
+      "abs_fringes": 0,
+      "coherent_km": 0,
+      "length_km": 120.0,
+      "segments": 0
+     },
+     "segments_deramped": [],
+     "los_cm_range_deramped": [
+      0.0,
+      11.9
+     ],
+     "usgs_model_fringes_along_line": 23.3,
+     "usgs_model_los_span_cm": 147.1
+    },
+    "N-S": {
+     "azimuth_deg": 0.0,
+     "raw": {
+      "abs_fringes": 0,
+      "coherent_km": 0,
+      "length_km": 120.0,
+      "segments": 0
+     },
+     "deramped": {
+      "abs_fringes": 0,
+      "coherent_km": 0,
+      "length_km": 120.0,
+      "segments": 0
+     },
+     "segments_deramped": [],
+     "los_cm_range_deramped": [
+      0.0,
+      11.9
+     ],
+     "usgs_model_fringes_along_line": 11.6,
+     "usgs_model_los_span_cm": 72.4
+    }
+   },
+   "note": null
+  },
+  {
+   "kind": "control",
+   "track": "004",
+   "dir": "A",
+   "direction": "ascending",
+   "ref_date": "2026-08-25",
+   "sec_date": "2026-09-06",
+   "days": 12,
+   "frames": [
+    {
+     "name": "NISAR_L2_PR_GUNW_029_004_A_005_030_4000_SH_20260825T110420_20260825T110435_20260906T110419_20260906T110435_P05023_N_P_J_001",
+     "frame": "005",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_029_004_A_005_030_4000_SH_20260825T110420_20260825T110435_20260906T110419_20260906T110435_P05023_N_P_J_001/NISAR_L2_PR_GUNW_029_004_A_005_030_4000_SH_20260825T110420_20260825T110435_20260906T110419_20260906T110435_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_029_004_A_005_030_4000_SH_20260825T110420_20260825T110435_20260906T110419_20260906T110435_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -80.73745,
+       7.18271
+      ],
+      [
+       -80.95822,
+       8.13643
+      ],
+      [
+       -83.18818,
+       7.61971
+      ],
+      [
+       -82.96483,
+       6.66934
+      ],
+      [
+       -80.73745,
+       7.18271
+      ]
+     ],
+     "georef": {
+      "ox": -83.4280201,
+      "sx": 0.0021804,
+      "oy": 8.3636342,
+      "sy": -0.0021638,
+      "residual_deg": 0.004872,
+      "ok": true
+     }
+    }
+   ],
+   "stats": {
+    "valid_px_within_30km": 274,
+    "coherent_frac_within_30km": 0.876,
+    "coherent_frac_60_110km": 0.728,
+    "fringe_rate_near_cyc_per_km": 0.095,
+    "fringe_rate_far_cyc_per_km": 0.035,
+    "ramp_cyc_per_km_east_north": [
+     0.002,
+     -0.012
+    ],
+    "ramp_fringes_per_100km": 1.2,
+    "deramped_rate_near": 0.085,
+    "deramped_rate_far": 0.034
+   },
+   "transects": {
+    "along-strike": {
+     "azimuth_deg": 115.0,
+     "raw": {
+      "abs_fringes": 0.2,
+      "coherent_km": 12.3,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "deramped": {
+      "abs_fringes": 0.1,
+      "coherent_km": 12.3,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "segments_deramped": [
+      {
+       "from_km": -60.0,
+       "to_km": -50.4,
+       "net_fringes": 0.09
+      },
+      {
+       "from_km": -34.6,
+       "to_km": -31.9,
+       "net_fringes": 0.02
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      13.1
+     ],
+     "usgs_model_fringes_along_line": 32.4,
+     "usgs_model_los_span_cm": 184.1
+    },
+    "across-strike": {
+     "azimuth_deg": 25.0,
+     "raw": {
+      "abs_fringes": 0,
+      "coherent_km": 0,
+      "length_km": 120.0,
+      "segments": 0
+     },
+     "deramped": {
+      "abs_fringes": 0,
+      "coherent_km": 0,
+      "length_km": 120.0,
+      "segments": 0
+     },
+     "segments_deramped": [],
+     "los_cm_range_deramped": [
+      0.0,
+      11.9
+     ],
+     "usgs_model_fringes_along_line": 23.3,
+     "usgs_model_los_span_cm": 147.1
+    },
+    "N-S": {
+     "azimuth_deg": 0.0,
+     "raw": {
+      "abs_fringes": 0,
+      "coherent_km": 0,
+      "length_km": 120.0,
+      "segments": 0
+     },
+     "deramped": {
+      "abs_fringes": 0,
+      "coherent_km": 0,
+      "length_km": 120.0,
+      "segments": 0
+     },
+     "segments_deramped": [],
+     "los_cm_range_deramped": [
+      0.0,
+      11.9
+     ],
+     "usgs_model_fringes_along_line": 11.6,
+     "usgs_model_los_span_cm": 72.4
+    }
+   },
+   "note": null
+  },
+  {
+   "kind": "control",
+   "track": "004",
+   "dir": "A",
+   "direction": "ascending",
+   "ref_date": "2026-09-06",
+   "sec_date": "2026-09-18",
+   "days": 12,
+   "frames": [
+    {
+     "name": "NISAR_L2_PR_GUNW_030_004_A_005_031_4000_SH_20260906T110419_20260906T110435_20260918T110419_20260918T110435_P05023_F_P_J_001",
+     "frame": "005",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_030_004_A_005_031_4000_SH_20260906T110419_20260906T110435_20260918T110419_20260918T110435_P05023_F_P_J_001/NISAR_L2_PR_GUNW_030_004_A_005_031_4000_SH_20260906T110419_20260906T110435_20260918T110419_20260918T110435_P05023_F_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_030_004_A_005_031_4000_SH_20260906T110419_20260906T110435_20260918T110419_20260918T110435_P05023_F_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -80.72578,
+       7.13222
+      ],
+      [
+       -80.96018,
+       8.14558
+      ],
+      [
+       -83.19035,
+       7.62877
+      ],
+      [
+       -82.95307,
+       6.61899
+      ],
+      [
+       -80.72578,
+       7.13222
+      ]
+     ],
+     "georef": {
+      "ox": -83.4280829,
+      "sx": 0.002181,
+      "oy": 8.364283,
+      "sy": -0.0021654,
+      "residual_deg": 0.0042948,
+      "ok": true
+     }
+    }
+   ],
+   "stats": {
+    "valid_px_within_30km": 273,
+    "coherent_frac_within_30km": 0.886,
+    "coherent_frac_60_110km": 0.709,
+    "fringe_rate_near_cyc_per_km": 0.073,
+    "fringe_rate_far_cyc_per_km": 0.029,
+    "ramp_cyc_per_km_east_north": [
+     -0.002,
+     0.007
+    ],
+    "ramp_fringes_per_100km": 0.7,
+    "deramped_rate_near": 0.076,
+    "deramped_rate_far": 0.029
+   },
+   "transects": {
+    "along-strike": {
+     "azimuth_deg": 115.0,
+     "raw": {
+      "abs_fringes": 0.1,
+      "coherent_km": 11.8,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "deramped": {
+      "abs_fringes": 0.1,
+      "coherent_km": 11.8,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "segments_deramped": [
+      {
+       "from_km": -60.0,
+       "to_km": -50.6,
+       "net_fringes": -0.07
+      },
+      {
+       "from_km": -33.8,
+       "to_km": -31.4,
+       "net_fringes": 0.02
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      13.1
+     ],
+     "usgs_model_fringes_along_line": 32.4,
+     "usgs_model_los_span_cm": 184.1
+    },
+    "across-strike": {
+     "azimuth_deg": 25.0,
+     "raw": {
+      "abs_fringes": 0,
+      "coherent_km": 0,
+      "length_km": 120.0,
+      "segments": 0
+     },
+     "deramped": {
+      "abs_fringes": 0,
+      "coherent_km": 0,
+      "length_km": 120.0,
+      "segments": 0
+     },
+     "segments_deramped": [],
+     "los_cm_range_deramped": [
+      0.0,
+      11.9
+     ],
+     "usgs_model_fringes_along_line": 23.3,
+     "usgs_model_los_span_cm": 147.1
+    },
+    "N-S": {
+     "azimuth_deg": 0.0,
+     "raw": {
+      "abs_fringes": 0,
+      "coherent_km": 0,
+      "length_km": 120.0,
+      "segments": 0
+     },
+     "deramped": {
+      "abs_fringes": 0,
+      "coherent_km": 0,
+      "length_km": 120.0,
+      "segments": 0
+     },
+     "segments_deramped": [],
+     "los_cm_range_deramped": [
+      0.0,
+      11.9
+     ],
+     "usgs_model_fringes_along_line": 11.6,
+     "usgs_model_los_span_cm": 72.4
+    }
+   },
+   "note": null
+  },
+  {
+   "kind": "control",
+   "track": "004",
+   "dir": "A",
+   "direction": "ascending",
+   "ref_date": "2026-09-18",
+   "sec_date": "2026-09-30",
+   "days": 12,
+   "frames": [
+    {
+     "name": "NISAR_L2_PR_GUNW_031_004_A_005_032_4000_SH_20260918T110419_20260918T110435_20260930T110420_20260930T110435_P05023_N_P_J_001",
+     "frame": "005",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_031_004_A_005_032_4000_SH_20260918T110419_20260918T110435_20260930T110420_20260930T110435_P05023_N_P_J_001/NISAR_L2_PR_GUNW_031_004_A_005_032_4000_SH_20260918T110419_20260918T110435_20260930T110420_20260930T110435_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_031_004_A_005_032_4000_SH_20260918T110419_20260918T110435_20260930T110420_20260930T110435_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -80.72548,
+       7.12969
+      ],
+      [
+       -80.9599,
+       8.14305
+      ],
+      [
+       -83.18996,
+       7.62625
+      ],
+      [
+       -82.95269,
+       6.61647
+      ],
+      [
+       -80.72548,
+       7.12969
+      ]
+     ],
+     "georef": {
+      "ox": -83.427474,
+      "sx": 0.002179,
+      "oy": 8.3639169,
+      "sy": -0.0021654,
+      "residual_deg": 0.0035125,
+      "ok": true
+     }
+    }
+   ],
+   "stats": {
+    "valid_px_within_30km": 288,
+    "coherent_frac_within_30km": 0.892,
+    "coherent_frac_60_110km": 0.773,
+    "fringe_rate_near_cyc_per_km": 0.113,
+    "fringe_rate_far_cyc_per_km": 0.044,
+    "ramp_cyc_per_km_east_north": [
+     0.006,
+     0.01
+    ],
+    "ramp_fringes_per_100km": 1.2,
+    "deramped_rate_near": 0.107,
+    "deramped_rate_far": 0.043
+   },
+   "transects": {
+    "along-strike": {
+     "azimuth_deg": 115.0,
+     "raw": {
+      "abs_fringes": 0.2,
+      "coherent_km": 12.5,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "deramped": {
+      "abs_fringes": 0.2,
+      "coherent_km": 12.5,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "segments_deramped": [
+      {
+       "from_km": -60.0,
+       "to_km": -49.7,
+       "net_fringes": -0.09
+      },
+      {
+       "from_km": -34.1,
+       "to_km": -31.9,
+       "net_fringes": -0.07
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      14.3
+     ],
+     "usgs_model_fringes_along_line": 32.4,
+     "usgs_model_los_span_cm": 184.1
+    },
+    "across-strike": {
+     "azimuth_deg": 25.0,
+     "raw": {
+      "abs_fringes": 0,
+      "coherent_km": 0,
+      "length_km": 120.0,
+      "segments": 0
+     },
+     "deramped": {
+      "abs_fringes": 0,
+      "coherent_km": 0,
+      "length_km": 120.0,
+      "segments": 0
+     },
+     "segments_deramped": [],
+     "los_cm_range_deramped": [
+      0.0,
+      11.9
+     ],
+     "usgs_model_fringes_along_line": 23.3,
+     "usgs_model_los_span_cm": 147.1
+    },
+    "N-S": {
+     "azimuth_deg": 0.0,
+     "raw": {
+      "abs_fringes": 0,
+      "coherent_km": 0,
+      "length_km": 120.0,
+      "segments": 0
+     },
+     "deramped": {
+      "abs_fringes": 0,
+      "coherent_km": 0,
+      "length_km": 120.0,
+      "segments": 0
+     },
+     "segments_deramped": [],
+     "los_cm_range_deramped": [
+      0.0,
+      11.9
+     ],
+     "usgs_model_fringes_along_line": 11.6,
+     "usgs_model_los_span_cm": 72.4
+    }
+   },
+   "note": null
+  },
+  {
+   "kind": "event",
+   "track": "004",
+   "dir": "A",
+   "direction": "ascending",
+   "ref_date": "2026-09-30",
+   "sec_date": "2026-10-12",
+   "days": 12,
+   "frames": [
+    {
+     "name": "NISAR_L2_PR_GUNW_032_004_A_005_033_4000_SH_20260930T110420_20260930T110435_20261012T110420_20261012T110436_P05023_N_P_J_001",
+     "frame": "005",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_032_004_A_005_033_4000_SH_20260930T110420_20260930T110435_20261012T110420_20261012T110436_P05023_N_P_J_001/NISAR_L2_PR_GUNW_032_004_A_005_033_4000_SH_20260930T110420_20260930T110435_20261012T110420_20261012T110436_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/NISAR_L2_PR_GUNW_032_004_A_005_033_4000_SH_20260930T110420_20260930T110435_20261012T110420_20261012T110436_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -80.73855,
+       7.18682
+      ],
+      [
+       -80.95929,
+       8.14055
+      ],
+      [
+       -83.18937,
+       7.62379
+      ],
+      [
+       -82.96601,
+       6.67341
+      ],
+      [
+       -80.73855,
+       7.18682
+      ]
+     ],
+     "georef": {
+      "ox": -83.4292189,
+      "sx": 0.0021804,
+      "oy": 8.3634341,
+      "sy": -0.0021639,
+      "residual_deg": 0.0036636,
+      "ok": true
+     }
+    }
+   ],
+   "stats": {
+    "valid_px_within_30km": 182,
+    "coherent_frac_within_30km": 0.857,
+    "coherent_frac_60_110km": 0.715,
+    "fringe_rate_near_cyc_per_km": null,
+    "fringe_rate_far_cyc_per_km": 0.063,
+    "ramp_cyc_per_km_east_north": [
+     -0.022,
+     0.015
+    ],
+    "ramp_fringes_per_100km": 2.7,
+    "deramped_rate_near": null,
+    "deramped_rate_far": 0.061
+   },
+   "transects": {
+    "along-strike": {
+     "azimuth_deg": 115.0,
+     "raw": {
+      "abs_fringes": 0.5,
+      "coherent_km": 9.8,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 0.3,
+      "coherent_km": 9.8,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -60.0,
+       "to_km": -50.2,
+       "net_fringes": -0.28
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      15.5
+     ],
+     "usgs_model_fringes_along_line": 32.4,
+     "usgs_model_los_span_cm": 184.1
+    },
+    "across-strike": {
+     "azimuth_deg": 25.0,
+     "raw": {
+      "abs_fringes": 0,
+      "coherent_km": 0,
+      "length_km": 120.0,
+      "segments": 0
+     },
+     "deramped": {
+      "abs_fringes": 0,
+      "coherent_km": 0,
+      "length_km": 120.0,
+      "segments": 0
+     },
+     "segments_deramped": [],
+     "los_cm_range_deramped": [
+      0.0,
+      11.9
+     ],
+     "usgs_model_fringes_along_line": 23.3,
+     "usgs_model_los_span_cm": 147.1
+    },
+    "N-S": {
+     "azimuth_deg": 0.0,
+     "raw": {
+      "abs_fringes": 0,
+      "coherent_km": 0,
+      "length_km": 120.0,
+      "segments": 0
+     },
+     "deramped": {
+      "abs_fringes": 0,
+      "coherent_km": 0,
+      "length_km": 120.0,
+      "segments": 0
+     },
+     "segments_deramped": [],
+     "los_cm_range_deramped": [
+      0.0,
+      11.9
+     ],
+     "usgs_model_fringes_along_line": 11.6,
+     "usgs_model_los_span_cm": 72.4
+    }
+   },
+   "note": null
+  },
+  {
+   "kind": "control",
+   "track": "040",
+   "dir": "D",
+   "direction": "descending",
+   "ref_date": "2026-06-28",
+   "sec_date": "2026-07-10",
+   "days": 12,
+   "frames": [
+    {
+     "name": "NISAR_L2_PR_GUNW_024_040_D_085_025_4000_SH_20260628T234519_20260628T234535_20260710T234518_20260710T234534_P05023_N_P_J_001",
+     "frame": "085",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_024_040_D_085_025_4000_SH_20260628T234519_20260628T234535_20260710T234518_20260710T234534_P05023_N_P_J_001/NISAR_L2_PR_GUNW_024_040_D_085_025_4000_SH_20260628T234519_20260628T234535_20260710T234518_20260710T234534_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_024_040_D_085_025_4000_SH_20260628T234519_20260628T234535_20260710T234518_20260710T234534_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -80.7157,
+       8.18878
+      ],
+      [
+       -80.94951,
+       7.17524
+      ],
+      [
+       -78.72999,
+       6.66375
+      ],
+      [
+       -78.49262,
+       7.67355
+      ],
+      [
+       -80.7157,
+       8.18878
+      ]
+     ],
+     "georef": {
+      "ox": -81.3244746,
+      "sx": 0.00218,
+      "oy": 8.3639962,
+      "sy": -0.0021632,
+      "residual_deg": 0.0027229,
+      "ok": true
+     }
+    }
+   ],
+   "stats": {
+    "valid_px_within_30km": 25427,
+    "coherent_frac_within_30km": 0.995,
+    "coherent_frac_60_110km": 0.156,
+    "fringe_rate_near_cyc_per_km": 0.04,
+    "fringe_rate_far_cyc_per_km": 0.035,
+    "ramp_cyc_per_km_east_north": [
+     -0.016,
+     -0.008
+    ],
+    "ramp_fringes_per_100km": 1.8,
+    "deramped_rate_near": 0.029,
+    "deramped_rate_far": 0.029
+   },
+   "transects": {
+    "along-strike": {
+     "azimuth_deg": 115.0,
+     "raw": {
+      "abs_fringes": 0.8,
+      "coherent_km": 54.3,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 0.2,
+      "coherent_km": 54.3,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -1.0,
+       "to_km": 53.3,
+       "net_fringes": -0.19
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      14.3
+     ],
+     "usgs_model_fringes_along_line": 35.1,
+     "usgs_model_los_span_cm": 178.7
+    },
+    "across-strike": {
+     "azimuth_deg": 25.0,
+     "raw": {
+      "abs_fringes": 0.6,
+      "coherent_km": 63.4,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "deramped": {
+      "abs_fringes": 0.4,
+      "coherent_km": 63.4,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "segments_deramped": [
+      {
+       "from_km": -3.8,
+       "to_km": 56.2,
+       "net_fringes": 0.3
+      },
+      {
+       "from_km": 56.6,
+       "to_km": 60.0,
+       "net_fringes": 0.09
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      16.7
+     ],
+     "usgs_model_fringes_along_line": 34.8,
+     "usgs_model_los_span_cm": 217.2
+    },
+    "N-S": {
+     "azimuth_deg": 0.0,
+     "raw": {
+      "abs_fringes": 0.4,
+      "coherent_km": 49.4,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 0.8,
+      "coherent_km": 49.4,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -43.2,
+       "to_km": 6.2,
+       "net_fringes": 0.76
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      21.5
+     ],
+     "usgs_model_fringes_along_line": 16.0,
+     "usgs_model_los_span_cm": 107.8
+    }
+   },
+   "note": null
+  },
+  {
+   "kind": "control",
+   "track": "040",
+   "dir": "D",
+   "direction": "descending",
+   "ref_date": "2026-07-10",
+   "sec_date": "2026-07-22",
+   "days": 12,
+   "frames": [
+    {
+     "name": "NISAR_L2_PR_GUNW_025_040_D_085_026_4000_SH_20260710T234518_20260710T234534_20260722T234517_20260722T234534_P05023_N_P_J_001",
+     "frame": "085",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_025_040_D_085_026_4000_SH_20260710T234518_20260710T234534_20260722T234517_20260722T234534_P05023_N_P_J_001/NISAR_L2_PR_GUNW_025_040_D_085_026_4000_SH_20260710T234518_20260710T234534_20260722T234517_20260722T234534_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_025_040_D_085_026_4000_SH_20260710T234518_20260710T234534_20260722T234517_20260722T234534_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -80.70905,
+       8.21565
+      ],
+      [
+       -80.94315,
+       7.20217
+      ],
+      [
+       -78.72364,
+       6.69056
+      ],
+      [
+       -78.48618,
+       7.70036
+      ],
+      [
+       -80.70905,
+       8.21565
+      ]
+     ],
+     "georef": {
+      "ox": -81.3246671,
+      "sx": 0.0021801,
+      "oy": 8.3651262,
+      "sy": -0.0021663,
+      "residual_deg": 0.0039744,
+      "ok": true
+     }
+    }
+   ],
+   "stats": {
+    "valid_px_within_30km": 25407,
+    "coherent_frac_within_30km": 0.996,
+    "coherent_frac_60_110km": 0.162,
+    "fringe_rate_near_cyc_per_km": 0.044,
+    "fringe_rate_far_cyc_per_km": 0.038,
+    "ramp_cyc_per_km_east_north": [
+     0.008,
+     0.015
+    ],
+    "ramp_fringes_per_100km": 1.6,
+    "deramped_rate_near": 0.045,
+    "deramped_rate_far": 0.032
+   },
+   "transects": {
+    "along-strike": {
+     "azimuth_deg": 115.0,
+     "raw": {
+      "abs_fringes": 0.2,
+      "coherent_km": 53.8,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "deramped": {
+      "abs_fringes": 0.1,
+      "coherent_km": 53.8,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "segments_deramped": [
+      {
+       "from_km": -1.0,
+       "to_km": 41.0,
+       "net_fringes": 0.09
+      },
+      {
+       "from_km": 41.5,
+       "to_km": 53.3,
+       "net_fringes": 0.02
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      13.1
+     ],
+     "usgs_model_fringes_along_line": 35.1,
+     "usgs_model_los_span_cm": 178.7
+    },
+    "across-strike": {
+     "azimuth_deg": 25.0,
+     "raw": {
+      "abs_fringes": 0.9,
+      "coherent_km": 63.4,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "deramped": {
+      "abs_fringes": 1.1,
+      "coherent_km": 63.4,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "segments_deramped": [
+      {
+       "from_km": -3.8,
+       "to_km": 39.4,
+       "net_fringes": -0.62
+      },
+      {
+       "from_km": 39.8,
+       "to_km": 60.0,
+       "net_fringes": 0.51
+      }
+     ],
+     "los_cm_range_deramped": [
+      1.2,
+      25.0
+     ],
+     "usgs_model_fringes_along_line": 34.8,
+     "usgs_model_los_span_cm": 217.2
+    },
+    "N-S": {
+     "azimuth_deg": 0.0,
+     "raw": {
+      "abs_fringes": 0.1,
+      "coherent_km": 48.9,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "deramped": {
+      "abs_fringes": 0.8,
+      "coherent_km": 48.9,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "segments_deramped": [
+      {
+       "from_km": -43.2,
+       "to_km": -41.5,
+       "net_fringes": -0.13
+      },
+      {
+       "from_km": -41.0,
+       "to_km": 6.2,
+       "net_fringes": -0.66
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      21.5
+     ],
+     "usgs_model_fringes_along_line": 16.0,
+     "usgs_model_los_span_cm": 107.8
+    }
+   },
+   "note": null
+  },
+  {
+   "kind": "control",
+   "track": "040",
+   "dir": "D",
+   "direction": "descending",
+   "ref_date": "2026-07-22",
+   "sec_date": "2026-08-15",
+   "days": 24,
+   "frames": [
+    {
+     "name": "NISAR_L2_PR_GUNW_026_040_D_085_028_4000_SH_20260722T234517_20260722T234534_20260815T234516_20260815T234533_P05023_N_P_J_001",
+     "frame": "085",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_026_040_D_085_028_4000_SH_20260722T234517_20260722T234534_20260815T234516_20260815T234533_P05023_N_P_J_001/NISAR_L2_PR_GUNW_026_040_D_085_028_4000_SH_20260722T234517_20260722T234534_20260815T234516_20260815T234533_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_026_040_D_085_028_4000_SH_20260722T234517_20260722T234534_20260815T234516_20260815T234533_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -80.70457,
+       8.23368
+      ],
+      [
+       -80.95261,
+       7.16062
+      ],
+      [
+       -78.73314,
+       6.64912
+      ],
+      [
+       -78.48174,
+       7.71833
+      ],
+      [
+       -80.70457,
+       8.23368
+      ]
+     ],
+     "georef": {
+      "ox": -81.3255304,
+      "sx": 0.0021808,
+      "oy": 8.363562,
+      "sy": -0.0021647,
+      "residual_deg": 0.003756,
+      "ok": true
+     }
+    }
+   ],
+   "stats": {
+    "valid_px_within_30km": 25439,
+    "coherent_frac_within_30km": 0.994,
+    "coherent_frac_60_110km": 0.158,
+    "fringe_rate_near_cyc_per_km": 0.066,
+    "fringe_rate_far_cyc_per_km": 0.072,
+    "ramp_cyc_per_km_east_north": [
+     -0.022,
+     0.005
+    ],
+    "ramp_fringes_per_100km": 2.3,
+    "deramped_rate_near": 0.067,
+    "deramped_rate_far": 0.068
+   },
+   "transects": {
+    "along-strike": {
+     "azimuth_deg": 115.0,
+     "raw": {
+      "abs_fringes": 1.0,
+      "coherent_km": 54.3,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 0.2,
+      "coherent_km": 54.3,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -1.0,
+       "to_km": 53.3,
+       "net_fringes": 0.17
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      14.3
+     ],
+     "usgs_model_fringes_along_line": 35.1,
+     "usgs_model_los_span_cm": 178.7
+    },
+    "across-strike": {
+     "azimuth_deg": 25.0,
+     "raw": {
+      "abs_fringes": 0.2,
+      "coherent_km": 64.6,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 0.6,
+      "coherent_km": 64.6,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -4.6,
+       "to_km": 60.0,
+       "net_fringes": 0.55
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      19.1
+     ],
+     "usgs_model_fringes_along_line": 34.8,
+     "usgs_model_los_span_cm": 217.2
+    },
+    "N-S": {
+     "azimuth_deg": 0.0,
+     "raw": {
+      "abs_fringes": 0.4,
+      "coherent_km": 49.6,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 0.2,
+      "coherent_km": 49.6,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -43.4,
+       "to_km": 6.2,
+       "net_fringes": 0.19
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      14.3
+     ],
+     "usgs_model_fringes_along_line": 16.0,
+     "usgs_model_los_span_cm": 107.8
+    }
+   },
+   "note": null
+  },
+  {
+   "kind": "control",
+   "track": "040",
+   "dir": "D",
+   "direction": "descending",
+   "ref_date": "2026-08-15",
+   "sec_date": "2026-08-27",
+   "days": 12,
+   "frames": [
+    {
+     "name": "NISAR_L2_PR_GUNW_028_040_D_085_029_4000_SH_20260815T234516_20260815T234533_20260827T234516_20260827T234532_P05023_N_P_J_001",
+     "frame": "085",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_028_040_D_085_029_4000_SH_20260815T234516_20260815T234533_20260827T234516_20260827T234532_P05023_N_P_J_001/NISAR_L2_PR_GUNW_028_040_D_085_029_4000_SH_20260815T234516_20260815T234533_20260827T234516_20260827T234532_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_028_040_D_085_029_4000_SH_20260815T234516_20260815T234533_20260827T234516_20260827T234532_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -80.70666,
+       8.22652
+      ],
+      [
+       -80.95462,
+       7.15345
+      ],
+      [
+       -78.73514,
+       6.64199
+      ],
+      [
+       -78.48378,
+       7.7112
+      ],
+      [
+       -80.70666,
+       8.22652
+      ]
+     ],
+     "georef": {
+      "ox": -81.325355,
+      "sx": 0.0021808,
+      "oy": 8.3650581,
+      "sy": -0.0021647,
+      "residual_deg": 0.0039217,
+      "ok": true
+     }
+    }
+   ],
+   "stats": {
+    "valid_px_within_30km": 25488,
+    "coherent_frac_within_30km": 0.996,
+    "coherent_frac_60_110km": 0.158,
+    "fringe_rate_near_cyc_per_km": 0.049,
+    "fringe_rate_far_cyc_per_km": 0.068,
+    "ramp_cyc_per_km_east_north": [
+     -0.002,
+     -0.0
+    ],
+    "ramp_fringes_per_100km": 0.2,
+    "deramped_rate_near": 0.049,
+    "deramped_rate_far": 0.068
+   },
+   "transects": {
+    "along-strike": {
+     "azimuth_deg": 115.0,
+     "raw": {
+      "abs_fringes": 0.0,
+      "coherent_km": 54.3,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 0.1,
+      "coherent_km": 54.3,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -1.0,
+       "to_km": 53.3,
+       "net_fringes": 0.05
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      13.1
+     ],
+     "usgs_model_fringes_along_line": 35.1,
+     "usgs_model_los_span_cm": 178.7
+    },
+    "across-strike": {
+     "azimuth_deg": 25.0,
+     "raw": {
+      "abs_fringes": 0.6,
+      "coherent_km": 64.6,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 0.6,
+      "coherent_km": 64.6,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -4.6,
+       "to_km": 60.0,
+       "net_fringes": -0.56
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      19.1
+     ],
+     "usgs_model_fringes_along_line": 34.8,
+     "usgs_model_los_span_cm": 217.2
+    },
+    "N-S": {
+     "azimuth_deg": 0.0,
+     "raw": {
+      "abs_fringes": 0.8,
+      "coherent_km": 49.4,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "deramped": {
+      "abs_fringes": 0.9,
+      "coherent_km": 49.4,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "segments_deramped": [
+      {
+       "from_km": -43.4,
+       "to_km": -37.0,
+       "net_fringes": -0.54
+      },
+      {
+       "from_km": -36.5,
+       "to_km": 6.5,
+       "net_fringes": 0.32
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      22.6
+     ],
+     "usgs_model_fringes_along_line": 16.0,
+     "usgs_model_los_span_cm": 107.8
+    }
+   },
+   "note": null
+  },
+  {
+   "kind": "control",
+   "track": "040",
+   "dir": "D",
+   "direction": "descending",
+   "ref_date": "2026-08-27",
+   "sec_date": "2026-09-08",
+   "days": 12,
+   "frames": [
+    {
+     "name": "NISAR_L2_PR_GUNW_029_040_D_085_030_4000_SH_20260827T234516_20260827T234532_20260908T234516_20260908T234532_P05023_N_P_J_001",
+     "frame": "085",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_029_040_D_085_030_4000_SH_20260827T234516_20260827T234532_20260908T234516_20260908T234532_P05023_N_P_J_001/NISAR_L2_PR_GUNW_029_040_D_085_030_4000_SH_20260827T234516_20260827T234532_20260908T234516_20260908T234532_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_029_040_D_085_030_4000_SH_20260827T234516_20260827T234532_20260908T234516_20260908T234532_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -80.71068,
+       8.21092
+      ],
+      [
+       -80.94474,
+       7.19744
+      ],
+      [
+       -78.72514,
+       6.68585
+      ],
+      [
+       -78.48771,
+       7.69565
+      ],
+      [
+       -80.71068,
+       8.21092
+      ]
+     ],
+     "georef": {
+      "ox": -81.3240862,
+      "sx": 0.0021802,
+      "oy": 8.3647268,
+      "sy": -0.0021663,
+      "residual_deg": 0.0045667,
+      "ok": true
+     }
+    }
+   ],
+   "stats": {
+    "valid_px_within_30km": 25408,
+    "coherent_frac_within_30km": 0.994,
+    "coherent_frac_60_110km": 0.156,
+    "fringe_rate_near_cyc_per_km": 0.102,
+    "fringe_rate_far_cyc_per_km": 0.101,
+    "ramp_cyc_per_km_east_north": [
+     -0.013,
+     -0.089
+    ],
+    "ramp_fringes_per_100km": 9.0,
+    "deramped_rate_near": 0.032,
+    "deramped_rate_far": 0.033
+   },
+   "transects": {
+    "along-strike": {
+     "azimuth_deg": 115.0,
+     "raw": {
+      "abs_fringes": 1.5,
+      "coherent_km": 54.3,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 0.1,
+      "coherent_km": 54.3,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -1.0,
+       "to_km": 53.3,
+       "net_fringes": 0.13
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      13.1
+     ],
+     "usgs_model_fringes_along_line": 35.1,
+     "usgs_model_los_span_cm": 178.7
+    },
+    "across-strike": {
+     "azimuth_deg": 25.0,
+     "raw": {
+      "abs_fringes": 5.0,
+      "coherent_km": 64.2,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "deramped": {
+      "abs_fringes": 0.5,
+      "coherent_km": 64.2,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "segments_deramped": [
+      {
+       "from_km": -4.6,
+       "to_km": 57.4,
+       "net_fringes": 0.4
+      },
+      {
+       "from_km": 57.8,
+       "to_km": 60.0,
+       "net_fringes": 0.13
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      17.9
+     ],
+     "usgs_model_fringes_along_line": 34.8,
+     "usgs_model_los_span_cm": 217.2
+    },
+    "N-S": {
+     "azimuth_deg": 0.0,
+     "raw": {
+      "abs_fringes": 4.3,
+      "coherent_km": 47.5,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "deramped": {
+      "abs_fringes": 1.2,
+      "coherent_km": 47.5,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "segments_deramped": [
+      {
+       "from_km": -43.7,
+       "to_km": -37.2,
+       "net_fringes": 0.55
+      },
+      {
+       "from_km": -34.8,
+       "to_km": 6.2,
+       "net_fringes": -0.62
+      }
+     ],
+     "los_cm_range_deramped": [
+      2.4,
+      26.2
+     ],
+     "usgs_model_fringes_along_line": 16.0,
+     "usgs_model_los_span_cm": 107.8
+    }
+   },
+   "note": null
+  },
+  {
+   "kind": "control",
+   "track": "040",
+   "dir": "D",
+   "direction": "descending",
+   "ref_date": "2026-09-08",
+   "sec_date": "2026-09-20",
+   "days": 12,
+   "frames": [
+    {
+     "name": "NISAR_L2_PR_GUNW_030_040_D_085_031_4000_SH_20260908T234516_20260908T234532_20260920T234516_20260920T234532_P05023_N_P_J_001",
+     "frame": "085",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_030_040_D_085_031_4000_SH_20260908T234516_20260908T234532_20260920T234516_20260920T234532_P05023_N_P_J_001/NISAR_L2_PR_GUNW_030_040_D_085_031_4000_SH_20260908T234516_20260908T234532_20260920T234516_20260920T234532_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_030_040_D_085_031_4000_SH_20260908T234516_20260908T234532_20260920T234516_20260920T234532_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -80.71277,
+       8.20016
+      ],
+      [
+       -80.94671,
+       7.18665
+      ],
+      [
+       -78.7272,
+       6.67509
+      ],
+      [
+       -78.48979,
+       7.6849
+      ],
+      [
+       -80.71277,
+       8.20016
+      ]
+     ],
+     "georef": {
+      "ox": -81.3238592,
+      "sx": 0.0021801,
+      "oy": 8.3647982,
+      "sy": -0.0021663,
+      "residual_deg": 0.0036858,
+      "ok": true
+     }
+    }
+   ],
+   "stats": {
+    "valid_px_within_30km": 25373,
+    "coherent_frac_within_30km": 0.992,
+    "coherent_frac_60_110km": 0.152,
+    "fringe_rate_near_cyc_per_km": 0.072,
+    "fringe_rate_far_cyc_per_km": 0.077,
+    "ramp_cyc_per_km_east_north": [
+     0.023,
+     0.057
+    ],
+    "ramp_fringes_per_100km": 6.2,
+    "deramped_rate_near": 0.038,
+    "deramped_rate_far": 0.041
+   },
+   "transects": {
+    "along-strike": {
+     "azimuth_deg": 115.0,
+     "raw": {
+      "abs_fringes": 0.0,
+      "coherent_km": 54.5,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 0.2,
+      "coherent_km": 54.5,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -1.0,
+       "to_km": 53.5,
+       "net_fringes": 0.19
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      14.3
+     ],
+     "usgs_model_fringes_along_line": 35.1,
+     "usgs_model_los_span_cm": 178.7
+    },
+    "across-strike": {
+     "azimuth_deg": 25.0,
+     "raw": {
+      "abs_fringes": 3.9,
+      "coherent_km": 64.1,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "deramped": {
+      "abs_fringes": 0.5,
+      "coherent_km": 64.1,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "segments_deramped": [
+      {
+       "from_km": -4.6,
+       "to_km": 7.7,
+       "net_fringes": 0.24
+      },
+      {
+       "from_km": 8.2,
+       "to_km": 60.0,
+       "net_fringes": -0.24
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      17.9
+     ],
+     "usgs_model_fringes_along_line": 34.8,
+     "usgs_model_los_span_cm": 217.2
+    },
+    "N-S": {
+     "azimuth_deg": 0.0,
+     "raw": {
+      "abs_fringes": 3.6,
+      "coherent_km": 49.6,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 0.8,
+      "coherent_km": 49.6,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -43.4,
+       "to_km": 6.2,
+       "net_fringes": 0.76
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      21.5
+     ],
+     "usgs_model_fringes_along_line": 16.0,
+     "usgs_model_los_span_cm": 107.8
+    }
+   },
+   "note": null
+  },
+  {
+   "kind": "control",
+   "track": "040",
+   "dir": "D",
+   "direction": "descending",
+   "ref_date": "2026-09-20",
+   "sec_date": "2026-10-02",
+   "days": 12,
+   "frames": [
+    {
+     "name": "NISAR_L2_PR_GUNW_031_040_D_085_032_4000_SH_20260920T234516_20260920T234532_20261002T234516_20261002T234533_P05023_N_P_J_001",
+     "frame": "085",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_031_040_D_085_032_4000_SH_20260920T234516_20260920T234532_20261002T234516_20261002T234533_P05023_N_P_J_001/NISAR_L2_PR_GUNW_031_040_D_085_032_4000_SH_20260920T234516_20260920T234532_20261002T234516_20261002T234533_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_031_040_D_085_032_4000_SH_20260920T234516_20260920T234532_20261002T234516_20261002T234533_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -80.71108,
+       8.20767
+      ],
+      [
+       -80.94509,
+       7.19417
+      ],
+      [
+       -78.72551,
+       6.68256
+      ],
+      [
+       -78.48807,
+       7.69237
+      ],
+      [
+       -80.71108,
+       8.20767
+      ]
+     ],
+     "georef": {
+      "ox": -81.3244347,
+      "sx": 0.0021801,
+      "oy": 8.3634259,
+      "sy": -0.0021633,
+      "residual_deg": 0.0023756,
+      "ok": true
+     }
+    }
+   ],
+   "stats": {
+    "valid_px_within_30km": 25456,
+    "coherent_frac_within_30km": 0.995,
+    "coherent_frac_60_110km": 0.154,
+    "fringe_rate_near_cyc_per_km": 0.107,
+    "fringe_rate_far_cyc_per_km": 0.119,
+    "ramp_cyc_per_km_east_north": [
+     0.019,
+     -0.103
+    ],
+    "ramp_fringes_per_100km": 10.5,
+    "deramped_rate_near": 0.038,
+    "deramped_rate_far": 0.047
+   },
+   "transects": {
+    "along-strike": {
+     "azimuth_deg": 115.0,
+     "raw": {
+      "abs_fringes": 2.2,
+      "coherent_km": 54.3,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 1.1,
+      "coherent_km": 54.3,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -1.0,
+       "to_km": 53.3,
+       "net_fringes": -1.1
+      }
+     ],
+     "los_cm_range_deramped": [
+      1.2,
+      25.0
+     ],
+     "usgs_model_fringes_along_line": 35.1,
+     "usgs_model_los_span_cm": 178.7
+    },
+    "across-strike": {
+     "azimuth_deg": 25.0,
+     "raw": {
+      "abs_fringes": 7.2,
+      "coherent_km": 64.6,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 1.6,
+      "coherent_km": 64.6,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -4.6,
+       "to_km": 60.0,
+       "net_fringes": -1.63
+      }
+     ],
+     "los_cm_range_deramped": [
+      7.2,
+      31.0
+     ],
+     "usgs_model_fringes_along_line": 34.8,
+     "usgs_model_los_span_cm": 217.2
+    },
+    "N-S": {
+     "azimuth_deg": 0.0,
+     "raw": {
+      "abs_fringes": 4.4,
+      "coherent_km": 48.9,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "deramped": {
+      "abs_fringes": 0.7,
+      "coherent_km": 48.9,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "segments_deramped": [
+      {
+       "from_km": -43.2,
+       "to_km": -21.6,
+       "net_fringes": 0.59
+      },
+      {
+       "from_km": -21.1,
+       "to_km": 6.2,
+       "net_fringes": 0.07
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      20.3
+     ],
+     "usgs_model_fringes_along_line": 16.0,
+     "usgs_model_los_span_cm": 107.8
+    }
+   },
+   "note": null
+  },
+  {
+   "kind": "event",
+   "track": "040",
+   "dir": "D",
+   "direction": "descending",
+   "ref_date": "2026-10-02",
+   "sec_date": "2026-10-14",
+   "days": 12,
+   "frames": [
+    {
+     "name": "NISAR_L2_PR_GUNW_032_040_D_085_033_4000_SH_20261002T234516_20261002T234533_20261014T234516_20261014T234533_P05023_N_P_J_001",
+     "frame": "085",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_032_040_D_085_033_4000_SH_20261002T234516_20261002T234533_20261014T234516_20261014T234533_P05023_N_P_J_001/NISAR_L2_PR_GUNW_032_040_D_085_033_4000_SH_20261002T234516_20261002T234533_20261014T234516_20261014T234533_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/NISAR_L2_PR_GUNW_032_040_D_085_033_4000_SH_20261002T234516_20261002T234533_20261014T234516_20261014T234533_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -80.7086,
+       8.21791
+      ],
+      [
+       -80.9565,
+       7.14482
+      ],
+      [
+       -78.73715,
+       6.63341
+      ],
+      [
+       -78.4858,
+       7.70262
+      ],
+      [
+       -80.7086,
+       8.21791
+      ]
+     ],
+     "georef": {
+      "ox": -81.3250334,
+      "sx": 0.0021807,
+      "oy": 8.3627415,
+      "sy": -0.0021617,
+      "residual_deg": 0.0030661,
+      "ok": true
+     }
+    }
+   ],
+   "stats": {
+    "valid_px_within_30km": 25409,
+    "coherent_frac_within_30km": 0.832,
+    "coherent_frac_60_110km": 0.167,
+    "fringe_rate_near_cyc_per_km": 0.232,
+    "fringe_rate_far_cyc_per_km": 0.126,
+    "ramp_cyc_per_km_east_north": [
+     -0.09,
+     0.054
+    ],
+    "ramp_fringes_per_100km": 10.5,
+    "deramped_rate_near": 0.247,
+    "deramped_rate_far": 0.058
+   },
+   "transects": {
+    "along-strike": {
+     "azimuth_deg": 115.0,
+     "raw": {
+      "abs_fringes": 1.4,
+      "coherent_km": 44.6,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "deramped": {
+      "abs_fringes": 3.2,
+      "coherent_km": 44.6,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "segments_deramped": [
+      {
+       "from_km": 0.0,
+       "to_km": 42.2,
+       "net_fringes": 3.08
+      },
+      {
+       "from_km": 56.9,
+       "to_km": 59.3,
+       "net_fringes": 0.16
+      }
+     ],
+     "los_cm_range_deramped": [
+      26.2,
+      50.1
+     ],
+     "usgs_model_fringes_along_line": 35.1,
+     "usgs_model_los_span_cm": 178.7
+    },
+    "across-strike": {
+     "azimuth_deg": 25.0,
+     "raw": {
+      "abs_fringes": 2.9,
+      "coherent_km": 60.0,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 3.5,
+      "coherent_km": 60.0,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": 0.0,
+       "to_km": 60.0,
+       "net_fringes": -3.48
+      }
+     ],
+     "los_cm_range_deramped": [
+      29.8,
+      53.6
+     ],
+     "usgs_model_fringes_along_line": 34.8,
+     "usgs_model_los_span_cm": 217.2
+    },
+    "N-S": {
+     "azimuth_deg": 0.0,
+     "raw": {
+      "abs_fringes": 4.0,
+      "coherent_km": 35.9,
+      "length_km": 120.0,
+      "segments": 3
+     },
+     "deramped": {
+      "abs_fringes": 5.9,
+      "coherent_km": 35.9,
+      "length_km": 120.0,
+      "segments": 3
+     },
+     "segments_deramped": [
+      {
+       "from_km": -43.7,
+       "to_km": -26.4,
+       "net_fringes": -1.86
+      },
+      {
+       "from_km": -25.9,
+       "to_km": -16.1,
+       "net_fringes": -1.3
+      },
+      {
+       "from_km": -2.6,
+       "to_km": 6.2,
+       "net_fringes": -2.78
+      }
+     ],
+     "los_cm_range_deramped": [
+      58.4,
+      82.2
+     ],
+     "usgs_model_fringes_along_line": 16.0,
+     "usgs_model_los_span_cm": 107.8
+    }
+   },
+   "note": null
+  },
+  {
+   "kind": "control",
+   "track": "076",
+   "dir": "A",
+   "direction": "ascending",
+   "ref_date": "2026-06-19",
+   "sec_date": "2026-07-01",
+   "days": 12,
+   "frames": [
+    {
+     "name": "NISAR_L2_PR_GUNW_023_076_A_005_024_4000_SH_20260619T105607_20260619T105620_20260701T105606_20260701T105619_P05023_N_P_J_001",
+     "frame": "005",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_023_076_A_005_024_4000_SH_20260619T105607_20260619T105620_20260701T105606_20260701T105619_P05023_N_P_J_001/NISAR_L2_PR_GUNW_023_076_A_005_024_4000_SH_20260619T105607_20260619T105620_20260701T105606_20260701T105619_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_023_076_A_005_024_4000_SH_20260619T105607_20260619T105620_20260701T105606_20260701T105619_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -78.71107,
+       7.38457
+      ],
+      [
+       -78.90355,
+       8.21925
+      ],
+      [
+       -81.12742,
+       7.70365
+      ],
+      [
+       -80.93163,
+       6.87212
+      ],
+      [
+       -78.71107,
+       7.38457
+      ]
+     ],
+     "georef": {
+      "ox": -81.3498638,
+      "sx": 0.0021808,
+      "oy": 8.3708563,
+      "sy": -0.0021658,
+      "residual_deg": 0.0048843,
+      "ok": true
+     }
+    },
+    {
+     "name": "NISAR_L2_PR_GUNW_023_076_A_006_024_4000_SH_20260619T105619_20260619T105629_20260701T105618_20260701T105629_P05023_N_P_J_001",
+     "frame": "006",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_023_076_A_006_024_4000_SH_20260619T105619_20260619T105629_20260701T105618_20260701T105629_P05023_N_P_J_001/NISAR_L2_PR_GUNW_023_076_A_006_024_4000_SH_20260619T105619_20260619T105629_20260701T105618_20260701T105629_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_023_076_A_006_024_4000_SH_20260619T105619_20260619T105629_20260701T105618_20260701T105629_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -78.87598,
+       8.10005
+      ],
+      [
+       -79.02793,
+       8.7558
+      ],
+      [
+       -81.2556,
+       8.23782
+      ],
+      [
+       -81.09935,
+       7.5849
+      ],
+      [
+       -78.87598,
+       8.10005
+      ]
+     ],
+     "georef": {
+      "ox": -81.8258315,
+      "sx": 0.0021932,
+      "oy": 10.3617294,
+      "sy": -0.0021643,
+      "residual_deg": 0.0025402,
+      "ok": true
+     }
+    }
+   ],
+   "stats": {
+    "valid_px_within_30km": 30059,
+    "coherent_frac_within_30km": 0.951,
+    "coherent_frac_60_110km": 0.48,
+    "fringe_rate_near_cyc_per_km": 0.029,
+    "fringe_rate_far_cyc_per_km": 0.031,
+    "ramp_cyc_per_km_east_north": [
+     0.004,
+     -0.005
+    ],
+    "ramp_fringes_per_100km": 0.7,
+    "deramped_rate_near": 0.029,
+    "deramped_rate_far": 0.03
+   },
+   "transects": {
+    "along-strike": {
+     "azimuth_deg": 115.0,
+     "raw": {
+      "abs_fringes": 0.1,
+      "coherent_km": 44.8,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 0.2,
+      "coherent_km": 44.8,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -35.0,
+       "to_km": 9.8,
+       "net_fringes": -0.2
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      14.3
+     ],
+     "usgs_model_fringes_along_line": 32.4,
+     "usgs_model_los_span_cm": 184.1
+    },
+    "across-strike": {
+     "azimuth_deg": 25.0,
+     "raw": {
+      "abs_fringes": 0.3,
+      "coherent_km": 67.4,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 0.1,
+      "coherent_km": 67.4,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -7.4,
+       "to_km": 60.0,
+       "net_fringes": -0.12
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      13.1
+     ],
+     "usgs_model_fringes_along_line": 23.3,
+     "usgs_model_los_span_cm": 147.1
+    },
+    "N-S": {
+     "azimuth_deg": 0.0,
+     "raw": {
+      "abs_fringes": 0.1,
+      "coherent_km": 66.0,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 0.3,
+      "coherent_km": 66.0,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -6.0,
+       "to_km": 60.0,
+       "net_fringes": 0.28
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      15.5
+     ],
+     "usgs_model_fringes_along_line": 11.6,
+     "usgs_model_los_span_cm": 72.4
+    }
+   },
+   "note": null
+  },
+  {
+   "kind": "control",
+   "track": "076",
+   "dir": "A",
+   "direction": "ascending",
+   "ref_date": "2026-07-01",
+   "sec_date": "2026-07-13",
+   "days": 12,
+   "frames": [
+    {
+     "name": "NISAR_L2_PR_GUNW_024_076_A_005_025_4000_SH_20260701T105606_20260701T105619_20260713T105605_20260713T105618_P05023_N_P_J_001",
+     "frame": "005",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_024_076_A_005_025_4000_SH_20260701T105606_20260701T105619_20260713T105605_20260713T105618_P05023_N_P_J_001/NISAR_L2_PR_GUNW_024_076_A_005_025_4000_SH_20260701T105606_20260701T105619_20260713T105605_20260713T105618_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_024_076_A_005_025_4000_SH_20260701T105606_20260701T105619_20260713T105605_20260713T105618_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -78.70679,
+       7.36636
+      ],
+      [
+       -78.89922,
+       8.20105
+      ],
+      [
+       -81.12299,
+       7.68556
+      ],
+      [
+       -80.92726,
+       6.85402
+      ],
+      [
+       -78.70679,
+       7.36636
+      ]
+     ],
+     "georef": {
+      "ox": -81.3521689,
+      "sx": 0.0021827,
+      "oy": 8.3699702,
+      "sy": -0.0021656,
+      "residual_deg": 0.0053472,
+      "ok": true
+     }
+    },
+    {
+     "name": "NISAR_L2_PR_GUNW_024_076_A_006_025_4000_SH_20260701T105618_20260701T105629_20260713T105617_20260713T105628_P05023_N_P_J_001",
+     "frame": "006",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_024_076_A_006_025_4000_SH_20260701T105618_20260701T105629_20260713T105617_20260713T105628_P05023_N_P_J_001/NISAR_L2_PR_GUNW_024_076_A_006_025_4000_SH_20260701T105618_20260701T105629_20260713T105617_20260713T105628_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_024_076_A_006_025_4000_SH_20260701T105618_20260701T105629_20260713T105617_20260713T105628_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -78.87167,
+       8.08184
+      ],
+      [
+       -79.03743,
+       8.79722
+      ],
+      [
+       -81.26466,
+       8.27927
+      ],
+      [
+       -81.09561,
+       7.56666
+      ],
+      [
+       -78.87167,
+       8.08184
+      ]
+     ],
+     "georef": {
+      "ox": -81.8261682,
+      "sx": 0.0021934,
+      "oy": 10.3635842,
+      "sy": -0.0021665,
+      "residual_deg": 0.0041714,
+      "ok": true
+     }
+    }
+   ],
+   "stats": {
+    "valid_px_within_30km": 30957,
+    "coherent_frac_within_30km": 0.951,
+    "coherent_frac_60_110km": 0.467,
+    "fringe_rate_near_cyc_per_km": 0.042,
+    "fringe_rate_far_cyc_per_km": 0.042,
+    "ramp_cyc_per_km_east_north": [
+     0.014,
+     -0.018
+    ],
+    "ramp_fringes_per_100km": 2.3,
+    "deramped_rate_near": 0.035,
+    "deramped_rate_far": 0.035
+   },
+   "transects": {
+    "along-strike": {
+     "azimuth_deg": 115.0,
+     "raw": {
+      "abs_fringes": 1.2,
+      "coherent_km": 46.5,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 0.2,
+      "coherent_km": 46.5,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -35.0,
+       "to_km": 11.5,
+       "net_fringes": 0.25
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      14.3
+     ],
+     "usgs_model_fringes_along_line": 32.4,
+     "usgs_model_los_span_cm": 184.1
+    },
+    "across-strike": {
+     "azimuth_deg": 25.0,
+     "raw": {
+      "abs_fringes": 0.8,
+      "coherent_km": 67.0,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 0.1,
+      "coherent_km": 67.0,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -7.0,
+       "to_km": 60.0,
+       "net_fringes": -0.1
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      13.1
+     ],
+     "usgs_model_fringes_along_line": 23.3,
+     "usgs_model_los_span_cm": 147.1
+    },
+    "N-S": {
+     "azimuth_deg": 0.0,
+     "raw": {
+      "abs_fringes": 1.4,
+      "coherent_km": 67.0,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 0.1,
+      "coherent_km": 67.0,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -7.0,
+       "to_km": 60.0,
+       "net_fringes": -0.13
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      13.1
+     ],
+     "usgs_model_fringes_along_line": 11.6,
+     "usgs_model_los_span_cm": 72.4
+    }
+   },
+   "note": null
+  },
+  {
+   "kind": "control",
+   "track": "076",
+   "dir": "A",
+   "direction": "ascending",
+   "ref_date": "2026-07-13",
+   "sec_date": "2026-07-25",
+   "days": 12,
+   "frames": [
+    {
+     "name": "NISAR_L2_PR_GUNW_025_076_A_005_026_4000_SH_20260713T105605_20260713T105618_20260725T105605_20260725T105617_P05023_N_P_J_001",
+     "frame": "005",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_025_076_A_005_026_4000_SH_20260713T105605_20260713T105618_20260725T105605_20260725T105617_P05023_N_P_J_001/NISAR_L2_PR_GUNW_025_076_A_005_026_4000_SH_20260713T105605_20260713T105618_20260725T105605_20260725T105617_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_025_076_A_005_026_4000_SH_20260713T105605_20260713T105618_20260725T105605_20260725T105617_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -78.70041,
+       7.33882
+      ],
+      [
+       -78.89281,
+       8.17351
+      ],
+      [
+       -81.11656,
+       7.65811
+      ],
+      [
+       -80.92088,
+       6.82657
+      ],
+      [
+       -78.70041,
+       7.33882
+      ]
+     ],
+     "georef": {
+      "ox": -81.3498886,
+      "sx": 0.0021806,
+      "oy": 8.3705704,
+      "sy": -0.0021655,
+      "residual_deg": 0.0038577,
+      "ok": true
+     }
+    },
+    {
+     "name": "NISAR_L2_PR_GUNW_025_076_A_006_026_4000_SH_20260713T105617_20260713T105628_20260725T105616_20260725T105628_P05023_N_P_J_001",
+     "frame": "006",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_025_076_A_006_026_4000_SH_20260713T105617_20260713T105628_20260725T105616_20260725T105628_P05023_N_P_J_001/NISAR_L2_PR_GUNW_025_076_A_006_026_4000_SH_20260713T105617_20260713T105628_20260725T105616_20260725T105628_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_025_076_A_006_026_4000_SH_20260713T105617_20260713T105628_20260725T105616_20260725T105628_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -78.86526,
+       8.05431
+      ],
+      [
+       -79.03099,
+       8.76969
+      ],
+      [
+       -81.25846,
+       8.25175
+      ],
+      [
+       -81.08885,
+       7.53928
+      ],
+      [
+       -78.86526,
+       8.05431
+      ]
+     ],
+     "georef": {
+      "ox": -81.8265982,
+      "sx": 0.0021936,
+      "oy": 10.3640241,
+      "sy": -0.0021662,
+      "residual_deg": 0.006284,
+      "ok": true
+     }
+    }
+   ],
+   "stats": {
+    "valid_px_within_30km": 30060,
+    "coherent_frac_within_30km": 0.955,
+    "coherent_frac_60_110km": 0.458,
+    "fringe_rate_near_cyc_per_km": 0.022,
+    "fringe_rate_far_cyc_per_km": 0.024,
+    "ramp_cyc_per_km_east_north": [
+     -0.001,
+     0.004
+    ],
+    "ramp_fringes_per_100km": 0.4,
+    "deramped_rate_near": 0.021,
+    "deramped_rate_far": 0.024
+   },
+   "transects": {
+    "along-strike": {
+     "azimuth_deg": 115.0,
+     "raw": {
+      "abs_fringes": 0.1,
+      "coherent_km": 45.1,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 0.0,
+      "coherent_km": 45.1,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -35.0,
+       "to_km": 10.1,
+       "net_fringes": -0.01
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      11.9
+     ],
+     "usgs_model_fringes_along_line": 32.4,
+     "usgs_model_los_span_cm": 184.1
+    },
+    "across-strike": {
+     "azimuth_deg": 25.0,
+     "raw": {
+      "abs_fringes": 0.4,
+      "coherent_km": 67.2,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "deramped": {
+      "abs_fringes": 0.2,
+      "coherent_km": 67.2,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "segments_deramped": [
+      {
+       "from_km": -7.7,
+       "to_km": 27.6,
+       "net_fringes": 0.05
+      },
+      {
+       "from_km": 28.1,
+       "to_km": 60.0,
+       "net_fringes": 0.11
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      14.3
+     ],
+     "usgs_model_fringes_along_line": 23.3,
+     "usgs_model_los_span_cm": 147.1
+    },
+    "N-S": {
+     "azimuth_deg": 0.0,
+     "raw": {
+      "abs_fringes": 0.2,
+      "coherent_km": 65.7,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "deramped": {
+      "abs_fringes": 0.1,
+      "coherent_km": 65.7,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "segments_deramped": [
+      {
+       "from_km": -6.2,
+       "to_km": 24.7,
+       "net_fringes": -0.11
+      },
+      {
+       "from_km": 25.2,
+       "to_km": 60.0,
+       "net_fringes": 0.01
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      13.1
+     ],
+     "usgs_model_fringes_along_line": 11.6,
+     "usgs_model_los_span_cm": 72.4
+    }
+   },
+   "note": null
+  },
+  {
+   "kind": "control",
+   "track": "076",
+   "dir": "A",
+   "direction": "ascending",
+   "ref_date": "2026-07-25",
+   "sec_date": "2026-08-18",
+   "days": 24,
+   "frames": [
+    {
+     "name": "NISAR_L2_PR_GUNW_026_076_A_005_028_4000_SH_20260725T105605_20260725T105617_20260818T105604_20260818T105616_P05023_N_P_J_001",
+     "frame": "005",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_026_076_A_005_028_4000_SH_20260725T105605_20260725T105617_20260818T105604_20260818T105616_P05023_N_P_J_001/NISAR_L2_PR_GUNW_026_076_A_005_028_4000_SH_20260725T105605_20260725T105617_20260818T105604_20260818T105616_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_026_076_A_005_028_4000_SH_20260725T105605_20260725T105617_20260818T105604_20260818T105616_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -78.70863,
+       7.37491
+      ],
+      [
+       -78.8873,
+       8.14998
+      ],
+      [
+       -81.11088,
+       7.63466
+      ],
+      [
+       -80.92916,
+       6.86252
+      ],
+      [
+       -78.70863,
+       7.37491
+      ]
+     ],
+     "georef": {
+      "ox": -81.3508868,
+      "sx": 0.0021819,
+      "oy": 8.3681569,
+      "sy": -0.0021602,
+      "residual_deg": 0.0038901,
+      "ok": true
+     }
+    }
+   ],
+   "stats": {
+    "valid_px_within_30km": 18093,
+    "coherent_frac_within_30km": 0.981,
+    "coherent_frac_60_110km": 0.338,
+    "fringe_rate_near_cyc_per_km": 0.032,
+    "fringe_rate_far_cyc_per_km": 0.104,
+    "ramp_cyc_per_km_east_north": [
+     -0.016,
+     -0.031
+    ],
+    "ramp_fringes_per_100km": 3.5,
+    "deramped_rate_near": 0.038,
+    "deramped_rate_far": 0.096
+   },
+   "transects": {
+    "along-strike": {
+     "azimuth_deg": 115.0,
+     "raw": {
+      "abs_fringes": 0.2,
+      "coherent_km": 29.1,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 0.2,
+      "coherent_km": 29.1,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -19.0,
+       "to_km": 10.1,
+       "net_fringes": -0.19
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      14.3
+     ],
+     "usgs_model_fringes_along_line": 32.4,
+     "usgs_model_los_span_cm": 184.1
+    },
+    "across-strike": {
+     "azimuth_deg": 25.0,
+     "raw": {
+      "abs_fringes": 0.2,
+      "coherent_km": 22.3,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 0.6,
+      "coherent_km": 22.3,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -7.7,
+       "to_km": 14.6,
+       "net_fringes": 0.59
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      19.1
+     ],
+     "usgs_model_fringes_along_line": 23.3,
+     "usgs_model_los_span_cm": 147.1
+    },
+    "N-S": {
+     "azimuth_deg": 0.0,
+     "raw": {
+      "abs_fringes": 0.0,
+      "coherent_km": 18.0,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 0.5,
+      "coherent_km": 18.0,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -6.2,
+       "to_km": 11.8,
+       "net_fringes": 0.52
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      17.9
+     ],
+     "usgs_model_fringes_along_line": 11.6,
+     "usgs_model_los_span_cm": 72.4
+    }
+   },
+   "note": null
+  },
+  {
+   "kind": "control",
+   "track": "076",
+   "dir": "A",
+   "direction": "ascending",
+   "ref_date": "2026-08-18",
+   "sec_date": "2026-08-30",
+   "days": 12,
+   "frames": [
+    {
+     "name": "NISAR_L2_PR_GUNW_028_076_A_005_029_4000_SH_20260818T105604_20260818T105616_20260830T105604_20260830T105616_P05023_N_P_J_001",
+     "frame": "005",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_028_076_A_005_029_4000_SH_20260818T105604_20260818T105616_20260830T105604_20260830T105616_P05023_N_P_J_001/NISAR_L2_PR_GUNW_028_076_A_005_029_4000_SH_20260818T105604_20260818T105616_20260830T105604_20260830T105616_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_028_076_A_005_029_4000_SH_20260818T105604_20260818T105616_20260830T105604_20260830T105616_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -78.70849,
+       7.37279
+      ],
+      [
+       -78.88717,
+       8.14785
+      ],
+      [
+       -81.1107,
+       7.63252
+      ],
+      [
+       -80.92898,
+       6.86038
+      ],
+      [
+       -78.70849,
+       7.37279
+      ]
+     ],
+     "georef": {
+      "ox": -81.3507028,
+      "sx": 0.0021818,
+      "oy": 8.3685591,
+      "sy": -0.0021638,
+      "residual_deg": 0.0039856,
+      "ok": true
+     }
+    }
+   ],
+   "stats": {
+    "valid_px_within_30km": 17628,
+    "coherent_frac_within_30km": 0.912,
+    "coherent_frac_60_110km": 0.247,
+    "fringe_rate_near_cyc_per_km": 0.032,
+    "fringe_rate_far_cyc_per_km": 0.078,
+    "ramp_cyc_per_km_east_north": [
+     -0.002,
+     0.004
+    ],
+    "ramp_fringes_per_100km": 0.4,
+    "deramped_rate_near": 0.03,
+    "deramped_rate_far": 0.078
+   },
+   "transects": {
+    "along-strike": {
+     "azimuth_deg": 115.0,
+     "raw": {
+      "abs_fringes": 0.0,
+      "coherent_km": 28.0,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 0.1,
+      "coherent_km": 28.0,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -18.2,
+       "to_km": 9.8,
+       "net_fringes": 0.1
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      13.1
+     ],
+     "usgs_model_fringes_along_line": 32.4,
+     "usgs_model_los_span_cm": 184.1
+    },
+    "across-strike": {
+     "azimuth_deg": 25.0,
+     "raw": {
+      "abs_fringes": 0.3,
+      "coherent_km": 22.0,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 0.3,
+      "coherent_km": 22.0,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -7.4,
+       "to_km": 14.6,
+       "net_fringes": 0.28
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      15.5
+     ],
+     "usgs_model_fringes_along_line": 23.3,
+     "usgs_model_los_span_cm": 147.1
+    },
+    "N-S": {
+     "azimuth_deg": 0.0,
+     "raw": {
+      "abs_fringes": 0.2,
+      "coherent_km": 17.8,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 0.1,
+      "coherent_km": 17.8,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -6.0,
+       "to_km": 11.8,
+       "net_fringes": 0.12
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      13.1
+     ],
+     "usgs_model_fringes_along_line": 11.6,
+     "usgs_model_los_span_cm": 72.4
+    }
+   },
+   "note": null
+  },
+  {
+   "kind": "control",
+   "track": "076",
+   "dir": "A",
+   "direction": "ascending",
+   "ref_date": "2026-08-30",
+   "sec_date": "2026-09-11",
+   "days": 12,
+   "frames": [
+    {
+     "name": "NISAR_L2_PR_GUNW_029_076_A_005_030_4000_SH_20260830T105604_20260830T105616_20260911T105603_20260911T105616_P05023_N_P_J_001",
+     "frame": "005",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_029_076_A_005_030_4000_SH_20260830T105604_20260830T105616_20260911T105603_20260911T105616_P05023_N_P_J_001/NISAR_L2_PR_GUNW_029_076_A_005_030_4000_SH_20260830T105604_20260830T105616_20260911T105603_20260911T105616_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_029_076_A_005_030_4000_SH_20260830T105604_20260830T105616_20260911T105603_20260911T105616_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -78.71293,
+       7.3927
+      ],
+      [
+       -78.89163,
+       8.16776
+      ],
+      [
+       -81.11524,
+       7.6524
+      ],
+      [
+       -80.9335,
+       6.88026
+      ],
+      [
+       -78.71293,
+       7.3927
+      ]
+     ],
+     "georef": {
+      "ox": -81.3508889,
+      "sx": 0.0021819,
+      "oy": 8.3689995,
+      "sy": -0.0021639,
+      "residual_deg": 0.0039677,
+      "ok": true
+     }
+    },
+    {
+     "name": "NISAR_L2_PR_GUNW_029_076_A_006_030_4000_SH_20260830T105615_20260830T105626_20260911T105615_20260911T105626_P05023_N_P_J_001",
+     "frame": "006",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_029_076_A_006_030_4000_SH_20260830T105615_20260830T105626_20260911T105615_20260911T105626_P05023_N_P_J_001/NISAR_L2_PR_GUNW_029_076_A_006_030_4000_SH_20260830T105615_20260830T105626_20260911T105615_20260911T105626_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_029_076_A_006_030_4000_SH_20260830T105615_20260830T105626_20260911T105615_20260911T105626_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -78.86408,
+       8.04855
+      ],
+      [
+       -79.0298,
+       8.76393
+      ],
+      [
+       -81.25696,
+       8.24608
+      ],
+      [
+       -81.08742,
+       7.53359
+      ],
+      [
+       -78.86408,
+       8.04855
+      ]
+     ],
+     "georef": {
+      "ox": -81.8250223,
+      "sx": 0.0021933,
+      "oy": 10.3674948,
+      "sy": -0.0021699,
+      "residual_deg": 0.0048266,
+      "ok": true
+     }
+    }
+   ],
+   "stats": {
+    "valid_px_within_30km": 29659,
+    "coherent_frac_within_30km": 0.95,
+    "coherent_frac_60_110km": 0.499,
+    "fringe_rate_near_cyc_per_km": 0.024,
+    "fringe_rate_far_cyc_per_km": 0.028,
+    "ramp_cyc_per_km_east_north": [
+     0.006,
+     -0.0
+    ],
+    "ramp_fringes_per_100km": 0.6,
+    "deramped_rate_near": 0.022,
+    "deramped_rate_far": 0.027
+   },
+   "transects": {
+    "along-strike": {
+     "azimuth_deg": 115.0,
+     "raw": {
+      "abs_fringes": 0.4,
+      "coherent_km": 44.2,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 0.1,
+      "coherent_km": 44.2,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -34.8,
+       "to_km": 9.4,
+       "net_fringes": 0.13
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      13.1
+     ],
+     "usgs_model_fringes_along_line": 32.4,
+     "usgs_model_los_span_cm": 184.1
+    },
+    "across-strike": {
+     "azimuth_deg": 25.0,
+     "raw": {
+      "abs_fringes": 0.2,
+      "coherent_km": 67.2,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 0.1,
+      "coherent_km": 67.2,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -7.2,
+       "to_km": 60.0,
+       "net_fringes": 0.08
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      13.1
+     ],
+     "usgs_model_fringes_along_line": 23.3,
+     "usgs_model_los_span_cm": 147.1
+    },
+    "N-S": {
+     "azimuth_deg": 0.0,
+     "raw": {
+      "abs_fringes": 0.1,
+      "coherent_km": 65.1,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "deramped": {
+      "abs_fringes": 0.1,
+      "coherent_km": 65.1,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "segments_deramped": [
+      {
+       "from_km": -5.8,
+       "to_km": 54.5,
+       "net_fringes": 0.07
+      },
+      {
+       "from_km": 55.2,
+       "to_km": 60.0,
+       "net_fringes": -0.06
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      13.1
+     ],
+     "usgs_model_fringes_along_line": 11.6,
+     "usgs_model_los_span_cm": 72.4
+    }
+   },
+   "note": null
+  },
+  {
+   "kind": "control",
+   "track": "076",
+   "dir": "A",
+   "direction": "ascending",
+   "ref_date": "2026-09-11",
+   "sec_date": "2026-10-05",
+   "days": 24,
+   "frames": [
+    {
+     "name": "NISAR_L2_PR_GUNW_030_076_A_005_032_4000_SH_20260911T105603_20260911T105616_20261005T105604_20261005T105616_P05023_N_P_J_001",
+     "frame": "005",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_030_076_A_005_032_4000_SH_20260911T105603_20260911T105616_20261005T105604_20261005T105616_P05023_N_P_J_001/NISAR_L2_PR_GUNW_030_076_A_005_032_4000_SH_20260911T105603_20260911T105616_20261005T105604_20261005T105616_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_030_076_A_005_032_4000_SH_20260911T105603_20260911T105616_20261005T105604_20261005T105616_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -78.70145,
+       7.34392
+      ],
+      [
+       -78.89385,
+       8.17861
+      ],
+      [
+       -81.11753,
+       7.66321
+      ],
+      [
+       -80.92184,
+       6.83167
+      ],
+      [
+       -78.70145,
+       7.34392
+      ]
+     ],
+     "georef": {
+      "ox": -81.3508518,
+      "sx": 0.0021806,
+      "oy": 8.368868,
+      "sy": -0.002162,
+      "residual_deg": 0.0045664,
+      "ok": true
+     }
+    }
+   ],
+   "stats": {
+    "valid_px_within_30km": 18571,
+    "coherent_frac_within_30km": 0.911,
+    "coherent_frac_60_110km": 0.236,
+    "fringe_rate_near_cyc_per_km": 0.027,
+    "fringe_rate_far_cyc_per_km": 0.091,
+    "ramp_cyc_per_km_east_north": [
+     0.005,
+     -0.017
+    ],
+    "ramp_fringes_per_100km": 1.8,
+    "deramped_rate_near": 0.03,
+    "deramped_rate_far": 0.092
+   },
+   "transects": {
+    "along-strike": {
+     "azimuth_deg": 115.0,
+     "raw": {
+      "abs_fringes": 0.1,
+      "coherent_km": 30.0,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 0.4,
+      "coherent_km": 30.0,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -20.6,
+       "to_km": 9.4,
+       "net_fringes": -0.4
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      16.7
+     ],
+     "usgs_model_fringes_along_line": 32.4,
+     "usgs_model_los_span_cm": 184.1
+    },
+    "across-strike": {
+     "azimuth_deg": 25.0,
+     "raw": {
+      "abs_fringes": 0.3,
+      "coherent_km": 23.3,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 0.0,
+      "coherent_km": 23.3,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -7.0,
+       "to_km": 16.3,
+       "net_fringes": -0.03
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      11.9
+     ],
+     "usgs_model_fringes_along_line": 23.3,
+     "usgs_model_los_span_cm": 147.1
+    },
+    "N-S": {
+     "azimuth_deg": 0.0,
+     "raw": {
+      "abs_fringes": 0.2,
+      "coherent_km": 18.5,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 0.1,
+      "coherent_km": 18.5,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -5.5,
+       "to_km": 13.0,
+       "net_fringes": 0.09
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      13.1
+     ],
+     "usgs_model_fringes_along_line": 11.6,
+     "usgs_model_los_span_cm": 72.4
+    }
+   },
+   "note": null
+  },
+  {
+   "kind": "event",
+   "track": "076",
+   "dir": "A",
+   "direction": "ascending",
+   "ref_date": "2026-10-05",
+   "sec_date": "2026-10-17",
+   "days": 12,
+   "frames": [
+    {
+     "name": "NISAR_L2_PR_GUNW_032_076_A_005_033_4000_SH_20261005T105604_20261005T105616_20261017T105604_20261017T105616_P05023_N_P_J_001",
+     "frame": "005",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_032_076_A_005_033_4000_SH_20261005T105604_20261005T105616_20261017T105604_20261017T105616_P05023_N_P_J_001/NISAR_L2_PR_GUNW_032_076_A_005_033_4000_SH_20261005T105604_20261005T105616_20261017T105604_20261017T105616_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/NISAR_L2_PR_GUNW_032_076_A_005_033_4000_SH_20261005T105604_20261005T105616_20261017T105604_20261017T105616_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -78.71081,
+       7.38355
+      ],
+      [
+       -78.88949,
+       8.15861
+      ],
+      [
+       -81.11308,
+       7.64327
+      ],
+      [
+       -80.93134,
+       6.87113
+      ],
+      [
+       -78.71081,
+       7.38355
+      ]
+     ],
+     "georef": {
+      "ox": -81.3509069,
+      "sx": 0.0021819,
+      "oy": 8.3681495,
+      "sy": -0.0021602,
+      "residual_deg": 0.0041884,
+      "ok": true
+     }
+    }
+   ],
+   "stats": {
+    "valid_px_within_30km": 16914,
+    "coherent_frac_within_30km": 0.651,
+    "coherent_frac_60_110km": 0.254,
+    "fringe_rate_near_cyc_per_km": 0.549,
+    "fringe_rate_far_cyc_per_km": 0.143,
+    "ramp_cyc_per_km_east_north": [
+     0.004,
+     0.077
+    ],
+    "ramp_fringes_per_100km": 7.7,
+    "deramped_rate_near": 0.478,
+    "deramped_rate_far": 0.114
+   },
+   "transects": {
+    "along-strike": {
+     "azimuth_deg": 115.0,
+     "raw": {
+      "abs_fringes": 0.3,
+      "coherent_km": 6.0,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 0.5,
+      "coherent_km": 6.0,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": 3.8,
+       "to_km": 9.8,
+       "net_fringes": 0.52
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      17.9
+     ],
+     "usgs_model_fringes_along_line": 32.4,
+     "usgs_model_los_span_cm": 184.1
+    },
+    "across-strike": {
+     "azimuth_deg": 25.0,
+     "raw": {
+      "abs_fringes": 7.5,
+      "coherent_km": 11.5,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 6.7,
+      "coherent_km": 11.5,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": 1.7,
+       "to_km": 13.2,
+       "net_fringes": 6.65
+      }
+     ],
+     "los_cm_range_deramped": [
+      67.9,
+      91.8
+     ],
+     "usgs_model_fringes_along_line": 23.3,
+     "usgs_model_los_span_cm": 147.1
+    },
+    "N-S": {
+     "azimuth_deg": 0.0,
+     "raw": {
+      "abs_fringes": 8.8,
+      "coherent_km": 11.4,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "deramped": {
+      "abs_fringes": 7.9,
+      "coherent_km": 11.4,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "segments_deramped": [
+      {
+       "from_km": -5.8,
+       "to_km": -3.8,
+       "net_fringes": 1.56
+      },
+      {
+       "from_km": 1.4,
+       "to_km": 10.8,
+       "net_fringes": 6.37
+      }
+     ],
+     "los_cm_range_deramped": [
+      82.2,
+      106.1
+     ],
+     "usgs_model_fringes_along_line": 11.6,
+     "usgs_model_los_span_cm": 72.4
+    }
+   },
+   "note": null
+  },
+  {
+   "kind": "control",
+   "track": "141",
+   "dir": "D",
+   "direction": "descending",
+   "ref_date": "2026-06-23",
+   "sec_date": "2026-07-05",
+   "days": 12,
+   "frames": [
+    {
+     "name": "NISAR_L2_PR_GUNW_023_141_D_084_024_4000_SH_20260623T235310_20260623T235340_20260705T235310_20260705T235339_P05023_N_F_J_001",
+     "frame": "084",
+     "full_frame": true,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_023_141_D_084_024_4000_SH_20260623T235310_20260623T235340_20260705T235310_20260705T235339_P05023_N_F_J_001/NISAR_L2_PR_GUNW_023_141_D_084_024_4000_SH_20260623T235310_20260623T235340_20260705T235310_20260705T235339_P05023_N_F_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_023_141_D_084_024_4000_SH_20260623T235310_20260623T235340_20260705T235310_20260705T235339_P05023_N_F_J_001_LATLON.png",
+     "footprint": [
+      [
+       -82.40465,
+       9.90279
+      ],
+      [
+       -82.83478,
+       8.05476
+      ],
+      [
+       -80.60486,
+       7.53831
+      ],
+      [
+       -80.16705,
+       9.37947
+      ],
+      [
+       -82.40465,
+       9.90279
+      ]
+     ],
+     "georef": {
+      "ox": -82.9554421,
+      "sx": 0.0021939,
+      "oy": 10.3618282,
+      "sy": -0.0021653,
+      "residual_deg": 0.005007,
+      "ok": true
+     }
+    },
+    {
+     "name": "NISAR_L2_PR_GUNW_023_141_D_085_024_4000_SH_20260623T235339_20260623T235347_20260705T235338_20260705T235347_P05023_N_P_J_001",
+     "frame": "085",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_023_141_D_085_024_4000_SH_20260623T235339_20260623T235347_20260705T235338_20260705T235347_P05023_N_P_J_001/NISAR_L2_PR_GUNW_023_141_D_085_024_4000_SH_20260623T235339_20260623T235347_20260705T235338_20260705T235347_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_023_141_D_085_024_4000_SH_20260623T235339_20260623T235347_20260705T235338_20260705T235347_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -82.80723,
+       8.17397
+      ],
+      [
+       -82.93103,
+       7.63738
+      ],
+      [
+       -80.70404,
+       7.12281
+      ],
+      [
+       -80.57709,
+       7.65713
+      ],
+      [
+       -82.80723,
+       8.17397
+      ]
+     ],
+     "georef": {
+      "ox": -83.4148954,
+      "sx": 0.0021796,
+      "oy": 8.3707921,
+      "sy": -0.0021629,
+      "residual_deg": 0.0037051,
+      "ok": true
+     }
+    },
+    {
+     "name": "NISAR_L2_PR_GUNW_023_141_D_085_024_2000_SH_20260623T235339_20260623T235355_20260705T235338_20260705T235351_P05023_N_P_J_001",
+     "frame": "085",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_023_141_D_085_024_2000_SH_20260623T235339_20260623T235355_20260705T235338_20260705T235351_P05023_N_P_J_001/NISAR_L2_PR_GUNW_023_141_D_085_024_2000_SH_20260623T235339_20260623T235355_20260705T235338_20260705T235351_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_023_141_D_085_024_2000_SH_20260623T235339_20260623T235355_20260705T235338_20260705T235351_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -82.80723,
+       8.17397
+      ],
+      [
+       -83.04062,
+       7.16033
+      ],
+      [
+       -80.81542,
+       6.64755
+      ],
+      [
+       -80.57709,
+       7.65713
+      ],
+      [
+       -82.80723,
+       8.17397
+      ]
+     ],
+     "georef": {
+      "ox": -83.4155998,
+      "sx": 0.0021801,
+      "oy": 8.3712771,
+      "sy": -0.0021682,
+      "residual_deg": 0.0047528,
+      "ok": true
+     }
+    }
+   ],
+   "stats": {
+    "valid_px_within_30km": 40535,
+    "coherent_frac_within_30km": 0.94,
+    "coherent_frac_60_110km": 0.601,
+    "fringe_rate_near_cyc_per_km": 0.053,
+    "fringe_rate_far_cyc_per_km": 0.047,
+    "ramp_cyc_per_km_east_north": [
+     -0.033,
+     0.005
+    ],
+    "ramp_fringes_per_100km": 3.3,
+    "deramped_rate_near": 0.043,
+    "deramped_rate_far": 0.034
+   },
+   "transects": {
+    "along-strike": {
+     "azimuth_deg": 115.0,
+     "raw": {
+      "abs_fringes": 3.1,
+      "coherent_km": 61.9,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "deramped": {
+      "abs_fringes": 1.1,
+      "coherent_km": 61.9,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "segments_deramped": [
+      {
+       "from_km": -60.0,
+       "to_km": -49.7,
+       "net_fringes": -0.24
+      },
+      {
+       "from_km": -34.1,
+       "to_km": 17.5,
+       "net_fringes": -0.87
+      }
+     ],
+     "los_cm_range_deramped": [
+      1.2,
+      25.0
+     ],
+     "usgs_model_fringes_along_line": 35.1,
+     "usgs_model_los_span_cm": 178.7
+    },
+    "across-strike": {
+     "azimuth_deg": 25.0,
+     "raw": {
+      "abs_fringes": 0.4,
+      "coherent_km": 105.1,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 1.4,
+      "coherent_km": 105.1,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -45.1,
+       "to_km": 60.0,
+       "net_fringes": 1.43
+      }
+     ],
+     "los_cm_range_deramped": [
+      4.8,
+      28.6
+     ],
+     "usgs_model_fringes_along_line": 34.8,
+     "usgs_model_los_span_cm": 217.2
+    },
+    "N-S": {
+     "azimuth_deg": 0.0,
+     "raw": {
+      "abs_fringes": 1.7,
+      "coherent_km": 102.4,
+      "length_km": 120.0,
+      "segments": 3
+     },
+     "deramped": {
+      "abs_fringes": 1.4,
+      "coherent_km": 102.4,
+      "length_km": 120.0,
+      "segments": 3
+     },
+     "segments_deramped": [
+      {
+       "from_km": -43.4,
+       "to_km": 19.2,
+       "net_fringes": 1.32
+      },
+      {
+       "from_km": 19.7,
+       "to_km": 22.8,
+       "net_fringes": -0.01
+      },
+      {
+       "from_km": 23.3,
+       "to_km": 60.0,
+       "net_fringes": -0.05
+      }
+     ],
+     "los_cm_range_deramped": [
+      4.8,
+      28.6
+     ],
+     "usgs_model_fringes_along_line": 16.0,
+     "usgs_model_los_span_cm": 107.8
+    }
+   },
+   "note": null
+  },
+  {
+   "kind": "control",
+   "track": "141",
+   "dir": "D",
+   "direction": "descending",
+   "ref_date": "2026-07-05",
+   "sec_date": "2026-07-17",
+   "days": 12,
+   "frames": [
+    {
+     "name": "NISAR_L2_PR_GUNW_024_141_D_084_025_4000_SH_20260705T235310_20260705T235339_20260717T235309_20260717T235338_P05023_N_F_J_001",
+     "frame": "084",
+     "full_frame": true,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_024_141_D_084_025_4000_SH_20260705T235310_20260705T235339_20260717T235309_20260717T235338_P05023_N_F_J_001/NISAR_L2_PR_GUNW_024_141_D_084_025_4000_SH_20260705T235310_20260705T235339_20260717T235309_20260717T235338_P05023_N_F_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_024_141_D_084_025_4000_SH_20260705T235310_20260705T235339_20260717T235309_20260717T235338_P05023_N_F_J_001_LATLON.png",
+     "footprint": [
+      [
+       -82.41466,
+       9.86434
+      ],
+      [
+       -82.83088,
+       8.07593
+      ],
+      [
+       -80.59958,
+       7.5591
+      ],
+      [
+       -80.17716,
+       9.34114
+      ],
+      [
+       -82.41466,
+       9.86434
+      ]
+     ],
+     "georef": {
+      "ox": -82.95589,
+      "sx": 0.0021932,
+      "oy": 10.3621853,
+      "sy": -0.0021645,
+      "residual_deg": 0.0027843,
+      "ok": true
+     }
+    },
+    {
+     "name": "NISAR_L2_PR_GUNW_024_141_D_085_025_2000_SH_20260705T235338_20260705T235351_20260717T235337_20260717T235350_P05023_N_P_J_001",
+     "frame": "085",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_024_141_D_085_025_2000_SH_20260705T235338_20260705T235351_20260717T235337_20260717T235350_P05023_N_P_J_001/NISAR_L2_PR_GUNW_024_141_D_085_025_2000_SH_20260705T235338_20260705T235351_20260717T235337_20260717T235350_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_024_141_D_085_025_2000_SH_20260705T235338_20260705T235351_20260717T235337_20260717T235350_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -82.80332,
+       8.19514
+      ],
+      [
+       -82.99571,
+       7.36041
+      ],
+      [
+       -80.76975,
+       6.84687
+      ],
+      [
+       -80.57296,
+       7.67818
+      ],
+      [
+       -82.80332,
+       8.19514
+      ]
+     ],
+     "georef": {
+      "ox": -83.4165838,
+      "sx": 0.0021807,
+      "oy": 8.3704367,
+      "sy": -0.0021642,
+      "residual_deg": 0.0047757,
+      "ok": true
+     }
+    },
+    {
+     "name": "NISAR_L2_PR_GUNW_024_141_D_085_025_4000_SH_20260705T235338_20260705T235347_20260717T235337_20260717T235346_P05023_N_P_J_001",
+     "frame": "085",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_024_141_D_085_025_4000_SH_20260705T235338_20260705T235347_20260717T235337_20260717T235346_P05023_N_P_J_001/NISAR_L2_PR_GUNW_024_141_D_085_025_4000_SH_20260705T235338_20260705T235347_20260717T235337_20260717T235346_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_024_141_D_085_025_4000_SH_20260705T235338_20260705T235347_20260717T235337_20260717T235346_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -82.80332,
+       8.19514
+      ],
+      [
+       -82.94088,
+       7.59893
+      ],
+      [
+       -80.71393,
+       7.08447
+      ],
+      [
+       -80.57286,
+       7.67816
+      ],
+      [
+       -82.80332,
+       8.19514
+      ]
+     ],
+     "georef": {
+      "ox": -83.4162284,
+      "sx": 0.0021805,
+      "oy": 8.3705089,
+      "sy": -0.002165,
+      "residual_deg": 0.0040692,
+      "ok": true
+     }
+    }
+   ],
+   "stats": {
+    "valid_px_within_30km": 40451,
+    "coherent_frac_within_30km": 0.943,
+    "coherent_frac_60_110km": 0.734,
+    "fringe_rate_near_cyc_per_km": 0.038,
+    "fringe_rate_far_cyc_per_km": 0.034,
+    "ramp_cyc_per_km_east_north": [
+     0.013,
+     0.002
+    ],
+    "ramp_fringes_per_100km": 1.3,
+    "deramped_rate_near": 0.037,
+    "deramped_rate_far": 0.032
+   },
+   "transects": {
+    "along-strike": {
+     "azimuth_deg": 115.0,
+     "raw": {
+      "abs_fringes": 0.4,
+      "coherent_km": 61.7,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "deramped": {
+      "abs_fringes": 0.9,
+      "coherent_km": 61.7,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "segments_deramped": [
+      {
+       "from_km": -60.0,
+       "to_km": -50.4,
+       "net_fringes": 0.01
+      },
+      {
+       "from_km": -34.6,
+       "to_km": 17.5,
+       "net_fringes": -0.86
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      22.6
+     ],
+     "usgs_model_fringes_along_line": 35.1,
+     "usgs_model_los_span_cm": 178.7
+    },
+    "across-strike": {
+     "azimuth_deg": 25.0,
+     "raw": {
+      "abs_fringes": 2.7,
+      "coherent_km": 103.9,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 2.0,
+      "coherent_km": 103.9,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -43.9,
+       "to_km": 60.0,
+       "net_fringes": 1.98
+      }
+     ],
+     "los_cm_range_deramped": [
+      11.9,
+      35.8
+     ],
+     "usgs_model_fringes_along_line": 34.8,
+     "usgs_model_los_span_cm": 217.2
+    },
+    "N-S": {
+     "azimuth_deg": 0.0,
+     "raw": {
+      "abs_fringes": 2.2,
+      "coherent_km": 103.4,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 2.0,
+      "coherent_km": 103.4,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -43.4,
+       "to_km": 60.0,
+       "net_fringes": 2.02
+      }
+     ],
+     "los_cm_range_deramped": [
+      11.9,
+      35.8
+     ],
+     "usgs_model_fringes_along_line": 16.0,
+     "usgs_model_los_span_cm": 107.8
+    }
+   },
+   "note": null
+  },
+  {
+   "kind": "control",
+   "track": "141",
+   "dir": "D",
+   "direction": "descending",
+   "ref_date": "2026-07-17",
+   "sec_date": "2026-08-10",
+   "days": 24,
+   "frames": [
+    {
+     "name": "NISAR_L2_PR_GUNW_025_141_D_084_027_4000_SH_20260717T235309_20260717T235338_20260810T235308_20260810T235337_P05023_N_F_J_001",
+     "frame": "084",
+     "full_frame": true,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_025_141_D_084_027_4000_SH_20260717T235309_20260717T235338_20260810T235308_20260810T235337_P05023_N_F_J_001/NISAR_L2_PR_GUNW_025_141_D_084_027_4000_SH_20260717T235309_20260717T235338_20260810T235308_20260810T235337_P05023_N_F_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_025_141_D_084_027_4000_SH_20260717T235309_20260717T235338_20260810T235308_20260810T235337_P05023_N_F_J_001_LATLON.png",
+     "footprint": [
+      [
+       -82.41108,
+       9.87736
+      ],
+      [
+       -82.82733,
+       8.08895
+      ],
+      [
+       -80.59547,
+       7.57197
+      ],
+      [
+       -80.17358,
+       9.35416
+      ],
+      [
+       -82.41108,
+       9.87736
+      ]
+     ],
+     "georef": {
+      "ox": -82.9568348,
+      "sx": 0.002195,
+      "oy": 10.3627053,
+      "sy": -0.0021667,
+      "residual_deg": 0.0043963,
+      "ok": true
+     }
+    },
+    {
+     "name": "NISAR_L2_PR_GUNW_025_141_D_085_027_2000_SH_20260717T235337_20260717T235350_20260810T235336_20260810T235349_P05023_N_P_J_001",
+     "frame": "085",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_025_141_D_085_027_2000_SH_20260717T235337_20260717T235350_20260810T235336_20260810T235349_P05023_N_P_J_001/NISAR_L2_PR_GUNW_025_141_D_085_027_2000_SH_20260717T235337_20260717T235350_20260810T235336_20260810T235349_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_025_141_D_085_027_2000_SH_20260717T235337_20260717T235350_20260810T235336_20260810T235349_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -82.79977,
+       8.20815
+      ],
+      [
+       -82.99216,
+       7.37342
+      ],
+      [
+       -80.76618,
+       6.85986
+      ],
+      [
+       -80.56924,
+       7.69116
+      ],
+      [
+       -82.79977,
+       8.20815
+      ]
+     ],
+     "georef": {
+      "ox": -83.4178081,
+      "sx": 0.0021828,
+      "oy": 8.3704642,
+      "sy": -0.0021642,
+      "residual_deg": 0.0058455,
+      "ok": true
+     }
+    },
+    {
+     "name": "NISAR_L2_PR_GUNW_025_141_D_085_027_4000_SH_20260717T235337_20260717T235346_20260810T235336_20260810T235345_P05023_N_P_J_001",
+     "frame": "085",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_025_141_D_085_027_4000_SH_20260717T235337_20260717T235346_20260810T235336_20260810T235345_P05023_N_P_J_001/NISAR_L2_PR_GUNW_025_141_D_085_027_4000_SH_20260717T235337_20260717T235346_20260810T235336_20260810T235345_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_025_141_D_085_027_4000_SH_20260717T235337_20260717T235346_20260810T235336_20260810T235345_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -82.79977,
+       8.20815
+      ],
+      [
+       -82.93733,
+       7.61194
+      ],
+      [
+       -80.71039,
+       7.09748
+      ],
+      [
+       -80.56921,
+       7.69115
+      ],
+      [
+       -82.79977,
+       8.20815
+      ]
+     ],
+     "georef": {
+      "ox": -83.4148791,
+      "sx": 0.0021806,
+      "oy": 8.3705287,
+      "sy": -0.002165,
+      "residual_deg": 0.0047767,
+      "ok": true
+     }
+    }
+   ],
+   "stats": {
+    "valid_px_within_30km": 40705,
+    "coherent_frac_within_30km": 0.942,
+    "coherent_frac_60_110km": 0.729,
+    "fringe_rate_near_cyc_per_km": 0.042,
+    "fringe_rate_far_cyc_per_km": 0.034,
+    "ramp_cyc_per_km_east_north": [
+     -0.01,
+     -0.004
+    ],
+    "ramp_fringes_per_100km": 1.1,
+    "deramped_rate_near": 0.042,
+    "deramped_rate_far": 0.033
+   },
+   "transects": {
+    "along-strike": {
+     "azimuth_deg": 115.0,
+     "raw": {
+      "abs_fringes": 1.1,
+      "coherent_km": 61.4,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "deramped": {
+      "abs_fringes": 1.5,
+      "coherent_km": 61.4,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "segments_deramped": [
+      {
+       "from_km": -60.0,
+       "to_km": -50.2,
+       "net_fringes": -0.16
+      },
+      {
+       "from_km": -33.8,
+       "to_km": 17.8,
+       "net_fringes": 1.3
+      }
+     ],
+     "los_cm_range_deramped": [
+      6.0,
+      29.8
+     ],
+     "usgs_model_fringes_along_line": 35.1,
+     "usgs_model_los_span_cm": 178.7
+    },
+    "across-strike": {
+     "azimuth_deg": 25.0,
+     "raw": {
+      "abs_fringes": 1.4,
+      "coherent_km": 103.4,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "deramped": {
+      "abs_fringes": 0.7,
+      "coherent_km": 103.4,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "segments_deramped": [
+      {
+       "from_km": -43.9,
+       "to_km": 35.5,
+       "net_fringes": -0.14
+      },
+      {
+       "from_km": 36.0,
+       "to_km": 60.0,
+       "net_fringes": -0.53
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      20.3
+     ],
+     "usgs_model_fringes_along_line": 34.8,
+     "usgs_model_los_span_cm": 217.2
+    },
+    "N-S": {
+     "azimuth_deg": 0.0,
+     "raw": {
+      "abs_fringes": 1.4,
+      "coherent_km": 101.7,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "deramped": {
+      "abs_fringes": 1.0,
+      "coherent_km": 101.7,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "segments_deramped": [
+      {
+       "from_km": -43.4,
+       "to_km": 43.4,
+       "net_fringes": -0.76
+      },
+      {
+       "from_km": 45.1,
+       "to_km": 60.0,
+       "net_fringes": -0.28
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      23.8
+     ],
+     "usgs_model_fringes_along_line": 16.0,
+     "usgs_model_los_span_cm": 107.8
+    }
+   },
+   "note": null
+  },
+  {
+   "kind": "control",
+   "track": "141",
+   "dir": "D",
+   "direction": "descending",
+   "ref_date": "2026-08-10",
+   "sec_date": "2026-08-22",
+   "days": 12,
+   "frames": [
+    {
+     "name": "NISAR_L2_PR_GUNW_027_141_D_084_028_4000_SH_20260810T235308_20260810T235337_20260822T235308_20260822T235337_P05023_N_F_J_001",
+     "frame": "084",
+     "full_frame": true,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_027_141_D_084_028_4000_SH_20260810T235308_20260810T235337_20260822T235308_20260822T235337_P05023_N_F_J_001/NISAR_L2_PR_GUNW_027_141_D_084_028_4000_SH_20260810T235308_20260810T235337_20260822T235308_20260822T235337_P05023_N_F_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_027_141_D_084_028_4000_SH_20260810T235308_20260810T235337_20260822T235308_20260822T235337_P05023_N_F_J_001_LATLON.png",
+     "footprint": [
+      [
+       -82.41122,
+       9.87941
+      ],
+      [
+       -82.82745,
+       8.09099
+      ],
+      [
+       -80.59608,
+       7.57415
+      ],
+      [
+       -80.17354,
+       9.35618
+      ],
+      [
+       -82.41122,
+       9.87941
+      ]
+     ],
+     "georef": {
+      "ox": -82.9569626,
+      "sx": 0.0021951,
+      "oy": 10.3625613,
+      "sy": -0.0021666,
+      "residual_deg": 0.0044124,
+      "ok": true
+     }
+    },
+    {
+     "name": "NISAR_L2_PR_GUNW_027_141_D_085_028_4000_SH_20260810T235336_20260810T235345_20260822T235336_20260822T235345_P05023_N_P_J_001",
+     "frame": "085",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_027_141_D_085_028_4000_SH_20260810T235336_20260810T235345_20260822T235336_20260822T235345_P05023_N_P_J_001/NISAR_L2_PR_GUNW_027_141_D_085_028_4000_SH_20260810T235336_20260810T235345_20260822T235336_20260822T235345_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_027_141_D_085_028_4000_SH_20260810T235336_20260810T235345_20260822T235336_20260822T235345_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -82.79989,
+       8.2102
+      ],
+      [
+       -82.93745,
+       7.61398
+      ],
+      [
+       -80.71034,
+       7.0995
+      ],
+      [
+       -80.56908,
+       7.69315
+      ],
+      [
+       -82.79989,
+       8.2102
+      ]
+     ],
+     "georef": {
+      "ox": -83.4150495,
+      "sx": 0.0021808,
+      "oy": 8.3704179,
+      "sy": -0.0021651,
+      "residual_deg": 0.0047408,
+      "ok": true
+     }
+    },
+    {
+     "name": "NISAR_L2_PR_GUNW_027_141_D_085_028_2000_SH_20260810T235336_20260810T235349_20260822T235336_20260822T235349_P05023_N_P_J_001",
+     "frame": "085",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_027_141_D_085_028_2000_SH_20260810T235336_20260810T235349_20260822T235336_20260822T235349_P05023_N_P_J_001/NISAR_L2_PR_GUNW_027_141_D_085_028_2000_SH_20260810T235336_20260810T235349_20260822T235336_20260822T235349_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_027_141_D_085_028_2000_SH_20260810T235336_20260810T235349_20260822T235336_20260822T235349_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -82.79989,
+       8.2102
+      ],
+      [
+       -82.99228,
+       7.37546
+      ],
+      [
+       -80.76613,
+       6.86188
+      ],
+      [
+       -80.56911,
+       7.69316
+      ],
+      [
+       -82.79989,
+       8.2102
+      ]
+     ],
+     "georef": {
+      "ox": -83.417972,
+      "sx": 0.002183,
+      "oy": 8.3703536,
+      "sy": -0.0021642,
+      "residual_deg": 0.0047549,
+      "ok": true
+     }
+    }
+   ],
+   "stats": {
+    "valid_px_within_30km": 40682,
+    "coherent_frac_within_30km": 0.947,
+    "coherent_frac_60_110km": 0.725,
+    "fringe_rate_near_cyc_per_km": 0.039,
+    "fringe_rate_far_cyc_per_km": 0.035,
+    "ramp_cyc_per_km_east_north": [
+     -0.004,
+     0.009
+    ],
+    "ramp_fringes_per_100km": 1.0,
+    "deramped_rate_near": 0.038,
+    "deramped_rate_far": 0.034
+   },
+   "transects": {
+    "along-strike": {
+     "azimuth_deg": 115.0,
+     "raw": {
+      "abs_fringes": 0.1,
+      "coherent_km": 63.3,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "deramped": {
+      "abs_fringes": 0.5,
+      "coherent_km": 63.3,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "segments_deramped": [
+      {
+       "from_km": -60.0,
+       "to_km": -49.7,
+       "net_fringes": 0.03
+      },
+      {
+       "from_km": -35.0,
+       "to_km": 18.0,
+       "net_fringes": 0.46
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      17.9
+     ],
+     "usgs_model_fringes_along_line": 35.1,
+     "usgs_model_los_span_cm": 178.7
+    },
+    "across-strike": {
+     "azimuth_deg": 25.0,
+     "raw": {
+      "abs_fringes": 2.1,
+      "coherent_km": 103.4,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "deramped": {
+      "abs_fringes": 2.3,
+      "coherent_km": 103.4,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "segments_deramped": [
+      {
+       "from_km": -43.9,
+       "to_km": 18.7,
+       "net_fringes": -1.67
+      },
+      {
+       "from_km": 19.2,
+       "to_km": 60.0,
+       "net_fringes": 0.6
+      }
+     ],
+     "los_cm_range_deramped": [
+      15.5,
+      39.3
+     ],
+     "usgs_model_fringes_along_line": 34.8,
+     "usgs_model_los_span_cm": 217.2
+    },
+    "N-S": {
+     "azimuth_deg": 0.0,
+     "raw": {
+      "abs_fringes": 0.4,
+      "coherent_km": 103.4,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 1.4,
+      "coherent_km": 103.4,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -43.4,
+       "to_km": 60.0,
+       "net_fringes": -1.39
+      }
+     ],
+     "los_cm_range_deramped": [
+      4.8,
+      28.6
+     ],
+     "usgs_model_fringes_along_line": 16.0,
+     "usgs_model_los_span_cm": 107.8
+    }
+   },
+   "note": null
+  },
+  {
+   "kind": "control",
+   "track": "141",
+   "dir": "D",
+   "direction": "descending",
+   "ref_date": "2026-08-22",
+   "sec_date": "2026-09-03",
+   "days": 12,
+   "frames": [
+    {
+     "name": "NISAR_L2_PR_GUNW_028_141_D_084_029_4000_SH_20260822T235308_20260822T235337_20260903T235307_20260903T235336_P05023_N_F_J_001",
+     "frame": "084",
+     "full_frame": true,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_028_141_D_084_029_4000_SH_20260822T235308_20260822T235337_20260903T235307_20260903T235336_P05023_N_F_J_001/NISAR_L2_PR_GUNW_028_141_D_084_029_4000_SH_20260822T235308_20260822T235337_20260903T235307_20260903T235336_P05023_N_F_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_028_141_D_084_029_4000_SH_20260822T235308_20260822T235337_20260903T235307_20260903T235336_P05023_N_F_J_001_LATLON.png",
+     "footprint": [
+      [
+       -82.41514,
+       9.85941
+      ],
+      [
+       -82.83134,
+       8.071
+      ],
+      [
+       -80.60087,
+       7.55438
+      ],
+      [
+       -80.17771,
+       9.33625
+      ],
+      [
+       -82.41514,
+       9.85941
+      ]
+     ],
+     "georef": {
+      "ox": -82.9563457,
+      "sx": 0.0021931,
+      "oy": 10.3615386,
+      "sy": -0.0021643,
+      "residual_deg": 0.0039056,
+      "ok": true
+     }
+    },
+    {
+     "name": "NISAR_L2_PR_GUNW_028_141_D_085_029_2000_SH_20260822T235336_20260822T235349_20260903T235335_20260903T235348_P05023_N_P_J_001",
+     "frame": "085",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_028_141_D_085_029_2000_SH_20260822T235336_20260822T235349_20260903T235335_20260903T235348_P05023_N_P_J_001/NISAR_L2_PR_GUNW_028_141_D_085_029_2000_SH_20260822T235336_20260822T235349_20260903T235335_20260903T235348_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_028_141_D_085_029_2000_SH_20260822T235336_20260822T235349_20260903T235335_20260903T235348_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -82.80379,
+       8.1902
+      ],
+      [
+       -82.99616,
+       7.35547
+      ],
+      [
+       -80.77022,
+       6.84195
+      ],
+      [
+       -80.5733,
+       7.67324
+      ],
+      [
+       -82.80379,
+       8.1902
+      ]
+     ],
+     "georef": {
+      "ox": -83.4174321,
+      "sx": 0.0021828,
+      "oy": 8.3722788,
+      "sy": -0.0021676,
+      "residual_deg": 0.0045375,
+      "ok": true
+     }
+    },
+    {
+     "name": "NISAR_L2_PR_GUNW_028_141_D_085_029_4000_SH_20260822T235336_20260822T235345_20260903T235335_20260903T235344_P05023_N_P_J_001",
+     "frame": "085",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_028_141_D_085_029_4000_SH_20260822T235336_20260822T235345_20260903T235335_20260903T235344_P05023_N_P_J_001/NISAR_L2_PR_GUNW_028_141_D_085_029_4000_SH_20260822T235336_20260822T235345_20260903T235335_20260903T235344_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_028_141_D_085_029_4000_SH_20260822T235336_20260822T235345_20260903T235335_20260903T235344_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -82.80379,
+       8.1902
+      ],
+      [
+       -82.94133,
+       7.59399
+      ],
+      [
+       -80.71444,
+       7.07957
+      ],
+      [
+       -80.57326,
+       7.67323
+      ],
+      [
+       -82.80379,
+       8.1902
+      ]
+     ],
+     "georef": {
+      "ox": -83.4145079,
+      "sx": 0.0021805,
+      "oy": 8.3724127,
+      "sy": -0.0021692,
+      "residual_deg": 0.0052856,
+      "ok": true
+     }
+    }
+   ],
+   "stats": {
+    "valid_px_within_30km": 40580,
+    "coherent_frac_within_30km": 0.937,
+    "coherent_frac_60_110km": 0.738,
+    "fringe_rate_near_cyc_per_km": 0.066,
+    "fringe_rate_far_cyc_per_km": 0.04,
+    "ramp_cyc_per_km_east_north": [
+     -0.009,
+     0.019
+    ],
+    "ramp_fringes_per_100km": 2.1,
+    "deramped_rate_near": 0.064,
+    "deramped_rate_far": 0.035
+   },
+   "transects": {
+    "along-strike": {
+     "azimuth_deg": 115.0,
+     "raw": {
+      "abs_fringes": 1.0,
+      "coherent_km": 58.7,
+      "length_km": 120.0,
+      "segments": 3
+     },
+     "deramped": {
+      "abs_fringes": 1.1,
+      "coherent_km": 58.7,
+      "length_km": 120.0,
+      "segments": 3
+     },
+     "segments_deramped": [
+      {
+       "from_km": -60.0,
+       "to_km": -50.6,
+       "net_fringes": -0.25
+      },
+      {
+       "from_km": -34.1,
+       "to_km": -18.2,
+       "net_fringes": -0.14
+      },
+      {
+       "from_km": -15.4,
+       "to_km": 18.0,
+       "net_fringes": 0.76
+      }
+     ],
+     "los_cm_range_deramped": [
+      1.2,
+      25.0
+     ],
+     "usgs_model_fringes_along_line": 35.1,
+     "usgs_model_los_span_cm": 178.7
+    },
+    "across-strike": {
+     "azimuth_deg": 25.0,
+     "raw": {
+      "abs_fringes": 2.2,
+      "coherent_km": 100.9,
+      "length_km": 120.0,
+      "segments": 4
+     },
+     "deramped": {
+      "abs_fringes": 1.3,
+      "coherent_km": 100.9,
+      "length_km": 120.0,
+      "segments": 4
+     },
+     "segments_deramped": [
+      {
+       "from_km": -43.9,
+       "to_km": 14.6,
+       "net_fringes": 0.93
+      },
+      {
+       "from_km": 16.6,
+       "to_km": 30.7,
+       "net_fringes": -0.19
+      },
+      {
+       "from_km": 31.2,
+       "to_km": 32.9,
+       "net_fringes": -0.04
+      },
+      {
+       "from_km": 33.4,
+       "to_km": 60.0,
+       "net_fringes": 0.1
+      }
+     ],
+     "los_cm_range_deramped": [
+      3.6,
+      27.4
+     ],
+     "usgs_model_fringes_along_line": 34.8,
+     "usgs_model_los_span_cm": 217.2
+    },
+    "N-S": {
+     "azimuth_deg": 0.0,
+     "raw": {
+      "abs_fringes": 2.6,
+      "coherent_km": 103.2,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 0.6,
+      "coherent_km": 103.2,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -43.2,
+       "to_km": 60.0,
+       "net_fringes": 0.64
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      19.1
+     ],
+     "usgs_model_fringes_along_line": 16.0,
+     "usgs_model_los_span_cm": 107.8
+    }
+   },
+   "note": null
+  },
+  {
+   "kind": "control",
+   "track": "141",
+   "dir": "D",
+   "direction": "descending",
+   "ref_date": "2026-09-03",
+   "sec_date": "2026-09-15",
+   "days": 12,
+   "frames": [
+    {
+     "name": "NISAR_L2_PR_GUNW_029_141_D_084_030_4000_SH_20260903T235307_20260903T235336_20260915T235307_20260915T235336_P05023_N_F_J_001",
+     "frame": "084",
+     "full_frame": true,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_029_141_D_084_030_4000_SH_20260903T235307_20260903T235336_20260915T235307_20260915T235336_P05023_N_F_J_001/NISAR_L2_PR_GUNW_029_141_D_084_030_4000_SH_20260903T235307_20260903T235336_20260915T235307_20260915T235336_P05023_N_F_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_029_141_D_084_030_4000_SH_20260903T235307_20260903T235336_20260915T235307_20260915T235336_P05023_N_F_J_001_LATLON.png",
+     "footprint": [
+      [
+       -82.40366,
+       9.90904
+      ],
+      [
+       -82.82004,
+       8.12064
+      ],
+      [
+       -80.58791,
+       7.60348
+      ],
+      [
+       -80.16595,
+       9.38566
+      ],
+      [
+       -82.40366,
+       9.90904
+      ]
+     ],
+     "georef": {
+      "ox": -82.9560347,
+      "sx": 0.0021935,
+      "oy": 10.3614926,
+      "sy": -0.0021648,
+      "residual_deg": 0.0026774,
+      "ok": true
+     }
+    },
+    {
+     "name": "NISAR_L2_PR_GUNW_029_141_D_085_030_2000_SH_20260903T235335_20260903T235348_20260915T235335_20260915T235348_P05023_N_P_J_001",
+     "frame": "085",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_029_141_D_085_030_2000_SH_20260903T235335_20260903T235348_20260915T235335_20260915T235348_P05023_N_P_J_001/NISAR_L2_PR_GUNW_029_141_D_085_030_2000_SH_20260903T235335_20260903T235348_20260915T235335_20260915T235348_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_029_141_D_085_030_2000_SH_20260903T235335_20260903T235348_20260915T235335_20260915T235348_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -82.79247,
+       8.23984
+      ],
+      [
+       -82.98493,
+       7.40512
+      ],
+      [
+       -80.7588,
+       6.8914
+      ],
+      [
+       -80.56211,
+       7.72276
+      ],
+      [
+       -82.79247,
+       8.23984
+      ]
+     ],
+     "georef": {
+      "ox": -83.4167197,
+      "sx": 0.0021808,
+      "oy": 8.3720825,
+      "sy": -0.0021679,
+      "residual_deg": 0.003808,
+      "ok": true
+     }
+    },
+    {
+     "name": "NISAR_L2_PR_GUNW_029_141_D_085_030_4000_SH_20260903T235335_20260903T235344_20260915T235335_20260915T235344_P05023_N_P_J_001",
+     "frame": "085",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_029_141_D_085_030_4000_SH_20260903T235335_20260903T235344_20260915T235335_20260915T235344_P05023_N_P_J_001/NISAR_L2_PR_GUNW_029_141_D_085_030_4000_SH_20260903T235335_20260903T235344_20260915T235335_20260915T235344_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_029_141_D_085_030_4000_SH_20260903T235335_20260903T235344_20260915T235335_20260915T235344_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -82.79247,
+       8.23984
+      ],
+      [
+       -82.93008,
+       7.64364
+      ],
+      [
+       -80.70298,
+       7.12901
+      ],
+      [
+       -80.56208,
+       7.72276
+      ],
+      [
+       -82.79247,
+       8.23984
+      ]
+     ],
+     "georef": {
+      "ox": -83.4163268,
+      "sx": 0.0021805,
+      "oy": 8.371927,
+      "sy": -0.0021654,
+      "residual_deg": 0.0050565,
+      "ok": true
+     }
+    }
+   ],
+   "stats": {
+    "valid_px_within_30km": 40581,
+    "coherent_frac_within_30km": 0.94,
+    "coherent_frac_60_110km": 0.734,
+    "fringe_rate_near_cyc_per_km": 0.073,
+    "fringe_rate_far_cyc_per_km": 0.042,
+    "ramp_cyc_per_km_east_north": [
+     0.002,
+     -0.009
+    ],
+    "ramp_fringes_per_100km": 0.9,
+    "deramped_rate_near": 0.075,
+    "deramped_rate_far": 0.042
+   },
+   "transects": {
+    "along-strike": {
+     "azimuth_deg": 115.0,
+     "raw": {
+      "abs_fringes": 1.7,
+      "coherent_km": 60.7,
+      "length_km": 120.0,
+      "segments": 3
+     },
+     "deramped": {
+      "abs_fringes": 1.8,
+      "coherent_km": 60.7,
+      "length_km": 120.0,
+      "segments": 3
+     },
+     "segments_deramped": [
+      {
+       "from_km": -60.0,
+       "to_km": -49.7,
+       "net_fringes": -0.27
+      },
+      {
+       "from_km": -34.6,
+       "to_km": -17.3,
+       "net_fringes": 0.78
+      },
+      {
+       "from_km": -15.6,
+       "to_km": 17.5,
+       "net_fringes": -0.77
+      }
+     ],
+     "los_cm_range_deramped": [
+      9.5,
+      33.4
+     ],
+     "usgs_model_fringes_along_line": 35.1,
+     "usgs_model_los_span_cm": 178.7
+    },
+    "across-strike": {
+     "azimuth_deg": 25.0,
+     "raw": {
+      "abs_fringes": 0.0,
+      "coherent_km": 103.4,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "deramped": {
+      "abs_fringes": 0.8,
+      "coherent_km": 103.4,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "segments_deramped": [
+      {
+       "from_km": -43.9,
+       "to_km": -11.8,
+       "net_fringes": 0.25
+      },
+      {
+       "from_km": -11.3,
+       "to_km": 60.0,
+       "net_fringes": 0.51
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      21.5
+     ],
+     "usgs_model_fringes_along_line": 34.8,
+     "usgs_model_los_span_cm": 217.2
+    },
+    "N-S": {
+     "azimuth_deg": 0.0,
+     "raw": {
+      "abs_fringes": 0.1,
+      "coherent_km": 103.9,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 0.9,
+      "coherent_km": 103.9,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -43.9,
+       "to_km": 60.0,
+       "net_fringes": 0.86
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      22.6
+     ],
+     "usgs_model_fringes_along_line": 16.0,
+     "usgs_model_los_span_cm": 107.8
+    }
+   },
+   "note": null
+  },
+  {
+   "kind": "control",
+   "track": "141",
+   "dir": "D",
+   "direction": "descending",
+   "ref_date": "2026-09-15",
+   "sec_date": "2026-09-27",
+   "days": 12,
+   "frames": [
+    {
+     "name": "NISAR_L2_PR_GUNW_030_141_D_084_031_4000_SH_20260915T235307_20260915T235336_20260927T235307_20260927T235336_P05023_N_F_J_001",
+     "frame": "084",
+     "full_frame": true,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_030_141_D_084_031_4000_SH_20260915T235307_20260915T235336_20260927T235307_20260927T235336_P05023_N_F_J_001/NISAR_L2_PR_GUNW_030_141_D_084_031_4000_SH_20260915T235307_20260915T235336_20260927T235307_20260927T235336_P05023_N_F_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_030_141_D_084_031_4000_SH_20260915T235307_20260915T235336_20260927T235307_20260927T235336_P05023_N_F_J_001_LATLON.png",
+     "footprint": [
+      [
+       -82.40523,
+       9.90307
+      ],
+      [
+       -82.82157,
+       8.11467
+      ],
+      [
+       -80.59028,
+       7.59774
+      ],
+      [
+       -80.16755,
+       9.37974
+      ],
+      [
+       -82.40523,
+       9.90307
+      ]
+     ],
+     "georef": {
+      "ox": -82.9576736,
+      "sx": 0.0021952,
+      "oy": 10.3619714,
+      "sy": -0.0021646,
+      "residual_deg": 0.0047456,
+      "ok": true
+     }
+    },
+    {
+     "name": "NISAR_L2_PR_GUNW_030_141_D_085_031_2000_SH_20260915T235335_20260915T235348_20260927T235335_20260927T235348_P05023_N_P_J_001",
+     "frame": "085",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_030_141_D_085_031_2000_SH_20260915T235335_20260915T235348_20260927T235335_20260927T235348_P05023_N_P_J_001/NISAR_L2_PR_GUNW_030_141_D_085_031_2000_SH_20260915T235335_20260915T235348_20260927T235335_20260927T235348_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_030_141_D_085_031_2000_SH_20260915T235335_20260915T235348_20260927T235335_20260927T235348_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -82.79401,
+       8.23388
+      ],
+      [
+       -82.98645,
+       7.39915
+      ],
+      [
+       -80.76033,
+       6.88547
+      ],
+      [
+       -80.56363,
+       7.71682
+      ],
+      [
+       -82.79401,
+       8.23388
+      ]
+     ],
+     "georef": {
+      "ox": -83.4160589,
+      "sx": 0.0021808,
+      "oy": 8.3702361,
+      "sy": -0.0021644,
+      "residual_deg": 0.0025251,
+      "ok": true
+     }
+    },
+    {
+     "name": "NISAR_L2_PR_GUNW_030_141_D_085_031_4000_SH_20260915T235335_20260915T235344_20260927T235335_20260927T235344_P05023_N_P_J_001",
+     "frame": "085",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_030_141_D_085_031_4000_SH_20260915T235335_20260915T235344_20260927T235335_20260927T235344_P05023_N_P_J_001/NISAR_L2_PR_GUNW_030_141_D_085_031_4000_SH_20260915T235335_20260915T235344_20260927T235335_20260927T235344_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/control/NISAR_L2_PR_GUNW_030_141_D_085_031_4000_SH_20260915T235335_20260915T235344_20260927T235335_20260927T235344_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -82.79401,
+       8.23388
+      ],
+      [
+       -82.93161,
+       7.63767
+      ],
+      [
+       -80.70453,
+       7.12308
+      ],
+      [
+       -80.5636,
+       7.71682
+      ],
+      [
+       -82.79401,
+       8.23388
+      ]
+     ],
+     "georef": {
+      "ox": -83.4156783,
+      "sx": 0.0021805,
+      "oy": 8.370294,
+      "sy": -0.0021653,
+      "residual_deg": 0.0040725,
+      "ok": true
+     }
+    }
+   ],
+   "stats": {
+    "valid_px_within_30km": 40624,
+    "coherent_frac_within_30km": 0.94,
+    "coherent_frac_60_110km": 0.606,
+    "fringe_rate_near_cyc_per_km": 0.15,
+    "fringe_rate_far_cyc_per_km": 0.14,
+    "ramp_cyc_per_km_east_north": [
+     -0.019,
+     -0.13
+    ],
+    "ramp_fringes_per_100km": 13.1,
+    "deramped_rate_near": 0.055,
+    "deramped_rate_far": 0.049
+   },
+   "transects": {
+    "along-strike": {
+     "azimuth_deg": 115.0,
+     "raw": {
+      "abs_fringes": 2.6,
+      "coherent_km": 59.5,
+      "length_km": 120.0,
+      "segments": 3
+     },
+     "deramped": {
+      "abs_fringes": 0.4,
+      "coherent_km": 59.5,
+      "length_km": 120.0,
+      "segments": 3
+     },
+     "segments_deramped": [
+      {
+       "from_km": -60.0,
+       "to_km": -50.4,
+       "net_fringes": 0.02
+      },
+      {
+       "from_km": -32.9,
+       "to_km": -31.0,
+       "net_fringes": 0.24
+      },
+      {
+       "from_km": -30.5,
+       "to_km": 17.5,
+       "net_fringes": 0.1
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      16.7
+     ],
+     "usgs_model_fringes_along_line": 35.1,
+     "usgs_model_los_span_cm": 178.7
+    },
+    "across-strike": {
+     "azimuth_deg": 25.0,
+     "raw": {
+      "abs_fringes": 14.2,
+      "coherent_km": 103.9,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 1.1,
+      "coherent_km": 103.9,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -43.9,
+       "to_km": 60.0,
+       "net_fringes": -1.15
+      }
+     ],
+     "los_cm_range_deramped": [
+      1.2,
+      25.0
+     ],
+     "usgs_model_fringes_along_line": 34.8,
+     "usgs_model_los_span_cm": 217.2
+    },
+    "N-S": {
+     "azimuth_deg": 0.0,
+     "raw": {
+      "abs_fringes": 14.2,
+      "coherent_km": 103.9,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "deramped": {
+      "abs_fringes": 0.7,
+      "coherent_km": 103.9,
+      "length_km": 120.0,
+      "segments": 1
+     },
+     "segments_deramped": [
+      {
+       "from_km": -43.9,
+       "to_km": 60.0,
+       "net_fringes": -0.73
+      }
+     ],
+     "los_cm_range_deramped": [
+      0.0,
+      20.3
+     ],
+     "usgs_model_fringes_along_line": 16.0,
+     "usgs_model_los_span_cm": 107.8
+    }
+   },
+   "note": null
+  },
+  {
+   "kind": "event",
+   "track": "141",
+   "dir": "D",
+   "direction": "descending",
+   "ref_date": "2026-09-27",
+   "sec_date": "2026-10-09",
+   "days": 12,
+   "frames": [
+    {
+     "name": "NISAR_L2_PR_GUNW_031_141_D_084_032_4000_SH_20260927T235307_20260927T235336_20261009T235308_20261009T235336_P05023_N_F_J_001",
+     "frame": "084",
+     "full_frame": true,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_031_141_D_084_032_4000_SH_20260927T235307_20260927T235336_20261009T235308_20261009T235336_P05023_N_F_J_001/NISAR_L2_PR_GUNW_031_141_D_084_032_4000_SH_20260927T235307_20260927T235336_20261009T235308_20261009T235336_P05023_N_F_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/NISAR_L2_PR_GUNW_031_141_D_084_032_4000_SH_20260927T235307_20260927T235336_20261009T235308_20261009T235336_P05023_N_F_J_001_LATLON.png",
+     "footprint": [
+      [
+       -82.40609,
+       9.90019
+      ],
+      [
+       -82.82239,
+       8.11179
+      ],
+      [
+       -80.59088,
+       7.59485
+      ],
+      [
+       -80.1684,
+       9.3769
+      ],
+      [
+       -82.40609,
+       9.90019
+      ]
+     ],
+     "georef": {
+      "ox": -82.9561862,
+      "sx": 0.0021934,
+      "oy": 10.361258,
+      "sy": -0.0021646,
+      "residual_deg": 0.0027172,
+      "ok": true
+     }
+    },
+    {
+     "name": "NISAR_L2_PR_GUNW_031_141_D_085_032_2000_SH_20260927T235335_20260927T235348_20261009T235335_20261009T235349_P05023_N_P_J_001",
+     "frame": "085",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_031_141_D_085_032_2000_SH_20260927T235335_20260927T235348_20261009T235335_20261009T235349_P05023_N_P_J_001/NISAR_L2_PR_GUNW_031_141_D_085_032_2000_SH_20260927T235335_20260927T235348_20261009T235335_20261009T235349_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/NISAR_L2_PR_GUNW_031_141_D_085_032_2000_SH_20260927T235335_20260927T235348_20261009T235335_20261009T235349_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -82.79483,
+       8.23099
+      ],
+      [
+       -82.98725,
+       7.39627
+      ],
+      [
+       -80.76108,
+       6.88262
+      ],
+      [
+       -80.56429,
+       7.71395
+      ],
+      [
+       -82.79483,
+       8.23099
+      ]
+     ],
+     "georef": {
+      "ox": -83.4168838,
+      "sx": 0.0021809,
+      "oy": 8.3718968,
+      "sy": -0.0021678,
+      "residual_deg": 0.0038594,
+      "ok": true
+     }
+    },
+    {
+     "name": "NISAR_L2_PR_GUNW_031_141_D_085_032_4000_SH_20260927T235335_20260927T235344_20261009T235335_20261009T235345_P05023_N_P_J_001",
+     "frame": "085",
+     "full_frame": false,
+     "browse_png": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_031_141_D_085_032_4000_SH_20260927T235335_20260927T235344_20261009T235335_20261009T235345_P05023_N_P_J_001/NISAR_L2_PR_GUNW_031_141_D_085_032_4000_SH_20260927T235335_20260927T235344_20261009T235335_20261009T235345_P05023_N_P_J_001_LATLON.png",
+     "local_png": "data/cases/gunw/NISAR_L2_PR_GUNW_031_141_D_085_032_4000_SH_20260927T235335_20260927T235344_20261009T235335_20261009T235345_P05023_N_P_J_001_LATLON.png",
+     "footprint": [
+      [
+       -82.79483,
+       8.23099
+      ],
+      [
+       -82.93241,
+       7.63479
+      ],
+      [
+       -80.70532,
+       7.12024
+      ],
+      [
+       -80.56429,
+       7.71395
+      ],
+      [
+       -82.79483,
+       8.23099
+      ]
+     ],
+     "georef": {
+      "ox": -83.4165008,
+      "sx": 0.0021806,
+      "oy": 8.3717283,
+      "sy": -0.0021652,
+      "residual_deg": 0.0050991,
+      "ok": true
+     }
+    }
+   ],
+   "stats": {
+    "valid_px_within_30km": 40425,
+    "coherent_frac_within_30km": 0.82,
+    "coherent_frac_60_110km": 0.599,
+    "fringe_rate_near_cyc_per_km": 0.357,
+    "fringe_rate_far_cyc_per_km": 0.074,
+    "ramp_cyc_per_km_east_north": [
+     0.053,
+     -0.003
+    ],
+    "ramp_fringes_per_100km": 5.3,
+    "deramped_rate_near": 0.362,
+    "deramped_rate_far": 0.051
+   },
+   "transects": {
+    "along-strike": {
+     "azimuth_deg": 115.0,
+     "raw": {
+      "abs_fringes": 12.3,
+      "coherent_km": 53.7,
+      "length_km": 120.0,
+      "segments": 3
+     },
+     "deramped": {
+      "abs_fringes": 9.6,
+      "coherent_km": 53.7,
+      "length_km": 120.0,
+      "segments": 3
+     },
+     "segments_deramped": [
+      {
+       "from_km": -60.0,
+       "to_km": -50.2,
+       "net_fringes": 1.19
+      },
+      {
+       "from_km": -30.7,
+       "to_km": -10.3,
+       "net_fringes": 3.56
+      },
+      {
+       "from_km": -6.0,
+       "to_km": 17.5,
+       "net_fringes": 4.87
+      }
+     ],
+     "los_cm_range_deramped": [
+      102.5,
+      126.4
+     ],
+     "usgs_model_fringes_along_line": 35.1,
+     "usgs_model_los_span_cm": 178.7
+    },
+    "across-strike": {
+     "azimuth_deg": 25.0,
+     "raw": {
+      "abs_fringes": 20.1,
+      "coherent_km": 95.0,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "deramped": {
+      "abs_fringes": 22.0,
+      "coherent_km": 95.0,
+      "length_km": 120.0,
+      "segments": 2
+     },
+     "segments_deramped": [
+      {
+       "from_km": -44.2,
+       "to_km": -15.4,
+       "net_fringes": -6.82
+      },
+      {
+       "from_km": -6.2,
+       "to_km": 60.0,
+       "net_fringes": -15.18
+      }
+     ],
+     "los_cm_range_deramped": [
+      250.3,
+      274.2
+     ],
+     "usgs_model_fringes_along_line": 34.8,
+     "usgs_model_los_span_cm": 217.2
+    },
+    "N-S": {
+     "azimuth_deg": 0.0,
+     "raw": {
+      "abs_fringes": 26.2,
+      "coherent_km": 98.2,
+      "length_km": 120.0,
+      "segments": 3
+     },
+     "deramped": {
+      "abs_fringes": 25.9,
+      "coherent_km": 98.2,
+      "length_km": 120.0,
+      "segments": 3
+     },
+     "segments_deramped": [
+      {
+       "from_km": -43.7,
+       "to_km": -15.8,
+       "net_fringes": -6.49
+      },
+      {
+       "from_km": -11.8,
+       "to_km": -8.2,
+       "net_fringes": -2.36
+      },
+      {
+       "from_km": -6.7,
+       "to_km": 60.0,
+       "net_fringes": -17.09
+      }
+     ],
+     "los_cm_range_deramped": [
+      296.8,
+      320.6
+     ],
+     "usgs_model_fringes_along_line": 16.0,
+     "usgs_model_los_span_cm": 107.8
+    }
+   },
+   "note": null
+  }
+ ],
+ "figure": "data/cases/gunw/panama_event_vs_control.jpg",
+ "cmr_query": "https://cmr.earthdata.nasa.gov/search/granules.umm_json?collection_concept_id=C2854335566-ASF&collection_concept_id=C3622247503-ASF&bounding_box=-81.4000%2C7.2000%2C-80.2000%2C7.9000&temporal=2026-07-01T00%3A00%3A00Z%2C2026-11-15T23%3A59%3A59Z&page_size=200&page_num=1&sort_key=start_date",
+ "quality": "screening from NASA browse images (wrapped phase rendering). Deformation in cm needs the unwrapped GUNW HDF5 (Earthdata login) plus ionospheric correction (split-spectrum layer in the product)."
+}

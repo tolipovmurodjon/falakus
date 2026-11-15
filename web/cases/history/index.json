@@ -1,0 +1,194 @@
+{
+ "items": [
+  {
+   "id": "aral",
+   "place": "Aral Sea, east basin of the Large Aral (Uzbekistan/Kazakhstan)",
+   "bbox": [
+    59.6,
+    44.6,
+    60.9,
+    46.0
+   ],
+   "then": {
+    "date": "1997-07-16",
+    "file": "aral_rs1_1997-07-16.jpg",
+    "sensor": "RADARSAT-1 (CSA), C-band HH",
+    "note": "relative dB, uncalibrated",
+    "beam": "SCWB",
+    "scenes": [
+     "s3://radarsat-r1-l1-cog/1997/7/RS1_M0357343_SCWB_19970716_021238_HH_SCW.tif"
+    ]
+   },
+   "now": {
+    "date": "2026-10-31",
+    "file": "aral_nisar_2026-10-31.jpg",
+    "sensor": "NISAR (NASA-ISRO), L-band, NASA GIBS",
+    "granules": [
+     "NISAR_L2_PR_GCOV_034_107_D_066_2005_DHDH_A_20261031T150652_20261031T150727_P05036_N_F_J_001",
+     "NISAR_L2_PR_GCOV_034_107_D_065_2005_DHDH_A_20261031T150618_20261031T150653_P05036_N_F_J_001"
+    ],
+    "coverage_pct": 97.2
+   },
+   "what_changed": "In July 1997 smooth open water covers the western two-thirds of the box up to a sharp eastern shore; in October 2026 the same area shows land texture everywhere, with the long island's outline now sitting in dry seabed and a straight track crossing where the water was.",
+   "band_note": "RADARSAT-1 is C-band (5.6 cm wavelength), NISAR is L-band (24 cm): L-band sees deeper into vegetation and dry soil, so brightness differences are partly the sensor, not the ground. Water stays dark in both.",
+   "series": "aral_series.json",
+   "sources": [
+    {
+     "name": "CSA RADARSAT-1 open archive (NRCan EODMS STAC, Open Government Licence - Canada)",
+     "url": "https://www.eodms-sgdot.nrcan-rncan.gc.ca/search/search?collections=Radarsat-1-L1-COG"
+    },
+    {
+     "name": "NISAR L2 GCOV via NASA GIBS (layer NISAR_L2_Geocoded_Polarimetric_Covariance)",
+     "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/NISAR_L2_Geocoded_Polarimetric_Covariance/default/2026-10-31/GoogleMapsCompatible_Level13/{z}/{y}/{x}.png"
+    },
+    {
+     "name": "NASA CMR granule search (pass dates)",
+     "url": "https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C2854338529-ASF&bounding_box=59.6,44.6,60.9,46.0"
+    }
+   ]
+  },
+  {
+   "id": "andijan",
+   "place": "Andijan reservoir (Kampirravot), Uzbekistan/Kyrgyzstan border",
+   "bbox": [
+    73.028,
+    40.684,
+    73.242,
+    40.846
+   ],
+   "then": {
+    "date": "1997-01-24",
+    "file": "andijan_rs1_1997-01-24.jpg",
+    "sensor": "RADARSAT-1 (CSA), C-band HH",
+    "note": "relative dB, uncalibrated",
+    "beam": "SCWB",
+    "scenes": [
+     "s3://radarsat-r1-l1-cog/1997/1/RS1_M0109173_SCWB_19970124_011859_HH_SCW.tif"
+    ]
+   },
+   "now": {
+    "date": "2026-10-30",
+    "file": "andijan_nisar_2026-10-30.jpg",
+    "sensor": "NISAR (NASA-ISRO), L-band, NASA GIBS",
+    "granules": [
+     "NISAR_L2_PR_GCOV_034_092_D_068_2005_DHDH_A_20261030T140944_20261030T141019_P05036_N_F_J_001"
+    ],
+    "coverage_pct": 100.0
+   },
+   "what_changed": "In the January 1997 RADARSAT-1 frame the dark water fills a wider reservoir whose eastern arm reaches farther east than in the late-October 2026 NISAR frame; the level swings with the season, so this is two dates, not a trend.",
+   "band_note": "RADARSAT-1 is C-band (5.6 cm wavelength), NISAR is L-band (24 cm): L-band sees deeper into vegetation and dry soil, so brightness differences are partly the sensor, not the ground. Water stays dark in both.",
+   "series": null,
+   "sources": [
+    {
+     "name": "CSA RADARSAT-1 open archive (NRCan EODMS STAC, Open Government Licence - Canada)",
+     "url": "https://www.eodms-sgdot.nrcan-rncan.gc.ca/search/search?collections=Radarsat-1-L1-COG"
+    },
+    {
+     "name": "NISAR L2 GCOV via NASA GIBS (layer NISAR_L2_Geocoded_Polarimetric_Covariance)",
+     "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/NISAR_L2_Geocoded_Polarimetric_Covariance/default/2026-10-30/GoogleMapsCompatible_Level13/{z}/{y}/{x}.png"
+    },
+    {
+     "name": "NASA CMR granule search (pass dates)",
+     "url": "https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C2854338529-ASF&bounding_box=73.028,40.684,73.242,40.846"
+    }
+   ]
+  },
+  {
+   "id": "tashkent",
+   "place": "Tashkent, Uzbekistan",
+   "bbox": [
+    69.1,
+    41.2,
+    69.4,
+    41.4
+   ],
+   "then": {
+    "date": "1999-05-03",
+    "file": "tashkent_rs1_1999-05-03.jpg",
+    "sensor": "RADARSAT-1 (CSA), C-band HH",
+    "note": "relative dB, uncalibrated",
+    "beam": "SCNA",
+    "scenes": [
+     "s3://radarsat-r1-l1-cog/1999/5/RS1_18229_SNA_F345_19990503_013954_HH_GRF.tif"
+    ]
+   },
+   "now": {
+    "date": "2026-11-01",
+    "file": "tashkent_nisar_2026-11-01.jpg",
+    "sensor": "NISAR (NASA-ISRO), L-band, NASA GIBS",
+    "granules": [
+     "NISAR_L2_PR_GCOV_034_121_D_068_2005_DHDH_A_20261101T142623_20261101T142658_P05036_F_F_J_001",
+     "NISAR_L2_PR_GCOV_034_121_D_067_2005_DHDH_A_20261101T142549_20261101T142624_P05036_F_F_J_001"
+    ],
+    "coverage_pct": 100.0
+   },
+   "what_changed": "The same main features sit in both frames (the airport runway south of centre, the dark strip on the east edge, the bright dense centre); city growth since 1999 cannot be separated from the C-band vs L-band difference at this scale.",
+   "band_note": "RADARSAT-1 is C-band (5.6 cm wavelength), NISAR is L-band (24 cm): L-band sees deeper into vegetation and dry soil, so brightness differences are partly the sensor, not the ground. Water stays dark in both.",
+   "series": null,
+   "sources": [
+    {
+     "name": "CSA RADARSAT-1 open archive (NRCan EODMS STAC, Open Government Licence - Canada)",
+     "url": "https://www.eodms-sgdot.nrcan-rncan.gc.ca/search/search?collections=Radarsat-1-L1-COG"
+    },
+    {
+     "name": "NISAR L2 GCOV via NASA GIBS (layer NISAR_L2_Geocoded_Polarimetric_Covariance)",
+     "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/NISAR_L2_Geocoded_Polarimetric_Covariance/default/2026-11-01/GoogleMapsCompatible_Level13/{z}/{y}/{x}.png"
+    },
+    {
+     "name": "NASA CMR granule search (pass dates)",
+     "url": "https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C2854338529-ASF&bounding_box=69.1,41.2,69.4,41.4"
+    }
+   ]
+  },
+  {
+   "id": "urmia",
+   "place": "Lake Urmia, north-central lake and causeway (Iran)",
+   "bbox": [
+    45.25,
+    37.58,
+    46.1,
+    38.25
+   ],
+   "then": {
+    "date": "1999-08-08",
+    "file": "urmia_rs1_1999-08-08.jpg",
+    "sensor": "RADARSAT-1 (CSA), C-band HH",
+    "note": "relative dB, uncalibrated",
+    "beam": "S7",
+    "scenes": [
+     "s3://radarsat-r1-l1-cog/1999/8/RS1_19616_ST7_F353_19990808_025206_HH_GRF.tif",
+     "s3://radarsat-r1-l1-cog/1999/8/RS1_19616_ST7_F355_19990808_025220_HH_GRF.tif",
+     "s3://radarsat-r1-l1-cog/1999/8/RS1_19616_ST7_F357_19990808_025234_HH_GRF.tif"
+    ]
+   },
+   "now": {
+    "date": "2026-10-30",
+    "file": "urmia_nisar_2026-10-30.jpg",
+    "sensor": "NISAR (NASA-ISRO), L-band, NASA GIBS",
+    "granules": [
+     "NISAR_L2_PR_GCOV_034_093_D_070_2005_DHDH_A_20261030T155045_20261030T155120_P05036_N_F_J_001",
+     "NISAR_L2_PR_GCOV_034_093_D_069_2005_DHDH_M_20261030T155011_20261030T155046_P05036_N_F_J_001",
+     "NISAR_L2_PR_GCOV_034_085_A_021_2005_DHDH_M_20261030T020337_20261030T020412_P05036_N_F_J_001"
+    ],
+    "coverage_pct": 95.7
+   },
+   "what_changed": "The island and the causeway line are the same in both; in 1999 dark water ends at a sharp eastern shore, while in 2026 the dark area runs past that old shore, and dark L-band can be water or a smooth dry salt bed, so these two radar images alone do not show how much water is left.",
+   "band_note": "RADARSAT-1 is C-band (5.6 cm wavelength), NISAR is L-band (24 cm): L-band sees deeper into vegetation and dry soil, so brightness differences are partly the sensor, not the ground. Water stays dark in both.",
+   "series": "urmia_series.json",
+   "sources": [
+    {
+     "name": "CSA RADARSAT-1 open archive (NRCan EODMS STAC, Open Government Licence - Canada)",
+     "url": "https://www.eodms-sgdot.nrcan-rncan.gc.ca/search/search?collections=Radarsat-1-L1-COG"
+    },
+    {
+     "name": "NISAR L2 GCOV via NASA GIBS (layer NISAR_L2_Geocoded_Polarimetric_Covariance)",
+     "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/NISAR_L2_Geocoded_Polarimetric_Covariance/default/2026-10-30/GoogleMapsCompatible_Level13/{z}/{y}/{x}.png"
+    },
+    {
+     "name": "NASA CMR granule search (pass dates)",
+     "url": "https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C2854338529-ASF&bounding_box=45.25,37.58,46.1,38.25"
+    }
+   ]
+  }
+ ]
+}

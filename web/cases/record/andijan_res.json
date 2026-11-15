@@ -1,0 +1,1798 @@
+{
+ "place": "andijan_res",
+ "name": "Andijan reservoir",
+ "unit": "km2",
+ "bbox": [
+  73.028,
+  40.684,
+  73.242,
+  40.846
+ ],
+ "coverage": {
+  "Sentinel-2": {
+   "from": "2017-04-09",
+   "to": "2026-11-03",
+   "n": 95
+  },
+  "Landsat": {
+   "from": "1993-09-30",
+   "to": "2016-09-20",
+   "n": 23
+  },
+  "Sentinel-1": {
+   "from": "2015-06-16",
+   "to": "2026-11-09",
+   "n": 138
+  },
+  "NISAR": {
+   "from": "2026-06-20",
+   "to": "2026-10-30",
+   "n": 11
+  }
+ },
+ "series": [
+  {
+   "sensor": "Landsat",
+   "band": "optical",
+   "date": "1993-09-30",
+   "km2": 19.9,
+   "platform": "L5",
+   "mosaic_days": 9,
+   "note": "summer cloud-free mosaic (Jun-Sep); date = scene filling most pixels"
+  },
+  {
+   "sensor": "Landsat",
+   "band": "optical",
+   "date": "1994-06-29",
+   "km2": 60.2,
+   "platform": "L5",
+   "mosaic_days": 71,
+   "note": "summer cloud-free mosaic (Jun-Sep); date = scene filling most pixels"
+  },
+  {
+   "sensor": "Landsat",
+   "band": "optical",
+   "date": "1996-09-06",
+   "km2": 46.8,
+   "platform": "L5",
+   "mosaic_days": 0,
+   "note": "summer cloud-free mosaic (Jun-Sep); date = scene filling most pixels"
+  },
+  {
+   "sensor": "Landsat",
+   "band": "optical",
+   "date": "1997-09-09",
+   "km2": 16.8,
+   "platform": "L5",
+   "mosaic_days": 0,
+   "note": "summer cloud-free mosaic (Jun-Sep); date = scene filling most pixels"
+  },
+  {
+   "sensor": "Landsat",
+   "band": "optical",
+   "date": "1998-09-03",
+   "km2": 48.7,
+   "platform": "L5",
+   "mosaic_days": 23,
+   "note": "summer cloud-free mosaic (Jun-Sep); date = scene filling most pixels"
+  },
+  {
+   "sensor": "Landsat",
+   "band": "optical",
+   "date": "1999-09-23",
+   "km2": 35.7,
+   "platform": "L7",
+   "mosaic_days": 0,
+   "note": "summer cloud-free mosaic (Jun-Sep); date = scene filling most pixels"
+  },
+  {
+   "sensor": "Landsat",
+   "band": "optical",
+   "date": "2000-08-24",
+   "km2": 16.4,
+   "platform": "L7",
+   "mosaic_days": 23,
+   "note": "summer cloud-free mosaic (Jun-Sep); date = scene filling most pixels"
+  },
+  {
+   "sensor": "Landsat",
+   "band": "optical",
+   "date": "2001-09-28",
+   "km2": 23.5,
+   "platform": "L7",
+   "mosaic_days": 0,
+   "note": "summer cloud-free mosaic (Jun-Sep); date = scene filling most pixels"
+  },
+  {
+   "sensor": "Landsat",
+   "band": "optical",
+   "date": "2002-08-30",
+   "km2": 30.8,
+   "platform": "L7",
+   "mosaic_days": 23,
+   "note": "summer cloud-free mosaic (Jun-Sep); date = scene filling most pixels"
+  },
+  {
+   "sensor": "Landsat",
+   "band": "optical",
+   "date": "2003-09-18",
+   "km2": 36.7,
+   "platform": "L7",
+   "mosaic_days": 57,
+   "note": "summer cloud-free mosaic (Jun-Sep); date = scene filling most pixels"
+  },
+  {
+   "sensor": "Landsat",
+   "band": "optical",
+   "date": "2004-06-16",
+   "km2": 58.1,
+   "platform": "L7",
+   "mosaic_days": 103,
+   "note": "summer cloud-free mosaic (Jun-Sep); date = scene filling most pixels"
+  },
+  {
+   "sensor": "Landsat",
+   "band": "optical",
+   "date": "2005-09-07",
+   "km2": 31.9,
+   "platform": "L7",
+   "mosaic_days": 119,
+   "note": "summer cloud-free mosaic (Jun-Sep); date = scene filling most pixels"
+  },
+  {
+   "sensor": "Landsat",
+   "band": "optical",
+   "date": "2006-09-26",
+   "km2": 19.6,
+   "platform": "L7",
+   "mosaic_days": 64,
+   "note": "summer cloud-free mosaic (Jun-Sep); date = scene filling most pixels"
+  },
+  {
+   "sensor": "Landsat",
+   "band": "optical",
+   "date": "2007-09-13",
+   "km2": 15.1,
+   "platform": "L7",
+   "mosaic_days": 16,
+   "note": "summer cloud-free mosaic (Jun-Sep); date = scene filling most pixels"
+  },
+  {
+   "sensor": "Landsat",
+   "band": "optical",
+   "date": "2008-08-13",
+   "km2": 18.2,
+   "platform": "L5",
+   "mosaic_days": 39,
+   "note": "summer cloud-free mosaic (Jun-Sep); date = scene filling most pixels"
+  },
+  {
+   "sensor": "Landsat",
+   "band": "optical",
+   "date": "2009-09-10",
+   "km2": 28.2,
+   "platform": "L5",
+   "mosaic_days": 0,
+   "note": "summer cloud-free mosaic (Jun-Sep); date = scene filling most pixels"
+  },
+  {
+   "sensor": "Landsat",
+   "band": "optical",
+   "date": "2010-09-04",
+   "km2": 43.4,
+   "platform": "L5",
+   "mosaic_days": 7,
+   "note": "summer cloud-free mosaic (Jun-Sep); date = scene filling most pixels"
+  },
+  {
+   "sensor": "Landsat",
+   "band": "optical",
+   "date": "2011-09-07",
+   "km2": 22.7,
+   "platform": "L5",
+   "mosaic_days": 55,
+   "note": "summer cloud-free mosaic (Jun-Sep); date = scene filling most pixels"
+  },
+  {
+   "sensor": "Landsat",
+   "band": "optical",
+   "date": "2012-09-01",
+   "km2": 20.2,
+   "platform": "L7",
+   "mosaic_days": 32,
+   "note": "summer cloud-free mosaic (Jun-Sep); date = scene filling most pixels"
+  },
+  {
+   "sensor": "Landsat",
+   "band": "optical",
+   "date": "2013-08-27",
+   "km2": 29.2,
+   "platform": "L8",
+   "mosaic_days": 87,
+   "note": "summer cloud-free mosaic (Jun-Sep); date = scene filling most pixels"
+  },
+  {
+   "sensor": "Landsat",
+   "band": "optical",
+   "date": "2014-08-30",
+   "km2": 13.1,
+   "platform": "L8",
+   "mosaic_days": 39,
+   "note": "summer cloud-free mosaic (Jun-Sep); date = scene filling most pixels"
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2015-06-16",
+   "km2": 50.07
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2015-07-15",
+   "km2": 45.65
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2015-08-14",
+   "km2": 34.16
+  },
+  {
+   "sensor": "Landsat",
+   "band": "optical",
+   "date": "2015-08-17",
+   "km2": 28.6,
+   "platform": "L8",
+   "mosaic_days": 57,
+   "note": "summer cloud-free mosaic (Jun-Sep); date = scene filling most pixels"
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2015-09-07",
+   "km2": 32.14
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2015-10-19",
+   "km2": 21.61
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2015-11-18",
+   "km2": 21.77
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2015-12-13",
+   "km2": 10.12
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2016-01-23",
+   "km2": 31.6
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2016-02-16",
+   "km2": 32.97
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2016-03-17",
+   "km2": 29.91,
+   "fit_month": true
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2016-04-11",
+   "km2": 31.17
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2016-05-22",
+   "km2": 43.98
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2016-06-15",
+   "km2": 53.88
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2016-07-15",
+   "km2": 44.72
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2016-08-14",
+   "km2": 45.93
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2016-09-19",
+   "km2": 46.97
+  },
+  {
+   "sensor": "Landsat",
+   "band": "optical",
+   "date": "2016-09-20",
+   "km2": 22.0,
+   "platform": "L8",
+   "mosaic_days": 9,
+   "note": "summer cloud-free mosaic (Jun-Sep); date = scene filling most pixels"
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2016-10-13",
+   "km2": 52.89
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2016-11-13",
+   "km2": 23.44
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2016-12-12",
+   "km2": 23.47
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2017-01-17",
+   "km2": 44.63
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2017-02-16",
+   "km2": 51.95
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2017-03-13",
+   "km2": 32.03
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2017-04-09",
+   "km2": 35.42
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2017-04-17",
+   "km2": 39.18
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2017-05-17",
+   "km2": 52.03
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2017-05-19",
+   "km2": 48.27
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2017-06-08",
+   "km2": 51.03
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2017-06-16",
+   "km2": 53.81
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2017-07-16",
+   "km2": 56.97
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2017-08-15",
+   "km2": 48.49
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2017-08-27",
+   "km2": 36.14
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2017-09-14",
+   "km2": 51.16
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2017-09-16",
+   "km2": 27.19
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2017-10-01",
+   "km2": 30.65
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2017-10-15",
+   "km2": 34.22
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2017-11-13",
+   "km2": 45.69
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2017-11-30",
+   "km2": 28.51
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2017-12-14",
+   "km2": 33.94
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2018-01-12",
+   "km2": 35.4
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2018-02-13",
+   "km2": 32.62
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2018-02-17",
+   "km2": 45.75
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2018-03-13",
+   "km2": 36.3
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2018-03-20",
+   "km2": 37.33
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2018-04-04",
+   "km2": 37.2
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2018-04-13",
+   "km2": 39.02
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2018-05-18",
+   "km2": 48.01
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2018-05-29",
+   "km2": 48.9
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2018-06-17",
+   "km2": 54.59
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2018-06-28",
+   "km2": 51.18
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2018-07-17",
+   "km2": 56.54
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2018-07-23",
+   "km2": 48.09
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2018-08-16",
+   "km2": 49.82
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2018-08-22",
+   "km2": 29.15
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2018-09-06",
+   "km2": 25.45
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2018-09-15",
+   "km2": 43.59
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2018-10-15",
+   "km2": 49.36
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2018-10-21",
+   "km2": 21.8
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2018-11-05",
+   "km2": 20.39
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2018-11-15",
+   "km2": 20.74
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2018-12-14",
+   "km2": 36.48
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2018-12-15",
+   "km2": 23.71
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2019-01-14",
+   "km2": 23.99
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2019-02-18",
+   "km2": 30.11
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2019-03-10",
+   "km2": 28.28
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2019-03-15",
+   "km2": 29.97
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2019-04-13",
+   "km2": 34.74
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2019-04-14",
+   "km2": 29.55
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2019-05-14",
+   "km2": 36.71
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2019-05-29",
+   "km2": 35.74
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2019-06-13",
+   "km2": 39.86
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2019-06-18",
+   "km2": 42.16
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2019-07-13",
+   "km2": 44.95
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2019-07-23",
+   "km2": 38.61
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2019-08-17",
+   "km2": 37.71
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2019-08-22",
+   "km2": 23.05
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2019-09-16",
+   "km2": 49.58
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2019-09-21",
+   "km2": 19.62
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2019-10-16",
+   "km2": 47.64
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2019-10-26",
+   "km2": 16.06
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2019-11-15",
+   "km2": 58.37
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2019-11-30",
+   "km2": 17.42
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2019-12-15",
+   "km2": 17.4
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2020-01-14",
+   "km2": 29.54
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2020-02-14",
+   "km2": 19.5
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2020-03-14",
+   "km2": 26.11
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2020-03-14",
+   "km2": 32.19
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2020-04-14",
+   "km2": 20.25
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2020-04-18",
+   "km2": 23.77
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2020-05-13",
+   "km2": 32.6
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2020-05-23",
+   "km2": 21.5
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2020-06-12",
+   "km2": 20.4
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2020-06-13",
+   "km2": 27.82
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2020-07-07",
+   "km2": 16.3
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2020-07-18",
+   "km2": 27.55
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2020-08-06",
+   "km2": 11.95
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2020-08-17",
+   "km2": 36.36
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2020-09-16",
+   "km2": 32.16
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2020-09-25",
+   "km2": 12.41
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2020-10-15",
+   "km2": 11.38
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2020-10-16",
+   "km2": 47.35
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2020-11-04",
+   "km2": 10.33
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2020-11-15",
+   "km2": 11.28
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2020-12-15",
+   "km2": 35.73
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2021-01-15",
+   "km2": 14.27
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2021-02-13",
+   "km2": 19.48
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2021-02-17",
+   "km2": 18.1
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2021-03-15",
+   "km2": 20.66
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2021-03-19",
+   "km2": 17.72
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2021-04-14",
+   "km2": 32.1
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2021-04-28",
+   "km2": 21.12
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2021-05-03",
+   "km2": 20.73
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2021-05-15",
+   "km2": 37.57
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2021-06-13",
+   "km2": 52.33
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2021-06-22",
+   "km2": 37.93
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2021-07-14",
+   "km2": 35.3
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2021-07-27",
+   "km2": 21.64
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2021-08-18",
+   "km2": 30.85
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2021-08-21",
+   "km2": 14.88
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2021-09-17",
+   "km2": 41.24
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2021-09-20",
+   "km2": 14.12
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2021-10-17",
+   "km2": 31.32
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2021-11-11",
+   "km2": 21.77
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2021-11-19",
+   "km2": 15.0
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2021-12-09",
+   "km2": 16.66
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2021-12-16",
+   "km2": 31.21
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2022-01-08",
+   "km2": 19.7
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2022-01-15",
+   "km2": 46.31
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2022-02-15",
+   "km2": 17.85
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2022-02-27",
+   "km2": 26.02
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2022-03-16",
+   "km2": 27.13
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2022-04-03",
+   "km2": 32.43
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2022-04-15",
+   "km2": 44.04
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2022-05-08",
+   "km2": 46.44
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2022-05-15",
+   "km2": 49.49
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2022-06-07",
+   "km2": 48.32
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2022-06-15",
+   "km2": 46.77
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2022-07-14",
+   "km2": 56.85
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2022-07-27",
+   "km2": 42.38
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2022-08-14",
+   "km2": 37.86
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2022-08-21",
+   "km2": 30.26
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2022-09-18",
+   "km2": 41.25
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2022-09-25",
+   "km2": 26.44
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2022-10-10",
+   "km2": 25.8
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2022-10-13",
+   "km2": 35.86
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2022-11-14",
+   "km2": 25.83
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2022-11-17",
+   "km2": 25.12
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2022-12-17",
+   "km2": 24.41
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2022-12-19",
+   "km2": 26.39
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2023-01-16",
+   "km2": 26.94
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2023-02-15",
+   "km2": 50.44
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2023-03-17",
+   "km2": 31.98
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2023-03-24",
+   "km2": 27.15
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2023-04-13",
+   "km2": 24.63
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2023-04-16",
+   "km2": 30.2
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2023-05-16",
+   "km2": 33.07
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2023-05-28",
+   "km2": 33.87
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2023-06-07",
+   "km2": 34.56
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2023-06-15",
+   "km2": 47.28
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2023-07-12",
+   "km2": 42.1
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2023-07-15",
+   "km2": 46.56
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2023-08-14",
+   "km2": 44.34
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2023-08-21",
+   "km2": 26.53
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2023-09-10",
+   "km2": 26.75
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2023-09-14",
+   "km2": 35.22
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2023-10-13",
+   "km2": 19.37
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2023-10-20",
+   "km2": 26.95
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2023-11-13",
+   "km2": 29.95
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2023-11-14",
+   "km2": 25.93
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2023-12-18",
+   "km2": 26.77
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2024-01-17",
+   "km2": 28.03
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2024-01-18",
+   "km2": 31.81
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2024-02-16",
+   "km2": 32.04
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2024-03-17",
+   "km2": 37.09
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2024-03-18",
+   "km2": 30.78
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2024-04-02",
+   "km2": 27.74
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2024-04-16",
+   "km2": 29.53
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2024-05-16",
+   "km2": 42.67
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2024-05-27",
+   "km2": 42.82
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2024-06-15",
+   "km2": 43.73
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2024-06-26",
+   "km2": 45.83
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2024-07-15",
+   "km2": 48.8
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2024-07-26",
+   "km2": 42.05
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2024-08-15",
+   "km2": 38.9
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2024-08-20",
+   "km2": 33.2
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2024-09-13",
+   "km2": 50.46
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2024-09-24",
+   "km2": 31.05
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2024-10-14",
+   "km2": 33.84
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2024-10-19",
+   "km2": 33.38
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2024-11-03",
+   "km2": 34.3
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2024-11-18",
+   "km2": 36.41
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2024-12-13",
+   "km2": 33.8
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2025-01-17",
+   "km2": 40.69
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2025-02-16",
+   "km2": 51.86
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2025-03-18",
+   "km2": 34.92
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2025-03-18",
+   "km2": 40.33
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2025-04-17",
+   "km2": 39.58
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2025-04-27",
+   "km2": 42.27
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2025-05-17",
+   "km2": 45.47
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2025-05-17",
+   "km2": 46.46
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2025-06-16",
+   "km2": 49.33
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2025-06-21",
+   "km2": 44.93
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2025-07-06",
+   "km2": 44.06
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2025-07-16",
+   "km2": 46.25
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2025-08-15",
+   "km2": 47.0
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2025-08-25",
+   "km2": 22.84
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2025-09-15",
+   "km2": 30.93
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2025-09-24",
+   "km2": 21.98
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2025-10-14",
+   "km2": 52.61
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2025-10-24",
+   "km2": 21.27
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2025-11-14",
+   "km2": 29.22
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2025-11-23",
+   "km2": 20.02
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2025-12-13",
+   "km2": 23.08
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2026-01-07",
+   "km2": 29.91
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2026-01-13",
+   "km2": 29.9
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2026-02-17",
+   "km2": 30.45
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2026-03-14",
+   "km2": 32.06
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2026-03-18",
+   "km2": 32.83
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2026-04-18",
+   "km2": 36.7
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2026-04-27",
+   "km2": 38.46
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2026-05-13",
+   "km2": 40.41
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2026-05-14",
+   "km2": 41.7
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2026-06-17",
+   "km2": 43.67
+  },
+  {
+   "sensor": "NISAR",
+   "band": "L-band radar",
+   "date": "2026-06-20",
+   "km2": 39.22
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2026-06-26",
+   "km2": 42.51
+  },
+  {
+   "sensor": "NISAR",
+   "band": "L-band radar",
+   "date": "2026-07-02",
+   "km2": 39.35
+  },
+  {
+   "sensor": "NISAR",
+   "band": "L-band radar",
+   "date": "2026-07-14",
+   "km2": 38.49
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2026-07-18",
+   "km2": 45.26
+  },
+  {
+   "sensor": "NISAR",
+   "band": "L-band radar",
+   "date": "2026-07-26",
+   "km2": 35.0
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2026-07-31",
+   "km2": 28.99
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2026-08-02",
+   "km2": 27.41
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2026-08-17",
+   "km2": 41.03
+  },
+  {
+   "sensor": "NISAR",
+   "band": "L-band radar",
+   "date": "2026-08-19",
+   "km2": 21.89
+  },
+  {
+   "sensor": "NISAR",
+   "band": "L-band radar",
+   "date": "2026-08-31",
+   "km2": 19.81
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2026-09-09",
+   "km2": 18.82
+  },
+  {
+   "sensor": "NISAR",
+   "band": "L-band radar",
+   "date": "2026-09-12",
+   "km2": 20.45
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2026-09-16",
+   "km2": 36.48
+  },
+  {
+   "sensor": "NISAR",
+   "band": "L-band radar",
+   "date": "2026-09-24",
+   "km2": 19.5
+  },
+  {
+   "sensor": "NISAR",
+   "band": "L-band radar",
+   "date": "2026-10-06",
+   "km2": 19.38
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2026-10-16",
+   "km2": 49.15
+  },
+  {
+   "sensor": "NISAR",
+   "band": "L-band radar",
+   "date": "2026-10-18",
+   "km2": 19.84
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2026-10-19",
+   "km2": 21.09
+  },
+  {
+   "sensor": "NISAR",
+   "band": "L-band radar",
+   "date": "2026-10-30",
+   "km2": 20.06
+  },
+  {
+   "sensor": "Sentinel-2",
+   "band": "optical",
+   "date": "2026-11-03",
+   "km2": 19.04
+  },
+  {
+   "sensor": "Sentinel-1",
+   "band": "C-band radar",
+   "date": "2026-11-09",
+   "km2": 57.26
+  }
+ ],
+ "validation": {
+  "Sentinel-2": {
+   "metric": "reference (answer key); self-check = MNDWI (time-lapse) minus NDWI (monthly) on the same scene, km2",
+   "value": 0.14,
+   "bias_km2": -0.14,
+   "n": 3,
+   "source": "data/timelapse/andijan_res/index.json vs data/forecast/andijan_res_s2_monthly.json"
+  },
+  "Landsat": {
+   "metric": "median IoU vs Sentinel-2 photo (Landsat 8/9, +-3 days, jointly clear pixels)",
+   "value": 0.891,
+   "mean_iou": 0.889,
+   "area_mae_km2": 1.13,
+   "area_bias_km2": 1.02,
+   "n": 30,
+   "source": "data/cases/record/andijan_res_landsat_check.json",
+   "caveat": "scored on Landsat 8/9 (2017-2026); the 1993-2016 record also uses Landsat 5/7 and multi-date summer mosaics, which this does not score"
+  },
+  "Sentinel-1": {
+   "metric": "median IoU vs Sentinel-2 photo (+-6 days), held-out months (threshold learned on one month, frozen)",
+   "value": 0.734,
+   "mean_iou": 0.685,
+   "area_mae_km2": 9.1,
+   "area_bias_km2": 8.13,
+   "n": 71,
+   "threshold_db": -13.75,
+   "fit_month": "2016-03",
+   "source": "data/s1series/andijan_res.json"
+  },
+  "NISAR": {
+   "metric": "median IoU vs Sentinel-2 photo, nested held-out (clean-up size chosen without the scored day)",
+   "value": 0.796,
+   "area_mae_km2": 2.48,
+   "area_bias_km2": 0.18,
+   "n": 8,
+   "source": "data/ml/water_clean.json",
+   "box_note": "UTM envelope, slightly larger than record box"
+  }
+ },
+ "agreement": {
+  "Sentinel-1 vs Sentinel-2, same month (all months, not only +-6 d)": {
+   "n": 95,
+   "mae_km2": 10.29,
+   "bias_km2": 9.48,
+   "median_abs_pct": 23.3
+  },
+  "Sentinel-1 vs Sentinel-2 within 6 days": {
+   "n": 39,
+   "mae_km2": 10.13,
+   "bias_km2": 9.51,
+   "median_abs_pct": 17.6
+  },
+  "Sentinel-1 minus Sentinel-2 by calendar month (bias km2)": {
+   "01": 7.61,
+   "02": 2.11,
+   "03": 3.18,
+   "04": 3.27,
+   "05": 3.36,
+   "06": 4.49,
+   "07": 9.32,
+   "08": 15.7,
+   "09": 18.82,
+   "10": 17.89,
+   "11": 11.9,
+   "12": 8.45
+  },
+  "NISAR vs Sentinel-2 within 6 days": {
+   "n": 6,
+   "mae_km2": 2.73,
+   "bias_km2": 0.16,
+   "median_abs_pct": 7.6
+  },
+  "NISAR vs Sentinel-1 same month": {
+   "n": 11,
+   "mae_km2": 17.18,
+   "bias_km2": -17.18,
+   "median_abs_pct": 46.5
+  },
+  "Landsat summer mosaic vs Sentinel-2 same year Jun-Sep median (no year overlaps: Landsat frames stop 2016, S2 record starts 2017)": null
+ },
+ "excluded": [],
+ "notes": [
+  "Index choice matters: on the same Sentinel-2 scene, MNDWI (used for Landsat) minus NDWI (used for the S2 record) = -0.14 km2 on average (n=3).",
+  "NISAR grid is the UTM envelope of the box, 8 % larger in area than the record box; same Sentinel-2 photo measured on both grids differs by -0.0 km2 on average (n=2). Kept on the chart, flagged.",
+  "Sentinel-1 C-band over-counts when the reservoir is drawn down: photo < 25 km2 -> S1 +16.5 km2, IoU 0.45 (n=23); photo >= 35 km2 (full) -> S1 +2.3 km2, IoU 0.85 (n=24). Likely cause (not measured): exposed wet bed / mud flats are smooth and radar-dark in VV; frozen threshold -13.75 dB was learned on 2016-03.",
+  "No pixels are blended across sensors: each point is one sensor's own water map on one date.",
+  "Landsat points are summer (Jun-Sep) cloud-free mosaics; mosaic_days says how many days the mosaic spans. Treat as 'summer level', not a single-day reading.",
+  "Sentinel-2 points are single clear scenes (>= 70 % of the box clear, NDWI > 0); cloudy months are left out, not guessed.",
+  "Sentinel-1 (C-band VV) and NISAR (L-band HH) water = dark radar inside the possible-water zone (ESA WorldCover water/wetland + 1 km)."
+ ],
+ "method": "One long, multi-sensor water record for a place: each sensor its OWN measured product, each scored on the same answer key.\n\nNo pixels are blended across sensors (the NASA OPERA DSWx / JRC Global Surface Water rule). Every sensor makes its own\nopen-water area (km2) on the same box, every sensor is checked against clear-sky optical photos, and the series are put\non one timeline with one colour per sensor. Sources, all already in the repo except the Landsat check:\n  Landsat      data/timelapse/<place>/index.json frames whose source is Landsat (summer Jun-Sep cloud-free mosaics,\n               MNDWI > 0). Scored by --landsat-check: Landsat 8/9 scenes within +-3 days of a clear Sentinel-2 month,\n               MNDWI > 0 vs Sentinel-2 NDWI > 0 on the pixels clear in both (IoU, area error).\n  Sentinel-2   data/forecast/<place>_s2_monthly.json, months with >= 70 % of the box clear (NDWI > 0). This IS the\n               answer key; its own check is index agreement (NDWI monthly vs MNDWI time-lapse frame on the same date).\n  Sentinel-1   data/s1series/<place>.json (tools/s1_series.py: Lee-filtered VV < T, T learned on one month, frozen).\n  NISAR        data/ml/water_clean.json (learned map + nested size clean-up; nested held-out IoU).\nCross-sensor agreement where they overlap is reported (S1 vs S2 same month, NISAR vs nearest S2 within 6 days, ...)."
+}

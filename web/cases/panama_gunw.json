@@ -1,0 +1,213 @@
+{
+ "id": "panama_gunw",
+ "title": "Panama M7.7: did the ground move? (NISAR interferograms)",
+ "place": "Azuero peninsula, Panama",
+ "date": "2026-10-09",
+ "bbox": [
+  -81.55,
+  6.95,
+  -79.95,
+  8.25
+ ],
+ "center": [
+  -80.7566,
+  7.6069
+ ],
+ "zoom": 8,
+ "before": "2026-09-27",
+ "after": "2026-10-09",
+ "track": "141D",
+ "finding": "Three of the four NISAR tracks that span the quake (141D, 040D descending; 076A ascending) show dense, curved fringes around the USGS rupture: up to 25.9 fringes on one 120 km line (roughly 3 m of line-of-sight motion, lower bound), while 12-day control pairs on the same tracks show at most 2.3 once their smooth ramps are removed. The fourth (004A) barely reaches the rupture. Screening from NASA browse images, consistent in size with USGS's model and USGS's own NISAR offsets.",
+ "sections": {
+  "what": "A magnitude 7.7 earthquake struck at 17:56 UTC on 9 Oct 2026 (USGS us6000u18k), on a fault striking about 295.0 degrees, mostly sideways slip (rake -16.0), up to 11.1 m of slip in the USGS model.",
+  "why": "An interferogram compares the radar wave's timing on two passes. If the ground moved toward or away from the satellite in between, colour bands (fringes) appear: each full colour cycle is 11.9 cm of motion along the radar's line of sight. Many tight fringes = a lot of motion over a short distance.",
+  "radar": "NISAR L-band (wavelength 23.8 cm). 4 pairs span the quake: 141D (27 Sep -> 9 Oct), 004A (30 Sep -> 12 Oct), 040D (2 -> 14 Oct), 076A (5 -> 17 Oct), two descending and two ascending geometries. We compared each with earlier 12-day pairs on the same track (28 control pairs). We georeferenced NASA's browse images from their CMR footprints, turned colour back into wrapped phase, removed the smooth ramp seen far from the fault, and counted fringes along three 120 km lines through the epicentre.",
+  "validation": "Near the rupture (within 30 km) the deramped fringe rate is 0.362 per km in event pairs vs 0.042 in controls (median); far away (60-110 km) it is 0.059 vs 0.034: the extra fringes sit on the fault, not everywhere. Both ascending (076A) and descending (141D, 040D) tracks show it; 004A has no coherent data within 30 km. Independent: the USGS finite-fault model predicts ~16 fringes on the same line from its coarse (~20 km) grid, which smooths the near-fault motion; we count 25.9 on coherent stretches. Same order of magnitude, not a precise match, and USGS's own NISAR range offsets for tracks 141 and 040 measure metres of line-of-sight motion.",
+  "limits": "Browse images show wrapped phase only, with no ionospheric or orbit correction. Some control pairs carry 10+ fringes per 100 km of smooth ramp (L-band ionosphere is strong in the tropics), so raw counts alone mislead. Next to the rupture the phase decorrelates or aliases (motion of metres), so our counts are lower bounds. Real centimetres need the unwrapped GUNW HDF5 (Earthdata login) plus its ionosphere layer. Ascending line-of-sight for the model check is approximated.",
+  "sources": [
+   {
+    "name": "USGS event us6000u18k",
+    "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u18k"
+   },
+   {
+    "name": "USGS finite-fault model (rupture outline)",
+    "url": "https://earthquake.usgs.gov/product/finite-fault/us6000u18k_1/us/1792710177789/FFM.geojson"
+   },
+   {
+    "name": "USGS model surface displacement",
+    "url": "https://earthquake.usgs.gov/product/finite-fault/us6000u18k_1/us/1792710177789/surface_deformation.disp"
+   },
+   {
+    "name": "USGS NISAR range offsets (tracks 141, 040)",
+    "url": "https://earthquake.usgs.gov/product/finite-fault/us6000u18k_1/us/1792710177789/resampled_interferograms.zip"
+   },
+   {
+    "name": "NASA CMR GUNW pairs over the rupture",
+    "url": "https://cmr.earthdata.nasa.gov/search/granules.umm_json?collection_concept_id=C2854335566-ASF&collection_concept_id=C3622247503-ASF&bounding_box=-81.4000%2C7.2000%2C-80.2000%2C7.9000&temporal=2026-07-01T00%3A00%3A00Z%2C2026-11-15T23%3A59%3A59Z&page_size=200&page_num=1&sort_key=start_date"
+   },
+   {
+    "name": "NASA CMR GUNW pairs spanning the quake (point)",
+    "url": "https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C2854335566-ASF&collection_concept_id=C3622247503-ASF&point=-80.7566,7.6069&temporal=2026-09-25T00:00:00Z,2026-10-20T00:00:00Z&page_size=50"
+   },
+   {
+    "name": "NASA browse 004A 2026-09-30 -> 2026-10-12 frame 005",
+    "url": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_032_004_A_005_033_4000_SH_20260930T110420_20260930T110435_20261012T110420_20261012T110436_P05023_N_P_J_001/NISAR_L2_PR_GUNW_032_004_A_005_033_4000_SH_20260930T110420_20260930T110435_20261012T110420_20261012T110436_P05023_N_P_J_001_LATLON.png"
+   },
+   {
+    "name": "NASA browse 040D 2026-10-02 -> 2026-10-14 frame 085",
+    "url": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_032_040_D_085_033_4000_SH_20261002T234516_20261002T234533_20261014T234516_20261014T234533_P05023_N_P_J_001/NISAR_L2_PR_GUNW_032_040_D_085_033_4000_SH_20261002T234516_20261002T234533_20261014T234516_20261014T234533_P05023_N_P_J_001_LATLON.png"
+   },
+   {
+    "name": "NASA browse 076A 2026-10-05 -> 2026-10-17 frame 005",
+    "url": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_032_076_A_005_033_4000_SH_20261005T105604_20261005T105616_20261017T105604_20261017T105616_P05023_N_P_J_001/NISAR_L2_PR_GUNW_032_076_A_005_033_4000_SH_20261005T105604_20261005T105616_20261017T105604_20261017T105616_P05023_N_P_J_001_LATLON.png"
+   },
+   {
+    "name": "NASA browse 141D 2026-09-27 -> 2026-10-09 frame 084",
+    "url": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_031_141_D_084_032_4000_SH_20260927T235307_20260927T235336_20261009T235308_20261009T235336_P05023_N_F_J_001/NISAR_L2_PR_GUNW_031_141_D_084_032_4000_SH_20260927T235307_20260927T235336_20261009T235308_20261009T235336_P05023_N_F_J_001_LATLON.png"
+   },
+   {
+    "name": "NASA browse 141D 2026-09-27 -> 2026-10-09 frame 085",
+    "url": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_031_141_D_085_032_2000_SH_20260927T235335_20260927T235348_20261009T235335_20261009T235349_P05023_N_P_J_001/NISAR_L2_PR_GUNW_031_141_D_085_032_2000_SH_20260927T235335_20260927T235348_20261009T235335_20261009T235349_P05023_N_P_J_001_LATLON.png"
+   },
+   {
+    "name": "NASA browse 141D 2026-09-27 -> 2026-10-09 frame 085",
+    "url": "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_031_141_D_085_032_4000_SH_20260927T235335_20260927T235344_20261009T235335_20261009T235345_P05023_N_P_J_001/NISAR_L2_PR_GUNW_031_141_D_085_032_4000_SH_20260927T235335_20260927T235344_20261009T235335_20261009T235345_P05023_N_P_J_001_LATLON.png"
+   },
+   {
+    "name": "Screening script",
+    "url": "https://github.com/tolipovmurodjon/falakus/blob/main/tools/gunw_panama.py"
+   }
+  ]
+ },
+ "numbers": [
+  {
+   "label": "Track 004A 2026-09-30 -> 2026-10-12: fringe rate within 30 km of epicentre, event vs controls (max of 7)",
+   "value": "no coherent data vs 0.107",
+   "unit": "fringes/km",
+   "source": "data/cases/gunw/panama_summary.json (tools/gunw_panama.py)"
+  },
+  {
+   "label": "Track 040D 2026-10-02 -> 2026-10-14: fringe rate within 30 km of epicentre, event vs controls (max of 7)",
+   "value": "0.247 vs 0.067",
+   "unit": "fringes/km",
+   "source": "data/cases/gunw/panama_summary.json (tools/gunw_panama.py)"
+  },
+  {
+   "label": "Track 076A 2026-10-05 -> 2026-10-17: fringe rate within 30 km of epicentre, event vs controls (max of 7)",
+   "value": "0.478 vs 0.038",
+   "unit": "fringes/km",
+   "source": "data/cases/gunw/panama_summary.json (tools/gunw_panama.py)"
+  },
+  {
+   "label": "Track 141D 2026-09-27 -> 2026-10-09: fringe rate within 30 km of epicentre, event vs controls (max of 7)",
+   "value": "0.362 vs 0.075",
+   "unit": "fringes/km",
+   "source": "data/cases/gunw/panama_summary.json (tools/gunw_panama.py)"
+  },
+  {
+   "label": "Most fringes counted on one transect, track 141D event (deramped, coherent parts only)",
+   "value": 25.9,
+   "unit": "fringes",
+   "source": "data/cases/gunw/panama_summary.json"
+  },
+  {
+   "label": "Same, as line-of-sight motion (lower bound, +/-1 fringe)",
+   "value": "296.8-320.6",
+   "unit": "cm",
+   "source": "fringes x 11.92 cm"
+  },
+  {
+   "label": "Most fringes on any transect in any control pair (deramped)",
+   "value": 2.3,
+   "unit": "fringes",
+   "source": "data/cases/gunw/panama_summary.json"
+  },
+  {
+   "label": "USGS finite-fault model: fringes predicted on the same transect (coarse ~20 km grid, smooths near-fault motion)",
+   "value": 16.0,
+   "unit": "fringes",
+   "source": "USGS us6000u18k surface_deformation.disp"
+  },
+  {
+   "label": "USGS NISAR range offsets, track 141 (5th-95th percentile LOS)",
+   "value": "-3.69 to 0.44",
+   "unit": "m",
+   "source": "USGS us6000u18k resampled_interferograms.zip"
+  },
+  {
+   "label": "USGS NISAR range offsets, track 040 (5th-95th percentile LOS)",
+   "value": "-2.74 to 0.02",
+   "unit": "m",
+   "source": "USGS us6000u18k resampled_interferograms.zip"
+  },
+  {
+   "label": "Event vs control pairs (all tracks)",
+   "value": "4 / 28",
+   "unit": "pairs",
+   "source": "NASA CMR"
+  }
+ ],
+ "quality": "screening",
+ "quality_note": "screening from NASA's browse images (wrapped phase), not unwrapped GUNW",
+ "image": {
+  "png": "data/cases/gunw/panama_event_vs_control.jpg",
+  "legend": "left: pairs spanning the quake; right: earlier pair on the same track. 1 colour cycle = 11.9 cm line-of-sight motion"
+ },
+ "gunw": {
+  "exists_in_cmr": true,
+  "processed": true,
+  "summary": "data/cases/gunw/panama_summary.json",
+  "event_pairs": [
+   {
+    "track": "004A",
+    "ref": "2026-09-30",
+    "sec": "2026-10-12",
+    "browse": [
+     "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_032_004_A_005_033_4000_SH_20260930T110420_20260930T110435_20261012T110420_20261012T110436_P05023_N_P_J_001/NISAR_L2_PR_GUNW_032_004_A_005_033_4000_SH_20260930T110420_20260930T110435_20261012T110420_20261012T110436_P05023_N_P_J_001_LATLON.png"
+    ],
+    "local": [
+     "data/cases/gunw/NISAR_L2_PR_GUNW_032_004_A_005_033_4000_SH_20260930T110420_20260930T110435_20261012T110420_20261012T110436_P05023_N_P_J_001_LATLON.png"
+    ]
+   },
+   {
+    "track": "040D",
+    "ref": "2026-10-02",
+    "sec": "2026-10-14",
+    "browse": [
+     "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_032_040_D_085_033_4000_SH_20261002T234516_20261002T234533_20261014T234516_20261014T234533_P05023_N_P_J_001/NISAR_L2_PR_GUNW_032_040_D_085_033_4000_SH_20261002T234516_20261002T234533_20261014T234516_20261014T234533_P05023_N_P_J_001_LATLON.png"
+    ],
+    "local": [
+     "data/cases/gunw/NISAR_L2_PR_GUNW_032_040_D_085_033_4000_SH_20261002T234516_20261002T234533_20261014T234516_20261014T234533_P05023_N_P_J_001_LATLON.png"
+    ]
+   },
+   {
+    "track": "076A",
+    "ref": "2026-10-05",
+    "sec": "2026-10-17",
+    "browse": [
+     "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_032_076_A_005_033_4000_SH_20261005T105604_20261005T105616_20261017T105604_20261017T105616_P05023_N_P_J_001/NISAR_L2_PR_GUNW_032_076_A_005_033_4000_SH_20261005T105604_20261005T105616_20261017T105604_20261017T105616_P05023_N_P_J_001_LATLON.png"
+    ],
+    "local": [
+     "data/cases/gunw/NISAR_L2_PR_GUNW_032_076_A_005_033_4000_SH_20261005T105604_20261005T105616_20261017T105604_20261017T105616_P05023_N_P_J_001_LATLON.png"
+    ]
+   },
+   {
+    "track": "141D",
+    "ref": "2026-09-27",
+    "sec": "2026-10-09",
+    "browse": [
+     "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_031_141_D_084_032_4000_SH_20260927T235307_20260927T235336_20261009T235308_20261009T235336_P05023_N_F_J_001/NISAR_L2_PR_GUNW_031_141_D_084_032_4000_SH_20260927T235307_20260927T235336_20261009T235308_20261009T235336_P05023_N_F_J_001_LATLON.png",
+     "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_031_141_D_085_032_2000_SH_20260927T235335_20260927T235348_20261009T235335_20261009T235349_P05023_N_P_J_001/NISAR_L2_PR_GUNW_031_141_D_085_032_2000_SH_20260927T235335_20260927T235348_20261009T235335_20261009T235349_P05023_N_P_J_001_LATLON.png",
+     "https://nisar.asf.earthdatacloud.nasa.gov/BROWSE/NISAR_L2_GUNW_PROVISIONAL_V1/NISAR_L2_PR_GUNW_031_141_D_085_032_4000_SH_20260927T235335_20260927T235344_20261009T235335_20261009T235345_P05023_N_P_J_001/NISAR_L2_PR_GUNW_031_141_D_085_032_4000_SH_20260927T235335_20260927T235344_20261009T235335_20261009T235345_P05023_N_P_J_001_LATLON.png"
+    ],
+    "local": [
+     "data/cases/gunw/NISAR_L2_PR_GUNW_031_141_D_084_032_4000_SH_20260927T235307_20260927T235336_20261009T235308_20261009T235336_P05023_N_F_J_001_LATLON.png",
+     "data/cases/gunw/NISAR_L2_PR_GUNW_031_141_D_085_032_2000_SH_20260927T235335_20260927T235348_20261009T235335_20261009T235349_P05023_N_P_J_001_LATLON.png",
+     "data/cases/gunw/NISAR_L2_PR_GUNW_031_141_D_085_032_4000_SH_20260927T235335_20260927T235344_20261009T235335_20261009T235345_P05023_N_P_J_001_LATLON.png"
+    ]
+   }
+  ],
+  "web": "FalakusGUNW.eventPairs(-80.7566, 7.6069, '2026-10-09T17:56:05Z')"
+ },
+ "generated": "2026-11-15"
+}

@@ -1,0 +1,65 @@
+{
+ "id": "ukraine_east",
+ "title": "Donetsk region, eastern Ukraine: radar backscatter change",
+ "place": "Donetsk region, eastern Ukraine",
+ "date": "2026-11-05",
+ "bbox": [
+  37.837,
+  48.4915,
+  38.163,
+  48.7085
+ ],
+ "center": [
+  38.0,
+  48.6
+ ],
+ "zoom": 8,
+ "before": "2026-06-21",
+ "after": "2026-11-05",
+ "track": null,
+ "finding": "NASA CMR lists 42 NISAR GCOV granules here (2026-06-21 to 2026-11-05), but the NASA GIBS tiles for them are unusable here (no common ground, or the same picture on every pass), so no change is measured.",
+ "sections": {
+  "what": "Radar backscatter change over a 24 km box since the first public NISAR pass.",
+  "why": "Radar shows surface change, not its cause.",
+  "radar": "Radar backscatter depends on surface roughness, moisture and structures.",
+  "validation": "Nothing measured, nothing to validate.",
+  "limits": "no radar signal in GIBS tiles here (quiet-pair spread 0.00)",
+  "sources": [
+   {
+    "name": "NASA CMR NISAR passes here",
+    "url": "https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C2854338529-ASF&bounding_box=37.837,48.4915,38.163,48.7085&temporal=2025-10-01T00:00:00Z,2026-11-15T23:59:59Z&sort_key=start_date"
+   },
+   {
+    "name": "GIBS NISAR GCOV layer",
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/NISAR_L2_Geocoded_Polarimetric_Covariance/default/{date}/GoogleMapsCompatible_Level13/{z}/{y}/{x}.png"
+   }
+  ]
+ },
+ "numbers": [
+  {
+   "label": "NISAR GCOV granules in CMR",
+   "value": 42,
+   "unit": "granules",
+   "source": "NASA CMR"
+  },
+  {
+   "label": "First public pass",
+   "value": "2026-06-21",
+   "unit": "date",
+   "source": "NASA CMR"
+  }
+ ],
+ "quality": "screening",
+ "quality_note": "coverage only: no GIBS tiles",
+ "independent_check": "none",
+ "generated": "2026-11-15",
+ "archive": {
+  "first_pass": "2026-06-21T16:45:40.000Z",
+  "last_pass": "2026-11-05T16:37:18.000Z",
+  "granules": 42,
+  "cmr": [
+   "https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C3622241360-ASF&bounding_box=37.837%2C48.4915%2C38.163%2C48.7085&sort_key=start_date&page_size=2000&temporal=2025-10-01T00%3A00%3A00Z%2C2026-11-15T23%3A59%3A59Z",
+   "https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C2854338529-ASF&bounding_box=37.837%2C48.4915%2C38.163%2C48.7085&sort_key=start_date&page_size=2000&temporal=2025-10-01T00%3A00%3A00Z%2C2026-11-15T23%3A59%3A59Z"
+  ]
+ }
+}

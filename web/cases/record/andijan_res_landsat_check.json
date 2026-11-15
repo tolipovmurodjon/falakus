@@ -1,0 +1,312 @@
+{
+ "place": "andijan_res",
+ "bbox": [
+  73.028,
+  40.684,
+  73.242,
+  40.846
+ ],
+ "method": "Landsat 8/9 C2 L2 MNDWI>0 vs Sentinel-2 L2A NDWI>0, scenes within +-3 days, pixels clear in both (>=70 % of box)",
+ "pairs": [
+  {
+   "month": "2017-04",
+   "landsat_date": "2017-04-09",
+   "landsat": "landsat-8",
+   "s2_date": "2017-04-09",
+   "joint_clear_pct": 100.0,
+   "iou": 0.89,
+   "landsat_km2": 38.03,
+   "s2_km2": 35.49
+  },
+  {
+   "month": "2017-09",
+   "landsat_date": "2017-09-16",
+   "landsat": "landsat-8",
+   "s2_date": "2017-09-16",
+   "joint_clear_pct": 98.2,
+   "iou": 0.922,
+   "landsat_km2": 28.81,
+   "s2_km2": 28.03
+  },
+  {
+   "month": "2018-06",
+   "landsat_date": "2018-07-01",
+   "landsat": "landsat-8",
+   "s2_date": "2018-06-28",
+   "joint_clear_pct": 100.0,
+   "iou": 0.919,
+   "landsat_km2": 55.15,
+   "s2_km2": 52.64
+  },
+  {
+   "month": "2018-10",
+   "landsat_date": "2018-10-21",
+   "landsat": "landsat-8",
+   "s2_date": "2018-10-21",
+   "joint_clear_pct": 99.9,
+   "iou": 0.872,
+   "landsat_km2": 24.01,
+   "s2_km2": 22.11
+  },
+  {
+   "month": "2018-11",
+   "landsat_date": "2018-11-06",
+   "landsat": "landsat-8",
+   "s2_date": "2018-11-05",
+   "joint_clear_pct": 99.8,
+   "iou": 0.845,
+   "landsat_km2": 23.12,
+   "s2_km2": 20.57
+  },
+  {
+   "month": "2019-08",
+   "landsat_date": "2019-08-21",
+   "landsat": "landsat-8",
+   "s2_date": "2019-08-22",
+   "joint_clear_pct": 99.8,
+   "iou": 0.888,
+   "landsat_km2": 24.31,
+   "s2_km2": 23.57
+  },
+  {
+   "month": "2019-09",
+   "landsat_date": "2019-09-22",
+   "landsat": "landsat-8",
+   "s2_date": "2019-09-21",
+   "joint_clear_pct": 99.9,
+   "iou": 0.916,
+   "landsat_km2": 20.23,
+   "s2_km2": 20.07
+  },
+  {
+   "month": "2019-10",
+   "landsat_date": "2019-10-24",
+   "landsat": "landsat-8",
+   "s2_date": "2019-10-26",
+   "joint_clear_pct": 99.8,
+   "iou": 0.873,
+   "landsat_km2": 17.5,
+   "s2_km2": 16.38
+  },
+  {
+   "month": "2020-08",
+   "landsat_date": "2020-08-07",
+   "landsat": "landsat-8",
+   "s2_date": "2020-08-06",
+   "joint_clear_pct": 99.7,
+   "iou": 0.838,
+   "landsat_km2": 12.86,
+   "s2_km2": 12.19
+  },
+  {
+   "month": "2020-09",
+   "landsat_date": "2020-09-24",
+   "landsat": "landsat-8",
+   "s2_date": "2020-09-25",
+   "joint_clear_pct": 99.8,
+   "iou": 0.876,
+   "landsat_km2": 13.33,
+   "s2_km2": 12.75
+  },
+  {
+   "month": "2021-02",
+   "landsat_date": "2021-02-15",
+   "landsat": "landsat-8",
+   "s2_date": "2021-02-17",
+   "joint_clear_pct": 100.0,
+   "iou": 0.878,
+   "landsat_km2": 19.0,
+   "s2_km2": 18.48
+  },
+  {
+   "month": "2021-07",
+   "landsat_date": "2021-07-25",
+   "landsat": "landsat-8",
+   "s2_date": "2021-07-27",
+   "joint_clear_pct": 98.8,
+   "iou": 0.856,
+   "landsat_km2": 23.68,
+   "s2_km2": 22.26
+  },
+  {
+   "month": "2021-09",
+   "landsat_date": "2021-09-18",
+   "landsat": "landsat-8",
+   "s2_date": "2021-09-20",
+   "joint_clear_pct": 71.8,
+   "iou": 0.916,
+   "landsat_km2": 13.91,
+   "s2_km2": 13.77
+  },
+  {
+   "month": "2022-10",
+   "landsat_date": "2022-10-08",
+   "landsat": "landsat-9",
+   "s2_date": "2022-10-10",
+   "joint_clear_pct": 100.0,
+   "iou": 0.929,
+   "landsat_km2": 25.93,
+   "s2_km2": 25.3
+  },
+  {
+   "month": "2022-11",
+   "landsat_date": "2022-11-17",
+   "landsat": "landsat-8",
+   "s2_date": "2022-11-14",
+   "joint_clear_pct": 99.6,
+   "iou": 0.883,
+   "landsat_km2": 27.46,
+   "s2_km2": 26.49
+  },
+  {
+   "month": "2023-07",
+   "landsat_date": "2023-07-15",
+   "landsat": "landsat-8",
+   "s2_date": "2023-07-12",
+   "joint_clear_pct": 100.0,
+   "iou": 0.926,
+   "landsat_km2": 40.92,
+   "s2_km2": 42.17
+  },
+  {
+   "month": "2023-10",
+   "landsat_date": "2023-10-19",
+   "landsat": "landsat-8",
+   "s2_date": "2023-10-20",
+   "joint_clear_pct": 99.7,
+   "iou": 0.923,
+   "landsat_km2": 26.83,
+   "s2_km2": 26.79
+  },
+  {
+   "month": "2024-04",
+   "landsat_date": "2024-04-04",
+   "landsat": "landsat-9",
+   "s2_date": "2024-04-02",
+   "joint_clear_pct": 98.9,
+   "iou": 0.905,
+   "landsat_km2": 28.0,
+   "s2_km2": 27.7
+  },
+  {
+   "month": "2024-07",
+   "landsat_date": "2024-07-25",
+   "landsat": "landsat-9",
+   "s2_date": "2024-07-26",
+   "joint_clear_pct": 100.0,
+   "iou": 0.907,
+   "landsat_km2": 43.7,
+   "s2_km2": 42.26
+  },
+  {
+   "month": "2024-10",
+   "landsat_date": "2024-10-21",
+   "landsat": "landsat-8",
+   "s2_date": "2024-10-19",
+   "joint_clear_pct": 100.0,
+   "iou": 0.927,
+   "landsat_km2": 33.0,
+   "s2_km2": 33.29
+  },
+  {
+   "month": "2025-06",
+   "landsat_date": "2025-06-18",
+   "landsat": "landsat-8",
+   "s2_date": "2025-06-21",
+   "joint_clear_pct": 100.0,
+   "iou": 0.869,
+   "landsat_km2": 49.91,
+   "s2_km2": 45.4
+  },
+  {
+   "month": "2025-07",
+   "landsat_date": "2025-07-04",
+   "landsat": "landsat-8",
+   "s2_date": "2025-07-06",
+   "joint_clear_pct": 99.9,
+   "iou": 0.914,
+   "landsat_km2": 45.3,
+   "s2_km2": 44.0
+  },
+  {
+   "month": "2025-09",
+   "landsat_date": "2025-09-22",
+   "landsat": "landsat-8",
+   "s2_date": "2025-09-24",
+   "joint_clear_pct": 100.0,
+   "iou": 0.908,
+   "landsat_km2": 22.42,
+   "s2_km2": 21.97
+  },
+  {
+   "month": "2025-10",
+   "landsat_date": "2025-10-24",
+   "landsat": "landsat-8",
+   "s2_date": "2025-10-24",
+   "joint_clear_pct": 100.0,
+   "iou": 0.898,
+   "landsat_km2": 21.67,
+   "s2_km2": 21.24
+  },
+  {
+   "month": "2025-11",
+   "landsat_date": "2025-11-25",
+   "landsat": "landsat-8",
+   "s2_date": "2025-11-23",
+   "joint_clear_pct": 100.0,
+   "iou": 0.845,
+   "landsat_km2": 20.73,
+   "s2_km2": 19.66
+  },
+  {
+   "month": "2026-01",
+   "landsat_date": "2026-01-04",
+   "landsat": "landsat-9",
+   "s2_date": "2026-01-07",
+   "joint_clear_pct": 100.0,
+   "iou": 0.761,
+   "landsat_km2": 33.31,
+   "s2_km2": 29.03
+  },
+  {
+   "month": "2026-03",
+   "landsat_date": "2026-03-17",
+   "landsat": "landsat-8",
+   "s2_date": "2026-03-18",
+   "joint_clear_pct": 96.2,
+   "iou": 0.927,
+   "landsat_km2": 32.85,
+   "s2_km2": 32.89
+  },
+  {
+   "month": "2026-08",
+   "landsat_date": "2026-07-31",
+   "landsat": "landsat-9",
+   "s2_date": "2026-08-02",
+   "joint_clear_pct": 99.9,
+   "iou": 0.874,
+   "landsat_km2": 28.17,
+   "s2_km2": 27.26
+  },
+  {
+   "month": "2026-09",
+   "landsat_date": "2026-09-09",
+   "landsat": "landsat-8",
+   "s2_date": "2026-09-09",
+   "joint_clear_pct": 100.0,
+   "iou": 0.89,
+   "landsat_km2": 18.95,
+   "s2_km2": 18.8
+  },
+  {
+   "month": "2026-10",
+   "landsat_date": "2026-10-19",
+   "landsat": "landsat-9",
+   "s2_date": "2026-10-19",
+   "joint_clear_pct": 100.0,
+   "iou": 0.891,
+   "landsat_km2": 21.21,
+   "s2_km2": 21.07
+  }
+ ]
+}

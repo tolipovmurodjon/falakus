@@ -1,0 +1,44 @@
+{
+ "place": "andijan",
+ "bbox": [
+  73.028,
+  40.684,
+  73.242,
+  40.846
+ ],
+ "width": 1400,
+ "rs1_stretch_db": [
+  30.68,
+  46.09
+ ],
+ "rs1_note": "20*log10(DN), relative dB, uncalibrated; one fixed stretch for all RADARSAT-1 frames of this place",
+ "nisar_note": "GIBS NISAR GCOV display PNG, R channel (HH), 2-98 % stretch; not calibrated",
+ "frames": [
+  {
+   "date": "1997-01-24",
+   "sensor": "RADARSAT-1 (CSA), C-band HH",
+   "file": "andijan_rs1_1997-01-24.jpg",
+   "beam": "SCWB",
+   "orbit": "descending",
+   "scenes": [
+    "s3://radarsat-r1-l1-cog/1997/1/RS1_M0109173_SCWB_19970124_011859_HH_SCW.tif"
+   ],
+   "coverage_pct": 100.0
+  },
+  {
+   "date": "2026-10-30",
+   "sensor": "NISAR (NASA-ISRO), L-band, NASA GIBS",
+   "file": "andijan_nisar_2026-10-30.jpg",
+   "granules": [
+    "NISAR_L2_PR_GCOV_034_092_D_068_2005_DHDH_A_20261030T140944_20261030T141019_P05036_N_F_J_001"
+   ],
+   "tiles": {
+    "ok_after_3_retries": 1,
+    "ok_after_1_retries": 1,
+    "ok": 2
+   },
+   "coverage_pct": 100.0,
+   "zoom": 11
+  }
+ ]
+}

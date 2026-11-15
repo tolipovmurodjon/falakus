@@ -1,0 +1,222 @@
+{
+ "id": "andijan",
+ "title": "Andijan reservoir: radar water every 12 days vs the 10-year normal",
+ "place": "Andijan reservoir, Fergana valley, Uzbekistan",
+ "date": "2026-10-30",
+ "bbox": [
+  73.024,
+  40.6805,
+  73.2463,
+  40.8495
+ ],
+ "center": [
+  73.1352,
+  40.765
+ ],
+ "zoom": 11,
+ "before": "2026-06-20",
+ "after": "2026-10-30",
+ "track": null,
+ "finding": "December is forecast at 19.49 km2 (8 in 10: 13.1-25.7) vs a typical 22.25 km2: below normal, but inside the band.",
+ "sections": {
+  "what": "NISAR measured the lake on 11 passes from 2026-06-20 to 2026-10-30, including the 24 Sep day the camera saw only cloud. The summer drop is the normal irrigation cycle; the question is whether this year is unusual.",
+  "why": "The reservoir feeds the Fergana valley's fields; how much water is left for winter and spring decides the first irrigation releases.",
+  "radar": "Calm water is a mirror: it sends the L-band pulse away, so it looks dark in HH. A learned model on 10 radar features maps water at 40 m on every pass.",
+  "validation": "On 8 photo days it never saw, the map matches Sentinel-2 at IoU 0.796 (95 % CI 0.745-0.853); shuffled labels score 0.067. ICESat-2 laser levels track the area (rho 0.946, n = 9).",
+  "limits": "Wet mud on the drying shore reads as water (+2.56 km2 in late summer). The typical December rests on only 3 clear years. The model fails at other places so far.",
+  "sources": [
+   {
+    "name": "Water map score (nested cut-off)",
+    "url": "https://github.com/tolipovmurodjon/falakus/blob/main/tools/ml_water_clean.py"
+   },
+   {
+    "name": "Learned water model",
+    "url": "https://github.com/tolipovmurodjon/falakus/blob/main/tools/ml_water.py"
+   },
+   {
+    "name": "Forecast v2",
+    "url": "https://github.com/tolipovmurodjon/falakus/blob/main/tools/forecast_v2.py"
+   },
+   {
+    "name": "ICESat-2 ATL13 check",
+    "url": "https://github.com/tolipovmurodjon/falakus/blob/main/tools/icesat2_levels.py"
+   },
+   {
+    "name": "NASA CMR NISAR passes over Andijan",
+    "url": "https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C3622241360-ASF&page_size=1&sort_key=start_date&bounding_box=72.9%2C40.6%2C73.3%2C40.9"
+   }
+  ]
+ },
+ "numbers": [
+  {
+   "label": "Radar water, first pass (20 Jun 2026)",
+   "value": 39.22,
+   "unit": "km2",
+   "source": "data/ml/water_clean.json series[0] (final map)"
+  },
+  {
+   "label": "Radar water, last pass (30 Oct 2026)",
+   "value": 20.06,
+   "unit": "km2",
+   "source": "data/ml/water_clean.json series[-1] (final map)"
+  },
+  {
+   "label": "Radar water on the 100 % cloud day (24 Sep 2026)",
+   "value": 19.5,
+   "unit": "km2",
+   "source": "data/ml/water_clean.json series"
+  },
+  {
+   "label": "Dec 2026 forecast",
+   "value": 19.49,
+   "unit": "km2",
+   "source": "data/headline_numbers.json forecast_dec"
+  },
+  {
+   "label": "Dec 8-in-10 band",
+   "value": "13.1-25.7",
+   "unit": "km2",
+   "source": "data/headline_numbers.json forecast_dec"
+  },
+  {
+   "label": "Typical December (n = 3 years)",
+   "value": 22.25,
+   "unit": "km2",
+   "source": "data/headline_numbers.json typical_dec"
+  },
+  {
+   "label": "Nov 2026 photo vs typical November",
+   "value": "19.04 vs 21.97 (n = 9, range 10.33-34.3)",
+   "unit": "km2",
+   "source": "data/forecast/andijan_res_v2.json series"
+  },
+  {
+   "label": "Water map IoU on unseen days (nested)",
+   "value": 0.796,
+   "unit": "IoU",
+   "source": "data/headline_numbers.json nested_iou"
+  },
+  {
+   "label": "95 % CI",
+   "value": "0.745-0.853",
+   "unit": "IoU",
+   "source": "data/headline_numbers.json nested_iou"
+  },
+  {
+   "label": "No clean-up",
+   "value": 0.627,
+   "unit": "IoU",
+   "source": "data/headline_numbers.json raw_iou"
+  },
+  {
+   "label": "Baseline: one HH threshold",
+   "value": 0.299,
+   "unit": "IoU",
+   "source": "data/headline_numbers.json baseline_rule_iou"
+  },
+  {
+   "label": "Shuffled-label control",
+   "value": 0.067,
+   "unit": "IoU",
+   "source": "data/headline_numbers.json shuffled_control_iou"
+  },
+  {
+   "label": "ICESat-2 level vs area",
+   "value": "0.946 (n = 9)",
+   "unit": "Spearman rho",
+   "source": "data/headline_numbers.json icesat2_spearman"
+  },
+  {
+   "label": "Wet-mud over-count, late summer",
+   "value": 2.56,
+   "unit": "km2",
+   "source": "data/headline_numbers.json wet_mud_bias"
+  }
+ ],
+ "quality": "calibrated",
+ "quality_note": "NISAR GCOV gamma0 dB from the HDF5 files (tools/gcov_science.py), 40 m",
+ "anomaly": {
+  "dec_forecast_km2": 19.49,
+  "band": [
+   13.1,
+   25.7
+  ],
+  "typical_dec_km2": 22.25,
+  "anomaly_km2": -2.76,
+  "typical_inside_band": true,
+  "latest_month": "2026-11",
+  "latest_km2": 19.04,
+  "typical_nov_km2": 21.97,
+  "nov_years": 9
+ },
+ "independent_check": "Sentinel-2 photos (ESA) and ICESat-2 ATL13 (NASA), neither made by us. OPERA DSWx not run for this case.",
+ "series": [
+  {
+   "date": "2026-06-20",
+   "km2": 39.22,
+   "raw_km2": 43.23,
+   "cutoff_km2": 2.0
+  },
+  {
+   "date": "2026-07-02",
+   "km2": 39.35,
+   "raw_km2": 44.92,
+   "cutoff_km2": 2.0
+  },
+  {
+   "date": "2026-07-14",
+   "km2": 38.49,
+   "raw_km2": 45.12,
+   "cutoff_km2": 2.0
+  },
+  {
+   "date": "2026-07-26",
+   "km2": 35.0,
+   "raw_km2": 42.2,
+   "cutoff_km2": 2.0
+  },
+  {
+   "date": "2026-08-19",
+   "km2": 21.89,
+   "raw_km2": 30.33,
+   "cutoff_km2": 2.0
+  },
+  {
+   "date": "2026-08-31",
+   "km2": 19.81,
+   "raw_km2": 28.49,
+   "cutoff_km2": 2.0
+  },
+  {
+   "date": "2026-09-12",
+   "km2": 20.45,
+   "raw_km2": 29.68,
+   "cutoff_km2": 2.0
+  },
+  {
+   "date": "2026-09-24",
+   "km2": 19.5,
+   "raw_km2": 24.65,
+   "cutoff_km2": 2.0
+  },
+  {
+   "date": "2026-10-06",
+   "km2": 19.38,
+   "raw_km2": 26.48,
+   "cutoff_km2": 2.0
+  },
+  {
+   "date": "2026-10-18",
+   "km2": 19.84,
+   "raw_km2": 28.53,
+   "cutoff_km2": 2.0
+  },
+  {
+   "date": "2026-10-30",
+   "km2": 20.06,
+   "raw_km2": 32.28,
+   "cutoff_km2": 2.0
+  }
+ ],
+ "generated": "2026-11-15"
+}

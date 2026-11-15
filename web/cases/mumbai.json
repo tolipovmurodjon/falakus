@@ -1,0 +1,241 @@
+{
+ "id": "mumbai",
+ "title": "Mumbai: built-up area",
+ "place": "Mumbai, India",
+ "date": "2026-10-14",
+ "bbox": [
+  72.7659,
+  18.9615,
+  72.9941,
+  19.1785
+ ],
+ "center": [
+  72.88,
+  19.07
+ ],
+ "zoom": 10,
+ "before": "2026-07-22",
+ "after": "2026-10-14",
+ "track": "034D",
+ "finding": "0.0 km2 became brighter (built-like) and 0.0 km2 darker between 2026-07-22 and 2026-10-14, vs 0.0 km2 in the quiet pair. Only 5 months of public NISAR data, so construction change is expected to be small.",
+ "sections": {
+  "what": "A dense coastal megacity under monsoon cloud for months each year.",
+  "why": "Radar keeps watching the city when cameras see only cloud.",
+  "radar": "Buildings form corner reflectors and look very bright; the sea is dark. Same track 034D, 6 passes, each compared with the first.",
+  "validation": "Quiet pair 2026-07-22 to 2026-08-27: 0.0 km2 flagged by the same test. No independent product covers built-up change.",
+  "limits": "Display-scaled GIBS radar, not calibrated dB; screening only. A 12-day quiet pair understates a 4-month seasonal change. Brighter also means wetter or rougher ground, crops, ships or metal; 5 months is short for construction.",
+  "sources": [
+   {
+    "name": "NASA CMR NISAR passes here",
+    "url": "https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C2854338529-ASF&bounding_box=72.7659,18.9615,72.9941,19.1785&temporal=2025-10-01T00:00:00Z,2026-11-15T23:59:59Z&sort_key=start_date"
+   },
+   {
+    "name": "GIBS NISAR GCOV layer",
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/NISAR_L2_Geocoded_Polarimetric_Covariance/default/{date}/GoogleMapsCompatible_Level13/{z}/{y}/{x}.png"
+   },
+   {
+    "name": "Case script",
+    "url": "https://github.com/tolipovmurodjon/falakus/blob/main/tools/case_world.py"
+   }
+  ]
+ },
+ "numbers": [
+  {
+   "label": "First public NISAR pass here",
+   "value": "2026-06-22",
+   "unit": "date",
+   "source": "NASA CMR"
+  },
+  {
+   "label": "Passes used (track 034D, same geometry)",
+   "value": 6,
+   "unit": "passes",
+   "source": "NASA CMR + GIBS"
+  },
+  {
+   "label": "Ground compared on every pass",
+   "value": 535.3,
+   "unit": "km2",
+   "source": "data/cases/mumbai.json (tools/case_world.py)"
+  },
+  {
+   "label": "Changed > 4x the quiet wobble, 2026-07-22 to 2026-10-14",
+   "value": 0.0,
+   "unit": "km2",
+   "source": "data/cases/mumbai.json (tools/case_world.py)"
+  },
+  {
+   "label": "Same test on the quiet pair 2026-07-22 to 2026-08-27 (baseline)",
+   "value": 0.0,
+   "unit": "km2",
+   "source": "data/cases/mumbai.json (tools/case_world.py)"
+  },
+  {
+   "label": "Of which brighter",
+   "value": 0.0,
+   "unit": "km2",
+   "source": "data/cases/mumbai.json (tools/case_world.py)"
+  },
+  {
+   "label": "Of which darker",
+   "value": 0.0,
+   "unit": "km2",
+   "source": "data/cases/mumbai.json (tools/case_world.py)"
+  },
+  {
+   "label": "Largest change on any pass vs the first",
+   "value": 0.0,
+   "unit": "km2",
+   "source": "data/cases/mumbai.json (tools/case_world.py)"
+  }
+ ],
+ "quality": "screening",
+ "quality_note": "screening only: display-scaled GIBS tiles, not calibrated gamma0",
+ "generated": "2026-11-15",
+ "tracks_tried": [
+  "034D: 6 usable passes, 25642 common px"
+ ],
+ "archive": {
+  "first_pass": "2026-06-22T00:34:49.000Z",
+  "first_id": "NISAR_L2_PR_GCOV_023_113_A_011_4005_DHDH_A_20260622T003449_20260622T003524_P05023_N_F_J_001",
+  "last_pass": "2026-11-13T00:34:47.000Z",
+  "last_id": "NISAR_L2_PR_GCOV_035_113_A_011_4005_DHDH_A_20261113T003447_20261113T003521_P05036_N_F_J_001",
+  "granules": 18,
+  "tracks": {
+   "113A": 9,
+   "034D": 9
+  },
+  "cmr": [
+   "https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C3622241360-ASF&bounding_box=72.7659%2C18.9615%2C72.9941%2C19.1785&sort_key=start_date&page_size=2000&temporal=2025-10-01T00%3A00%3A00Z%2C2026-11-15T23%3A59%3A59Z",
+   "https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C2854338529-ASF&bounding_box=72.7659%2C18.9615%2C72.9941%2C19.1785&sort_key=start_date&page_size=2000&temporal=2025-10-01T00%3A00%3A00Z%2C2026-11-15T23%3A59%3A59Z"
+  ]
+ },
+ "track_direction": "descending",
+ "incidence_deg": null,
+ "incidence_note": "not in CMR granule metadata",
+ "stack_dates": [
+  "2026-07-22",
+  "2026-08-27",
+  "2026-09-08",
+  "2026-09-20",
+  "2026-10-02",
+  "2026-10-14"
+ ],
+ "dropped_dates": [
+  "2026-06-28",
+  "2026-07-10",
+  "2026-08-15"
+ ],
+ "common_km2": 535.3,
+ "tiles": {
+  "2026-06-28": {
+   "ok": 2,
+   "empty": 1,
+   "missing": 0,
+   "scrambled": 1
+  },
+  "2026-07-10": {
+   "ok": 2,
+   "empty": 0,
+   "missing": 0,
+   "scrambled": 2
+  },
+  "2026-07-22": {
+   "ok": 4,
+   "empty": 0,
+   "missing": 0,
+   "scrambled": 0
+  },
+  "2026-08-15": {
+   "ok": 2,
+   "empty": 0,
+   "missing": 0,
+   "scrambled": 2
+  },
+  "2026-08-27": {
+   "ok": 4,
+   "empty": 0,
+   "missing": 0,
+   "scrambled": 0
+  },
+  "2026-09-08": {
+   "ok": 4,
+   "empty": 0,
+   "missing": 0,
+   "scrambled": 0
+  },
+  "2026-09-20": {
+   "ok": 4,
+   "empty": 0,
+   "missing": 0,
+   "scrambled": 0
+  },
+  "2026-10-02": {
+   "ok": 4,
+   "empty": 0,
+   "missing": 0,
+   "scrambled": 0
+  },
+  "2026-10-14": {
+   "ok": 3,
+   "empty": 1,
+   "missing": 0,
+   "scrambled": 0
+  }
+ },
+ "series": [
+  {
+   "date": "2026-08-27",
+   "changed_km2": 0.0,
+   "brighter_km2": 0.0,
+   "darker_km2": 0.0
+  },
+  {
+   "date": "2026-09-08",
+   "changed_km2": 0.0,
+   "brighter_km2": 0.0,
+   "darker_km2": 0.0
+  },
+  {
+   "date": "2026-09-20",
+   "changed_km2": 0.0,
+   "brighter_km2": 0.0,
+   "darker_km2": 0.0
+  },
+  {
+   "date": "2026-10-02",
+   "changed_km2": 0.0,
+   "brighter_km2": 0.0,
+   "darker_km2": 0.0
+  },
+  {
+   "date": "2026-10-14",
+   "changed_km2": 0.0,
+   "brighter_km2": 0.0,
+   "darker_km2": 0.0
+  }
+ ],
+ "method": {
+  "channel": "HH",
+  "k": 4.0,
+  "quiet_pair": [
+   "2026-07-22",
+   "2026-08-27"
+  ],
+  "quiet_sigma": 72.32,
+  "threshold": 289.27,
+  "min_group_px": 4,
+  "note": "each pass compared with the FIRST pass of the stack; series[0] is the quiet pair (12 days) = baseline"
+ },
+ "image": {
+  "png": "data/cases/img/mumbai_change.png",
+  "bbox": [
+   72.7659,
+   18.9615,
+   72.9941,
+   19.1785
+  ],
+  "legend": "orange = brighter than the first pass, blue = darker, faint white = compared"
+ },
+ "independent_check": "no independent product covers built-up change"
+}

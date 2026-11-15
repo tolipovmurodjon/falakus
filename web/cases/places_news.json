@@ -1,0 +1,447 @@
+{
+ "_note": "Real-world context per demo place. Every URL was checked on 2026-11-15 (HTTP 200 and the page content matches the claim). suggested_period = first NISAR GCOV pass over the point (CMR C2854338529-ASF) to the latest pass in either GCOV collection (C2854338529-ASF / C3622241360-ASF), queried 2026-11-15.",
+ "places": {
+  "andijan": {
+   "why_it_changes": "The Andijan (Kampirravot) reservoir on the Kara Darya fills with spring snowmelt and is drawn down for irrigation, so its water area swings with the seasons.",
+   "watch_for": "dark water edge moves as the reservoir fills and drains",
+   "suggested_period": {
+    "from": "2026-06-18",
+    "to": "2026-11-04"
+   },
+   "sources": [
+    {
+     "title": "Optimising Water Resources using Earth Observation in Andijan Reservoir, Uzbekistan",
+     "publisher": "ESA Global Development Assistance (Knowledge Hub)",
+     "date": "",
+     "url": "https://knowledge-hub-gda.esa.int/case_studies/optimising-water-resources-using-earth-observation-in-andijan-reservoir-uzbekistan/"
+    },
+    {
+     "title": "Andijan Reservoir",
+     "publisher": "Wikipedia",
+     "date": "",
+     "url": "https://en.wikipedia.org/wiki/Andijan_Reservoir"
+    }
+   ]
+  },
+  "tashkent": {
+   "why_it_changes": "Central Asia's largest city keeps expanding, with new construction on its edges in the Chirchiq River valley.",
+   "watch_for": "new buildings and roads shine bright at the city edge",
+   "suggested_period": {
+    "from": "2026-06-20",
+    "to": "2026-11-01"
+   },
+   "sources": [
+    {
+     "title": "Earth from Space: Tashkent, Uzbekistan",
+     "publisher": "ESA",
+     "date": "2023-06-23",
+     "url": "https://www.esa.int/ESA_Multimedia/Images/2023/06/Earth_from_Space_Tashkent_Uzbekistan"
+    },
+    {
+     "title": "Satellite data reveals significant economic growth and urbanization across Uzbekistan",
+     "publisher": "Kun.uz",
+     "date": "2026-03-25",
+     "url": "https://kun.uz/en/news/2026/03/25/satellite-data-reveals-significant-economic-growth-and-urbanization-across-uzbekistan"
+    }
+   ]
+  },
+  "aral": {
+   "why_it_changes": "River water diverted for irrigation since the 1960s shrank the Aral Sea, while a dam has let the small northern part partly refill.",
+   "watch_for": "calm water turns to bright dry lakebed as the shore retreats",
+   "suggested_period": {
+    "from": "2026-06-21",
+    "to": "2026-10-31"
+   },
+   "sources": [
+    {
+     "title": "World of Change: Shrinking Aral Sea",
+     "publisher": "NASA Earth Observatory",
+     "date": "2026-03-05",
+     "url": "https://science.nasa.gov/earth/earth-observatory/world-of-change/aral-sea/"
+    },
+    {
+     "title": "North Aral Sea Recovery",
+     "publisher": "NASA Earth Observatory",
+     "date": "2007-05-04",
+     "url": "https://science.nasa.gov/earth/earth-observatory/north-aral-sea-recovery-7645/"
+    }
+   ]
+  },
+  "charvak": {
+   "why_it_changes": "The Charvak reservoir on the Chirchiq fills from spring and early-summer snowmelt inflow and is drawn down for irrigation and hydropower.",
+   "watch_for": "dark water edge shifts up and down the valley sides",
+   "suggested_period": {
+    "from": "2026-06-20",
+    "to": "2026-11-01"
+   },
+   "sources": [
+    {
+     "title": "Water resources of Chirchik River basin",
+     "publisher": "Scientific-Information Center of ICWC (CAWater-Info)",
+     "date": "",
+     "url": "https://www.cawater-info.net/chirchik/water_e.htm"
+    },
+    {
+     "title": "Lake Charvak",
+     "publisher": "Wikipedia",
+     "date": "",
+     "url": "https://en.wikipedia.org/wiki/Lake_Charvak"
+    }
+   ]
+  },
+  "jakobshavn": {
+   "why_it_changes": "Jakobshavn (Sermeq Kujalleq), one of Greenland's fastest glaciers, calves icebergs and has retreated and thinned over recent decades.",
+   "watch_for": "glacier front retreats and the iceberg-choked fjord shifts",
+   "suggested_period": {
+    "from": "2026-06-18",
+    "to": "2026-11-02"
+   },
+   "sources": [
+    {
+     "title": "Jakobshavn Glacier Retreat",
+     "publisher": "NASA Earth Observatory",
+     "date": "2010-07-15",
+     "url": "https://science.nasa.gov/earth/earth-observatory/jakobshavn-glacier-retreat-44625/"
+    },
+    {
+     "title": "Greenland's Biggest Losers",
+     "publisher": "NASA Earth Observatory",
+     "date": "2024-02-05",
+     "url": "https://science.nasa.gov/earth/earth-observatory/greenlands-biggest-losers-152364/"
+    },
+    {
+     "title": "Jakobshavn's Interrupted Thinning Explained",
+     "publisher": "NASA Scientific Visualization Studio",
+     "date": "",
+     "url": "https://svs.gsfc.nasa.gov/4688"
+    }
+   ]
+  },
+  "pineisland": {
+   "why_it_changes": "Pine Island Glacier's floating ice shelf thins from warm ocean water beneath it and breaks off large icebergs every year or two.",
+   "watch_for": "ice-shelf front cracks and icebergs drift away",
+   "suggested_period": {
+    "from": "2026-06-17",
+    "to": "2026-11-01"
+   },
+   "sources": [
+    {
+     "title": "Another Berg from Pine Island Glacier",
+     "publisher": "NASA Earth Observatory",
+     "date": "2020-02-11",
+     "url": "https://science.nasa.gov/earth/earth-observatory/another-berg-from-pine-island-glacier-146282/"
+    },
+    {
+     "title": "Pine Island Glacier Births New 'Berg",
+     "publisher": "NASA Earth Observatory",
+     "date": "2017-10-03",
+     "url": "https://science.nasa.gov/earth/earth-observatory/pine-island-glacier-births-new-berg-91066/"
+    }
+   ]
+  },
+  "nile_delta": {
+   "why_it_changes": "Growing towns are spreading over the delta's farmland, while sea level rise and sinking land push salt water into fields.",
+   "watch_for": "fields give way to bright new buildings",
+   "suggested_period": {
+    "from": "2026-06-23",
+    "to": "2026-11-02"
+   },
+   "sources": [
+    {
+     "title": "The Nile Delta's Disappearing Farmland",
+     "publisher": "NASA Earth Observatory",
+     "date": "2021-12-15",
+     "url": "https://science.nasa.gov/earth/earth-observatory/the-nile-deltas-disappearing-farmland-149183/"
+    },
+    {
+     "title": "How Fast Is the Nile Delta Sinking?",
+     "publisher": "Eos (AGU)",
+     "date": "2018-04-24",
+     "url": "https://eos.org/research-spotlights/how-fast-is-the-nile-delta-sinking"
+    }
+   ]
+  },
+  "urmia": {
+   "why_it_changes": "Drought, farm water use and dams on its feeder rivers have shrunk Lake Urmia by roughly 90 percent since 1995.",
+   "watch_for": "calm water turns to bright salt flat as the lake shrinks",
+   "suggested_period": {
+    "from": "2026-06-20",
+    "to": "2026-10-30"
+   },
+   "sources": [
+    {
+     "title": "Lake Urmia Shrivels Again",
+     "publisher": "NASA Earth Observatory",
+     "date": "2023-10-10",
+     "url": "https://science.nasa.gov/earth/earth-observatory/lake-urmia-shrivels-again-151913/"
+    },
+    {
+     "title": "Red Lake Urmia",
+     "publisher": "NASA Earth Observatory",
+     "date": "2016-07-26",
+     "url": "https://science.nasa.gov/earth/earth-observatory/red-lake-urmia-88395/"
+    },
+    {
+     "title": "Vanishing Lake",
+     "publisher": "NASA Scientific Visualization Studio",
+     "date": "2015-02-17",
+     "url": "https://svs.gsfc.nasa.gov/11748"
+    }
+   ]
+  },
+  "deadsea": {
+   "why_it_changes": "The Dead Sea keeps falling because Jordan River water is diverted and mineral evaporation ponds take water from its southern basin.",
+   "watch_for": "shoreline retreats and evaporation ponds stand out as sharp-edged patches",
+   "suggested_period": {
+    "from": "2026-06-21",
+    "to": "2026-11-03"
+   },
+   "sources": [
+    {
+     "title": "The Dead Sea",
+     "publisher": "NASA Earth Observatory",
+     "date": "2012-04-06",
+     "url": "https://science.nasa.gov/earth/earth-observatory/the-dead-sea-77592/"
+    },
+    {
+     "title": "Getting Saltier",
+     "publisher": "NASA Earth Observatory",
+     "date": "2019-07-31",
+     "url": "https://science.nasa.gov/earth/earth-observatory/getting-saltier-145373/"
+    }
+   ]
+  },
+  "mekong": {
+   "why_it_changes": "Monsoon floods spread over the delta from August to November, and the land is slowly sinking, which lets salt water reach farther inland.",
+   "watch_for": "flooded rice fields turn dark, then reappear as water recedes",
+   "suggested_period": {
+    "from": "2026-06-17",
+    "to": "2026-10-29"
+   },
+   "sources": [
+    {
+     "title": "Flooding on the Mekong River",
+     "publisher": "NASA Earth Observatory",
+     "date": "2004-09-28",
+     "url": "https://science.nasa.gov/earth/earth-observatory/flooding-on-the-mekong-river-13982/"
+    },
+    {
+     "title": "River deltas at risk: Chao Phraya, Mekong and Yellow River",
+     "publisher": "ESA",
+     "date": "2026-02-17",
+     "url": "https://www.esa.int/ESA_Multimedia/Images/2026/02/River_deltas_at_risk_Chao_Phraya_Mekong_and_Yellow_River"
+    }
+   ]
+  },
+  "rondonia": {
+   "why_it_changes": "Forest in Rondônia is cleared, often by fire, for roads, farms and cattle pasture, in a 'fishbone' pattern along new roads.",
+   "watch_for": "rough bright forest turns smooth and dark where it is cleared",
+   "suggested_period": {
+    "from": "2026-06-18",
+    "to": "2026-10-28"
+   },
+   "sources": [
+    {
+     "title": "World of Change: Amazon Deforestation",
+     "publisher": "NASA Earth Observatory",
+     "date": "2026-03-05",
+     "url": "https://science.nasa.gov/earth/earth-observatory/world-of-change/amazon-deforestation/"
+    },
+    {
+     "title": "Fires and Deforestation on the Amazon Frontier, Rondonia, Brazil",
+     "publisher": "NASA Earth Observatory",
+     "date": "2009-05-28",
+     "url": "https://science.nasa.gov/earth/earth-observatory/fires-and-deforestation-on-the-amazon-frontier-rondonia-brazil-38782/"
+    }
+   ]
+  },
+  "borneo": {
+   "why_it_changes": "Lowland and peat forests in Central/South Kalimantan are cleared for logging, farming and oil palm, often with dry-season fires.",
+   "watch_for": "forest patches go dark as land is cleared or burned",
+   "suggested_period": {
+    "from": "2026-06-18",
+    "to": "2026-11-01"
+   },
+   "sources": [
+    {
+     "title": "Kalimantan, Borneo, Indonesia",
+     "publisher": "NASA Earth Observatory",
+     "date": "2012-07-07",
+     "url": "https://science.nasa.gov/earth/earth-observatory/kalimantan-borneo-indonesia-78461/"
+    },
+    {
+     "title": "Fires and Smoke in Borneo",
+     "publisher": "NASA Earth Observatory",
+     "date": "2009-09-15",
+     "url": "https://science.nasa.gov/earth/earth-observatory/fires-and-smoke-in-borneo-40182/"
+    }
+   ]
+  },
+  "dubai": {
+   "why_it_changes": "Dubai has built palm-shaped islands and dense new districts on reclaimed land and desert since 2001.",
+   "watch_for": "new islands and buildings shine bright",
+   "suggested_period": {
+    "from": "2026-06-18",
+    "to": "2026-10-29"
+   },
+   "sources": [
+    {
+     "title": "World of Change: Urbanization of Dubai",
+     "publisher": "NASA Earth Observatory",
+     "date": "2026-03-05",
+     "url": "https://science.nasa.gov/earth/earth-observatory/world-of-change/dubai/"
+    },
+    {
+     "title": "Artificial island arises off Dubai",
+     "publisher": "ESA",
+     "date": "2004-01-28",
+     "url": "https://www.esa.int/Applications/Observing_the_Earth/Artificial_island_arises_off_Dubai"
+    }
+   ]
+  },
+  "mumbai": {
+   "why_it_changes": "Mumbai grew from seven islands joined by land reclamation and keeps expanding along its coasts and across the harbour to Navi Mumbai.",
+   "watch_for": "new coastal land and buildings shine bright",
+   "suggested_period": {
+    "from": "2026-06-22",
+    "to": "2026-11-13"
+   },
+   "sources": [
+    {
+     "title": "Mumbai, India",
+     "publisher": "NASA Earth Observatory",
+     "date": "2004-05-03",
+     "url": "https://science.nasa.gov/earth/earth-observatory/mumbai-india-4446/"
+    },
+    {
+     "title": "Mumbai, India",
+     "publisher": "ESA",
+     "date": "2014-10-24",
+     "url": "https://www.esa.int/ESA_Multimedia/Images/2014/10/Mumbai_India"
+    }
+   ]
+  },
+  "lagos": {
+   "why_it_changes": "Lagos is building Eko Atlantic on sand reclaimed from the ocean while its coastline suffers flooding and erosion.",
+   "watch_for": "new land and buildings shine bright where there was sea",
+   "suggested_period": {
+    "from": "2026-06-24",
+    "to": "2026-10-25"
+   },
+   "sources": [
+    {
+     "title": "The Cost of Coastal Zone Degradation in Nigeria: Cross River, Delta and Lagos States",
+     "publisher": "World Bank",
+     "date": "2020-10",
+     "url": "https://documents1.worldbank.org/curated/en/881071603896002534/pdf/The-Cost-of-Coastal-Zone-Degradation-in-Nigeria-Cross-River-Delta-and-Lagos-States.pdf"
+    },
+    {
+     "title": "A new coastal city built on reclaimed land from the sea (Eko Atlantic)",
+     "publisher": "Royal HaskoningDHV",
+     "date": "2023-06",
+     "url": "https://www.haskoning.com/en/projects/a-new-coastal-city-built-on-reclaimed-land-from-the-sea"
+    }
+   ]
+  },
+  "panama_m77": {
+   "why_it_changes": "A magnitude 7.7 earthquake struck Herrera province on 9 Oct 2026, damaging buildings, roads and slopes in central Panama.",
+   "watch_for": "patches where ground and slopes changed after the shaking",
+   "suggested_period": {
+    "from": "2026-06-16",
+    "to": "2026-11-07"
+   },
+   "sources": [
+    {
+     "title": "M 7.7 - 10 km WSW of Pitaloza Arriba, Panama (us6000u18k)",
+     "publisher": "USGS",
+     "date": "2026-10-09",
+     "url": "https://earthquake.usgs.gov/earthquakes/eventpage/us6000u18k"
+    },
+    {
+     "title": "A magnitude 7.7 earthquake shakes Panama, prompting evacuations",
+     "publisher": "AP (via OPB)",
+     "date": "2026-10-09",
+     "url": "https://www.opb.org/article/2026/10/09/a-magnitude-7-7-earthquake-shakes-panama-prompting-evacuations/"
+    },
+    {
+     "title": "Panama declares a state of emergency as powerful quake aftershocks rattle communities",
+     "publisher": "AP (via Boston Globe)",
+     "date": "2026-10-11",
+     "url": "https://www.bostonglobe.com/2026/10/11/world/panama-declares-state-of-emergency-as-quake-aftershocks-rattle-communities/"
+    }
+   ]
+  },
+  "langtang": {
+   "why_it_changes": "On 26 Aug 2026 rock and glacier ice fell from Langtang Lirung and became a debris flow that ran about 100 km down the valley.",
+   "watch_for": "debris-scoured valley floor changes brightness",
+   "suggested_period": {
+    "from": "2026-06-08",
+    "to": "2026-11-11"
+   },
+   "sources": [
+    {
+     "title": "2026 Nepal Debris Avalanche and Flash Flood",
+     "publisher": "USGS Landslide Hazards Program",
+     "date": "2026-08-27",
+     "url": "https://www.usgs.gov/programs/landslide-hazards/science/2026-nepal-debris-avalanche-and-flash-flood"
+    },
+    {
+     "title": "Gyirong-Rasuwa Flood 2026",
+     "publisher": "ICIMOD",
+     "date": "2026-09-16",
+     "url": "https://www.icimod.org/kyirong-rasuwa-flood-2026-nepal-china-border/"
+    },
+    {
+     "title": "Nepal's deadly debris flow points to risks in other high mountain regions",
+     "publisher": "Science News",
+     "date": "2026-09-17",
+     "url": "https://www.sciencenews.org/article/nepal-debris-flow-risk-mountain-climate"
+    }
+   ]
+  },
+  "gaza": {
+   "why_it_changes": "Conflict-affected area; radar shows surface change, not its cause.",
+   "watch_for": "building blocks change brightness",
+   "suggested_period": {
+    "from": "2026-06-19",
+    "to": "2026-11-03"
+   },
+   "sources": [
+    {
+     "title": "UNOSAT Gaza Strip Comprehensive Damage Assessment (imagery 11 Oct 2025)",
+     "publisher": "UNOSAT / UNITAR (via UN UNISPAL)",
+     "date": "2025-10-31",
+     "url": "https://www.un.org/unispal/document/unosat-gaza-strip-damage-assessment-31oct25/"
+    },
+    {
+     "title": "UNOSAT Damage Assessment Overview Map: Gaza Strip, 11 October 2025 (PDF)",
+     "publisher": "UNOSAT / OCHA",
+     "date": "2025-10-31",
+     "url": "https://www.un.org/unispal/wp-content/uploads/2025/11/OCHA-CBPF-OPT-031_UNOSAT_A3_GazaStrip_CDA_11October2025.pdf"
+    }
+   ]
+  },
+  "ukraine_east": {
+   "why_it_changes": "Conflict-affected area; radar shows surface change, not its cause.",
+   "watch_for": "town blocks and fields change brightness",
+   "suggested_period": {
+    "from": "2026-06-21",
+    "to": "2026-11-05"
+   },
+   "sources": [
+    {
+     "title": "Satellite images show scale of destruction in Bakhmut, Ukraine",
+     "publisher": "Al Jazeera",
+     "date": "2023-05-24",
+     "url": "https://www.aljazeera.com/news/longform/2023/5/24/satellite-images-show-scale-of-destruction-in-bakhmut-ukraine"
+    },
+    {
+     "title": "PHOTOS: Bakhmut 'destroyed' as Russian offensive grinds on in eastern Ukraine",
+     "publisher": "AP (via PBS NewsHour)",
+     "date": "2022-12-10",
+     "url": "https://www.pbs.org/newshour/world/photos-bakhmut-destroyed-as-russian-offensive-grinds-on-in-eastern-ukraine"
+    }
+   ]
+  }
+ }
+}
