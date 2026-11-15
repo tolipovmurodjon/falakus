@@ -6,6 +6,11 @@ Repo: github.com/tolipovmurodjon/falakus (PUBLIC since 15 Nov 09:00, branch over
 ## LATEST 15 Nov ~13:00 (pull this; main and overnight are the same)
 **Start here:** `docs/design-pack/0-TODO-read-first.md` (files, steps to submit, what not to claim). The deck prompt for Claude Design is in `docs/design-pack/1-PROMPT-paste-this.md`. The form is in `docs/design-pack/text/submission-form.md`.
 
+### Running on Murodjon's laptop (15 Nov ~15:00)
+- NISAR download, Sardoba reservoir (40.350N 68.463E, OpenStreetMap; the dam that failed 1 May 2020): `python tools/gcov_science.py sardoba 68.463 40.350 --km 10`. Then `python tools/ml_water_transfer.py sardoba` (flat ground, so a fair transfer test), add `sardoba` to `PLACES` in `tools/water_intel.py` and the intel page, and give it a briefing. The summary opens with Sardoba.
+- NISAR download, Tuyamuyun (3 passes so far).
+- Summary FINAL (style D, 198 words): `docs/project/SUMMARY-copy-paste.txt`. Other styles: `docs/project/SUMMARY-5-styles.md`.
+
 ### The numbers we stand behind (Andijan reservoir; all measured, all in `docs/design-pack/text/key-numbers.json`)
 | Claim | Number | Check |
 |---|---|---|
