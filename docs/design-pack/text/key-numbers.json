@@ -23,5 +23,53 @@
  },
  "fergana_lost_plant_echo_pct": 12.8,
  "aral_1997_km2": 1598,
- "aral_2026_nisar_km2_max": 0.93
+ "aral_2026_nisar_km2_max": 0.93,
+ "forecast_v2": {
+  "record": "Sentinel-2 monthly water, Apr 2017 - Nov 2026, 95 clear months",
+  "test_30_days_mae_km2": {
+   "persistence": 4.68,
+   "seasonal": 5.9,
+   "climatology": 5.66,
+   "ridge": 4.08
+  },
+  "test_3_months_mae_km2": {
+   "persistence": 10.43,
+   "seasonal": 5.33,
+   "climatology": 5.44,
+   "ridge": 5.85
+  },
+  "plain": "ML wins 30 days ahead (4.1 vs 4.7 km2 best simple guess); at 3 months the seasonal pattern is as good or better, so beyond 30 days we show the 10-year range",
+  "forecast": [
+   {
+    "month": "2026-12",
+    "km2": 19.49,
+    "low": 13.1,
+    "high": 25.7,
+    "typical": 22.25,
+    "min": 16.66,
+    "max": 26.39,
+    "driest_year": "2021"
+   },
+   {
+    "month": "2027-01",
+    "km2": 24.74,
+    "low": 17.27,
+    "high": 34.62,
+    "typical": 27.14,
+    "min": 19.7,
+    "max": 31.81,
+    "driest_year": "2022"
+   },
+   {
+    "month": "2027-02",
+    "km2": 25.76,
+    "low": 18.29,
+    "high": 35.64,
+    "typical": 25.58,
+    "min": 18.1,
+    "max": 32.62,
+    "driest_year": "2021"
+   }
+  ]
+ }
 }

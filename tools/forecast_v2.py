@@ -55,7 +55,7 @@ def main(place):
         return float(np.mean(vals)) if vals else None
 
     def feats(t, target):
-        last = series.get(t); c_t = clim(t[5:], t); c_y = clim(target[5:], t); ly = series.get(shift(target, -12))
+        last = series.get(t); c_t = clim(t[5:], t); c_y = clim(target[5:], t); ly = series.get(shift(target, -12), c_y)  # cloudy last year: use that month's average
         if last is None or c_t is None or c_y is None or ly is None:
             return None
         mo = int(target[5:]); return [np.sin(2 * np.pi * mo / 12), np.cos(2 * np.pi * mo / 12), last, last - c_t, c_y, ly]
