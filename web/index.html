@@ -297,7 +297,8 @@ function initMap(){
  map.addControl(new maplibregl.NavigationControl({showCompass:false}),"bottom-right");
  map.touchZoomRotate.disableRotation();
  map.on("load",()=>document.querySelectorAll(".maplibregl-ctrl-attrib.maplibregl-compact-show").forEach(e=>e.classList.remove("maplibregl-compact-show")));
- return new Promise(r=>map.on("load",r));
+ // draw overlays as soon as the style is ready; "load" also waits for every satellite tile, which is slow on real networks
+ return new Promise(r=>{let done=false;const go=()=>{if(!done){done=true;r()}};map.once("style.load",go);map.once("load",go);if(map.isStyleLoaded())go()});
 }
 function fitPad(){const m=innerWidth<860;return m?{top:140,bottom:100,left:6,right:6}:{top:70,bottom:84,left:24,right:24}}
 function ensureLayer(id,url,bbox,opacity=1){
