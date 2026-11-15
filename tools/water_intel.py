@@ -50,32 +50,29 @@ def trend(series):
 
 def andijan():
     P = PLACES["andijan_res"]
-    ml = json.loads((D / "ml/water_model.json").read_text()); fc = json.loads((D / "forecast/andijan_res.json").read_text())
+    ml = json.loads((D / "ml/water_model.json").read_text()); fc = json.loads((D / "forecast/andijan_res_v2.json").read_text())
     ice = json.loads((D / "waterroad/andijan_res_icesat2.json").read_text()); pop = json.loads((D / "waterroad/population.json").read_text())["regions_2025"]
     s = [dict(date=x["date"], km2=x["ml_km2"]) for x in ml["series"]]
     slope, first, last, peak, low = trend(s)
     drop = (last["km2"] - peak["km2"]) / peak["km2"] * 100
     f0, f2 = fc["forecast"][0], fc["forecast"][-1]
-    same_last_year = next((x for x in fc["series"] if x["month"] == f2["month"].replace("2027", "2026")), None)
+    h1 = fc["skill"]["h1"]["mae_km2"]; best_simple = min(v for k, v in h1.items() if k != "ridge")
+    better = round((1 - h1["ridge"] / best_simple) * 100)
     people = pop["fergana"] + pop["andijan"] + pop["namangan"]
     sm = ml["summary"]
-    vs = ""
-    if same_last_year:
-        dv = f2["km2"] - same_last_year["km2"]
-        vs = f" That is {fmt(abs(dv))} km² {'more' if dv > 0 else 'less'} than in {MON[int(f2['month'][5:]) - 1]} this year ({fmt(same_last_year['km2'])} km²)."
     ho = ml["held_out"]; pa, pb = max(ho, key=lambda r: r["photo_water_km2"]), ho[-1]
     pdrop = (pb["photo_water_km2"] - pa["photo_water_km2"]) / pa["photo_water_km2"] * 100
     sections = [
         dict(h="What happened", p=f"The lake's open water fell from {fmt(peak['km2'])} km² on {day(peak['date'])} to {fmt(last['km2'])} km² on {day(last['date'])} 2026: {fmt(abs(drop), 0)} % less. NISAR measured it every 12 days, also on the days clouds hid it from cameras. Clear-day photos show a bigger fall, {fmt(pa['photo_water_km2'])} → {fmt(pb['photo_water_km2'])} km² ({fmt(abs(pdrop), 0)} % less, {day(pa['photo'])} to {day(pb['photo'])}): in autumn the radar still counts wet mud on the drying shore as water."),
         dict(h="Why", p=P["why_fall"] + " " + P["why_rise"]),
-        dict(h="What next", p=f"Our forecast for {MON[int(f0['month'][5:]) - 1]} to {MON[int(f2['month'][5:]) - 1]}: about {fmt(f0['km2'], 0)} km² rising to {fmt(f2['km2'], 0)} km² (8 in 10 chance within ±{fmt(f2['band80_km2'])} km²).{vs} The forecast beat simple guesses by {fc['skill']['vs_seasonal_pct']} % on months it never saw."),
+        dict(h="What next", p=f"Next month ({MON[int(f0['month'][5:]) - 1]}): about {fmt(f0['km2'])} km² (8 in 10 chance {fmt(f0['low'], 0)}–{fmt(f0['high'], 0)} km²); a typical {MON[int(f0['month'][5:]) - 1]} holds {fmt(f0['typical'])} km², the lowest was {fmt(f0['min'])} km² in {f0['driest_year']}. By {MON[int(f2['month'][5:]) - 1]}: about {fmt(f2['km2'])} km² (typical {fmt(f2['typical'])}). Learned from {fc['n_months']} clear months since {fc['record_from'][:4]}; 30 days ahead it beat the best simple guess by {better} % on months it never saw. Beyond a month we show the 10-year range, because the model is no better than the seasonal pattern there."),
         dict(h="For a farmer", p=f"Summer water for the valley's fields came from this lake; by {day(last['date'])} it held {fmt(last['km2'] / peak['km2'] * 100, 0)} % of its summer size. Watch the winter refill: if the lake reaches the forecast by spring, early-season water should be close to normal; if it stays lower, plan for a tighter first irrigation."),
         dict(h="For the water agency", p=f"You get the lake's area every 12 days, cloud or not (34 % of camera visits in 2025 were cloudy). Our learned map agrees with clear-day photos at IoU {fmt(sm['ml_iou'], 2)} (the old one-number rule: {fmt(sm['rule_zone_iou'], 2)}); its typical miss is {fmt(sm['ml_area_mae_km2'])} km², mostly wet mud counted as water in late summer. A second NASA satellite (ICESat-2 laser) agrees: water level and area rise and fall together (rank correlation {fmt(ice['spearman_r'], 2)}, {ice['n']} passes)."),
         dict(h="For a family", p=f"{fmt(people / 1e6)} million people live in the three valley regions this water reaches (Andijan, Fergana, Namangan; {fmt(people / pop['uzbekistan'] * 100, 0)} % of Uzbekistan). A smaller lake in winter means less water to share in spring."),
     ]
     return dict(place="andijan_res", title=P["title"], river=P["river"],
-                headline=f"{fmt(abs(drop), 0)} % less open water since {day(peak['date'])}; refill to about {fmt(f2['km2'], 0)} km² expected by {MON[int(f2['month'][5:]) - 1]}",
-                sections=sections, numbers=dict(peak=peak, last=last, drop_pct=round(drop, 1), slope_km2_per_month=round(slope, 2), forecast=fc["forecast"]),
+                headline=f"Lake down {fmt(abs(pdrop), 0)} % since {day(pa['photo'])} (clear-day photos); about {fmt(f0['km2'])} km² expected in {MON[int(f0['month'][5:]) - 1]}",
+                sections=sections, numbers=dict(peak=peak, last=last, drop_pct=round(drop, 1), slope_km2_per_month=round(slope, 2), forecast=fc["forecast"], forecast_skill=fc["skill"]["h1"]["mae_km2"]),
                 confidence=f"Learned water map IoU {fmt(sm['ml_iou'], 2)} vs photos (leave-one-date-out, 8 days); shuffled-label control {fmt(sm['null_iou'], 2)}; laser rank correlation {fmt(ice['spearman_r'], 2)}.",
                 sources="NASA-ISRO NISAR GCOV (provisional before 21 Oct 2026); ESA Sentinel-2 (photo check); NASA ICESat-2 ATL13; stat.uz population 1 Oct 2025.")
 
