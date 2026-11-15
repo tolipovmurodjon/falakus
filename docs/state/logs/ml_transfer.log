@@ -27,3 +27,11 @@ rogun {'date': '2026-10-30', 'ml_km2': 3.42}
 rogun median IoU on unseen place: 0.018 photo days 3
 terrain mask: 0 % of the box steeper than 12 deg
 2026-06-17 s2 fail operands could not be broadcast together with shapes (1207,1500) (1206,1500) 
+2026-06-17 s2 fail operands could not be broadcast together with shapes (1207,1500) (1206,1500) 
+2026-07-11 s2 fail IncompleteRead(14210591 bytes read, 273537 more expected)
+2026-07-11 s2 fail <urlopen error [Errno 11001] getaddrinfo failed>
+2026-07-23 s2 fail operands could not be broadcast together with shapes (1207,1500) (1206,1500) 
+2026-08-16 s2 fail IncompleteRead(14091861 bytes read, 392267 more expected)
+2026-08-28 s2 fail Remote end closed connection without response
+2026-08-28 s2 fail Remote end closed connection without response
+2026-08-28 s2 fail IncompleteRead(5322271 bytes read, 9161857 more expected)

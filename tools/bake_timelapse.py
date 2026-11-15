@@ -190,7 +190,7 @@ class Mosaic:
         return sub.size > 0 and (~sub).mean() > 0.002
 
 
-def fill_rounds(mosaic, collection, items, bbox, size, main, rounds=4):
+def fill_rounds(mosaic, collection, items, bbox, size, main, rounds=3):
     """Round r reads the r-th clearest scene of every tile whose footprint still has holes."""
     tiles = {}
     for it in items:
@@ -227,7 +227,7 @@ def bake_year(place, year, index):
         return None
     gap_years = []
     for y2 in (year - 1, year + 1):  # holes (no scene that summer) are filled from the next-door summers, and labelled
-        if m.filled.mean() > 0.998 or y2 not in YEARS:
+        if m.filled.mean() > 0.985 or y2 not in YEARS:  # small holes keep their cloudy-but-real pixels
             continue
         c2, it2 = candidates(place, y2)
         if c2 == collection and it2:

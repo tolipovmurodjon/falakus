@@ -36,6 +36,7 @@ Run the app: `python tools/nisar_tile_server.py --port 8765` → http://127.0.0.
 - [ ] Tick terms + "work is original" → **Submit for judging before 23:59 Tashkent**. Only the last submission counts.
 
 ### What is left, in order (Boss, 15 Nov 11:30)
+0. **Domain:** the finished site will be served at **earth.instant.uz**, the public link judges open. Everything must work there cold, with no localhost paths (use relative URLs, see `tools/export_static.py`).
 1. **One website, not separate HTML pages.** Today each part is its own page (`intel.html`, `timelapse.html`, `explorer.html`, `index.html`, `dash.html`) with its own look and nav. Make one site:
    - one shared header and nav, and one style (Falak tokens: paper #F6F3ED, ink #14120D, teal #17515F);
    - `index.html` = the briefings front door; the time-lapse and explorer as sections or tabs;

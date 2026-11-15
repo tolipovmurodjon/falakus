@@ -25,3 +25,17 @@
 2018-10 {'date': '2018-10-21', 'clear_pct': 99.5, 'water_km2': 21.8, 'use': True}
 2018-11 {'date': '2018-11-05', 'clear_pct': 98.2, 'water_km2': 20.39, 'use': True}
 2018-12 {'date': '2018-12-15', 'clear_pct': 96.5, 'water_km2': 23.71, 'use': True}
+2019-01 {'date': '2019-01-14', 'clear_pct': 23.1, 'water_km2': 31.36, 'use': False}
+2019-02 {'date': '2019-02-23', 'clear_pct': 64.7, 'water_km2': 28.32, 'use': False}
+2019-03 {'date': '2019-03-10', 'clear_pct': 97.5, 'water_km2': 28.28, 'use': True}
+  retry 0 Remote end closed connection without response
+  retry 0 IncompleteRead(164053 bytes read, 2020075 more expected)
+2019-04 {'date': '2019-04-14', 'clear_pct': 99.8, 'water_km2': 29.55, 'use': True}
+  retry 0 Remote end closed connection without response
+2019-05 {'date': '2019-05-29', 'clear_pct': 99.2, 'water_km2': 35.74, 'use': True}
+2019-06 {'date': '2019-06-13', 'clear_pct': 99.4, 'water_km2': 39.86, 'use': True}
+2019-07 {'date': '2019-07-23', 'clear_pct': 99.9, 'water_km2': 38.61, 'use': True}
+2019-08 {'date': '2019-08-22', 'clear_pct': 99.7, 'water_km2': 23.05, 'use': True}
+  retry 0 IncompleteRead(817696 bytes read, 1366432 more expected)
+  retry 1 Remote end closed connection without response
+  retry 2 IncompleteRead(1039697 bytes read, 1144431 more expected)
