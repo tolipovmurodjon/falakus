@@ -1,0 +1,239 @@
+{
+ "id": "pineisland",
+ "title": "Pine Island Glacier: ice shelf change",
+ "place": "Amundsen Sea, West Antarctica",
+ "date": "2026-08-28",
+ "bbox": [
+  -100.422,
+  -75.3085,
+  -99.578,
+  -75.0915
+ ],
+ "center": [
+  -100.0,
+  -75.2
+ ],
+ "zoom": 10,
+ "before": "2026-07-11",
+ "after": "2026-08-28",
+ "track": "040D",
+ "finding": "0.01 km2 changed by more than 4x the 12-day wobble between 2026-07-11 and 2026-08-28 (0.01 km2 brighter, 0.0 km2 darker), vs 0.0 km2 in the quiet pair.",
+ "sections": {
+  "what": "One of Antarctica's fastest-thinning glaciers flows into a floating ice shelf.",
+  "why": "Rifts, calving and sea ice at the front change how much ice the shelf holds back.",
+  "radar": "Crevassed ice and rough sea ice are bright; smooth new ice or open water is dark. Same track 040D; HH vs the first pass.",
+  "validation": "Quiet pair 2026-07-11 to 2026-08-16: 0.0 km2 flagged by the same test. No independent product covers this ice change.",
+  "limits": "Display-scaled GIBS radar, not calibrated dB; screening only. A 12-day quiet pair understates a 4-month seasonal change. Melt, refreeze and wet snow change the echo without the front moving.",
+  "sources": [
+   {
+    "name": "NASA CMR NISAR passes here",
+    "url": "https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C2854338529-ASF&bounding_box=-100.422,-75.3085,-99.578,-75.0915&temporal=2025-10-01T00:00:00Z,2026-11-15T23:59:59Z&sort_key=start_date"
+   },
+   {
+    "name": "GIBS NISAR GCOV layer",
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/NISAR_L2_Geocoded_Polarimetric_Covariance/default/{date}/GoogleMapsCompatible_Level13/{z}/{y}/{x}.png"
+   },
+   {
+    "name": "Case script",
+    "url": "https://github.com/tolipovmurodjon/falakus/blob/main/tools/case_world.py"
+   }
+  ]
+ },
+ "numbers": [
+  {
+   "label": "First public NISAR pass here",
+   "value": "2026-06-17",
+   "unit": "date",
+   "source": "NASA CMR"
+  },
+  {
+   "label": "Passes used (track 040D, same geometry)",
+   "value": 3,
+   "unit": "passes",
+   "source": "NASA CMR + GIBS"
+  },
+  {
+   "label": "Ground compared on every pass",
+   "value": 75.3,
+   "unit": "km2",
+   "source": "data/cases/pineisland.json (tools/case_world.py)"
+  },
+  {
+   "label": "Changed > 4x the quiet wobble, 2026-07-11 to 2026-08-28",
+   "value": 0.01,
+   "unit": "km2",
+   "source": "data/cases/pineisland.json (tools/case_world.py)"
+  },
+  {
+   "label": "Same test on the quiet pair 2026-07-11 to 2026-08-16 (baseline)",
+   "value": 0.0,
+   "unit": "km2",
+   "source": "data/cases/pineisland.json (tools/case_world.py)"
+  },
+  {
+   "label": "Of which brighter",
+   "value": 0.01,
+   "unit": "km2",
+   "source": "data/cases/pineisland.json (tools/case_world.py)"
+  },
+  {
+   "label": "Of which darker",
+   "value": 0.0,
+   "unit": "km2",
+   "source": "data/cases/pineisland.json (tools/case_world.py)"
+  },
+  {
+   "label": "Largest change on any pass vs the first",
+   "value": 0.01,
+   "unit": "km2",
+   "source": "data/cases/pineisland.json (tools/case_world.py)"
+  }
+ ],
+ "quality": "screening",
+ "quality_note": "screening only: display-scaled GIBS tiles, not calibrated gamma0",
+ "generated": "2026-11-15",
+ "tracks_tried": [
+  "083D: 0 usable passes, 0 common px",
+  "040D: 3 usable passes, 49408 common px"
+ ],
+ "archive": {
+  "first_pass": "2026-06-17T00:08:37.000Z",
+  "first_id": "NISAR_L2_PR_GCOV_023_040_D_126_4005_SHSH_A_20260617T000837_20260617T000914_P05023_F_F_J_001",
+  "last_pass": "2026-11-01T13:27:10.000Z",
+  "last_id": "NISAR_L2_PR_GCOV_034_120_A_140_4005_SHSH_A_20261101T132710_20261101T132747_P05036_N_F_J_001",
+  "granules": 104,
+  "tracks": {
+   "040D": 10,
+   "048A": 10,
+   "083D": 11,
+   "091A": 10,
+   "112D": 10,
+   "120A": 10,
+   "149A": 9,
+   "155D": 9,
+   "011D": 9,
+   "019A": 9
+  },
+  "cmr": [
+   "https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C3622241360-ASF&bounding_box=-100.422%2C-75.3085%2C-99.578%2C-75.0915&sort_key=start_date&page_size=2000&temporal=2025-10-01T00%3A00%3A00Z%2C2026-11-15T23%3A59%3A59Z",
+   "https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C2854338529-ASF&bounding_box=-100.422%2C-75.3085%2C-99.578%2C-75.0915&sort_key=start_date&page_size=2000&temporal=2025-10-01T00%3A00%3A00Z%2C2026-11-15T23%3A59%3A59Z"
+  ]
+ },
+ "track_direction": "descending",
+ "incidence_deg": null,
+ "incidence_note": "not in CMR granule metadata",
+ "stack_dates": [
+  "2026-07-11",
+  "2026-08-16",
+  "2026-08-28"
+ ],
+ "dropped_dates": [
+  "2026-06-17",
+  "2026-06-29",
+  "2026-07-23",
+  "2026-09-09",
+  "2026-09-21",
+  "2026-10-03",
+  "2026-10-15"
+ ],
+ "common_km2": 75.3,
+ "tiles": {
+  "2026-06-17": {
+   "ok": 1,
+   "empty": 5,
+   "missing": 0,
+   "scrambled": 3
+  },
+  "2026-06-29": {
+   "ok": 0,
+   "empty": 3,
+   "missing": 0,
+   "scrambled": 6
+  },
+  "2026-07-11": {
+   "ok": 5,
+   "empty": 0,
+   "missing": 0,
+   "scrambled": 4
+  },
+  "2026-07-23": {
+   "ok": 2,
+   "empty": 2,
+   "missing": 0,
+   "scrambled": 5
+  },
+  "2026-08-16": {
+   "ok": 4,
+   "empty": 1,
+   "missing": 0,
+   "scrambled": 4
+  },
+  "2026-08-28": {
+   "ok": 3,
+   "empty": 3,
+   "missing": 0,
+   "scrambled": 3
+  },
+  "2026-09-09": {
+   "ok": 2,
+   "empty": 2,
+   "missing": 0,
+   "scrambled": 5
+  },
+  "2026-09-21": {
+   "ok": 3,
+   "empty": 2,
+   "missing": 0,
+   "scrambled": 4
+  },
+  "2026-10-03": {
+   "ok": 1,
+   "empty": 5,
+   "missing": 0,
+   "scrambled": 3
+  },
+  "2026-10-15": {
+   "ok": 1,
+   "empty": 3,
+   "missing": 0,
+   "scrambled": 5
+  }
+ },
+ "series": [
+  {
+   "date": "2026-08-16",
+   "changed_km2": 0.0,
+   "brighter_km2": 0.0,
+   "darker_km2": 0.0
+  },
+  {
+   "date": "2026-08-28",
+   "changed_km2": 0.01,
+   "brighter_km2": 0.01,
+   "darker_km2": 0.0
+  }
+ ],
+ "method": {
+  "channel": "HH",
+  "k": 4.0,
+  "quiet_pair": [
+   "2026-07-11",
+   "2026-08-16"
+  ],
+  "quiet_sigma": 9.72,
+  "threshold": 38.88,
+  "min_group_px": 4,
+  "note": "each pass compared with the FIRST pass of the stack; series[0] is the quiet pair (12 days) = baseline"
+ },
+ "image": {
+  "png": "data/cases/img/pineisland_change.png",
+  "bbox": [
+   -100.422,
+   -75.3085,
+   -99.578,
+   -75.0915
+  ],
+  "legend": "orange = brighter than the first pass, blue = darker, faint white = compared"
+ },
+ "independent_check": "no independent product covers ice change here (OPERA DSWx/DIST do not map ice)"
+}

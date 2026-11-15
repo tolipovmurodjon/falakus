@@ -1,0 +1,286 @@
+{
+ "id": "deadsea",
+ "title": "Dead Sea: shoreline and evaporation ponds",
+ "place": "Dead Sea, Israel / Jordan / West Bank",
+ "date": "2026-11-03",
+ "bbox": [
+  35.3736,
+  31.3915,
+  35.6264,
+  31.6085
+ ],
+ "center": [
+  35.5,
+  31.5
+ ],
+ "zoom": 10,
+ "before": "2026-09-16",
+ "after": "2026-11-03",
+ "track": "151D",
+ "finding": "70.17 km2 of the box changed by more than 4x the 12-day wobble between 2026-09-16 and 2026-11-03 (66.41 km2 darker, 3.75 km2 brighter), vs 0.53 km2 in the quiet pair.",
+ "sections": {
+  "what": "A terminal lake whose level falls about a metre a year, with large evaporation ponds in the south.",
+  "why": "Falling water exposes sinkholes and changes the shoreline people depend on.",
+  "radar": "Calm water is dark; wind roughening can brighten it, and salt crust can look dark. Same track 151D, 4 passes, each compared with the first.",
+  "validation": "Quiet pair 2026-09-16 to 2026-09-28: 0.53 km2 flagged by the same test. OPERA DSWx-S1 (Sentinel-1, NASA JPL, not ours): water 151.35 -> 151.64 km2 over the same ground; 2.0 % of NISAR-flagged pixels sit where DSWx water changed (chance 0.9 %).",
+  "limits": "Display-scaled GIBS radar, not calibrated dB; screening only. A 12-day quiet pair understates a 4-month seasonal change. Darker is not always more water and brighter is not always less: wind, wet salt and crops change HH too.",
+  "sources": [
+   {
+    "name": "NASA CMR NISAR passes here",
+    "url": "https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C2854338529-ASF&bounding_box=35.3736,31.3915,35.6264,31.6085&temporal=2025-10-01T00:00:00Z,2026-11-15T23:59:59Z&sort_key=start_date"
+   },
+   {
+    "name": "GIBS NISAR GCOV layer",
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/NISAR_L2_Geocoded_Polarimetric_Covariance/default/{date}/GoogleMapsCompatible_Level13/{z}/{y}/{x}.png"
+   },
+   {
+    "name": "Case script",
+    "url": "https://github.com/tolipovmurodjon/falakus/blob/main/tools/case_world.py"
+   },
+   {
+    "name": "GIBS OPERA DSWx-S1 colormap",
+    "url": "https://gibs.earthdata.nasa.gov/colormaps/v1.3/OPERA_Dynamic_Surface_Water_Extent_S1.xml"
+   }
+  ]
+ },
+ "numbers": [
+  {
+   "label": "First public NISAR pass here",
+   "value": "2026-06-21",
+   "unit": "date",
+   "source": "NASA CMR"
+  },
+  {
+   "label": "Passes used (track 151D, same geometry)",
+   "value": 4,
+   "unit": "passes",
+   "source": "NASA CMR + GIBS"
+  },
+  {
+   "label": "Ground compared on every pass",
+   "value": 308.0,
+   "unit": "km2",
+   "source": "data/cases/deadsea.json (tools/case_world.py)"
+  },
+  {
+   "label": "Changed > 4x the quiet wobble, 2026-09-16 to 2026-11-03",
+   "value": 70.17,
+   "unit": "km2",
+   "source": "data/cases/deadsea.json (tools/case_world.py)"
+  },
+  {
+   "label": "Same test on the quiet pair 2026-09-16 to 2026-09-28 (baseline)",
+   "value": 0.53,
+   "unit": "km2",
+   "source": "data/cases/deadsea.json (tools/case_world.py)"
+  },
+  {
+   "label": "Of which brighter",
+   "value": 3.75,
+   "unit": "km2",
+   "source": "data/cases/deadsea.json (tools/case_world.py)"
+  },
+  {
+   "label": "Of which darker",
+   "value": 66.41,
+   "unit": "km2",
+   "source": "data/cases/deadsea.json (tools/case_world.py)"
+  },
+  {
+   "label": "Largest change on any pass vs the first",
+   "value": 70.17,
+   "unit": "km2",
+   "source": "data/cases/deadsea.json (tools/case_world.py)"
+  },
+  {
+   "label": "OPERA DSWx-S1 water near 2026-09-16",
+   "value": 151.35,
+   "unit": "km2",
+   "source": "data/cases/deadsea.json (tools/case_world.py)"
+  },
+  {
+   "label": "OPERA DSWx-S1 water near 2026-11-03",
+   "value": 151.64,
+   "unit": "km2",
+   "source": "data/cases/deadsea.json (tools/case_world.py)"
+  },
+  {
+   "label": "NISAR-flagged pixels where DSWx water also changed (chance)",
+   "value": "2.0 (0.9)",
+   "unit": "%",
+   "source": "data/cases/deadsea.json (tools/case_world.py)"
+  }
+ ],
+ "quality": "screening",
+ "quality_note": "screening only: display-scaled GIBS tiles, not calibrated gamma0",
+ "generated": "2026-11-15",
+ "tracks_tried": [
+  "151D: 4 usable passes, 18130 common px"
+ ],
+ "archive": {
+  "first_pass": "2026-06-21T02:59:41.000Z",
+  "first_id": "NISAR_L2_PR_GCOV_023_100_A_017_2005_DHDH_A_20260621T025941_20260621T030016_P05023_N_F_J_001",
+  "last_pass": "2026-11-03T16:25:44.000Z",
+  "last_id": "NISAR_L2_PR_GCOV_034_151_D_073_2005_DHDH_A_20261103T162544_20261103T162619_P05036_N_F_J_001",
+  "granules": 55,
+  "tracks": {
+   "100A": 9,
+   "151D": 11,
+   "172A": 10
+  },
+  "cmr": [
+   "https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C3622241360-ASF&bounding_box=35.3736%2C31.3915%2C35.6264%2C31.6085&sort_key=start_date&page_size=2000&temporal=2025-10-01T00%3A00%3A00Z%2C2026-11-15T23%3A59%3A59Z",
+   "https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C2854338529-ASF&bounding_box=35.3736%2C31.3915%2C35.6264%2C31.6085&sort_key=start_date&page_size=2000&temporal=2025-10-01T00%3A00%3A00Z%2C2026-11-15T23%3A59%3A59Z"
+  ]
+ },
+ "track_direction": "descending",
+ "incidence_deg": null,
+ "incidence_note": "not in CMR granule metadata",
+ "stack_dates": [
+  "2026-09-16",
+  "2026-09-28",
+  "2026-10-22",
+  "2026-11-03"
+ ],
+ "dropped_dates": [
+  "2026-06-24",
+  "2026-07-06",
+  "2026-07-18",
+  "2026-08-11",
+  "2026-08-23",
+  "2026-09-04",
+  "2026-10-10"
+ ],
+ "common_km2": 308.0,
+ "tiles": {
+  "2026-06-24": {
+   "ok": 1,
+   "empty": 0,
+   "missing": 0,
+   "scrambled": 1
+  },
+  "2026-07-06": {
+   "ok": 0,
+   "empty": 1,
+   "missing": 0,
+   "scrambled": 1
+  },
+  "2026-07-18": {
+   "ok": 1,
+   "empty": 0,
+   "missing": 0,
+   "scrambled": 1
+  },
+  "2026-08-11": {
+   "ok": 1,
+   "empty": 1,
+   "missing": 0,
+   "scrambled": 0
+  },
+  "2026-08-23": {
+   "ok": 0,
+   "empty": 0,
+   "missing": 0,
+   "scrambled": 2
+  },
+  "2026-09-04": {
+   "ok": 0,
+   "empty": 2,
+   "missing": 0,
+   "scrambled": 0
+  },
+  "2026-09-16": {
+   "ok": 1,
+   "empty": 1,
+   "missing": 0,
+   "scrambled": 0
+  },
+  "2026-09-28": {
+   "ok": 2,
+   "empty": 0,
+   "missing": 0,
+   "scrambled": 0
+  },
+  "2026-10-10": {
+   "ok": 1,
+   "empty": 0,
+   "missing": 0,
+   "scrambled": 1
+  },
+  "2026-10-22": {
+   "ok": 1,
+   "empty": 1,
+   "missing": 0,
+   "scrambled": 0
+  },
+  "2026-11-03": {
+   "ok": 2,
+   "empty": 0,
+   "missing": 0,
+   "scrambled": 0
+  }
+ },
+ "series": [
+  {
+   "date": "2026-09-28",
+   "changed_km2": 0.53,
+   "brighter_km2": 0.0,
+   "darker_km2": 0.53
+  },
+  {
+   "date": "2026-10-22",
+   "changed_km2": 0.88,
+   "brighter_km2": 0.0,
+   "darker_km2": 0.88
+  },
+  {
+   "date": "2026-11-03",
+   "changed_km2": 70.17,
+   "brighter_km2": 3.75,
+   "darker_km2": 66.41
+  }
+ ],
+ "method": {
+  "channel": "HH",
+  "k": 4.0,
+  "quiet_pair": [
+   "2026-09-16",
+   "2026-09-28"
+  ],
+  "quiet_sigma": 5.77,
+  "threshold": 23.06,
+  "min_group_px": 4,
+  "note": "each pass compared with the FIRST pass of the stack; series[0] is the quiet pair (12 days) = baseline"
+ },
+ "image": {
+  "png": "data/cases/img/deadsea_change.png",
+  "bbox": [
+   35.3736,
+   31.3915,
+   35.6264,
+   31.6085
+  ],
+  "legend": "orange = brighter than the first pass, blue = darker, faint white = compared"
+ },
+ "independent_check": {
+  "product": "OPERA_L3_Dynamic_Surface_Water_Extent-Sentinel-1 (GIBS)",
+  "days_start": [
+   "2026-09-16",
+   "2026-09-15",
+   "2026-09-17"
+  ],
+  "days_end": [
+   "2026-11-03",
+   "2026-11-02",
+   "2026-11-04",
+   "2026-11-05"
+  ],
+  "seen_pct": 98.0,
+  "dswx_water_start_km2": 151.35,
+  "dswx_water_end_km2": 151.64,
+  "dswx_changed_km2": 0.46,
+  "nisar_flags_on_dswx_change_pct": 2.0,
+  "chance_pct": 0.9,
+  "tolerance_px": 1
+ }
+}

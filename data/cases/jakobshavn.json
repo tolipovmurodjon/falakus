@@ -1,0 +1,283 @@
+{
+ "id": "jakobshavn",
+ "title": "Jakobshavn Isbrae: ice front and melange",
+ "place": "Ilulissat Icefjord, Greenland",
+ "date": "2026-10-28",
+ "bbox": [
+  -49.9036,
+  69.0915,
+  -49.2964,
+  69.3085
+ ],
+ "center": [
+  -49.6,
+  69.2
+ ],
+ "zoom": 10,
+ "before": "2026-06-30",
+ "after": "2026-10-28",
+ "track": "059A",
+ "finding": "23.81 km2 changed by more than 4x the 12-day wobble between 2026-06-30 and 2026-10-28 (19.84 km2 brighter, 3.97 km2 darker), vs 4.11 km2 in the quiet pair.",
+ "sections": {
+  "what": "Greenland's fastest glacier calves into a fjord packed with ice melange.",
+  "why": "Where the ice front sits, and whether open water replaces melange, tracks how fast ice leaves the ice sheet.",
+  "radar": "Rough crevassed ice and melange scatter the radar back (bright); calm open water mirrors it away (dark). Same track 059A; HH vs the first pass.",
+  "validation": "Quiet pair 2026-06-30 to 2026-07-12: 4.11 km2 flagged by the same test. No independent product covers this ice change.",
+  "limits": "Display-scaled GIBS radar, not calibrated dB; screening only. A 12-day quiet pair understates a 4-month seasonal change. Melt, refreeze and wet snow change the echo without the front moving.",
+  "sources": [
+   {
+    "name": "NASA CMR NISAR passes here",
+    "url": "https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C2854338529-ASF&bounding_box=-49.9036,69.0915,-49.2964,69.3085&temporal=2025-10-01T00:00:00Z,2026-11-15T23:59:59Z&sort_key=start_date"
+   },
+   {
+    "name": "GIBS NISAR GCOV layer",
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/NISAR_L2_Geocoded_Polarimetric_Covariance/default/{date}/GoogleMapsCompatible_Level13/{z}/{y}/{x}.png"
+   },
+   {
+    "name": "Case script",
+    "url": "https://github.com/tolipovmurodjon/falakus/blob/main/tools/case_world.py"
+   }
+  ]
+ },
+ "numbers": [
+  {
+   "label": "First public NISAR pass here",
+   "value": "2026-06-18",
+   "unit": "date",
+   "source": "NASA CMR"
+  },
+  {
+   "label": "Passes used (track 059A, same geometry)",
+   "value": 10,
+   "unit": "passes",
+   "source": "NASA CMR + GIBS"
+  },
+  {
+   "label": "Ground compared on every pass",
+   "value": 319.5,
+   "unit": "km2",
+   "source": "data/cases/jakobshavn.json (tools/case_world.py)"
+  },
+  {
+   "label": "Changed > 4x the quiet wobble, 2026-06-30 to 2026-10-28",
+   "value": 23.81,
+   "unit": "km2",
+   "source": "data/cases/jakobshavn.json (tools/case_world.py)"
+  },
+  {
+   "label": "Same test on the quiet pair 2026-06-30 to 2026-07-12 (baseline)",
+   "value": 4.11,
+   "unit": "km2",
+   "source": "data/cases/jakobshavn.json (tools/case_world.py)"
+  },
+  {
+   "label": "Of which brighter",
+   "value": 19.84,
+   "unit": "km2",
+   "source": "data/cases/jakobshavn.json (tools/case_world.py)"
+  },
+  {
+   "label": "Of which darker",
+   "value": 3.97,
+   "unit": "km2",
+   "source": "data/cases/jakobshavn.json (tools/case_world.py)"
+  },
+  {
+   "label": "Largest change on any pass vs the first",
+   "value": 23.81,
+   "unit": "km2",
+   "source": "data/cases/jakobshavn.json (tools/case_world.py)"
+  }
+ ],
+ "quality": "screening",
+ "quality_note": "screening only: display-scaled GIBS tiles, not calibrated gamma0",
+ "generated": "2026-11-15",
+ "tracks_tried": [
+  "059A: 10 usable passes, 108430 common px"
+ ],
+ "archive": {
+  "first_pass": "2026-06-18T06:55:54.000Z",
+  "first_id": "NISAR_L2_PR_GCOV_023_059_A_037_7700_SHNA_A_20260618T065554_20260618T065631_P05023_N_P_J_001",
+  "last_pass": "2026-11-02T06:47:32.000Z",
+  "last_id": "NISAR_L2_PR_GCOV_034_131_A_037_7700_SHNA_A_20261102T064732_20261102T064809_P05036_N_P_J_001",
+  "granules": 64,
+  "tracks": {
+   "059A": 11,
+   "069D": 11,
+   "098D": 9,
+   "131A": 11,
+   "170D": 10,
+   "030A": 10
+  },
+  "cmr": [
+   "https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C3622241360-ASF&bounding_box=-49.9036%2C69.0915%2C-49.2964%2C69.3085&sort_key=start_date&page_size=2000&temporal=2025-10-01T00%3A00%3A00Z%2C2026-11-15T23%3A59%3A59Z",
+   "https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C2854338529-ASF&bounding_box=-49.9036%2C69.0915%2C-49.2964%2C69.3085&sort_key=start_date&page_size=2000&temporal=2025-10-01T00%3A00%3A00Z%2C2026-11-15T23%3A59%3A59Z"
+  ]
+ },
+ "track_direction": "ascending",
+ "incidence_deg": null,
+ "incidence_note": "not in CMR granule metadata",
+ "stack_dates": [
+  "2026-06-30",
+  "2026-07-12",
+  "2026-07-24",
+  "2026-08-17",
+  "2026-08-29",
+  "2026-09-10",
+  "2026-09-22",
+  "2026-10-04",
+  "2026-10-16",
+  "2026-10-28"
+ ],
+ "dropped_dates": [
+  "2026-06-18"
+ ],
+ "common_km2": 319.5,
+ "tiles": {
+  "2026-06-18": {
+   "ok": 4,
+   "empty": 2,
+   "missing": 0,
+   "scrambled": 0
+  },
+  "2026-06-30": {
+   "ok": 4,
+   "empty": 1,
+   "missing": 0,
+   "scrambled": 1
+  },
+  "2026-07-12": {
+   "ok": 4,
+   "empty": 1,
+   "missing": 0,
+   "scrambled": 1
+  },
+  "2026-07-24": {
+   "ok": 5,
+   "empty": 1,
+   "missing": 0,
+   "scrambled": 0
+  },
+  "2026-08-17": {
+   "ok": 5,
+   "empty": 0,
+   "missing": 0,
+   "scrambled": 1
+  },
+  "2026-08-29": {
+   "ok": 4,
+   "empty": 1,
+   "missing": 0,
+   "scrambled": 1
+  },
+  "2026-09-10": {
+   "ok": 4,
+   "empty": 0,
+   "missing": 0,
+   "scrambled": 2
+  },
+  "2026-09-22": {
+   "ok": 5,
+   "empty": 0,
+   "missing": 0,
+   "scrambled": 1
+  },
+  "2026-10-04": {
+   "ok": 5,
+   "empty": 0,
+   "missing": 0,
+   "scrambled": 1
+  },
+  "2026-10-16": {
+   "ok": 4,
+   "empty": 0,
+   "missing": 0,
+   "scrambled": 2
+  },
+  "2026-10-28": {
+   "ok": 5,
+   "empty": 1,
+   "missing": 0,
+   "scrambled": 0
+  }
+ },
+ "series": [
+  {
+   "date": "2026-07-12",
+   "changed_km2": 4.11,
+   "brighter_km2": 2.2,
+   "darker_km2": 1.91
+  },
+  {
+   "date": "2026-07-24",
+   "changed_km2": 9.39,
+   "brighter_km2": 7.39,
+   "darker_km2": 2.0
+  },
+  {
+   "date": "2026-08-17",
+   "changed_km2": 11.19,
+   "brighter_km2": 9.2,
+   "darker_km2": 1.99
+  },
+  {
+   "date": "2026-08-29",
+   "changed_km2": 3.4,
+   "brighter_km2": 2.09,
+   "darker_km2": 1.31
+  },
+  {
+   "date": "2026-09-10",
+   "changed_km2": 3.27,
+   "brighter_km2": 2.04,
+   "darker_km2": 1.23
+  },
+  {
+   "date": "2026-09-22",
+   "changed_km2": 9.55,
+   "brighter_km2": 7.68,
+   "darker_km2": 1.87
+  },
+  {
+   "date": "2026-10-04",
+   "changed_km2": 14.33,
+   "brighter_km2": 11.57,
+   "darker_km2": 2.76
+  },
+  {
+   "date": "2026-10-16",
+   "changed_km2": 17.2,
+   "brighter_km2": 13.77,
+   "darker_km2": 3.43
+  },
+  {
+   "date": "2026-10-28",
+   "changed_km2": 23.81,
+   "brighter_km2": 19.84,
+   "darker_km2": 3.97
+  }
+ ],
+ "method": {
+  "channel": "HH",
+  "k": 4.0,
+  "quiet_pair": [
+   "2026-06-30",
+   "2026-07-12"
+  ],
+  "quiet_sigma": 20.43,
+  "threshold": 81.71,
+  "min_group_px": 4,
+  "note": "each pass compared with the FIRST pass of the stack; series[0] is the quiet pair (12 days) = baseline"
+ },
+ "image": {
+  "png": "data/cases/img/jakobshavn_change.png",
+  "bbox": [
+   -49.9036,
+   69.0915,
+   -49.2964,
+   69.3085
+  ],
+  "legend": "orange = brighter than the first pass, blue = darker, faint white = compared"
+ },
+ "independent_check": "no independent product covers ice change here (OPERA DSWx/DIST do not map ice)"
+}

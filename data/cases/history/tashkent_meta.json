@@ -1,0 +1,45 @@
+{
+ "place": "tashkent",
+ "bbox": [
+  69.1,
+  41.2,
+  69.4,
+  41.4
+ ],
+ "width": 1400,
+ "rs1_stretch_db": [
+  33.45,
+  47.28
+ ],
+ "rs1_note": "20*log10(DN), relative dB, uncalibrated; one fixed stretch for all RADARSAT-1 frames of this place",
+ "nisar_note": "GIBS NISAR GCOV display PNG, R channel (HH), 2-98 % stretch; not calibrated",
+ "frames": [
+  {
+   "date": "1999-05-03",
+   "sensor": "RADARSAT-1 (CSA), C-band HH",
+   "file": "tashkent_rs1_1999-05-03.jpg",
+   "beam": "SCNA",
+   "orbit": "descending",
+   "scenes": [
+    "s3://radarsat-r1-l1-cog/1999/5/RS1_18229_SNA_F345_19990503_013954_HH_GRF.tif"
+   ],
+   "coverage_pct": 100.0
+  },
+  {
+   "date": "2026-11-01",
+   "sensor": "NISAR (NASA-ISRO), L-band, NASA GIBS",
+   "file": "tashkent_nisar_2026-11-01.jpg",
+   "granules": [
+    "NISAR_L2_PR_GCOV_034_121_D_068_2005_DHDH_A_20261101T142623_20261101T142658_P05036_F_F_J_001",
+    "NISAR_L2_PR_GCOV_034_121_D_067_2005_DHDH_A_20261101T142549_20261101T142624_P05036_F_F_J_001"
+   ],
+   "tiles": {
+    "ok": 4,
+    "ok_after_9_retries": 1,
+    "ok_after_1_retries": 1
+   },
+   "coverage_pct": 100.0,
+   "zoom": 11
+  }
+ ]
+}

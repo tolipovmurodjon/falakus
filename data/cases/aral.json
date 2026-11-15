@@ -1,0 +1,95 @@
+{
+ "id": "aral",
+ "title": "Aral Sea: 41 years of shrinking, and today's radar",
+ "place": "Aral Sea, Kazakhstan / Uzbekistan",
+ "date": "2026-10-31",
+ "bbox": [
+  58.0,
+  43.6,
+  61.9,
+  46.9
+ ],
+ "center": [
+  59.95,
+  45.25
+ ],
+ "zoom": 7,
+ "before": "1985-07-28",
+ "after": "2026-10-31",
+ "track": "107D",
+ "finding": "Open water in the box fell from 46,371.1 km2 (1985) to 9,018.8 km2 (2026), 80.6 % less (Landsat).",
+ "sections": {
+  "what": "The Aral Sea shrank as its rivers were diverted to irrigation; the summer Landsat photos show it year by year.",
+  "why": "The same rivers feed the Fergana valley, so upstream water use reaches all the way here.",
+  "radar": "On the NISAR pass, calm open water is dark and wet salt crust and rough ground are bright. We show the radar; we do not measure water area from it here.",
+  "validation": "Water areas are from Landsat (MNDWI > 0 on clear pixels), not from NISAR. Salt flats can look like water to radar, so no radar water number is claimed.",
+  "limits": "The 1985 frame borrows 44.7 % of its pixels from 1986 (cloud fill). GIBS radar is display-scaled, not calibrated dB.",
+  "sources": [
+   {
+    "name": "Time-lapse baker (Landsat C2 L2, Planetary Computer)",
+    "url": "https://github.com/tolipovmurodjon/falakus/blob/main/tools/bake_timelapse.py"
+   },
+   {
+    "name": "NASA CMR NISAR passes over the Aral box",
+    "url": "https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C2854338529-ASF&bounding_box=58%2C43.6%2C61.9%2C46.9&sort_key=start_date&page_size=2000&temporal=2026-10-01T00%3A00%3A00Z%2C2026-11-15T23%3A59%3A59Z"
+   },
+   {
+    "name": "GIBS NISAR GCOV layer",
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/NISAR_L2_Geocoded_Polarimetric_Covariance/default/{date}/GoogleMapsCompatible_Level13/{z}/{y}/{x}.png"
+   }
+  ]
+ },
+ "numbers": [
+  {
+   "label": "Open water 1985 (Landsat)",
+   "value": 46371.1,
+   "unit": "km2",
+   "source": "data/headline_numbers.json aral_1985_km2"
+  },
+  {
+   "label": "Open water 2026 (Landsat/Sentinel-2)",
+   "value": 9018.8,
+   "unit": "km2",
+   "source": "data/headline_numbers.json aral_2026_km2"
+  },
+  {
+   "label": "Lost since 1985",
+   "value": 80.6,
+   "unit": "%",
+   "source": "data/headline_numbers.json aral_loss_pct"
+  },
+  {
+   "label": "NISAR GIBS pass shown",
+   "value": "2026-10-31",
+   "unit": "date",
+   "source": "NASA CMR + GIBS"
+  },
+  {
+   "label": "Share of the box covered by that day's NISAR tiles",
+   "value": 79.2,
+   "unit": "%",
+   "source": "data/cases/aral.json image"
+  }
+ ],
+ "quality": "screening",
+ "quality_note": "Landsat numbers are measured; NISAR is shown only (display-scaled GIBS)",
+ "image": {
+  "png": "data/cases/img/aral_nisar.png",
+  "bbox": [
+   58.0,
+   43.6,
+   61.9,
+   46.9
+  ],
+  "date": "2026-10-31",
+  "zoom": 8,
+  "tiles": {
+   "ok": 13,
+   "empty": 3,
+   "missing": 0,
+   "scrambled": 0
+  }
+ },
+ "independent_check": "no independent product used: no change is claimed from NISAR here",
+ "generated": "2026-11-15"
+}

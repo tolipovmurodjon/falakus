@@ -1,0 +1,323 @@
+{
+ "id": "nile_delta",
+ "title": "Nile delta: irrigation season water",
+ "place": "Nile delta, Egypt",
+ "date": "2026-11-02",
+ "bbox": [
+  30.8744,
+  30.7915,
+  31.1256,
+  31.0085
+ ],
+ "center": [
+  31.0,
+  30.9
+ ],
+ "zoom": 10,
+ "before": "2026-06-23",
+ "after": "2026-11-02",
+ "track": "129A",
+ "finding": "1.24 km2 of the box changed by more than 4x the 12-day wobble between 2026-06-23 and 2026-11-02 (0.88 km2 darker, 0.36 km2 brighter), vs 0.33 km2 in the quiet pair.",
+ "sections": {
+  "what": "Egypt's breadbasket, irrigated from the Nile through canals and flooded rice fields.",
+  "why": "Flooded fields and canals show when and where water is used through the summer rice season.",
+  "radar": "Flooded fields are dark before plants grow; standing crops in water can turn bright (double bounce). Same track 129A, 10 passes, each compared with the first.",
+  "validation": "Quiet pair 2026-06-23 to 2026-07-05: 0.33 km2 flagged by the same test. OPERA DSWx-S1 (Sentinel-1, NASA JPL, not ours): water 0.59 -> 0.15 km2 over the same ground; 9.7 % of NISAR-flagged pixels sit where DSWx water changed (chance 0.9 %).",
+  "limits": "Display-scaled GIBS radar, not calibrated dB; screening only. A 12-day quiet pair understates a 4-month seasonal change. Darker is not always more water and brighter is not always less: wind, wet salt and crops change HH too.",
+  "sources": [
+   {
+    "name": "NASA CMR NISAR passes here",
+    "url": "https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C2854338529-ASF&bounding_box=30.8744,30.7915,31.1256,31.0085&temporal=2025-10-01T00:00:00Z,2026-11-15T23:59:59Z&sort_key=start_date"
+   },
+   {
+    "name": "GIBS NISAR GCOV layer",
+    "url": "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/NISAR_L2_Geocoded_Polarimetric_Covariance/default/{date}/GoogleMapsCompatible_Level13/{z}/{y}/{x}.png"
+   },
+   {
+    "name": "Case script",
+    "url": "https://github.com/tolipovmurodjon/falakus/blob/main/tools/case_world.py"
+   },
+   {
+    "name": "GIBS OPERA DSWx-S1 colormap",
+    "url": "https://gibs.earthdata.nasa.gov/colormaps/v1.3/OPERA_Dynamic_Surface_Water_Extent_S1.xml"
+   }
+  ]
+ },
+ "numbers": [
+  {
+   "label": "First public NISAR pass here",
+   "value": "2026-06-23",
+   "unit": "date",
+   "source": "NASA CMR"
+  },
+  {
+   "label": "Passes used (track 129A, same geometry)",
+   "value": 10,
+   "unit": "passes",
+   "source": "NASA CMR + GIBS"
+  },
+  {
+   "label": "Ground compared on every pass",
+   "value": 430.6,
+   "unit": "km2",
+   "source": "data/cases/nile_delta.json (tools/case_world.py)"
+  },
+  {
+   "label": "Changed > 4x the quiet wobble, 2026-06-23 to 2026-11-02",
+   "value": 1.24,
+   "unit": "km2",
+   "source": "data/cases/nile_delta.json (tools/case_world.py)"
+  },
+  {
+   "label": "Same test on the quiet pair 2026-06-23 to 2026-07-05 (baseline)",
+   "value": 0.33,
+   "unit": "km2",
+   "source": "data/cases/nile_delta.json (tools/case_world.py)"
+  },
+  {
+   "label": "Of which brighter",
+   "value": 0.36,
+   "unit": "km2",
+   "source": "data/cases/nile_delta.json (tools/case_world.py)"
+  },
+  {
+   "label": "Of which darker",
+   "value": 0.88,
+   "unit": "km2",
+   "source": "data/cases/nile_delta.json (tools/case_world.py)"
+  },
+  {
+   "label": "Largest change on any pass vs the first",
+   "value": 85.42,
+   "unit": "km2",
+   "source": "data/cases/nile_delta.json (tools/case_world.py)"
+  },
+  {
+   "label": "OPERA DSWx-S1 water near 2026-06-23",
+   "value": 0.59,
+   "unit": "km2",
+   "source": "data/cases/nile_delta.json (tools/case_world.py)"
+  },
+  {
+   "label": "OPERA DSWx-S1 water near 2026-11-02",
+   "value": 0.15,
+   "unit": "km2",
+   "source": "data/cases/nile_delta.json (tools/case_world.py)"
+  },
+  {
+   "label": "NISAR-flagged pixels where DSWx water also changed (chance)",
+   "value": "9.7 (0.9)",
+   "unit": "%",
+   "source": "data/cases/nile_delta.json (tools/case_world.py)"
+  }
+ ],
+ "quality": "screening",
+ "quality_note": "screening only: display-scaled GIBS tiles, not calibrated gamma0",
+ "generated": "2026-11-15",
+ "tracks_tried": [
+  "129A: 10 usable passes, 25024 common px"
+ ],
+ "archive": {
+  "first_pass": "2026-06-23T03:16:20.000Z",
+  "first_id": "NISAR_L2_PR_GCOV_023_129_A_017_4005_DHDH_A_20260623T031620_20260623T031651_P05023_N_F_J_001",
+  "last_pass": "2026-11-02T03:16:17.000Z",
+  "last_id": "NISAR_L2_PR_GCOV_034_129_A_017_4005_DHDH_A_20261102T031617_20261102T031650_P05036_N_F_J_001",
+  "granules": 29,
+  "tracks": {
+   "129A": 11,
+   "007D": 10,
+   "028A": 8
+  },
+  "cmr": [
+   "https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C3622241360-ASF&bounding_box=30.8744%2C30.7915%2C31.1256%2C31.0085&sort_key=start_date&page_size=2000&temporal=2025-10-01T00%3A00%3A00Z%2C2026-11-15T23%3A59%3A59Z",
+   "https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C2854338529-ASF&bounding_box=30.8744%2C30.7915%2C31.1256%2C31.0085&sort_key=start_date&page_size=2000&temporal=2025-10-01T00%3A00%3A00Z%2C2026-11-15T23%3A59%3A59Z"
+  ]
+ },
+ "track_direction": "ascending",
+ "incidence_deg": null,
+ "incidence_note": "not in CMR granule metadata",
+ "stack_dates": [
+  "2026-06-23",
+  "2026-07-05",
+  "2026-07-17",
+  "2026-08-10",
+  "2026-08-22",
+  "2026-09-03",
+  "2026-09-15",
+  "2026-09-27",
+  "2026-10-09",
+  "2026-11-02"
+ ],
+ "dropped_dates": [
+  "2026-10-21"
+ ],
+ "common_km2": 430.6,
+ "tiles": {
+  "2026-06-23": {
+   "ok": 1,
+   "empty": 1,
+   "missing": 0,
+   "scrambled": 0
+  },
+  "2026-07-05": {
+   "ok": 1,
+   "empty": 0,
+   "missing": 0,
+   "scrambled": 1
+  },
+  "2026-07-17": {
+   "ok": 1,
+   "empty": 0,
+   "missing": 0,
+   "scrambled": 1
+  },
+  "2026-08-10": {
+   "ok": 2,
+   "empty": 0,
+   "missing": 0,
+   "scrambled": 0
+  },
+  "2026-08-22": {
+   "ok": 1,
+   "empty": 1,
+   "missing": 0,
+   "scrambled": 0
+  },
+  "2026-09-03": {
+   "ok": 1,
+   "empty": 1,
+   "missing": 0,
+   "scrambled": 0
+  },
+  "2026-09-15": {
+   "ok": 2,
+   "empty": 0,
+   "missing": 0,
+   "scrambled": 0
+  },
+  "2026-09-27": {
+   "ok": 1,
+   "empty": 1,
+   "missing": 0,
+   "scrambled": 0
+  },
+  "2026-10-09": {
+   "ok": 2,
+   "empty": 0,
+   "missing": 0,
+   "scrambled": 0
+  },
+  "2026-10-21": {
+   "ok": 0,
+   "empty": 2,
+   "missing": 0,
+   "scrambled": 0
+  },
+  "2026-11-02": {
+   "ok": 1,
+   "empty": 1,
+   "missing": 0,
+   "scrambled": 0
+  }
+ },
+ "series": [
+  {
+   "date": "2026-07-05",
+   "changed_km2": 0.33,
+   "brighter_km2": 0.24,
+   "darker_km2": 0.09
+  },
+  {
+   "date": "2026-07-17",
+   "changed_km2": 13.63,
+   "brighter_km2": 13.47,
+   "darker_km2": 0.15
+  },
+  {
+   "date": "2026-08-10",
+   "changed_km2": 59.66,
+   "brighter_km2": 40.26,
+   "darker_km2": 19.39
+  },
+  {
+   "date": "2026-08-22",
+   "changed_km2": 85.42,
+   "brighter_km2": 48.01,
+   "darker_km2": 37.41
+  },
+  {
+   "date": "2026-09-03",
+   "changed_km2": 78.77,
+   "brighter_km2": 46.2,
+   "darker_km2": 32.57
+  },
+  {
+   "date": "2026-09-15",
+   "changed_km2": 48.33,
+   "brighter_km2": 30.27,
+   "darker_km2": 18.07
+  },
+  {
+   "date": "2026-09-27",
+   "changed_km2": 22.71,
+   "brighter_km2": 20.32,
+   "darker_km2": 2.39
+  },
+  {
+   "date": "2026-10-09",
+   "changed_km2": 1.6,
+   "brighter_km2": 1.07,
+   "darker_km2": 0.53
+  },
+  {
+   "date": "2026-11-02",
+   "changed_km2": 1.24,
+   "brighter_km2": 0.36,
+   "darker_km2": 0.88
+  }
+ ],
+ "method": {
+  "channel": "HH",
+  "k": 4.0,
+  "quiet_pair": [
+   "2026-06-23",
+   "2026-07-05"
+  ],
+  "quiet_sigma": 12.68,
+  "threshold": 50.74,
+  "min_group_px": 4,
+  "note": "each pass compared with the FIRST pass of the stack; series[0] is the quiet pair (12 days) = baseline"
+ },
+ "image": {
+  "png": "data/cases/img/nile_delta_change.png",
+  "bbox": [
+   30.8744,
+   30.7915,
+   31.1256,
+   31.0085
+  ],
+  "legend": "orange = brighter than the first pass, blue = darker, faint white = compared"
+ },
+ "independent_check": {
+  "product": "OPERA_L3_Dynamic_Surface_Water_Extent-Sentinel-1 (GIBS)",
+  "days_start": [
+   "2026-06-23",
+   "2026-06-24",
+   "2026-06-21",
+   "2026-06-20"
+  ],
+  "days_end": [
+   "2026-11-02",
+   "2026-11-03",
+   "2026-10-31",
+   "2026-11-06"
+  ],
+  "seen_pct": 99.6,
+  "dswx_water_start_km2": 0.59,
+  "dswx_water_end_km2": 0.15,
+  "dswx_changed_km2": 0.67,
+  "nisar_flags_on_dswx_change_pct": 9.7,
+  "chance_pct": 0.9,
+  "tolerance_px": 1
+ }
+}
