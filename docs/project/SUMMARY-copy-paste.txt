@@ -1,0 +1,7 @@
+Earth's surface keeps changing — water, fields, floods, ground — but clouds and darkness hide most of it from ordinary satellite cameras. Falakus makes these changes visible with NISAR, the new NASA-ISRO radar satellite, which sees through cloud and at night, every 12 days.
+
+We started at home. 10.9 million people in Uzbekistan's Fergana valley depend on reservoirs that cameras often cannot see: 15 of 24 winter photos in 2025 were mostly cloud. Our machine-learning model learned to find water in the radar and was tested on days it had never seen; it beat the standard method (map overlap 0.63 vs 0.59), and NASA's ICESat-2 laser confirmed it (correlation 0.95). We show the reservoir losing half its water to cotton fields, the harvest moving field by field, and the Aral Sea gone since 1997.
+
+Then we opened it to the world: a map of every NISAR pass, flood watch on NASA's event feed, ground motion from an earthquake measured in centimetres, ship tracking, rain and wildfire layers, and a 40-year time-lapse.
+
+Every number sits next to an outside check, and every change comes with a plain-language briefing: what happened, why, and what comes next.
