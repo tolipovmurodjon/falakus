@@ -1,7 +1,7 @@
-Earth's surface keeps changing — water, fields, floods, ground — but clouds and darkness hide most of it from ordinary satellite cameras. Falakus makes these changes visible with NISAR, the new NASA-ISRO radar satellite, which sees through cloud and at night, every 12 days.
+About two-thirds of Earth is under cloud at any moment, and half of every day is night. So the changes that shape people's lives, from shrinking reservoirs and floods to harvests and sinking ground, often happen where satellite cameras cannot see.
 
-We started at home. 10.9 million people in Uzbekistan's Fergana valley depend on reservoirs that cameras often cannot see: 15 of 24 winter photos in 2025 were mostly cloud. Our machine-learning model learned to find water in the radar and was tested on days it had never seen; it beat the standard method (map overlap 0.63 vs 0.59), and NASA's ICESat-2 laser confirmed it (correlation 0.95). We show the reservoir losing half its water to cotton fields, the harvest moving field by field, and the Aral Sea gone since 1997.
+Falakus makes them visible with NISAR, the new NASA-ISRO radar satellite. It sends its own signal, so it sees through cloud and at night, across the whole planet, every 12 days. Calm water turns black, so we track reservoirs and floods under storm clouds. Leaves twist the radar wave, so we see harvests field by field. The wave's timing measures ground motion in centimetres after an earthquake. Ships shine bright on dark seas, day or night.
 
-Then we opened it to the world: a map of every NISAR pass, flood watch on NASA's event feed, ground motion from an earthquake measured in centimetres, ship tracking, rain and wildfire layers, and a 40-year time-lapse.
+We proved it at home first. In Uzbekistan, 10.9 million people depend on reservoirs that cameras lost to cloud in 15 of 24 winter photos. Our machine-learning model, tested on days it never saw, mapped the water better than the standard method (0.63 vs 0.59 overlap), and NASA's ICESat-2 laser confirmed it (0.95 correlation).
 
-Every number sits next to an outside check, and every change comes with a plain-language briefing: what happened, why, and what comes next.
+Anyone can explore every NISAR pass worldwide, NASA flood and fire events, and a 40-year time-lapse, with plain briefings on what changed, why, and what comes next.
