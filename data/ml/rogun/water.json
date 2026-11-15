@@ -1,0 +1,59 @@
+{
+ "place": "rogun",
+ "trained_on": "andijan_res (8 photo days)",
+ "test": "leave-one-place-out: this place never used in training",
+ "bbox": [
+  69.61660812339682,
+  38.55372983331861,
+  69.96403901532611,
+  38.82602454403556
+ ],
+ "passes": [
+  {
+   "date": "2026-06-20",
+   "ml_km2": 24.34
+  },
+  {
+   "date": "2026-07-02",
+   "ml_km2": 1.81
+  },
+  {
+   "date": "2026-07-26",
+   "ml_km2": 7.44,
+   "photo": "2026-07-24",
+   "photo_water_km2": 12.25,
+   "ml_in_clear_km2": 7.16,
+   "iou": 0.039
+  },
+  {
+   "date": "2026-08-19",
+   "ml_km2": 3.65
+  },
+  {
+   "date": "2026-08-31",
+   "ml_km2": 0.98,
+   "photo": "2026-09-02",
+   "photo_water_km2": 17.72,
+   "ml_in_clear_km2": 0.95,
+   "iou": 0.012
+  },
+  {
+   "date": "2026-09-24",
+   "ml_km2": 5.14,
+   "photo": "2026-09-22",
+   "photo_water_km2": 20.32,
+   "ml_in_clear_km2": 5.03,
+   "iou": 0.018
+  },
+  {
+   "date": "2026-10-18",
+   "ml_km2": 3.85
+  },
+  {
+   "date": "2026-10-30",
+   "ml_km2": 3.42
+  }
+ ],
+ "median_iou": 0.018,
+ "n_photo_days": 3
+}

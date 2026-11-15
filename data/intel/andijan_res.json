@@ -1,0 +1,84 @@
+{
+ "place": "andijan_res",
+ "title": "Andijan reservoir",
+ "river": "Kara Darya, head of the Syr Darya",
+ "headline": "Lake down 50 % since 23 Jun (clear-day photos); about 19.5 km\u00b2 expected in Dec",
+ "sections": [
+  {
+   "h": "What happened",
+   "p": "The lake's open water fell from 45.1 km\u00b2 on 14 Jul to 32.3 km\u00b2 on 30 Oct 2026: 28 % less. NISAR measured it every 12 days, also on the days clouds hid it from cameras. Clear-day photos show a bigger fall, 42.1 \u2192 21.1 km\u00b2 (50 % less, 23 Jun to 19 Oct): in autumn the radar still counts wet mud on the drying shore as water."
+  },
+  {
+   "h": "Why",
+   "p": "Water is let out all summer for cotton, wheat and orchards downstream; the release season ends in September. Winter brings little use and river inflow from Kyrgyzstan's mountains, so the lake refills until spring."
+  },
+  {
+   "h": "What next",
+   "p": "Next month (Dec): about 19.5 km\u00b2 (8 in 10 chance 13\u201326 km\u00b2); a typical Dec holds 22.2 km\u00b2, the lowest was 16.7 km\u00b2 in 2021. By Feb: about 25.8 km\u00b2 (typical 25.6). Learned from 95 clear months since 2017; 30 days ahead it beat the best simple guess by 13 % on months it never saw. Beyond a month we show the 10-year range, because the model is no better than the seasonal pattern there."
+  },
+  {
+   "h": "For a farmer",
+   "p": "Summer water for the valley's fields came from this lake; by 30 Oct it held 72 % of its summer size. Watch the winter refill: if the lake reaches the forecast by spring, early-season water should be close to normal; if it stays lower, plan for a tighter first irrigation."
+  },
+  {
+   "h": "For the water agency",
+   "p": "You get the lake's area every 12 days, cloud or not (34 % of camera visits in 2025 were cloudy). Our learned map agrees with clear-day photos at IoU 0.63 (the old one-number rule: 0.59); its typical miss is 7.6 km\u00b2, mostly wet mud counted as water in late summer. A second NASA satellite (ICESat-2 laser) agrees: water level and area rise and fall together (rank correlation 0.95, 9 passes)."
+  },
+  {
+   "h": "For a family",
+   "p": "10.9 million people live in the three valley regions this water reaches (Andijan, Fergana, Namangan; 29 % of Uzbekistan). A smaller lake in winter means less water to share in spring."
+  }
+ ],
+ "numbers": {
+  "peak": {
+   "date": "2026-07-14",
+   "km2": 45.12
+  },
+  "last": {
+   "date": "2026-10-30",
+   "km2": 32.28
+  },
+  "drop_pct": -28.5,
+  "slope_km2_per_month": -4.46,
+  "forecast": [
+   {
+    "month": "2026-12",
+    "km2": 19.49,
+    "low": 13.1,
+    "high": 25.7,
+    "typical": 22.25,
+    "min": 16.66,
+    "max": 26.39,
+    "driest_year": "2021"
+   },
+   {
+    "month": "2027-01",
+    "km2": 24.74,
+    "low": 17.27,
+    "high": 34.62,
+    "typical": 27.14,
+    "min": 19.7,
+    "max": 31.81,
+    "driest_year": "2022"
+   },
+   {
+    "month": "2027-02",
+    "km2": 25.76,
+    "low": 18.29,
+    "high": 35.64,
+    "typical": 25.58,
+    "min": 18.1,
+    "max": 32.62,
+    "driest_year": "2021"
+   }
+  ],
+  "forecast_skill": {
+   "persistence": 4.68,
+   "seasonal": 5.9,
+   "climatology": 5.66,
+   "ridge": 4.08
+  }
+ },
+ "confidence": "Learned water map IoU 0.63 vs photos (leave-one-date-out, 8 days); shuffled-label control 0.07; laser rank correlation 0.95.",
+ "sources": "NASA-ISRO NISAR GCOV (provisional before 21 Oct 2026); ESA Sentinel-2 (photo check); NASA ICESat-2 ATL13; stat.uz population 1 Oct 2025."
+}

@@ -1,0 +1,206 @@
+{
+ "method": "Learned radar water map for the Andijan reservoir: gradient boosting on NISAR HH/HV, labelled by Sentinel-2 photos.\n\nWhy: the one-number rule (filtered HH < T) agrees with the photo at median IoU 0.58. Wet mud and wind-roughened\nwater break a single cut-off; texture, HV and the pixel's own history can tell them apart.\n\nData: every NISAR GCOV pass in data/science/andijan_res (HH, HV gamma0 dB, 20 m, read at 40 m).\nLabels: Sentinel-2 L2A within 3 days, NDWI = (B03 - B08)/(B03 + B08) > 0 on clear-sky pixels (SCL), same grid.\nFeatures per pixel (all from radar, no photo, no map of where water \"should\" be):\n  Lee-filtered HH and HV, HH - HV, HH local std 5x5 and 11x11, HH min / median / max over all passes of the\n  season (the pixel's history), this pass's HH minus the season median (change), HV local std 5x5.\nModel: sklearn HistGradientBoostingClassifier (200 trees, depth 6), class-balanced sample of 40k pixels per date.\nTest: leave-one-DATE-out. The model never sees the photo of the day it is scored on. Same pixels, same days for\n  the threshold baseline (the rule from tools/water_road.py: HH < T inside the water zone, T fit on the first date).\nNull control: the same model trained on shuffled labels must collapse (rules/null-control-before-any-score).",
+ "features": [
+  "HH",
+  "HV",
+  "HH-HV",
+  "HH std 5",
+  "HH std 11",
+  "HV std 5",
+  "HH season min",
+  "HH season median",
+  "HH season max",
+  "HH minus season median"
+ ],
+ "threshold_db": -16.75,
+ "bbox": [
+  73.02399687968372,
+  40.6804663130263,
+  73.24625854410294,
+  40.849456303513286
+ ],
+ "held_out": [
+  {
+   "date": "2026-06-20",
+   "photo": "2026-06-23",
+   "clear_pct": 99.6,
+   "photo_water_km2": 42.11,
+   "ml_km2": 42.01,
+   "rule_km2": 53.24,
+   "ml_iou": 0.763,
+   "rule_iou": 0.615,
+   "null_iou": 0.094,
+   "extra_km2": 5.6,
+   "missed_km2": 5.69
+  },
+  {
+   "date": "2026-07-14",
+   "photo": "2026-07-11",
+   "clear_pct": 99.6,
+   "photo_water_km2": 40.2,
+   "ml_km2": 44.38,
+   "rule_km2": 105.89,
+   "ml_iou": 0.767,
+   "rule_iou": 0.324,
+   "null_iou": 0.134,
+   "extra_km2": 7.67,
+   "missed_km2": 3.5
+  },
+  {
+   "date": "2026-07-26",
+   "photo": "2026-07-26",
+   "clear_pct": 99.6,
+   "photo_water_km2": 31.96,
+   "ml_km2": 42.0,
+   "rule_km2": 101.96,
+   "ml_iou": 0.673,
+   "rule_iou": 0.274,
+   "null_iou": 0.141,
+   "extra_km2": 12.26,
+   "missed_km2": 2.21
+  },
+  {
+   "date": "2026-08-19",
+   "photo": "2026-08-20",
+   "clear_pct": 99.6,
+   "photo_water_km2": 20.07,
+   "ml_km2": 30.81,
+   "rule_km2": 82.94,
+   "ml_iou": 0.59,
+   "rule_iou": 0.209,
+   "null_iou": 0.02,
+   "extra_km2": 11.93,
+   "missed_km2": 1.19
+  },
+  {
+   "date": "2026-08-31",
+   "photo": "2026-08-30",
+   "clear_pct": 99.6,
+   "photo_water_km2": 18.96,
+   "ml_km2": 28.17,
+   "rule_km2": 78.91,
+   "ml_iou": 0.611,
+   "rule_iou": 0.201,
+   "null_iou": 0.072,
+   "extra_km2": 10.31,
+   "missed_km2": 1.09
+  },
+  {
+   "date": "2026-09-12",
+   "photo": "2026-09-09",
+   "clear_pct": 99.6,
+   "photo_water_km2": 18.78,
+   "ml_km2": 30.19,
+   "rule_km2": 84.37,
+   "ml_iou": 0.57,
+   "rule_iou": 0.191,
+   "null_iou": 0.045,
+   "extra_km2": 12.4,
+   "missed_km2": 1.0
+  },
+  {
+   "date": "2026-10-06",
+   "photo": "2026-10-04",
+   "clear_pct": 93.7,
+   "photo_water_km2": 16.97,
+   "ml_km2": 25.42,
+   "rule_km2": 22.63,
+   "ml_iou": 0.612,
+   "rule_iou": 0.565,
+   "null_iou": 0.047,
+   "extra_km2": 9.33,
+   "missed_km2": 0.88
+  },
+  {
+   "date": "2026-10-18",
+   "photo": "2026-10-19",
+   "clear_pct": 99.5,
+   "photo_water_km2": 21.12,
+   "ml_km2": 27.82,
+   "rule_km2": 50.84,
+   "ml_iou": 0.641,
+   "rule_iou": 0.324,
+   "null_iou": 0.061,
+   "extra_km2": 8.71,
+   "missed_km2": 2.01
+  }
+ ],
+ "summary": {
+  "ml_iou": 0.627,
+  "rule_iou": 0.299,
+  "null_iou": 0.067,
+  "ml_area_mae_km2": 7.6,
+  "rule_area_mae_km2": 46.33,
+  "rule_zone_iou": 0.591,
+  "rule_zone_area_mae_km2": 8.78
+ },
+ "importance": {
+  "HH season min": 0.0651,
+  "HH season max": 0.0589,
+  "HH season median": 0.0073,
+  "HV std 5": 0.0018,
+  "HH": 0.0018,
+  "HH std 11": -0.002,
+  "HH-HV": -0.0027,
+  "HH minus season median": -0.0028,
+  "HV": -0.0037,
+  "HH std 5": -0.0064
+ },
+ "series": [
+  {
+   "date": "2026-06-20",
+   "ml_km2": 43.23,
+   "photo_labelled": true
+  },
+  {
+   "date": "2026-07-02",
+   "ml_km2": 44.92,
+   "photo_labelled": false
+  },
+  {
+   "date": "2026-07-14",
+   "ml_km2": 45.12,
+   "photo_labelled": true
+  },
+  {
+   "date": "2026-07-26",
+   "ml_km2": 42.2,
+   "photo_labelled": true
+  },
+  {
+   "date": "2026-08-19",
+   "ml_km2": 30.33,
+   "photo_labelled": true
+  },
+  {
+   "date": "2026-08-31",
+   "ml_km2": 28.49,
+   "photo_labelled": true
+  },
+  {
+   "date": "2026-09-12",
+   "ml_km2": 29.68,
+   "photo_labelled": true
+  },
+  {
+   "date": "2026-09-24",
+   "ml_km2": 24.65,
+   "photo_labelled": false
+  },
+  {
+   "date": "2026-10-06",
+   "ml_km2": 26.48,
+   "photo_labelled": true
+  },
+  {
+   "date": "2026-10-18",
+   "ml_km2": 28.53,
+   "photo_labelled": true
+  },
+  {
+   "date": "2026-10-30",
+   "ml_km2": 32.28,
+   "photo_labelled": false
+  }
+ ]
+}

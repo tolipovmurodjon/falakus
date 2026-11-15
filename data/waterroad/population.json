@@ -1,0 +1,31 @@
+{
+ "source": "WorldPop Global 2020 (wpgppop), api.worldpop.org stats service",
+ "boxes": {
+  "fergana": [
+   71.62201996331262,
+   40.464864864864865,
+   71.97798003668737,
+   40.73513513513514
+  ],
+  "andijan_res": [
+   73.02795,
+   40.68392,
+   73.24205,
+   40.84608
+  ]
+ },
+ "population": {},
+ "regions_2025": {
+  "source": "National Statistics Committee of Uzbekistan (stat.uz), permanent population on 1 Oct 2025",
+  "url": "https://stat.uz/en/press-center/news-of-committee/62565-hududlar-kesimida-doimiy-aholi-soni-pp-3",
+  "fergana": 4204284,
+  "andijan": 3507220,
+  "namangan": 3177070,
+  "uzbekistan": 38069116,
+  "density_per_km2_2026": {
+   "andijan": 821.4,
+   "fergana": 627.8,
+   "namangan": 430.9
+  }
+ }
+}

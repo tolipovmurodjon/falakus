@@ -1,0 +1,79 @@
+[
+ {
+  "date": "2025-01-10",
+  "level_m": 847.99,
+  "spread_m": 0.14,
+  "segments": 335,
+  "water_body_id": 14508
+ },
+ {
+  "date": "2025-03-12",
+  "level_m": 847.88,
+  "spread_m": 0.17,
+  "segments": 135,
+  "water_body_id": 14508
+ },
+ {
+  "date": "2025-04-11",
+  "level_m": 849.5,
+  "spread_m": 0.02,
+  "segments": 86,
+  "water_body_id": 14508
+ },
+ {
+  "date": "2025-07-11",
+  "level_m": 852.25,
+  "spread_m": 0.12,
+  "segments": 668,
+  "water_body_id": 14508
+ },
+ {
+  "date": "2025-09-09",
+  "level_m": 836.9,
+  "spread_m": 0.03,
+  "segments": 78,
+  "water_body_id": 14508
+ },
+ {
+  "date": "2025-11-08",
+  "level_m": 891.32,
+  "spread_m": 0.1,
+  "segments": 3,
+  "water_body_id": 2005835
+ },
+ {
+  "date": "2026-01-09",
+  "level_m": 841.03,
+  "spread_m": 0.1,
+  "segments": 637,
+  "water_body_id": 14508
+ },
+ {
+  "date": "2026-05-08",
+  "level_m": 850.01,
+  "spread_m": 0.05,
+  "segments": 14,
+  "water_body_id": 14508
+ },
+ {
+  "date": "2026-06-09",
+  "level_m": 852.28,
+  "spread_m": 0.4,
+  "segments": 292,
+  "water_body_id": 14508
+ },
+ {
+  "date": "2026-07-08",
+  "level_m": 850.98,
+  "spread_m": 0.09,
+  "segments": 207,
+  "water_body_id": 14508
+ },
+ {
+  "date": "2026-07-09",
+  "level_m": 850.63,
+  "spread_m": 0.1,
+  "segments": 141,
+  "water_body_id": 14508
+ }
+]

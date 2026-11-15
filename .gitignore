@@ -1,4 +1,16 @@
-data/
+data/*
+# site data the pages read (small results only; raw radar boxes *.npz stay out)
+!data/intel/
+!data/ml/
+!data/forecast/
+!data/waterroad/
+!data/timelapse/
+!data/science/
+data/science/*
+!data/science/andijan_res/
+data/science/andijan_res/*
+!data/science/andijan_res/img/
+!data/science/andijan_res/frames.json
 __pycache__/
 *.part
 docs/deck/qa/

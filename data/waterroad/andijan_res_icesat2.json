@@ -1,0 +1,111 @@
+{
+ "method": "Independent check of the reservoir water AREA with NASA ICESat-2 laser water LEVELS (ATL13 inland water surface height).\n\nA lake's area and its water level must move together along one curve (the shape of the valley it fills).\nFor each ATL13 granule over the box: read every beam's water-surface segments inside the box, keep the\nreservoir's own water body (the most common inland_water_body_id), and take the median height.\nThen pair each laser date with the nearest monthly area (Sentinel-2 photo, else corrected Sentinel-1 radar,\nfrom data/forecast/andijan_res.json) and with the nearest NISAR pass, and report Spearman / Pearson r.",
+ "levels": [
+  {
+   "date": "2025-01-10",
+   "level_m": 847.99,
+   "spread_m": 0.14,
+   "segments": 335,
+   "water_body_id": 14508,
+   "month_area_km2": 24.8,
+   "month_area_from": "radar"
+  },
+  {
+   "date": "2025-03-12",
+   "level_m": 847.88,
+   "spread_m": 0.17,
+   "segments": 135,
+   "water_body_id": 14508,
+   "month_area_km2": 35.13,
+   "month_area_from": "photo"
+  },
+  {
+   "date": "2025-04-11",
+   "level_m": 849.5,
+   "spread_m": 0.02,
+   "segments": 86,
+   "water_body_id": 14508,
+   "month_area_km2": 36.48,
+   "month_area_from": "photo"
+  },
+  {
+   "date": "2025-07-11",
+   "level_m": 852.25,
+   "spread_m": 0.12,
+   "segments": 668,
+   "water_body_id": 14508,
+   "month_area_km2": 39.99,
+   "month_area_from": "photo"
+  },
+  {
+   "date": "2025-09-09",
+   "level_m": 836.9,
+   "spread_m": 0.03,
+   "segments": 78,
+   "water_body_id": 14508,
+   "month_area_km2": 21.95,
+   "month_area_from": "photo"
+  },
+  {
+   "date": "2025-11-08",
+   "level_m": 891.32,
+   "spread_m": 0.1,
+   "segments": 3,
+   "water_body_id": 2005835,
+   "month_area_km2": 19.49,
+   "month_area_from": "photo"
+  },
+  {
+   "date": "2026-01-09",
+   "level_m": 841.03,
+   "spread_m": 0.1,
+   "segments": 637,
+   "water_body_id": 14508,
+   "month_area_km2": 28.98,
+   "month_area_from": "photo"
+  },
+  {
+   "date": "2026-05-08",
+   "level_m": 850.01,
+   "spread_m": 0.05,
+   "segments": 14,
+   "water_body_id": 14508,
+   "month_area_km2": 41.5,
+   "month_area_from": "photo"
+  },
+  {
+   "date": "2026-06-09",
+   "level_m": 852.28,
+   "spread_m": 0.4,
+   "segments": 292,
+   "water_body_id": 14508,
+   "month_area_km2": 41.81,
+   "month_area_from": "photo"
+  },
+  {
+   "date": "2026-07-08",
+   "level_m": 850.98,
+   "spread_m": 0.09,
+   "segments": 207,
+   "water_body_id": 14508,
+   "month_area_km2": 37.47,
+   "month_area_from": "photo",
+   "nisar_date": "2026-07-02",
+   "nisar_km2": 48.97
+  },
+  {
+   "date": "2026-07-09",
+   "level_m": 850.63,
+   "spread_m": 0.1,
+   "segments": 141,
+   "water_body_id": 14508,
+   "month_area_km2": 37.47,
+   "month_area_from": "photo",
+   "nisar_date": "2026-07-14",
+   "nisar_km2": 50.51
+  }
+ ],
+ "n": 9,
+ "pearson_r": 0.851,
+ "spearman_r": 0.946
+}

@@ -1,0 +1,146 @@
+{
+ "place": "fergana",
+ "method": "The water road: Andijan reservoir -> Fergana fields -> Aral Sea, from calibrated NISAR GCOV dB.\n\nFor every stored pass of a place (data/science/<place>/*.npz, HH and HV gamma0 in dB on NASA's UTM grid):\n  1. Lee speckle filter (7x7, on power, local coefficient of variation) on HH and HV.\n  2. Water mask = filtered HH < T, only inside the \"possible water\" zone (ESA WorldCover water/wetland + 1 km). T is learned on the FIRST pass only (best IoU against its Sentinel-2 photo) and then\n     tested on every later pass, which it never saw. HV is not used: over calm water NISAR's HV sits at its noise floor\n     (about -23 dB), so it cannot separate water (measured on the Andijan reservoir, 14 Nov).\n  3. Dual-pol radar vegetation index RVI = 4*HV / (HH + HV) (power), averaged over cropland pixels\n     (ESA WorldCover class 40); grows as stems and leaves grow, drops when a field is cut.\n  4. Outside judge: for each pass, the clearest Sentinel-2 L2A scene within 3 days (cloud < 20 %) gives a water mask\n     NDWI = (B03 - B08) / (B03 + B08) > 0 on the same grid; IoU = |radar & optical| / |radar | optical|.",
+ "passes": [
+  {
+   "date": "2026-06-20",
+   "water_km2": 4.63,
+   "rvi_crop": 0.779,
+   "hv_crop_db": -16.67,
+   "held_out": false,
+   "s2_date": "2026-06-23",
+   "s2_clear_pct": 99.7,
+   "radar_water_in_clear_km2": 4.63,
+   "s2_water_km2": 7.4,
+   "iou": 0.067
+  },
+  {
+   "date": "2026-07-02",
+   "water_km2": 3.18,
+   "rvi_crop": 0.805,
+   "hv_crop_db": -16.17,
+   "held_out": true,
+   "s2_date": "2026-07-01",
+   "s2_clear_pct": 99.7,
+   "radar_water_in_clear_km2": 3.18,
+   "s2_water_km2": 6.88,
+   "iou": 0.054
+  },
+  {
+   "date": "2026-07-14",
+   "water_km2": 3.53,
+   "rvi_crop": 0.714,
+   "hv_crop_db": -16.77,
+   "held_out": true,
+   "s2_date": "2026-07-16",
+   "s2_clear_pct": 99.7,
+   "radar_water_in_clear_km2": 3.53,
+   "s2_water_km2": 5.39,
+   "iou": 0.106
+  },
+  {
+   "date": "2026-07-26",
+   "water_km2": 2.42,
+   "rvi_crop": 0.736,
+   "hv_crop_db": -16.06,
+   "held_out": true,
+   "s2_date": "2026-07-29",
+   "s2_clear_pct": 99.7,
+   "radar_water_in_clear_km2": 2.42,
+   "s2_water_km2": 4.33,
+   "iou": 0.126
+  },
+  {
+   "date": "2026-08-19",
+   "water_km2": 1.43,
+   "rvi_crop": 0.723,
+   "hv_crop_db": -15.68,
+   "held_out": true,
+   "s2_date": "2026-08-18",
+   "s2_clear_pct": 99.7,
+   "radar_water_in_clear_km2": 1.43,
+   "s2_water_km2": 3.88,
+   "iou": 0.158
+  },
+  {
+   "date": "2026-08-31",
+   "water_km2": 0.94,
+   "rvi_crop": 0.782,
+   "hv_crop_db": -15.15,
+   "held_out": true,
+   "s2_date": "2026-08-30",
+   "s2_clear_pct": 99.7,
+   "radar_water_in_clear_km2": 0.94,
+   "s2_water_km2": 4.54,
+   "iou": 0.11
+  },
+  {
+   "date": "2026-09-12",
+   "water_km2": 1.46,
+   "rvi_crop": 0.775,
+   "hv_crop_db": -15.07,
+   "held_out": true,
+   "s2_date": "2026-09-14",
+   "s2_clear_pct": 99.7,
+   "radar_water_in_clear_km2": 1.46,
+   "s2_water_km2": 3.37,
+   "iou": 0.167
+  },
+  {
+   "date": "2026-09-24",
+   "water_km2": 0.82,
+   "rvi_crop": 0.734,
+   "hv_crop_db": -14.62,
+   "held_out": true,
+   "s2_date": "2026-09-27",
+   "s2_clear_pct": 99.7,
+   "radar_water_in_clear_km2": 0.82,
+   "s2_water_km2": 3.37,
+   "iou": 0.142
+  },
+  {
+   "date": "2026-10-06",
+   "water_km2": 0.81,
+   "rvi_crop": 0.762,
+   "hv_crop_db": -13.92,
+   "held_out": true,
+   "s2_date": "2026-10-07",
+   "s2_clear_pct": 99.7,
+   "radar_water_in_clear_km2": 0.81,
+   "s2_water_km2": 2.65,
+   "iou": 0.143
+  },
+  {
+   "date": "2026-10-18",
+   "water_km2": 0.88,
+   "rvi_crop": 0.68,
+   "hv_crop_db": -15.12,
+   "held_out": true,
+   "s2_date": "2026-10-19",
+   "s2_clear_pct": 99.7,
+   "radar_water_in_clear_km2": 0.88,
+   "s2_water_km2": 3.6,
+   "iou": 0.093
+  },
+  {
+   "date": "2026-10-30",
+   "water_km2": 1.62,
+   "rvi_crop": 0.649,
+   "hv_crop_db": -16.29,
+   "held_out": true,
+   "s2_date": "2026-11-01",
+   "s2_clear_pct": 99.7,
+   "radar_water_in_clear_km2": 1.61,
+   "s2_water_km2": 2.82,
+   "iou": 0.09
+  }
+ ],
+ "threshold_db": -15.5,
+ "threshold_fit_on": "2026-06-20",
+ "bbox": [
+  71.61788496446289,
+  40.460802317316265,
+  71.9828237389741,
+  40.738964095449035
+ ]
+}

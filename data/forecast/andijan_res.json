@@ -1,0 +1,323 @@
+{
+ "skill": {
+  "vs_seasonal_pct": 30,
+  "vs_persistence_pct": 47,
+  "mae_band_coverage_pct": 73,
+  "band80_km2": 3.5,
+  "n_test": 11
+ },
+ "method": "Forecast the Andijan reservoir's water area 1-3 months ahead, and prove it against baselines on months it never saw.\n\nData: one value per month, Nov 2023 -> Nov 2026. Truth = Sentinel-2 photo water (clear, snow masked) when that month has\na clear photo; otherwise the Sentinel-1 radar water corrected by the photo-vs-radar fit of the SAME calendar season\n(the radar over-counts drained mud in autumn). Each month is tagged photo / radar so the chart can show it.\nModels, all walk-forward one step ahead over Jan-Nov 2026 (never trained on the month they predict):\n  persistence = last month, seasonal = same month last year, ridge = month-of-year (sin, cos) + last month + same month last year.",
+ "season_correction": {
+  "0": [
+   0.902,
+   3.617
+  ],
+  "1": [
+   -0.224,
+   33.271
+  ]
+ },
+ "series": [
+  {
+   "month": "2023-11",
+   "km2": 25.69,
+   "from": "photo"
+  },
+  {
+   "month": "2023-12",
+   "km2": 27.47,
+   "from": "radar"
+  },
+  {
+   "month": "2024-01",
+   "km2": 31.04,
+   "from": "photo"
+  },
+  {
+   "month": "2024-02",
+   "km2": 26.37,
+   "from": "radar"
+  },
+  {
+   "month": "2024-03",
+   "km2": 30.9,
+   "from": "photo"
+  },
+  {
+   "month": "2024-04",
+   "km2": 29.88,
+   "from": "radar"
+  },
+  {
+   "month": "2024-05",
+   "km2": 42.68,
+   "from": "photo"
+  },
+  {
+   "month": "2024-06",
+   "km2": 46.18,
+   "from": "photo"
+  },
+  {
+   "month": "2024-07",
+   "km2": 45.11,
+   "from": "radar"
+  },
+  {
+   "month": "2024-08",
+   "km2": 33.13,
+   "from": "photo"
+  },
+  {
+   "month": "2024-09",
+   "km2": 22.9,
+   "from": "radar"
+  },
+  {
+   "month": "2024-10",
+   "km2": 33.25,
+   "from": "photo"
+  },
+  {
+   "month": "2024-11",
+   "km2": 38.08,
+   "from": "photo"
+  },
+  {
+   "month": "2024-12",
+   "km2": 25.92,
+   "from": "radar"
+  },
+  {
+   "month": "2025-01",
+   "km2": 24.8,
+   "from": "radar"
+  },
+  {
+   "month": "2025-02",
+   "km2": 22.22,
+   "from": "radar"
+  },
+  {
+   "month": "2025-03",
+   "km2": 35.13,
+   "from": "photo"
+  },
+  {
+   "month": "2025-04",
+   "km2": 36.48,
+   "from": "photo"
+  },
+  {
+   "month": "2025-05",
+   "km2": 45.84,
+   "from": "photo"
+  },
+  {
+   "month": "2025-06",
+   "km2": 45.43,
+   "from": "photo"
+  },
+  {
+   "month": "2025-07",
+   "km2": 39.99,
+   "from": "photo"
+  },
+  {
+   "month": "2025-08",
+   "km2": 27.71,
+   "from": "photo"
+  },
+  {
+   "month": "2025-09",
+   "km2": 21.95,
+   "from": "photo"
+  },
+  {
+   "month": "2025-10",
+   "km2": 22.26,
+   "from": "photo"
+  },
+  {
+   "month": "2025-11",
+   "km2": 19.49,
+   "from": "photo"
+  },
+  {
+   "month": "2025-12",
+   "km2": 28.36,
+   "from": "radar"
+  },
+  {
+   "month": "2026-01",
+   "km2": 28.98,
+   "from": "photo"
+  },
+  {
+   "month": "2026-02",
+   "km2": 26.55,
+   "from": "radar"
+  },
+  {
+   "month": "2026-03",
+   "km2": 33.12,
+   "from": "photo"
+  },
+  {
+   "month": "2026-04",
+   "km2": 36.0,
+   "from": "radar"
+  },
+  {
+   "month": "2026-05",
+   "km2": 41.5,
+   "from": "photo"
+  },
+  {
+   "month": "2026-06",
+   "km2": 41.81,
+   "from": "photo"
+  },
+  {
+   "month": "2026-07",
+   "km2": 37.47,
+   "from": "photo"
+  },
+  {
+   "month": "2026-08",
+   "km2": 20.0,
+   "from": "photo"
+  },
+  {
+   "month": "2026-09",
+   "km2": 18.57,
+   "from": "photo"
+  },
+  {
+   "month": "2026-10",
+   "km2": 21.04,
+   "from": "photo"
+  },
+  {
+   "month": "2026-11",
+   "km2": 17.34,
+   "from": "photo"
+  }
+ ],
+ "test": [
+  {
+   "month": "2026-01",
+   "truth": 28.98,
+   "truth_from": "photo",
+   "ridge": 27.84,
+   "persistence": 28.36,
+   "seasonal": 24.8
+  },
+  {
+   "month": "2026-02",
+   "truth": 26.55,
+   "truth_from": "radar",
+   "ridge": 30.04,
+   "persistence": 28.98,
+   "seasonal": 22.22
+  },
+  {
+   "month": "2026-03",
+   "truth": 33.12,
+   "truth_from": "photo",
+   "ridge": 33.54,
+   "persistence": 26.55,
+   "seasonal": 35.13
+  },
+  {
+   "month": "2026-04",
+   "truth": 36.0,
+   "truth_from": "radar",
+   "ridge": 37.34,
+   "persistence": 33.12,
+   "seasonal": 36.48
+  },
+  {
+   "month": "2026-05",
+   "truth": 41.5,
+   "truth_from": "photo",
+   "ridge": 40.57,
+   "persistence": 36.0,
+   "seasonal": 45.84
+  },
+  {
+   "month": "2026-06",
+   "truth": 41.81,
+   "truth_from": "photo",
+   "ridge": 41.57,
+   "persistence": 41.5,
+   "seasonal": 45.43
+  },
+  {
+   "month": "2026-07",
+   "truth": 37.47,
+   "truth_from": "photo",
+   "ridge": 38.16,
+   "persistence": 41.81,
+   "seasonal": 39.99
+  },
+  {
+   "month": "2026-08",
+   "truth": 20.0,
+   "truth_from": "photo",
+   "ridge": 30.57,
+   "persistence": 37.47,
+   "seasonal": 27.71
+  },
+  {
+   "month": "2026-09",
+   "truth": 18.57,
+   "truth_from": "photo",
+   "ridge": 17.18,
+   "persistence": 20.0,
+   "seasonal": 21.95
+  },
+  {
+   "month": "2026-10",
+   "truth": 21.04,
+   "truth_from": "photo",
+   "ridge": 17.2,
+   "persistence": 18.57,
+   "seasonal": 22.26
+  },
+  {
+   "month": "2026-11",
+   "truth": 17.34,
+   "truth_from": "photo",
+   "ridge": 18.63,
+   "persistence": 21.04,
+   "seasonal": 19.49
+  }
+ ],
+ "mae_km2": {
+  "persistence": 4.34,
+  "seasonal": 3.27,
+  "ridge": 2.3
+ },
+ "forecast": [
+  {
+   "month": "2026-12",
+   "km2": 22.6,
+   "band_km2": 2.3,
+   "band80_km2": 3.5
+  },
+  {
+   "month": "2027-01",
+   "km2": 26.9,
+   "band_km2": 3.3,
+   "band80_km2": 4.9
+  },
+  {
+   "month": "2027-02",
+   "km2": 29.4,
+   "band_km2": 4.0,
+   "band80_km2": 6.0
+  }
+ ],
+ "beats_baselines": true
+}

@@ -1,0 +1,726 @@
+{
+ "place": "andijan_res",
+ "bbox": [
+  73.028,
+  40.684,
+  73.242,
+  40.846
+ ],
+ "method": "Ten years of monthly open water for a box from Sentinel-2 L2A (2017-2026), the training record for the forecast.\n\nFor each month: every Sentinel-2 scene over the box with scene cloud < 60 %; keep the scene whose box is clearest\n(SCL: drop no-data, saturated, cloud shadow, clouds, cirrus, snow); water = NDWI (B03-B08)/(B03+B08) > 0.\nMonths with < 70 % of the box clear are marked \"cloudy\" and their km\u00b2 is not used for training (we do not guess).",
+ "months": {
+  "2017-01": {
+   "date": "2017-01-29",
+   "clear_pct": 6.1,
+   "water_km2": 18.71,
+   "use": false
+  },
+  "2017-02": {
+   "date": "2017-02-28",
+   "clear_pct": 21.8,
+   "water_km2": 23.36,
+   "use": false
+  },
+  "2017-03": {
+   "date": "2017-03-20",
+   "clear_pct": 0.0,
+   "water_km2": 0.0,
+   "use": false
+  },
+  "2017-04": {
+   "date": "2017-04-09",
+   "clear_pct": 99.7,
+   "water_km2": 35.42,
+   "use": true
+  },
+  "2017-05": {
+   "date": "2017-05-19",
+   "clear_pct": 99.4,
+   "water_km2": 48.27,
+   "use": true
+  },
+  "2017-06": {
+   "date": "2017-06-08",
+   "clear_pct": 99.4,
+   "water_km2": 51.03,
+   "use": true
+  },
+  "2017-07": {
+   "date": null,
+   "clear_pct": 0,
+   "water_km2": null,
+   "use": false
+  },
+  "2017-08": {
+   "date": "2017-08-27",
+   "clear_pct": 99.7,
+   "water_km2": 36.14,
+   "use": true
+  },
+  "2017-09": {
+   "date": "2017-09-16",
+   "clear_pct": 98.0,
+   "water_km2": 27.19,
+   "use": true
+  },
+  "2017-10": {
+   "date": "2017-10-01",
+   "clear_pct": 99.6,
+   "water_km2": 30.65,
+   "use": true
+  },
+  "2017-11": {
+   "date": "2017-11-30",
+   "clear_pct": 99.0,
+   "water_km2": 28.51,
+   "use": true
+  },
+  "2017-12": {
+   "date": "2017-12-30",
+   "clear_pct": 47.6,
+   "water_km2": 33.27,
+   "use": false
+  },
+  "2018-01": {
+   "date": "2018-01-09",
+   "clear_pct": 4.2,
+   "water_km2": 0.12,
+   "use": false
+  },
+  "2018-02": {
+   "date": "2018-02-13",
+   "clear_pct": 98.7,
+   "water_km2": 32.62,
+   "use": true
+  },
+  "2018-03": {
+   "date": "2018-03-20",
+   "clear_pct": 99.5,
+   "water_km2": 37.33,
+   "use": true
+  },
+  "2018-04": {
+   "date": "2018-04-04",
+   "clear_pct": 99.6,
+   "water_km2": 37.2,
+   "use": true
+  },
+  "2018-05": {
+   "date": "2018-05-29",
+   "clear_pct": 99.0,
+   "water_km2": 48.9,
+   "use": true
+  },
+  "2018-06": {
+   "date": "2018-06-28",
+   "clear_pct": 99.4,
+   "water_km2": 51.18,
+   "use": true
+  },
+  "2018-07": {
+   "date": "2018-07-23",
+   "clear_pct": 99.7,
+   "water_km2": 48.09,
+   "use": true
+  },
+  "2018-08": {
+   "date": "2018-08-22",
+   "clear_pct": 97.2,
+   "water_km2": 29.15,
+   "use": true
+  },
+  "2018-09": {
+   "date": "2018-09-06",
+   "clear_pct": 99.7,
+   "water_km2": 25.45,
+   "use": true
+  },
+  "2018-10": {
+   "date": "2018-10-21",
+   "clear_pct": 99.5,
+   "water_km2": 21.8,
+   "use": true
+  },
+  "2018-11": {
+   "date": "2018-11-05",
+   "clear_pct": 98.2,
+   "water_km2": 20.39,
+   "use": true
+  },
+  "2018-12": {
+   "date": "2018-12-15",
+   "clear_pct": 96.5,
+   "water_km2": 23.71,
+   "use": true
+  },
+  "2019-01": {
+   "date": "2019-01-14",
+   "clear_pct": 23.1,
+   "water_km2": 31.36,
+   "use": false
+  },
+  "2019-02": {
+   "date": "2019-02-23",
+   "clear_pct": 64.7,
+   "water_km2": 28.32,
+   "use": false
+  },
+  "2019-03": {
+   "date": "2019-03-10",
+   "clear_pct": 97.5,
+   "water_km2": 28.28,
+   "use": true
+  },
+  "2019-04": {
+   "date": "2019-04-14",
+   "clear_pct": 99.8,
+   "water_km2": 29.55,
+   "use": true
+  },
+  "2019-05": {
+   "date": "2019-05-29",
+   "clear_pct": 99.2,
+   "water_km2": 35.74,
+   "use": true
+  },
+  "2019-06": {
+   "date": "2019-06-13",
+   "clear_pct": 99.4,
+   "water_km2": 39.86,
+   "use": true
+  },
+  "2019-07": {
+   "date": "2019-07-23",
+   "clear_pct": 99.9,
+   "water_km2": 38.61,
+   "use": true
+  },
+  "2019-08": {
+   "date": "2019-08-22",
+   "clear_pct": 99.7,
+   "water_km2": 23.05,
+   "use": true
+  },
+  "2019-09": {
+   "date": "2019-09-21",
+   "clear_pct": 99.8,
+   "water_km2": 19.62,
+   "use": true
+  },
+  "2019-10": {
+   "date": "2019-10-26",
+   "clear_pct": 99.5,
+   "water_km2": 16.06,
+   "use": true
+  },
+  "2019-11": {
+   "date": "2019-11-30",
+   "clear_pct": 78.5,
+   "water_km2": 17.42,
+   "use": true
+  },
+  "2019-12": {
+   "date": "2019-12-05",
+   "clear_pct": 58.0,
+   "water_km2": 9.29,
+   "use": false
+  },
+  "2020-01": {
+   "date": "2020-01-29",
+   "clear_pct": 20.3,
+   "water_km2": 19.88,
+   "use": false
+  },
+  "2020-02": {
+   "date": "2020-02-08",
+   "clear_pct": 62.0,
+   "water_km2": 17.94,
+   "use": false
+  },
+  "2020-03": {
+   "date": "2020-03-14",
+   "clear_pct": 99.7,
+   "water_km2": 26.11,
+   "use": true
+  },
+  "2020-04": {
+   "date": "2020-04-18",
+   "clear_pct": 99.8,
+   "water_km2": 23.77,
+   "use": true
+  },
+  "2020-05": {
+   "date": "2020-05-23",
+   "clear_pct": 99.3,
+   "water_km2": 21.5,
+   "use": true
+  },
+  "2020-06": {
+   "date": "2020-06-12",
+   "clear_pct": 98.9,
+   "water_km2": 20.4,
+   "use": true
+  },
+  "2020-07": {
+   "date": "2020-07-07",
+   "clear_pct": 99.8,
+   "water_km2": 16.3,
+   "use": true
+  },
+  "2020-08": {
+   "date": "2020-08-06",
+   "clear_pct": 99.7,
+   "water_km2": 11.95,
+   "use": true
+  },
+  "2020-09": {
+   "date": "2020-09-25",
+   "clear_pct": 99.8,
+   "water_km2": 12.41,
+   "use": true
+  },
+  "2020-10": {
+   "date": "2020-10-15",
+   "clear_pct": 99.6,
+   "water_km2": 11.38,
+   "use": true
+  },
+  "2020-11": {
+   "date": "2020-11-04",
+   "clear_pct": 99.5,
+   "water_km2": 10.33,
+   "use": true
+  },
+  "2020-12": {
+   "date": "2020-12-24",
+   "clear_pct": 8.9,
+   "water_km2": 17.39,
+   "use": false
+  },
+  "2021-01": {
+   "date": "2021-01-03",
+   "clear_pct": 18.3,
+   "water_km2": 19.13,
+   "use": false
+  },
+  "2021-02": {
+   "date": "2021-02-17",
+   "clear_pct": 98.4,
+   "water_km2": 18.1,
+   "use": true
+  },
+  "2021-03": {
+   "date": "2021-03-19",
+   "clear_pct": 93.8,
+   "water_km2": 17.72,
+   "use": true
+  },
+  "2021-04": {
+   "date": "2021-04-28",
+   "clear_pct": 99.5,
+   "water_km2": 21.12,
+   "use": true
+  },
+  "2021-05": {
+   "date": "2021-05-03",
+   "clear_pct": 97.3,
+   "water_km2": 20.73,
+   "use": true
+  },
+  "2021-06": {
+   "date": "2021-06-22",
+   "clear_pct": 98.7,
+   "water_km2": 37.93,
+   "use": true
+  },
+  "2021-07": {
+   "date": "2021-07-27",
+   "clear_pct": 97.8,
+   "water_km2": 21.64,
+   "use": true
+  },
+  "2021-08": {
+   "date": "2021-08-21",
+   "clear_pct": 99.2,
+   "water_km2": 14.88,
+   "use": true
+  },
+  "2021-09": {
+   "date": "2021-09-20",
+   "clear_pct": 99.0,
+   "water_km2": 14.12,
+   "use": true
+  },
+  "2021-10": {
+   "date": null,
+   "clear_pct": 0,
+   "water_km2": null,
+   "use": false
+  },
+  "2021-11": {
+   "date": "2021-11-19",
+   "clear_pct": 73.3,
+   "water_km2": 15.0,
+   "use": true
+  },
+  "2021-12": {
+   "date": "2021-12-09",
+   "clear_pct": 99.2,
+   "water_km2": 16.66,
+   "use": true
+  },
+  "2022-01": {
+   "date": "2022-01-08",
+   "clear_pct": 88.3,
+   "water_km2": 19.7,
+   "use": true
+  },
+  "2022-02": {
+   "date": "2022-02-27",
+   "clear_pct": 97.0,
+   "water_km2": 26.02,
+   "use": true
+  },
+  "2022-03": {
+   "date": "2022-03-04",
+   "clear_pct": 14.3,
+   "water_km2": 4.74,
+   "use": false
+  },
+  "2022-04": {
+   "date": "2022-04-03",
+   "clear_pct": 99.5,
+   "water_km2": 32.43,
+   "use": true
+  },
+  "2022-05": {
+   "date": "2022-05-08",
+   "clear_pct": 99.6,
+   "water_km2": 46.44,
+   "use": true
+  },
+  "2022-06": {
+   "date": "2022-06-07",
+   "clear_pct": 99.5,
+   "water_km2": 48.32,
+   "use": true
+  },
+  "2022-07": {
+   "date": "2022-07-27",
+   "clear_pct": 99.8,
+   "water_km2": 42.38,
+   "use": true
+  },
+  "2022-08": {
+   "date": "2022-08-21",
+   "clear_pct": 99.8,
+   "water_km2": 30.26,
+   "use": true
+  },
+  "2022-09": {
+   "date": "2022-09-25",
+   "clear_pct": 99.8,
+   "water_km2": 26.44,
+   "use": true
+  },
+  "2022-10": {
+   "date": "2022-10-10",
+   "clear_pct": 100.0,
+   "water_km2": 25.8,
+   "use": true
+  },
+  "2022-11": {
+   "date": "2022-11-14",
+   "clear_pct": 99.1,
+   "water_km2": 25.83,
+   "use": true
+  },
+  "2022-12": {
+   "date": "2022-12-19",
+   "clear_pct": 77.3,
+   "water_km2": 26.39,
+   "use": true
+  },
+  "2023-01": {
+   "date": "2023-01-18",
+   "clear_pct": 6.3,
+   "water_km2": 19.95,
+   "use": false
+  },
+  "2023-02": {
+   "date": "2023-02-07",
+   "clear_pct": 66.4,
+   "water_km2": 25.73,
+   "use": false
+  },
+  "2023-03": {
+   "date": "2023-03-24",
+   "clear_pct": 99.6,
+   "water_km2": 27.15,
+   "use": true
+  },
+  "2023-04": {
+   "date": "2023-04-13",
+   "clear_pct": 98.8,
+   "water_km2": 24.63,
+   "use": true
+  },
+  "2023-05": {
+   "date": "2023-05-28",
+   "clear_pct": 99.8,
+   "water_km2": 33.87,
+   "use": true
+  },
+  "2023-06": {
+   "date": "2023-06-07",
+   "clear_pct": 99.8,
+   "water_km2": 34.56,
+   "use": true
+  },
+  "2023-07": {
+   "date": "2023-07-12",
+   "clear_pct": 99.9,
+   "water_km2": 42.1,
+   "use": true
+  },
+  "2023-08": {
+   "date": "2023-08-21",
+   "clear_pct": 100.0,
+   "water_km2": 26.53,
+   "use": true
+  },
+  "2023-09": {
+   "date": "2023-09-10",
+   "clear_pct": 99.9,
+   "water_km2": 26.75,
+   "use": true
+  },
+  "2023-10": {
+   "date": "2023-10-20",
+   "clear_pct": 99.9,
+   "water_km2": 26.95,
+   "use": true
+  },
+  "2023-11": {
+   "date": "2023-11-14",
+   "clear_pct": 99.4,
+   "water_km2": 25.93,
+   "use": true
+  },
+  "2023-12": {
+   "date": "2023-12-14",
+   "clear_pct": 6.7,
+   "water_km2": 18.88,
+   "use": false
+  },
+  "2024-01": {
+   "date": "2024-01-18",
+   "clear_pct": 99.6,
+   "water_km2": 31.81,
+   "use": true
+  },
+  "2024-02": {
+   "date": "2024-02-12",
+   "clear_pct": 37.9,
+   "water_km2": 4.76,
+   "use": false
+  },
+  "2024-03": {
+   "date": "2024-03-18",
+   "clear_pct": 99.1,
+   "water_km2": 30.78,
+   "use": true
+  },
+  "2024-04": {
+   "date": "2024-04-02",
+   "clear_pct": 98.6,
+   "water_km2": 27.74,
+   "use": true
+  },
+  "2024-05": {
+   "date": "2024-05-27",
+   "clear_pct": 99.4,
+   "water_km2": 42.82,
+   "use": true
+  },
+  "2024-06": {
+   "date": "2024-06-26",
+   "clear_pct": 99.7,
+   "water_km2": 45.83,
+   "use": true
+  },
+  "2024-07": {
+   "date": "2024-07-26",
+   "clear_pct": 99.8,
+   "water_km2": 42.05,
+   "use": true
+  },
+  "2024-08": {
+   "date": "2024-08-20",
+   "clear_pct": 99.9,
+   "water_km2": 33.2,
+   "use": true
+  },
+  "2024-09": {
+   "date": "2024-09-24",
+   "clear_pct": 99.8,
+   "water_km2": 31.05,
+   "use": true
+  },
+  "2024-10": {
+   "date": "2024-10-19",
+   "clear_pct": 99.9,
+   "water_km2": 33.38,
+   "use": true
+  },
+  "2024-11": {
+   "date": "2024-11-03",
+   "clear_pct": 99.8,
+   "water_km2": 34.3,
+   "use": true
+  },
+  "2024-12": {
+   "date": "2024-12-28",
+   "clear_pct": 14.9,
+   "water_km2": 37.42,
+   "use": false
+  },
+  "2025-01": {
+   "date": "2025-01-12",
+   "clear_pct": 23.6,
+   "water_km2": 38.22,
+   "use": false
+  },
+  "2025-02": {
+   "date": "2025-02-21",
+   "clear_pct": 59.5,
+   "water_km2": 39.01,
+   "use": false
+  },
+  "2025-03": {
+   "date": "2025-03-18",
+   "clear_pct": 99.3,
+   "water_km2": 34.92,
+   "use": true
+  },
+  "2025-04": {
+   "date": "2025-04-27",
+   "clear_pct": 99.8,
+   "water_km2": 42.27,
+   "use": true
+  },
+  "2025-05": {
+   "date": "2025-05-17",
+   "clear_pct": 99.5,
+   "water_km2": 45.47,
+   "use": true
+  },
+  "2025-06": {
+   "date": "2025-06-21",
+   "clear_pct": 99.7,
+   "water_km2": 44.93,
+   "use": true
+  },
+  "2025-07": {
+   "date": "2025-07-06",
+   "clear_pct": 99.9,
+   "water_km2": 44.06,
+   "use": true
+  },
+  "2025-08": {
+   "date": "2025-08-25",
+   "clear_pct": 99.9,
+   "water_km2": 22.84,
+   "use": true
+  },
+  "2025-09": {
+   "date": "2025-09-24",
+   "clear_pct": 99.8,
+   "water_km2": 21.98,
+   "use": true
+  },
+  "2025-10": {
+   "date": "2025-10-24",
+   "clear_pct": 99.9,
+   "water_km2": 21.27,
+   "use": true
+  },
+  "2025-11": {
+   "date": "2025-11-23",
+   "clear_pct": 99.5,
+   "water_km2": 20.02,
+   "use": true
+  },
+  "2025-12": {
+   "date": "2025-12-03",
+   "clear_pct": 55.9,
+   "water_km2": 14.53,
+   "use": false
+  },
+  "2026-01": {
+   "date": "2026-01-07",
+   "clear_pct": 99.3,
+   "water_km2": 29.91,
+   "use": true
+  },
+  "2026-02": {
+   "date": "2026-02-01",
+   "clear_pct": 27.5,
+   "water_km2": 31.04,
+   "use": false
+  },
+  "2026-03": {
+   "date": "2026-03-18",
+   "clear_pct": 95.4,
+   "water_km2": 32.83,
+   "use": true
+  },
+  "2026-04": {
+   "date": "2026-04-27",
+   "clear_pct": 99.8,
+   "water_km2": 38.46,
+   "use": true
+  },
+  "2026-05": {
+   "date": "2026-05-14",
+   "clear_pct": 99.5,
+   "water_km2": 41.7,
+   "use": true
+  },
+  "2026-06": {
+   "date": "2026-06-26",
+   "clear_pct": 99.8,
+   "water_km2": 42.51,
+   "use": true
+  },
+  "2026-07": {
+   "date": "2026-07-31",
+   "clear_pct": 100.0,
+   "water_km2": 28.99,
+   "use": true
+  },
+  "2026-08": {
+   "date": "2026-08-02",
+   "clear_pct": 99.8,
+   "water_km2": 27.41,
+   "use": true
+  },
+  "2026-09": {
+   "date": "2026-09-09",
+   "clear_pct": 99.9,
+   "water_km2": 18.82,
+   "use": true
+  },
+  "2026-10": {
+   "date": "2026-10-19",
+   "clear_pct": 100.0,
+   "water_km2": 21.09,
+   "use": true
+  },
+  "2026-11": {
+   "date": "2026-11-03",
+   "clear_pct": 99.8,
+   "water_km2": 19.04,
+   "use": true
+  }
+ }
+}

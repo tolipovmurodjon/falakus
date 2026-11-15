@@ -1,0 +1,9 @@
+{
+ "from": "2026-07-02",
+ "to": "2026-10-30",
+ "fell_pct": 12.8,
+ "rose_pct": 9.4,
+ "median_change_db": -0.14,
+ "pixel_m": 20,
+ "smoothing_m": 100
+}

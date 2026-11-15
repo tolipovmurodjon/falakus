@@ -1,0 +1,128 @@
+{
+ "place": "andijan_res",
+ "method": "The water road: Andijan reservoir -> Fergana fields -> Aral Sea, from calibrated NISAR GCOV dB.\n\nFor every stored pass of a place (data/science/<place>/*.npz, HH and HV gamma0 in dB on NASA's UTM grid):\n  1. Lee speckle filter (7x7, on power, local coefficient of variation) on HH and HV.\n  2. Water mask = filtered HH < T, only inside the \"possible water\" zone (ESA WorldCover water/wetland + 1 km). T is learned on the FIRST pass only (best IoU against its Sentinel-2 photo) and then\n     tested on every later pass, which it never saw. HV is not used: over calm water NISAR's HV sits at its noise floor\n     (about -23 dB), so it cannot separate water (measured on the Andijan reservoir, 14 Nov).\n  3. Dual-pol radar vegetation index RVI = 4*HV / (HH + HV) (power), averaged over cropland pixels\n     (ESA WorldCover class 40); grows as stems and leaves grow, drops when a field is cut.\n  4. Outside judge: for each pass, the clearest Sentinel-2 L2A scene within 3 days (cloud < 20 %) gives a water mask\n     NDWI = (B03 - B08) / (B03 + B08) > 0 on the same grid; IoU = |radar & optical| / |radar | optical|.",
+ "passes": [
+  {
+   "date": "2026-06-20",
+   "water_km2": 40.43,
+   "rvi_crop": 0.788,
+   "hv_crop_db": -18.25,
+   "held_out": false,
+   "s2_date": "2026-06-23",
+   "s2_clear_pct": 99.6,
+   "radar_water_in_clear_km2": 40.43,
+   "s2_water_km2": 42.11,
+   "iou": 0.786
+  },
+  {
+   "date": "2026-07-02",
+   "water_km2": 48.97,
+   "rvi_crop": 0.883,
+   "hv_crop_db": -18.48
+  },
+  {
+   "date": "2026-07-14",
+   "water_km2": 50.51,
+   "rvi_crop": 0.865,
+   "hv_crop_db": -18.83,
+   "held_out": true,
+   "s2_date": "2026-07-11",
+   "s2_clear_pct": 99.6,
+   "radar_water_in_clear_km2": 50.51,
+   "s2_water_km2": 40.2,
+   "iou": 0.651
+  },
+  {
+   "date": "2026-07-26",
+   "water_km2": 46.43,
+   "rvi_crop": 0.826,
+   "hv_crop_db": -18.59,
+   "held_out": true,
+   "s2_date": "2026-07-26",
+   "s2_clear_pct": 99.6,
+   "radar_water_in_clear_km2": 46.42,
+   "s2_water_km2": 31.96,
+   "iou": 0.582
+  },
+  {
+   "date": "2026-08-19",
+   "water_km2": 33.63,
+   "rvi_crop": 0.828,
+   "hv_crop_db": -18.57,
+   "held_out": true,
+   "s2_date": "2026-08-20",
+   "s2_clear_pct": 99.6,
+   "radar_water_in_clear_km2": 33.63,
+   "s2_water_km2": 20.07,
+   "iou": 0.495
+  },
+  {
+   "date": "2026-08-31",
+   "water_km2": 30.86,
+   "rvi_crop": 0.791,
+   "hv_crop_db": -18.85,
+   "held_out": true,
+   "s2_date": "2026-08-30",
+   "s2_clear_pct": 99.6,
+   "radar_water_in_clear_km2": 30.86,
+   "s2_water_km2": 18.96,
+   "iou": 0.489
+  },
+  {
+   "date": "2026-09-12",
+   "water_km2": 31.68,
+   "rvi_crop": 0.763,
+   "hv_crop_db": -19.16,
+   "held_out": true,
+   "s2_date": "2026-09-09",
+   "s2_clear_pct": 99.6,
+   "radar_water_in_clear_km2": 31.68,
+   "s2_water_km2": 18.78,
+   "iou": 0.487
+  },
+  {
+   "date": "2026-09-24",
+   "water_km2": 16.32,
+   "rvi_crop": 0.593,
+   "hv_crop_db": -17.9
+  },
+  {
+   "date": "2026-10-06",
+   "water_km2": 19.3,
+   "rvi_crop": 0.61,
+   "hv_crop_db": -18.78,
+   "held_out": true,
+   "s2_date": "2026-10-04",
+   "s2_clear_pct": 93.7,
+   "radar_water_in_clear_km2": 17.57,
+   "s2_water_km2": 16.97,
+   "iou": 0.707
+  },
+  {
+   "date": "2026-10-18",
+   "water_km2": 25.94,
+   "rvi_crop": 0.639,
+   "hv_crop_db": -19.48,
+   "held_out": true,
+   "s2_date": "2026-10-19",
+   "s2_clear_pct": 99.5,
+   "radar_water_in_clear_km2": 25.92,
+   "s2_water_km2": 21.12,
+   "iou": 0.599
+  },
+  {
+   "date": "2026-10-30",
+   "water_km2": 32.93,
+   "rvi_crop": 0.697,
+   "hv_crop_db": -19.98
+  }
+ ],
+ "threshold_db": -16.75,
+ "threshold_fit_on": "2026-06-20",
+ "bbox": [
+  73.02399687968372,
+  40.6804663130263,
+  73.24625854410294,
+  40.849456303513286
+ ]
+}

@@ -1,0 +1,1096 @@
+{
+ "place": "andijan_res",
+ "method": "Water forecast from ten years of monthly water: next 30 days and next 3 months, tested on months it never saw.\n\nRecord: tools/s2_history.py (Sentinel-2 monthly water, clear months only). For months NISAR saw (Jun 2026 on), the\nlearned NISAR water map (data/ml/water_model.json) fills cloudy months, scaled to the photo record by the median\nratio on the days both exist, so radar and photo speak the same units.\nModels, all predicting month t+h from data up to month t:\n  persistence (same as the last month), seasonal (same month last year), climatology (that month's average so far),\n  ridge (month cycle sin/cos, last value, last value's anomaly vs its month average, target month's average,\n  value 12 months before the target).\nTest: walk-forward from Jan 2023 to the last month; each prediction only sees earlier months. Score: mean absolute\nerror (km\u00b2). The 8-in-10 band comes from the model's own test misses (10th and 90th percentile).",
+ "record_from": "2017-04",
+ "record_to": "2026-11",
+ "n_months": 95,
+ "n_photo": 95,
+ "n_radar": 0,
+ "series": [
+  {
+   "month": "2017-04",
+   "km2": 35.42,
+   "from": "photo"
+  },
+  {
+   "month": "2017-05",
+   "km2": 48.27,
+   "from": "photo"
+  },
+  {
+   "month": "2017-06",
+   "km2": 51.03,
+   "from": "photo"
+  },
+  {
+   "month": "2017-08",
+   "km2": 36.14,
+   "from": "photo"
+  },
+  {
+   "month": "2017-09",
+   "km2": 27.19,
+   "from": "photo"
+  },
+  {
+   "month": "2017-10",
+   "km2": 30.65,
+   "from": "photo"
+  },
+  {
+   "month": "2017-11",
+   "km2": 28.51,
+   "from": "photo"
+  },
+  {
+   "month": "2018-02",
+   "km2": 32.62,
+   "from": "photo"
+  },
+  {
+   "month": "2018-03",
+   "km2": 37.33,
+   "from": "photo"
+  },
+  {
+   "month": "2018-04",
+   "km2": 37.2,
+   "from": "photo"
+  },
+  {
+   "month": "2018-05",
+   "km2": 48.9,
+   "from": "photo"
+  },
+  {
+   "month": "2018-06",
+   "km2": 51.18,
+   "from": "photo"
+  },
+  {
+   "month": "2018-07",
+   "km2": 48.09,
+   "from": "photo"
+  },
+  {
+   "month": "2018-08",
+   "km2": 29.15,
+   "from": "photo"
+  },
+  {
+   "month": "2018-09",
+   "km2": 25.45,
+   "from": "photo"
+  },
+  {
+   "month": "2018-10",
+   "km2": 21.8,
+   "from": "photo"
+  },
+  {
+   "month": "2018-11",
+   "km2": 20.39,
+   "from": "photo"
+  },
+  {
+   "month": "2018-12",
+   "km2": 23.71,
+   "from": "photo"
+  },
+  {
+   "month": "2019-03",
+   "km2": 28.28,
+   "from": "photo"
+  },
+  {
+   "month": "2019-04",
+   "km2": 29.55,
+   "from": "photo"
+  },
+  {
+   "month": "2019-05",
+   "km2": 35.74,
+   "from": "photo"
+  },
+  {
+   "month": "2019-06",
+   "km2": 39.86,
+   "from": "photo"
+  },
+  {
+   "month": "2019-07",
+   "km2": 38.61,
+   "from": "photo"
+  },
+  {
+   "month": "2019-08",
+   "km2": 23.05,
+   "from": "photo"
+  },
+  {
+   "month": "2019-09",
+   "km2": 19.62,
+   "from": "photo"
+  },
+  {
+   "month": "2019-10",
+   "km2": 16.06,
+   "from": "photo"
+  },
+  {
+   "month": "2019-11",
+   "km2": 17.42,
+   "from": "photo"
+  },
+  {
+   "month": "2020-03",
+   "km2": 26.11,
+   "from": "photo"
+  },
+  {
+   "month": "2020-04",
+   "km2": 23.77,
+   "from": "photo"
+  },
+  {
+   "month": "2020-05",
+   "km2": 21.5,
+   "from": "photo"
+  },
+  {
+   "month": "2020-06",
+   "km2": 20.4,
+   "from": "photo"
+  },
+  {
+   "month": "2020-07",
+   "km2": 16.3,
+   "from": "photo"
+  },
+  {
+   "month": "2020-08",
+   "km2": 11.95,
+   "from": "photo"
+  },
+  {
+   "month": "2020-09",
+   "km2": 12.41,
+   "from": "photo"
+  },
+  {
+   "month": "2020-10",
+   "km2": 11.38,
+   "from": "photo"
+  },
+  {
+   "month": "2020-11",
+   "km2": 10.33,
+   "from": "photo"
+  },
+  {
+   "month": "2021-02",
+   "km2": 18.1,
+   "from": "photo"
+  },
+  {
+   "month": "2021-03",
+   "km2": 17.72,
+   "from": "photo"
+  },
+  {
+   "month": "2021-04",
+   "km2": 21.12,
+   "from": "photo"
+  },
+  {
+   "month": "2021-05",
+   "km2": 20.73,
+   "from": "photo"
+  },
+  {
+   "month": "2021-06",
+   "km2": 37.93,
+   "from": "photo"
+  },
+  {
+   "month": "2021-07",
+   "km2": 21.64,
+   "from": "photo"
+  },
+  {
+   "month": "2021-08",
+   "km2": 14.88,
+   "from": "photo"
+  },
+  {
+   "month": "2021-09",
+   "km2": 14.12,
+   "from": "photo"
+  },
+  {
+   "month": "2021-11",
+   "km2": 15.0,
+   "from": "photo"
+  },
+  {
+   "month": "2021-12",
+   "km2": 16.66,
+   "from": "photo"
+  },
+  {
+   "month": "2022-01",
+   "km2": 19.7,
+   "from": "photo"
+  },
+  {
+   "month": "2022-02",
+   "km2": 26.02,
+   "from": "photo"
+  },
+  {
+   "month": "2022-04",
+   "km2": 32.43,
+   "from": "photo"
+  },
+  {
+   "month": "2022-05",
+   "km2": 46.44,
+   "from": "photo"
+  },
+  {
+   "month": "2022-06",
+   "km2": 48.32,
+   "from": "photo"
+  },
+  {
+   "month": "2022-07",
+   "km2": 42.38,
+   "from": "photo"
+  },
+  {
+   "month": "2022-08",
+   "km2": 30.26,
+   "from": "photo"
+  },
+  {
+   "month": "2022-09",
+   "km2": 26.44,
+   "from": "photo"
+  },
+  {
+   "month": "2022-10",
+   "km2": 25.8,
+   "from": "photo"
+  },
+  {
+   "month": "2022-11",
+   "km2": 25.83,
+   "from": "photo"
+  },
+  {
+   "month": "2022-12",
+   "km2": 26.39,
+   "from": "photo"
+  },
+  {
+   "month": "2023-03",
+   "km2": 27.15,
+   "from": "photo"
+  },
+  {
+   "month": "2023-04",
+   "km2": 24.63,
+   "from": "photo"
+  },
+  {
+   "month": "2023-05",
+   "km2": 33.87,
+   "from": "photo"
+  },
+  {
+   "month": "2023-06",
+   "km2": 34.56,
+   "from": "photo"
+  },
+  {
+   "month": "2023-07",
+   "km2": 42.1,
+   "from": "photo"
+  },
+  {
+   "month": "2023-08",
+   "km2": 26.53,
+   "from": "photo"
+  },
+  {
+   "month": "2023-09",
+   "km2": 26.75,
+   "from": "photo"
+  },
+  {
+   "month": "2023-10",
+   "km2": 26.95,
+   "from": "photo"
+  },
+  {
+   "month": "2023-11",
+   "km2": 25.93,
+   "from": "photo"
+  },
+  {
+   "month": "2024-01",
+   "km2": 31.81,
+   "from": "photo"
+  },
+  {
+   "month": "2024-03",
+   "km2": 30.78,
+   "from": "photo"
+  },
+  {
+   "month": "2024-04",
+   "km2": 27.74,
+   "from": "photo"
+  },
+  {
+   "month": "2024-05",
+   "km2": 42.82,
+   "from": "photo"
+  },
+  {
+   "month": "2024-06",
+   "km2": 45.83,
+   "from": "photo"
+  },
+  {
+   "month": "2024-07",
+   "km2": 42.05,
+   "from": "photo"
+  },
+  {
+   "month": "2024-08",
+   "km2": 33.2,
+   "from": "photo"
+  },
+  {
+   "month": "2024-09",
+   "km2": 31.05,
+   "from": "photo"
+  },
+  {
+   "month": "2024-10",
+   "km2": 33.38,
+   "from": "photo"
+  },
+  {
+   "month": "2024-11",
+   "km2": 34.3,
+   "from": "photo"
+  },
+  {
+   "month": "2025-03",
+   "km2": 34.92,
+   "from": "photo"
+  },
+  {
+   "month": "2025-04",
+   "km2": 42.27,
+   "from": "photo"
+  },
+  {
+   "month": "2025-05",
+   "km2": 45.47,
+   "from": "photo"
+  },
+  {
+   "month": "2025-06",
+   "km2": 44.93,
+   "from": "photo"
+  },
+  {
+   "month": "2025-07",
+   "km2": 44.06,
+   "from": "photo"
+  },
+  {
+   "month": "2025-08",
+   "km2": 22.84,
+   "from": "photo"
+  },
+  {
+   "month": "2025-09",
+   "km2": 21.98,
+   "from": "photo"
+  },
+  {
+   "month": "2025-10",
+   "km2": 21.27,
+   "from": "photo"
+  },
+  {
+   "month": "2025-11",
+   "km2": 20.02,
+   "from": "photo"
+  },
+  {
+   "month": "2026-01",
+   "km2": 29.91,
+   "from": "photo"
+  },
+  {
+   "month": "2026-03",
+   "km2": 32.83,
+   "from": "photo"
+  },
+  {
+   "month": "2026-04",
+   "km2": 38.46,
+   "from": "photo"
+  },
+  {
+   "month": "2026-05",
+   "km2": 41.7,
+   "from": "photo"
+  },
+  {
+   "month": "2026-06",
+   "km2": 42.51,
+   "from": "photo"
+  },
+  {
+   "month": "2026-07",
+   "km2": 28.99,
+   "from": "photo"
+  },
+  {
+   "month": "2026-08",
+   "km2": 27.41,
+   "from": "photo"
+  },
+  {
+   "month": "2026-09",
+   "km2": 18.82,
+   "from": "photo"
+  },
+  {
+   "month": "2026-10",
+   "km2": 21.09,
+   "from": "photo"
+  },
+  {
+   "month": "2026-11",
+   "km2": 19.04,
+   "from": "photo"
+  }
+ ],
+ "skill": {
+  "h1": {
+   "n_test": 32,
+   "mae_km2": {
+    "persistence": 4.68,
+    "seasonal": 5.9,
+    "climatology": 5.66,
+    "ridge": 4.08
+   },
+   "ridge_error_p10_p90": [
+    -6.39,
+    6.21
+   ],
+   "test": [
+    {
+     "from": "2023-03",
+     "target": "2023-04",
+     "truth": 24.63,
+     "persistence": 27.15,
+     "seasonal": 32.43,
+     "climatology": 29.92,
+     "ridge": 29.71
+    },
+    {
+     "from": "2023-04",
+     "target": "2023-05",
+     "truth": 33.87,
+     "persistence": 24.63,
+     "seasonal": 46.44,
+     "climatology": 36.93,
+     "ridge": 28.78
+    },
+    {
+     "from": "2023-05",
+     "target": "2023-06",
+     "truth": 34.56,
+     "persistence": 33.87,
+     "seasonal": 48.32,
+     "climatology": 41.45,
+     "ridge": 36.89
+    },
+    {
+     "from": "2023-06",
+     "target": "2023-07",
+     "truth": 42.1,
+     "persistence": 34.56,
+     "seasonal": 42.38,
+     "climatology": 33.4,
+     "ridge": 28.68
+    },
+    {
+     "from": "2023-07",
+     "target": "2023-08",
+     "truth": 26.53,
+     "persistence": 42.1,
+     "seasonal": 30.26,
+     "climatology": 24.24,
+     "ridge": 36.41
+    },
+    {
+     "from": "2023-08",
+     "target": "2023-09",
+     "truth": 26.75,
+     "persistence": 26.53,
+     "seasonal": 26.44,
+     "climatology": 20.87,
+     "ridge": 23.94
+    },
+    {
+     "from": "2023-09",
+     "target": "2023-10",
+     "truth": 26.95,
+     "persistence": 26.75,
+     "seasonal": 25.8,
+     "climatology": 21.14,
+     "ridge": 25.78
+    },
+    {
+     "from": "2023-10",
+     "target": "2023-11",
+     "truth": 25.93,
+     "persistence": 26.95,
+     "seasonal": 25.83,
+     "climatology": 19.58,
+     "ridge": 24.64
+    },
+    {
+     "from": "2024-03",
+     "target": "2024-04",
+     "truth": 27.74,
+     "persistence": 30.78,
+     "seasonal": 24.63,
+     "climatology": 29.16,
+     "ridge": 31.71
+    },
+    {
+     "from": "2024-04",
+     "target": "2024-05",
+     "truth": 42.82,
+     "persistence": 27.74,
+     "seasonal": 33.87,
+     "climatology": 36.49,
+     "ridge": 32.98
+    },
+    {
+     "from": "2024-05",
+     "target": "2024-06",
+     "truth": 45.83,
+     "persistence": 42.82,
+     "seasonal": 34.56,
+     "climatology": 40.47,
+     "ridge": 43.66
+    },
+    {
+     "from": "2024-06",
+     "target": "2024-07",
+     "truth": 42.05,
+     "persistence": 45.83,
+     "seasonal": 42.1,
+     "climatology": 34.85,
+     "ridge": 41.26
+    },
+    {
+     "from": "2024-07",
+     "target": "2024-08",
+     "truth": 33.2,
+     "persistence": 42.05,
+     "seasonal": 26.53,
+     "climatology": 24.57,
+     "ridge": 33.8
+    },
+    {
+     "from": "2024-08",
+     "target": "2024-09",
+     "truth": 31.05,
+     "persistence": 33.2,
+     "seasonal": 26.75,
+     "climatology": 21.71,
+     "ridge": 30.68
+    },
+    {
+     "from": "2024-09",
+     "target": "2024-10",
+     "truth": 33.38,
+     "persistence": 31.05,
+     "seasonal": 26.95,
+     "climatology": 22.11,
+     "ridge": 29.94
+    },
+    {
+     "from": "2024-10",
+     "target": "2024-11",
+     "truth": 34.3,
+     "persistence": 33.38,
+     "seasonal": 25.93,
+     "climatology": 20.49,
+     "ridge": 30.05
+    },
+    {
+     "from": "2025-03",
+     "target": "2025-04",
+     "truth": 42.27,
+     "persistence": 34.92,
+     "seasonal": 27.74,
+     "climatology": 28.98,
+     "ridge": 35.35
+    },
+    {
+     "from": "2025-04",
+     "target": "2025-05",
+     "truth": 45.47,
+     "persistence": 42.27,
+     "seasonal": 42.82,
+     "climatology": 37.28,
+     "ridge": 48.34
+    },
+    {
+     "from": "2025-05",
+     "target": "2025-06",
+     "truth": 44.93,
+     "persistence": 45.47,
+     "seasonal": 45.83,
+     "climatology": 41.14,
+     "ridge": 47.52
+    },
+    {
+     "from": "2025-06",
+     "target": "2025-07",
+     "truth": 44.06,
+     "persistence": 44.93,
+     "seasonal": 42.05,
+     "climatology": 35.88,
+     "ridge": 40.81
+    },
+    {
+     "from": "2025-07",
+     "target": "2025-08",
+     "truth": 22.84,
+     "persistence": 44.06,
+     "seasonal": 33.2,
+     "climatology": 25.64,
+     "ridge": 36.8
+    },
+    {
+     "from": "2025-08",
+     "target": "2025-09",
+     "truth": 21.98,
+     "persistence": 22.84,
+     "seasonal": 31.05,
+     "climatology": 22.88,
+     "ridge": 22.16
+    },
+    {
+     "from": "2025-09",
+     "target": "2025-10",
+     "truth": 21.27,
+     "persistence": 21.98,
+     "seasonal": 33.38,
+     "climatology": 23.72,
+     "ridge": 23.29
+    },
+    {
+     "from": "2025-10",
+     "target": "2025-11",
+     "truth": 20.02,
+     "persistence": 21.27,
+     "seasonal": 34.3,
+     "climatology": 22.21,
+     "ridge": 20.78
+    },
+    {
+     "from": "2026-03",
+     "target": "2026-04",
+     "truth": 38.46,
+     "persistence": 32.83,
+     "seasonal": 42.27,
+     "climatology": 30.46,
+     "ridge": 35.24
+    },
+    {
+     "from": "2026-04",
+     "target": "2026-05",
+     "truth": 41.7,
+     "persistence": 38.46,
+     "seasonal": 45.47,
+     "climatology": 38.19,
+     "ridge": 44.27
+    },
+    {
+     "from": "2026-05",
+     "target": "2026-06",
+     "truth": 42.51,
+     "persistence": 41.7,
+     "seasonal": 44.93,
+     "climatology": 41.56,
+     "ridge": 43.29
+    },
+    {
+     "from": "2026-06",
+     "target": "2026-07",
+     "truth": 28.99,
+     "persistence": 42.51,
+     "seasonal": 44.06,
+     "climatology": 36.9,
+     "ridge": 38.4
+    },
+    {
+     "from": "2026-07",
+     "target": "2026-08",
+     "truth": 27.41,
+     "persistence": 28.99,
+     "seasonal": 22.84,
+     "climatology": 25.33,
+     "ridge": 20.87
+    },
+    {
+     "from": "2026-08",
+     "target": "2026-09",
+     "truth": 18.82,
+     "persistence": 27.41,
+     "seasonal": 21.98,
+     "climatology": 22.78,
+     "ridge": 25.15
+    },
+    {
+     "from": "2026-09",
+     "target": "2026-10",
+     "truth": 21.09,
+     "persistence": 18.82,
+     "seasonal": 21.27,
+     "climatology": 23.41,
+     "ridge": 19.15
+    },
+    {
+     "from": "2026-10",
+     "target": "2026-11",
+     "truth": 19.04,
+     "persistence": 21.09,
+     "seasonal": 20.02,
+     "climatology": 21.97,
+     "ridge": 19.64
+    }
+   ]
+  },
+  "h3": {
+   "n_test": 29,
+   "mae_km2": {
+    "persistence": 10.43,
+    "seasonal": 5.33,
+    "climatology": 5.44,
+    "ridge": 5.85
+   },
+   "ridge_error_p10_p90": [
+    -7.47,
+    9.88
+   ],
+   "test": [
+    {
+     "from": "2022-12",
+     "target": "2023-03",
+     "truth": 27.15,
+     "persistence": 26.39,
+     "climatology": 27.36,
+     "ridge": 33.13
+    },
+    {
+     "from": "2023-03",
+     "target": "2023-06",
+     "truth": 34.56,
+     "persistence": 27.15,
+     "seasonal": 48.32,
+     "climatology": 41.45,
+     "ridge": 32.23
+    },
+    {
+     "from": "2023-04",
+     "target": "2023-07",
+     "truth": 42.1,
+     "persistence": 24.63,
+     "seasonal": 42.38,
+     "climatology": 33.4,
+     "ridge": 24.43
+    },
+    {
+     "from": "2023-05",
+     "target": "2023-08",
+     "truth": 26.53,
+     "persistence": 33.87,
+     "seasonal": 30.26,
+     "climatology": 24.24,
+     "ridge": 21.34
+    },
+    {
+     "from": "2023-06",
+     "target": "2023-09",
+     "truth": 26.75,
+     "persistence": 34.56,
+     "seasonal": 26.44,
+     "climatology": 20.87,
+     "ridge": 17.08
+    },
+    {
+     "from": "2023-07",
+     "target": "2023-10",
+     "truth": 26.95,
+     "persistence": 42.1,
+     "seasonal": 25.8,
+     "climatology": 21.14,
+     "ridge": 27.4
+    },
+    {
+     "from": "2023-08",
+     "target": "2023-11",
+     "truth": 25.93,
+     "persistence": 26.53,
+     "seasonal": 25.83,
+     "climatology": 19.58,
+     "ridge": 23.42
+    },
+    {
+     "from": "2023-10",
+     "target": "2024-01",
+     "truth": 31.81,
+     "persistence": 26.95,
+     "climatology": 19.7,
+     "ridge": 25.67
+    },
+    {
+     "from": "2024-01",
+     "target": "2024-04",
+     "truth": 27.74,
+     "persistence": 31.81,
+     "seasonal": 24.63,
+     "climatology": 29.16,
+     "ridge": 39.55
+    },
+    {
+     "from": "2024-03",
+     "target": "2024-06",
+     "truth": 45.83,
+     "persistence": 30.78,
+     "seasonal": 34.56,
+     "climatology": 40.47,
+     "ridge": 37.85
+    },
+    {
+     "from": "2024-04",
+     "target": "2024-07",
+     "truth": 42.05,
+     "persistence": 27.74,
+     "seasonal": 42.1,
+     "climatology": 34.85,
+     "ridge": 34.7
+    },
+    {
+     "from": "2024-05",
+     "target": "2024-08",
+     "truth": 33.2,
+     "persistence": 42.82,
+     "seasonal": 26.53,
+     "climatology": 24.57,
+     "ridge": 31.76
+    },
+    {
+     "from": "2024-06",
+     "target": "2024-09",
+     "truth": 31.05,
+     "persistence": 45.83,
+     "seasonal": 26.75,
+     "climatology": 21.71,
+     "ridge": 28.02
+    },
+    {
+     "from": "2024-07",
+     "target": "2024-10",
+     "truth": 33.38,
+     "persistence": 42.05,
+     "seasonal": 26.95,
+     "climatology": 22.11,
+     "ridge": 27.68
+    },
+    {
+     "from": "2024-08",
+     "target": "2024-11",
+     "truth": 34.3,
+     "persistence": 33.2,
+     "seasonal": 25.93,
+     "climatology": 20.49,
+     "ridge": 28.08
+    },
+    {
+     "from": "2025-03",
+     "target": "2025-06",
+     "truth": 44.93,
+     "persistence": 34.92,
+     "seasonal": 45.83,
+     "climatology": 41.14,
+     "ridge": 42.83
+    },
+    {
+     "from": "2025-04",
+     "target": "2025-07",
+     "truth": 44.06,
+     "persistence": 42.27,
+     "seasonal": 42.05,
+     "climatology": 35.88,
+     "ridge": 44.46
+    },
+    {
+     "from": "2025-05",
+     "target": "2025-08",
+     "truth": 22.84,
+     "persistence": 45.47,
+     "seasonal": 33.2,
+     "climatology": 25.64,
+     "ridge": 35.81
+    },
+    {
+     "from": "2025-06",
+     "target": "2025-09",
+     "truth": 21.98,
+     "persistence": 44.93,
+     "seasonal": 31.05,
+     "climatology": 22.88,
+     "ridge": 29.6
+    },
+    {
+     "from": "2025-07",
+     "target": "2025-10",
+     "truth": 21.27,
+     "persistence": 44.06,
+     "seasonal": 33.38,
+     "climatology": 23.72,
+     "ridge": 30.78
+    },
+    {
+     "from": "2025-08",
+     "target": "2025-11",
+     "truth": 20.02,
+     "persistence": 22.84,
+     "seasonal": 34.3,
+     "climatology": 22.21,
+     "ridge": 24.99
+    },
+    {
+     "from": "2025-10",
+     "target": "2026-01",
+     "truth": 29.91,
+     "persistence": 21.27,
+     "climatology": 25.75,
+     "ridge": 22.83
+    },
+    {
+     "from": "2026-01",
+     "target": "2026-04",
+     "truth": 38.46,
+     "persistence": 29.91,
+     "seasonal": 42.27,
+     "climatology": 30.46,
+     "ridge": 35.41
+    },
+    {
+     "from": "2026-03",
+     "target": "2026-06",
+     "truth": 42.51,
+     "persistence": 32.83,
+     "seasonal": 44.93,
+     "climatology": 41.56,
+     "ridge": 40.05
+    },
+    {
+     "from": "2026-04",
+     "target": "2026-07",
+     "truth": 28.99,
+     "persistence": 38.46,
+     "seasonal": 44.06,
+     "climatology": 36.9,
+     "ridge": 40.36
+    },
+    {
+     "from": "2026-05",
+     "target": "2026-08",
+     "truth": 27.41,
+     "persistence": 41.7,
+     "seasonal": 22.84,
+     "climatology": 25.33,
+     "ridge": 29.42
+    },
+    {
+     "from": "2026-06",
+     "target": "2026-09",
+     "truth": 18.82,
+     "persistence": 42.51,
+     "seasonal": 21.98,
+     "climatology": 22.78,
+     "ridge": 24.41
+    },
+    {
+     "from": "2026-07",
+     "target": "2026-10",
+     "truth": 21.09,
+     "persistence": 28.99,
+     "seasonal": 21.27,
+     "climatology": 23.41,
+     "ridge": 18.84
+    },
+    {
+     "from": "2026-08",
+     "target": "2026-11",
+     "truth": 19.04,
+     "persistence": 27.41,
+     "seasonal": 20.02,
+     "climatology": 21.97,
+     "ridge": 23.97
+    }
+   ]
+  }
+ },
+ "forecast": [
+  {
+   "month": "2026-12",
+   "km2": 19.49,
+   "low": 13.1,
+   "high": 25.7,
+   "typical": 22.25,
+   "min": 16.66,
+   "max": 26.39,
+   "driest_year": "2021"
+  },
+  {
+   "month": "2027-01",
+   "km2": 24.74,
+   "low": 17.27,
+   "high": 34.62,
+   "typical": 27.14,
+   "min": 19.7,
+   "max": 31.81,
+   "driest_year": "2022"
+  },
+  {
+   "month": "2027-02",
+   "km2": 25.76,
+   "low": 18.29,
+   "high": 35.64,
+   "typical": 25.58,
+   "min": 18.1,
+   "max": 32.62,
+   "driest_year": "2021"
+  }
+ ]
+}

@@ -1,0 +1,45 @@
+{
+ "place": "qoshtepa",
+ "title": "Qosh Tepa canal head, northern Afghanistan",
+ "river": "Amu Darya",
+ "headline": "Open water grew 4 % between 17 Jun and 27 Oct",
+ "sections": [
+  {
+   "h": "What happened",
+   "p": "Open water grew from 366.4 km\u00b2 on 17 Jun to 380.4 km\u00b2 on 27 Oct 2026 (+4 %). Biggest: 380.4 km\u00b2 on 27 Oct; smallest: 358.5 km\u00b2 on 28 Aug."
+  },
+  {
+   "h": "Why",
+   "p": "More open water here means the canal and its new fields are taking more water from the Amu Darya, upstream of Uzbekistan."
+  },
+  {
+   "h": "What next",
+   "p": "If the season's trend holds (+1.0 km\u00b2 a month), the next 3 months would end near 383.4 km\u00b2. This is a trend line, not a tested forecast: one season of NISAR is too short to learn this place's yearly cycle."
+  },
+  {
+   "h": "Who it matters to",
+   "p": "Uzbekistan's and turkmenistan's share of the amu darya. NISAR sees this water every 12 days through cloud and at night."
+  }
+ ],
+ "numbers": {
+  "first": {
+   "date": "2026-06-17",
+   "km2": 366.35
+  },
+  "last": {
+   "date": "2026-10-27",
+   "km2": 380.41
+  },
+  "peak": {
+   "date": "2026-10-27",
+   "km2": 380.41
+  },
+  "low": {
+   "date": "2026-08-28",
+   "km2": 358.53
+  },
+  "slope_km2_per_month": 0.99
+ },
+ "confidence": "The model learned water at Andijan and was tested here on 1 clear photo days it never trained on: median IoU 0.00.",
+ "sources": "NASA-ISRO NISAR GCOV (provisional before 21 Oct 2026); model trained on Andijan; ESA Sentinel-2 photo check."
+}
