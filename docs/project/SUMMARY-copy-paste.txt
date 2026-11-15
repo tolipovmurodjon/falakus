@@ -1,7 +1,11 @@
-About two-thirds of Earth is under cloud at any moment, and half of every day is night. So the changes that shape people's lives, from shrinking reservoirs and floods to harvests and sinking ground, often happen where satellite cameras cannot see.
+On 1 May 2020, after days of storms, the Sardoba dam in Uzbekistan burst. Six people died and about 70,000 were evacuated. Disasters like this, and floods, earthquakes and failing water supplies, build up under cloud or in the dark, where satellite cameras see nothing. About two-thirds of Earth is cloudy at any moment (NASA).
 
-Falakus makes them visible with NISAR, the new NASA-ISRO radar satellite. It sends its own signal, so it sees through cloud and at night, across the whole planet, every 12 days. Calm water turns black, so we track reservoirs and floods under storm clouds. Leaves twist the radar wave, so we see harvests field by field. The wave's timing measures ground motion in centimetres after an earthquake. Ships shine bright on dark seas, day or night.
+NISAR, the new NASA-ISRO radar satellite, sees through both, everywhere, every 12 days. Falakus turns its images into warnings and answers anyone can read:
+Water: calm water is a mirror for radar, so reservoirs and floods stay visible under storm clouds.
+Ground: the radar's timing can catch dams, slopes and faults moving by centimetres, warning signs no camera sees; we show it after an earthquake.
+Crops: leaves twist the radar wave, so harvests show field by field.
+Ships: metal hulls shine on dark water, day or night.
 
-We proved it at home first. In Uzbekistan, 10.9 million people depend on reservoirs that cameras lost to cloud in 15 of 24 winter photos. Our machine-learning model, tested on days it never saw, mapped the water better than the standard method (0.63 vs 0.59 overlap), and NASA's ICESat-2 laser confirmed it (0.95 correlation).
+We proved it at home. In Uzbekistan, 10.9 million people depend on reservoirs that cameras lost to cloud in 15 of 24 winter photos. Our machine-learning model maps that water on every pass, and NASA's ICESat-2 laser confirms it (correlation 0.95).
 
-Anyone can explore every NISAR pass worldwide, NASA flood and fire events, and a 40-year time-lapse, with plain briefings on what changed, why, and what comes next.
+Explore it worldwide, and read a plain briefing: what changed, why, and what comes next.

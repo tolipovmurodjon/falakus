@@ -1,7 +1,11 @@
-Earth's surface keeps changing — water, fields, floods, ground — but clouds and darkness hide most of it from ordinary satellite cameras. Falakus makes these changes visible with NISAR, the new NASA-ISRO radar satellite, which sees through cloud and at night, every 12 days.
+On 1 May 2020, after days of storms, the Sardoba dam in Uzbekistan burst. Six people died and about 70,000 were evacuated. Disasters like this, and floods, earthquakes and failing water supplies, build up under cloud or in the dark, where satellite cameras see nothing. About two-thirds of Earth is cloudy at any moment (NASA).
 
-We started at home. 10.9 million people in Uzbekistan's Fergana valley depend on reservoirs that cameras often cannot see: 15 of 24 winter photos in 2025 were mostly cloud. Our machine-learning model learned to find water in the radar and was tested on days it had never seen; it beat the standard method (map overlap 0.63 vs 0.59), and NASA's ICESat-2 laser confirmed it (correlation 0.95). We show the reservoir losing half its water to cotton fields, the harvest moving field by field, and the Aral Sea gone since 1997.
+NISAR, the new NASA-ISRO radar satellite, sees through both, everywhere, every 12 days. Falakus turns its images into warnings and answers anyone can read:
+Water: calm water is a mirror for radar, so reservoirs and floods stay visible under storm clouds.
+Ground: the radar's timing can catch dams, slopes and faults moving by centimetres, warning signs no camera sees; we show it after an earthquake.
+Crops: leaves twist the radar wave, so harvests show field by field.
+Ships: metal hulls shine on dark water, day or night.
 
-Then we opened it to the world: a map of every NISAR pass, flood watch on NASA's event feed, ground motion from an earthquake measured in centimetres, ship tracking, rain and wildfire layers, and a 40-year time-lapse.
+We proved it at home. In Uzbekistan, 10.9 million people depend on reservoirs that cameras lost to cloud in 15 of 24 winter photos. Our machine-learning model maps that water on every pass, and NASA's ICESat-2 laser confirms it (correlation 0.95).
 
-Every number sits next to an outside check, and every change comes with a plain-language briefing: what happened, why, and what comes next.
+Explore it worldwide, and read a plain briefing: what changed, why, and what comes next.
