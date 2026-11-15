@@ -3099,6 +3099,640 @@
     852,
     1024
    ]
+  },
+  {
+   "year": 2003,
+   "file": "2003.jpg",
+   "source": "Landsat C2 L2 (L5, L7)",
+   "collection": "landsat-c2-l2",
+   "dates": [
+    "2002-07-10",
+    "2003-09-26"
+   ],
+   "scenes": [
+    {
+     "id": "LE07_L2SP_159029_20030926_02_T1",
+     "date": "2003-09-26",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 4.5
+    },
+    {
+     "id": "LE07_L2SP_159028_20030926_02_T1",
+     "date": "2003-09-26",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 0.7
+    },
+    {
+     "id": "LE07_L2SP_161030_20030924_02_T1",
+     "date": "2003-09-24",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 5.1
+    },
+    {
+     "id": "LE07_L2SP_162030_20030729_02_T1",
+     "date": "2003-07-29",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 0.4
+    },
+    {
+     "id": "LE07_L2SP_162029_20030729_02_T1",
+     "date": "2003-07-29",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 8.1
+    },
+    {
+     "id": "LE07_L2SP_162028_20030729_02_T1",
+     "date": "2003-07-29",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 15.0
+    },
+    {
+     "id": "LE07_L2SP_162027_20030729_02_T1",
+     "date": "2003-07-29",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 1.4
+    },
+    {
+     "id": "LE07_L2SP_160029_20030901_02_T1",
+     "date": "2003-09-01",
+     "platform": "landsat-7",
+     "cloud": 1.0,
+     "share": 17.4
+    },
+    {
+     "id": "LE07_L2SP_161028_20030807_02_T1",
+     "date": "2003-08-07",
+     "platform": "landsat-7",
+     "cloud": 1.0,
+     "share": 16.7
+    },
+    {
+     "id": "LE07_L2SP_159030_20030724_02_T1",
+     "date": "2003-07-24",
+     "platform": "landsat-7",
+     "cloud": 1.0,
+     "share": 0.9
+    },
+    {
+     "id": "LE07_L2SP_161029_20030924_02_T1",
+     "date": "2003-09-24",
+     "platform": "landsat-7",
+     "cloud": 2.0,
+     "share": 9.7
+    },
+    {
+     "id": "LE07_L2SP_160028_20030901_02_T1",
+     "date": "2003-09-01",
+     "platform": "landsat-7",
+     "cloud": 5.0,
+     "share": 8.6
+    },
+    {
+     "id": "LE07_L2SP_161027_20030807_02_T1",
+     "date": "2003-08-07",
+     "platform": "landsat-7",
+     "cloud": 5.0,
+     "share": 0.8
+    },
+    {
+     "id": "LE07_L2SP_160030_20030816_02_T1",
+     "date": "2003-08-16",
+     "platform": "landsat-7",
+     "cloud": 13.0,
+     "share": 1.1
+    },
+    {
+     "id": "LE07_L2SP_163028_20030805_02_T1",
+     "date": "2003-08-05",
+     "platform": "landsat-7",
+     "cloud": 14.0,
+     "share": 0.0
+    },
+    {
+     "id": "LE07_L2SP_163027_20030720_02_T1",
+     "date": "2003-07-20",
+     "platform": "landsat-7",
+     "cloud": 20.0,
+     "share": 0.1
+    },
+    {
+     "id": "LE07_L2SP_160027_20030715_02_T1",
+     "date": "2003-07-15",
+     "platform": "landsat-7",
+     "cloud": 21.0,
+     "share": 0.0
+    },
+    {
+     "id": "LE07_L2SP_159029_20030724_02_T1",
+     "date": "2003-07-24",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 0.3
+    },
+    {
+     "id": "LE07_L2SP_159028_20030724_02_T1",
+     "date": "2003-07-24",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 0.0
+    },
+    {
+     "id": "LE07_L2SP_161030_20030722_02_T1",
+     "date": "2003-07-22",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 0.4
+    },
+    {
+     "id": "LE07_L2SP_162030_20030814_02_T1",
+     "date": "2003-08-14",
+     "platform": "landsat-7",
+     "cloud": 1.0,
+     "share": 0.0
+    },
+    {
+     "id": "LE07_L2SP_160028_20030715_02_T1",
+     "date": "2003-07-15",
+     "platform": "landsat-7",
+     "cloud": 20.0,
+     "share": 1.2
+    },
+    {
+     "id": "LE07_L2SP_161029_20030722_02_T1",
+     "date": "2003-07-22",
+     "platform": "landsat-7",
+     "cloud": 22.0,
+     "share": 1.4
+    },
+    {
+     "id": "LE07_L2SP_163028_20030720_02_T1",
+     "date": "2003-07-20",
+     "platform": "landsat-7",
+     "cloud": 37.0,
+     "share": 0.1
+    },
+    {
+     "id": "LE07_L2SP_160030_20030715_02_T1",
+     "date": "2003-07-15",
+     "platform": "landsat-7",
+     "cloud": 42.0,
+     "share": 0.1
+    },
+    {
+     "id": "LE07_L2SP_161030_20020921_02_T1",
+     "date": "2002-09-21",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 0.0
+    },
+    {
+     "id": "LE07_L2SP_162029_20020912_02_T1",
+     "date": "2002-09-12",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 0.6
+    },
+    {
+     "id": "LE07_L2SP_163027_20020903_02_T1",
+     "date": "2002-09-03",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 0.0
+    },
+    {
+     "id": "LE07_L2SP_159030_20020822_02_T1",
+     "date": "2002-08-22",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 0.2
+    },
+    {
+     "id": "LE07_L2SP_160030_20020813_02_T1",
+     "date": "2002-08-13",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 0.5
+    },
+    {
+     "id": "LT05_L2SP_159029_20020729_02_T1",
+     "date": "2002-07-29",
+     "platform": "landsat-5",
+     "cloud": 0.0,
+     "share": 0.3
+    },
+    {
+     "id": "LT05_L2SP_163028_20020725_02_T1",
+     "date": "2002-07-25",
+     "platform": "landsat-5",
+     "cloud": 0.0,
+     "share": 0.0
+    },
+    {
+     "id": "LE07_L2SP_160029_20020712_02_T1",
+     "date": "2002-07-12",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 0.8
+    },
+    {
+     "id": "LT05_L2SP_161029_20020711_02_T1",
+     "date": "2002-07-11",
+     "platform": "landsat-5",
+     "cloud": 0.0,
+     "share": 0.4
+    },
+    {
+     "id": "LE07_L2SP_162028_20020710_02_T1",
+     "date": "2002-07-10",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 1.2
+    },
+    {
+     "id": "LE07_L2SP_160028_20020712_02_T1",
+     "date": "2002-07-12",
+     "platform": "landsat-7",
+     "cloud": 1.0,
+     "share": 1.2
+    },
+    {
+     "id": "LT05_L2SP_161028_20020711_02_T1",
+     "date": "2002-07-11",
+     "platform": "landsat-5",
+     "cloud": 1.0,
+     "share": 0.5
+    },
+    {
+     "id": "LE07_L2SP_160027_20020813_02_T1",
+     "date": "2002-08-13",
+     "platform": "landsat-7",
+     "cloud": 2.0,
+     "share": 0.2
+    },
+    {
+     "id": "LE07_L2SP_162027_20020912_02_T1",
+     "date": "2002-09-12",
+     "platform": "landsat-7",
+     "cloud": 3.0,
+     "share": 0.0
+    },
+    {
+     "id": "LE07_L2SP_161027_20020804_02_T1",
+     "date": "2002-08-04",
+     "platform": "landsat-7",
+     "cloud": 4.0,
+     "share": 0.0
+    }
+   ],
+   "scene_count": 40,
+   "cloud_pct": 0.0,
+   "from_other_years_pct": 6.0,
+   "other_years": [
+    2002
+   ],
+   "scene_cloud_pct": 1.8,
+   "water_km2": 27662.8,
+   "size": [
+    852,
+    1024
+   ]
+  },
+  {
+   "year": 2004,
+   "file": "2004.jpg",
+   "source": "Landsat C2 L2 (L7)",
+   "collection": "landsat-c2-l2",
+   "dates": [
+    "2004-06-06",
+    "2004-09-28"
+   ],
+   "scenes": [
+    {
+     "id": "LE07_L2SP_163027_20040924_02_T1",
+     "date": "2004-09-24",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 0.5
+    },
+    {
+     "id": "LE07_L2SP_161030_20040910_02_T1",
+     "date": "2004-09-10",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 5.1
+    },
+    {
+     "id": "LE07_L2SP_161029_20040825_02_T1",
+     "date": "2004-08-25",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 20.0
+    },
+    {
+     "id": "LE07_L2SP_161028_20040825_02_T1",
+     "date": "2004-08-25",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 21.0
+    },
+    {
+     "id": "LE07_L2SP_161027_20040825_02_T1",
+     "date": "2004-08-25",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 1.7
+    },
+    {
+     "id": "LE07_L2SP_160030_20040818_02_T1",
+     "date": "2004-08-18",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 3.8
+    },
+    {
+     "id": "LE07_L2SP_160029_20040818_02_T1",
+     "date": "2004-08-18",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 14.2
+    },
+    {
+     "id": "LE07_L2SP_160028_20040818_02_T1",
+     "date": "2004-08-18",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 9.8
+    },
+    {
+     "id": "LE07_L2SP_160027_20040818_02_T1",
+     "date": "2004-08-18",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 0.3
+    },
+    {
+     "id": "LE07_L2SP_162030_20040816_02_T1",
+     "date": "2004-08-16",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 0.4
+    },
+    {
+     "id": "LE07_L2SP_162029_20040816_02_T1",
+     "date": "2004-08-16",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 4.4
+    },
+    {
+     "id": "LE07_L2SP_159030_20040811_02_T1",
+     "date": "2004-08-11",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 0.6
+    },
+    {
+     "id": "LE07_L2SP_163028_20040620_02_T1",
+     "date": "2004-06-20",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 0.5
+    },
+    {
+     "id": "LE07_L2SP_159028_20040928_02_T1",
+     "date": "2004-09-28",
+     "platform": "landsat-7",
+     "cloud": 1.0,
+     "share": 0.2
+    },
+    {
+     "id": "LE07_L2SP_162027_20040917_02_T1",
+     "date": "2004-09-17",
+     "platform": "landsat-7",
+     "cloud": 1.0,
+     "share": 1.6
+    },
+    {
+     "id": "LE07_L2SP_162028_20040901_02_T1",
+     "date": "2004-09-01",
+     "platform": "landsat-7",
+     "cloud": 1.0,
+     "share": 7.9
+    },
+    {
+     "id": "LE07_L2SP_159029_20040726_02_T1",
+     "date": "2004-07-26",
+     "platform": "landsat-7",
+     "cloud": 1.0,
+     "share": 0.9
+    },
+    {
+     "id": "LE07_L2SP_163027_20040620_02_T1",
+     "date": "2004-06-20",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 0.0
+    },
+    {
+     "id": "LE07_L2SP_161030_20040825_02_T1",
+     "date": "2004-08-25",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 0.2
+    },
+    {
+     "id": "LE07_L2SP_161029_20040809_02_T1",
+     "date": "2004-08-09",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 1.3
+    },
+    {
+     "id": "LE07_L2SP_161028_20040606_02_T1",
+     "date": "2004-06-06",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 1.3
+    },
+    {
+     "id": "LE07_L2SP_161027_20040606_02_T1",
+     "date": "2004-06-06",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 0.1
+    },
+    {
+     "id": "LE07_L2SP_160030_20040717_02_T1",
+     "date": "2004-07-17",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 0.2
+    },
+    {
+     "id": "LE07_L2SP_160029_20040701_02_T1",
+     "date": "2004-07-01",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 1.2
+    },
+    {
+     "id": "LE07_L2SP_160028_20040615_02_T1",
+     "date": "2004-06-15",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 0.6
+    },
+    {
+     "id": "LE07_L2SP_160027_20040615_02_T1",
+     "date": "2004-06-15",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 0.0
+    },
+    {
+     "id": "LE07_L2SP_162029_20040613_02_T1",
+     "date": "2004-06-13",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 0.4
+    },
+    {
+     "id": "LE07_L2SP_159030_20040624_02_T1",
+     "date": "2004-06-24",
+     "platform": "landsat-7",
+     "cloud": 1.0,
+     "share": 0.1
+    },
+    {
+     "id": "LE07_L2SP_159028_20040624_02_T1",
+     "date": "2004-06-24",
+     "platform": "landsat-7",
+     "cloud": 1.0,
+     "share": 0.0
+    },
+    {
+     "id": "LE07_L2SP_162028_20040816_02_T1",
+     "date": "2004-08-16",
+     "platform": "landsat-7",
+     "cloud": 1.0,
+     "share": 0.7
+    },
+    {
+     "id": "LE07_L2SP_159029_20040624_02_T1",
+     "date": "2004-06-24",
+     "platform": "landsat-7",
+     "cloud": 1.0,
+     "share": 0.1
+    },
+    {
+     "id": "LE07_L2SP_162030_20040613_02_T1",
+     "date": "2004-06-13",
+     "platform": "landsat-7",
+     "cloud": 2.0,
+     "share": 0.0
+    },
+    {
+     "id": "LE07_L2SP_162027_20040816_02_T1",
+     "date": "2004-08-16",
+     "platform": "landsat-7",
+     "cloud": 2.0,
+     "share": 0.1
+    },
+    {
+     "id": "LE07_L2SP_161030_20040809_02_T1",
+     "date": "2004-08-09",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 0.0
+    },
+    {
+     "id": "LE07_L2SP_160030_20040701_02_T1",
+     "date": "2004-07-01",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 0.0
+    },
+    {
+     "id": "LE07_L2SP_160029_20040615_02_T1",
+     "date": "2004-06-15",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 0.1
+    },
+    {
+     "id": "LE07_L2SP_160028_20040717_02_T1",
+     "date": "2004-07-17",
+     "platform": "landsat-7",
+     "cloud": 1.0,
+     "share": 0.1
+    },
+    {
+     "id": "LE07_L2SP_161027_20040622_02_T1",
+     "date": "2004-06-22",
+     "platform": "landsat-7",
+     "cloud": 2.0,
+     "share": 0.0
+    },
+    {
+     "id": "LE07_L2SP_162028_20040917_02_T1",
+     "date": "2004-09-17",
+     "platform": "landsat-7",
+     "cloud": 2.0,
+     "share": 0.1
+    },
+    {
+     "id": "LE07_L2SP_161028_20040809_02_T1",
+     "date": "2004-08-09",
+     "platform": "landsat-7",
+     "cloud": 3.0,
+     "share": 0.1
+    },
+    {
+     "id": "LE07_L2SP_162030_20040917_02_T1",
+     "date": "2004-09-17",
+     "platform": "landsat-7",
+     "cloud": 3.0,
+     "share": 0.0
+    },
+    {
+     "id": "LE07_L2SP_161029_20040606_02_T1",
+     "date": "2004-06-06",
+     "platform": "landsat-7",
+     "cloud": 4.0,
+     "share": 0.1
+    },
+    {
+     "id": "LE07_L2SP_162029_20040917_02_T1",
+     "date": "2004-09-17",
+     "platform": "landsat-7",
+     "cloud": 4.0,
+     "share": 0.1
+    },
+    {
+     "id": "LE07_L2SP_162027_20040901_02_T1",
+     "date": "2004-09-01",
+     "platform": "landsat-7",
+     "cloud": 17.0,
+     "share": 0.0
+    }
+   ],
+   "scene_count": 44,
+   "cloud_pct": 0.1,
+   "from_other_years_pct": 0.0,
+   "other_years": [],
+   "scene_cloud_pct": 0.1,
+   "water_km2": 24736.8,
+   "size": [
+    852,
+    1024
+   ]
   }
  ]
 }
