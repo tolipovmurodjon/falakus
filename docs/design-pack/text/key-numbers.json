@@ -1,0 +1,27 @@
+{
+ "learned_water_iou": 0.627,
+ "rule_with_map_iou": 0.591,
+ "rule_alone_iou": 0.299,
+ "shuffled_control_iou": 0.067,
+ "area_miss_km2": 7.6,
+ "icesat2_spearman": 0.946,
+ "icesat2_n": 9,
+ "people_valley_millions": 10.9,
+ "share_of_uzbekistan_pct": 29,
+ "winter_photos_cloudy": "15 of 24 (Dec-Mar 2025)",
+ "year_photos_cloudy": "29 of 85 (34 %, 2025)",
+ "photo_lake_km2": "42.1 -> 21.1 (23 Jun -> 19 Oct 2026)",
+ "forecast_km2": [
+  "2026-12: 22.6 +/- 3.5",
+  "2027-01: 26.9 +/- 4.9",
+  "2027-02: 29.4 +/- 6.0"
+ ],
+ "forecast_better_than_seasonal_pct": 30,
+ "c_vs_l_band_overcount_km2": {
+  "Sentinel-1 C-band": 21.9,
+  "NISAR L-band": 4.8
+ },
+ "fergana_lost_plant_echo_pct": 12.8,
+ "aral_1997_km2": 1598,
+ "aral_2026_nisar_km2_max": 0.93
+}

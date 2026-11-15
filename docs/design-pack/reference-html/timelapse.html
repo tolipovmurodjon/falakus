@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Falakus Timelapse</title>
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.0.0/dist/maplibre-gl.css">
+<style>
+:root{--ink:#14120D;--ink2:#514B3F;--ink3:#8A8171;--line:#E5DFD2;--teal:#17515F;--teal2:#0F3A45;--teal-s:#E4EDEF;--paper:#F6F3ED;--card:#FFFFFF;--water:#2F6FD1;
+ --shadow:0 1px 2px rgba(20,18,13,.05),0 4px 12px rgba(20,18,13,.05);
+ --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Arial,sans-serif;--mono:ui-monospace,"Cascadia Mono",Consolas,monospace}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--paper);color:var(--ink);font:14px/1.45 var(--sans);overflow:hidden}
+#map{position:absolute;inset:0}
+.panel{background:rgba(255,255,255,.95);border-radius:14px;box-shadow:var(--shadow);backdrop-filter:blur(6px)}
+#top{position:absolute;top:12px;left:12px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;max-width:calc(100% - 24px);z-index:3}
+.seg{display:inline-flex;background:#EFEBE3;border-radius:10px;padding:3px}
+.seg button{border:0;background:transparent;padding:7px 11px;border-radius:8px;font:600 12.5px var(--sans);color:var(--ink2);cursor:pointer;white-space:nowrap}
+.seg button.on{background:var(--card);color:var(--teal2);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.seg button:focus-visible,button:focus-visible{outline:2px solid var(--teal);outline-offset:1px}
+#title{padding:8px 12px}
+#title h1{margin:0;font:700 14px var(--sans)}
+#title h1 span{color:var(--ink3);font-weight:500}
+#readout{position:absolute;top:64px;left:12px;padding:10px 14px;z-index:2;min-width:220px;max-width:min(360px,calc(100% - 24px))}
+#year{font:800 52px/1 var(--mono);letter-spacing:-.03em;color:var(--ink)}
+#src{font-size:12px;color:var(--ink2);margin-top:4px}
+#src b{font-weight:600;color:var(--ink)}
+#water{margin-top:6px;font-size:12px;color:var(--ink3)}
+#water b{font:700 18px var(--mono);color:var(--water)}
+#dock{position:absolute;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));padding:10px 14px 8px;z-index:3;max-width:980px;margin:0 auto}
+.row{display:flex;align-items:center;gap:10px}
+button.play{border:0;background:var(--teal);color:#fff;width:40px;height:40px;border-radius:50%;cursor:pointer;flex:none;display:grid;place-items:center}
+button.play svg{width:16px;height:16px;fill:#fff}
+button.small{border:1px solid var(--line);background:var(--card);color:var(--ink2);font:600 12px var(--sans);padding:6px 9px;border-radius:8px;cursor:pointer;flex:none}
+button.small.on{background:var(--teal-s);color:var(--teal2);border-color:transparent}
+#track{position:relative;flex:1;height:40px;cursor:pointer;touch-action:none;user-select:none}
+#rail{position:absolute;left:0;right:0;top:12px;height:4px;border-radius:2px;background:var(--line)}
+#fill{position:absolute;left:0;top:12px;height:4px;border-radius:2px;background:var(--teal)}
+#knob{position:absolute;top:6px;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:var(--card);border:3px solid var(--teal);box-shadow:var(--shadow)}
+.tick{position:absolute;top:19px;width:1px;height:5px;background:var(--ink3);opacity:.55}
+.tick.major{height:8px;opacity:1}
+.tlab{position:absolute;top:27px;transform:translateX(-50%);font:500 10.5px var(--mono);color:var(--ink3);white-space:nowrap}
+#chart{display:block;width:100%;height:64px;margin-top:2px}
+#chart text{font:10.5px var(--mono);fill:var(--ink3)}
+#note{font-size:11px;color:var(--ink3);margin-top:2px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+#loader{position:absolute;inset:0;display:grid;place-items:center;z-index:5;pointer-events:none}
+#loader div{padding:14px 18px;font:600 13px var(--sans);color:var(--ink2);text-align:center}
+#loader b{display:block;font:800 28px var(--mono);color:var(--teal2)}
+#loader.hide{display:none}
+#loadpill{position:absolute;top:12px;left:50%;transform:translateX(-50%);padding:5px 10px;font:600 11.5px var(--mono);color:var(--ink2);z-index:4}
+#src .gap{color:var(--ink3)}
+
+.maplibregl-ctrl-top-right{top:4px}
+@media (max-width:640px){
+ #top{top:8px;left:8px;gap:6px}
+ #title{display:none}
+ .seg button{padding:6px 8px;font-size:12px}
+ #readout{top:auto;bottom:178px;left:8px;padding:8px 11px;min-width:0}
+ #year{font-size:38px}
+ #dock{left:8px;right:8px;padding:8px 10px 6px}
+ #speed{display:none}
+ .maplibregl-ctrl-top-right{top:52px}
+}
+</style>
+</head>
+<body>
+<div id="map" role="region" aria-label="Map"></div>
+<div id="top">
+ <div id="title" class="panel"><h1>Timelapse <span>· summer composites, one per year</span></h1></div>
+ <div class="seg panel" id="places" role="tablist" aria-label="Place"></div>
+ <div class="seg panel" id="modes" role="tablist" aria-label="Source" hidden>
+  <button data-mode="optical" class="on">Optical years</button><button data-mode="radar">NISAR radar weeks</button>
+ </div>
+</div>
+<div id="readout" class="panel" aria-live="polite">
+ <div id="year">-</div>
+ <div id="src"></div>
+ <div id="water"></div>
+</div>
+<div id="dock" class="panel">
+ <div class="row">
+  <button class="play" id="play" aria-label="Play"><svg viewBox="0 0 16 16" id="playicon"><path d="M4 2l10 6-10 6z"/></svg></button>
+  <div id="track" role="slider" tabindex="0" aria-label="Time"><div id="rail"></div><div id="fill"></div><div id="ticks"></div><div id="knob"></div></div>
+  <button class="small" id="speed" aria-label="Speed">1x</button>
+  <button class="small on" id="loop" aria-pressed="true" aria-label="Loop">Loop</button>
+ </div>
+ <svg id="chart" aria-label="Open water per frame"></svg>
+ <div id="note"><span id="chartlab">Open water, km²</span><span id="method"></span></div>
+</div>
+<div id="loadpill" class="panel" hidden></div>
+<div id="loader"><div class="panel"><b id="pct">0 %</b><span id="loadlab">Loading frames</span></div></div>
+<script src="https://unpkg.com/maplibre-gl@5.0.0/dist/maplibre-gl.js"></script>
+<script>
+const PLACES=[{id:"aral",name:"Aral Sea"},{id:"andijan_res",name:"Andijan reservoir",radar:true},{id:"tashkent",name:"Tashkent"}];
+const $=id=>document.getElementById(id);
+const map=new maplibregl.Map({container:"map",attributionControl:{compact:true},center:[60,45],zoom:6,maxZoom:17,
+ style:{version:8,sources:{sat:{type:"raster",tiles:["https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"],tileSize:256,maxzoom:18,attribution:"Base © Esri, Maxar, Earthstar Geographics · Frames: USGS Landsat, ESA Sentinel-2 (Microsoft Planetary Computer), NASA-ISRO NISAR"}},
+ layers:[{id:"sat",type:"raster",source:"sat",paint:{"raster-saturation":-.35,"raster-brightness-max":.85}}]}});
+map.addControl(new maplibregl.NavigationControl({showCompass:false}),"top-right");
+map.addControl(new maplibregl.FullscreenControl(),"top-right");
+
+// Two stacked canvas sources: bottom = frame i, top = frame i+1 at opacity f. Frames are drawn from
+// preloaded Image objects, so a frame change never waits on the network (no blank or flashing frames).
+const cvA=document.createElement("canvas"),cvB=document.createElement("canvas");
+let S={frames:[],imgs:[],place:null,mode:"optical",pos:0,playing:false,speed:1,loop:true,shownI:-1,token:0,bbox:null};
+const SPEEDS=[1,2,0.5];
+
+function corners(b){return[[b[0],b[3]],[b[2],b[3]],[b[2],b[1]],[b[0],b[1]]]}
+function draw(cv,img){const c=cv.getContext("2d");if(!img){c.clearRect(0,0,cv.width,cv.height);return}
+ if(cv.width!==img.naturalWidth||cv.height!==img.naturalHeight){cv.width=img.naturalWidth;cv.height=img.naturalHeight}
+ c.drawImage(img,0,0)}
+function pushTextures(){for(const id of["fa","fb"]){const s=map.getSource(id);if(s){s.play();}}
+ map.once("render",()=>{for(const id of["fa","fb"]){const s=map.getSource(id);if(s)s.pause()}});map.triggerRepaint()}
+
+function setupLayers(b){
+ for(const id of["fb","fa"]){if(map.getLayer(id))map.removeLayer(id);if(map.getSource(id))map.removeSource(id)}
+ const im0=S.imgs[near(0)],w=im0.naturalWidth,h=im0.naturalHeight;cvA.width=cvB.width=w;cvA.height=cvB.height=h;
+ map.addSource("fa",{type:"canvas",canvas:cvA,coordinates:corners(b),animate:false});
+ map.addSource("fb",{type:"canvas",canvas:cvB,coordinates:corners(b),animate:false});
+ map.addLayer({id:"fa",type:"raster",source:"fa",paint:{"raster-opacity":1,"raster-fade-duration":0,"raster-resampling":"linear"}});
+ map.addLayer({id:"fb",type:"raster",source:"fb",paint:{"raster-opacity":0,"raster-fade-duration":0,"raster-resampling":"linear"}});
+ S.shownI=-1}
+
+function render(){
+ const n=S.frames.length;if(!n)return;
+ const p=Math.max(0,Math.min(n-1,S.pos)),i=Math.min(Math.floor(p),n-1),f=p-i;
+ const key=i+":"+near(i)+":"+near(Math.min(i+1,n-1));
+ if(key!==S.shownI&&map.getSource("fa")){draw(cvA,S.imgs[near(i)]);draw(cvB,S.imgs[near(Math.min(i+1,n-1))]);S.shownI=key;pushTextures()}
+ if(map.getLayer("fb"))map.setPaintProperty("fb","raster-opacity",f);
+ const k=f>.5?Math.min(i+1,n-1):i;label(k);
+ const x=n>1?p/(n-1)*100:0;$("fill").style.width=x+"%";$("knob").style.left=x+"%";
+ $("track").setAttribute("aria-valuetext",S.frames[k].label);
+ const ph=$("playhead");if(ph){const X=chartX(p);ph.setAttribute("x1",X);ph.setAttribute("x2",X);const d=$("dot"+k),all=document.querySelectorAll("#chart .pt");all.forEach(e=>e.setAttribute("r",2.5));if(d)d.setAttribute("r",5)}
+}
+// a frame still loading is skipped: show the nearest loaded frame before it
+function near(i){for(let j=i;j>=0;j--)if(S.imgs[j])return j;for(let j=i+1;j<S.imgs.length;j++)if(S.imgs[j])return j;return 0}
+let lastK=-1;
+function label(k){if(k===lastK)return;lastK=k;const fr=S.frames[k];
+ $("year").textContent=fr.big;$("src").innerHTML=fr.src;
+ $("water").innerHTML=fr.water!=null?`Open water <b>${fmt(fr.water)}</b> km²`:"Open water: no number for this frame"}
+function fmt(v){return v>=100?Math.round(v).toLocaleString("en-US"):v.toFixed(1)}
+
+// ---------- chart under the scrubber, same x scale as the track ----------
+let CW=0;
+function chartX(p){const n=S.frames.length;return n>1?p/(n-1)*CW:0}
+function buildChart(){
+ const svg=$("chart"),track=$("track");const tb=track.getBoundingClientRect(),sb=svg.getBoundingClientRect();
+ CW=tb.width;const off=tb.left-sb.left,H=64,top=8,bot=H-6;
+ const vals=S.frames.map(f=>f.water).filter(v=>v!=null);let s="";
+ if(vals.length){const mx=Math.max(...vals)*1.08,mn=0;const y=v=>bot-(v-mn)/(mx-mn)*(bot-top);
+  let d="",started=false;S.frames.forEach((f,i)=>{if(f.water==null){started=false;return}d+=(started?"L":"M")+chartX(i).toFixed(1)+","+y(f.water).toFixed(1);started=true});
+  let area=d?d+`L${chartX(S.frames.length-1)},${bot}L0,${bot}Z`:"";
+  s+=`<g transform="translate(${off},0)"><line x1="0" x2="${CW}" y1="${bot}" y2="${bot}" stroke="#E5DFD2"/>`;
+  s+=`<text x="${CW}" y="${top+2}" text-anchor="end">${fmt(Math.max(...vals))} km² max</text>`;
+  s+=`<path d="${d}" fill="none" stroke="#2F6FD1" stroke-width="2" stroke-linejoin="round"/>`;
+  S.frames.forEach((f,i)=>{if(f.water!=null)s+=`<circle class="pt" id="dot${i}" cx="${chartX(i)}" cy="${y(f.water)}" r="2.5" fill="#2F6FD1" stroke="#fff" stroke-width="1"><title>${f.big}: ${fmt(f.water)} km²</title></circle>`});
+  s+=`<line id="playhead" y1="${top-4}" y2="${bot}" stroke="#14120D" stroke-width="1" opacity=".5"/></g>`}
+ else s=`<text x="50%" y="34" text-anchor="middle">No water numbers for this series</text>`;
+ svg.innerHTML=s;render()}
+
+function buildTicks(){
+ const n=S.frames.length,t=$("ticks");let h="";
+ const step=S.mode==="radar"?2:(n>24?5:(n>12?2:1));
+ S.frames.forEach((f,i)=>{const x=n>1?i/(n-1)*100:0;const major=S.mode==="radar"?i%step===0:(f.year%step===0||i===0||i===n-1);
+  h+=`<div class="tick${major?" major":""}" style="left:${x}%"></div>`;
+  if(major&&(S.mode==="radar"||f.year%step===0))h+=`<div class="tlab" style="left:${x}%">${f.tick}</div>`});
+ t.innerHTML=h}
+
+// ---------- data ----------
+async function loadOptical(place){
+ const ix=await (await fetch(`/timelapse/${place}/index.json`)).json();
+ return{bbox:ix.bbox,method:"Open water = MNDWI > 0 on clear pixels, Jun-Sep composite",frames:ix.frames.map(f=>({url:`/timelapse/${place}/${f.file}`,big:String(f.year),tick:String(f.year),year:f.year,label:String(f.year),water:f.water_km2,
+  src:`<b>${f.source.replace("Landsat C2 L2 (","Landsat ").replace(")","").replace(/L(\d)/g,"$1")}</b> · ${span(f)} · ${f.scene_count} scenes · cloud ${f.scene_cloud_pct} %${f.from_other_years_pct>=0.5?`<br><span class="gap">${Math.round(f.from_other_years_pct)} % of area from ${f.other_years.join(", ")}</span>`:""}`}))}}
+function span(f){const own=(f.scenes||[]).map(x=>x.date).filter(d=>d.startsWith(String(f.year))).sort();const a=own[0]||f.dates[0],b=own[own.length-1]||f.dates[1];return short(a)+" to "+short(b)}
+function short(d){const m=new Date(d+"T00:00:00Z");return m.toLocaleDateString("en-GB",{day:"numeric",month:"short",timeZone:"UTC"})}
+async function loadRadar(place){
+ const fj=await (await fetch(`/science/${place}/frames.json`)).json();
+ let wr={};try{const w=await (await fetch(`/waterroad/${place}.json`)).json();(w.passes||[]).forEach(p=>wr[p.date]=p.water_km2)}catch(e){}
+ const fr=fj.frames.filter(f=>f.sci!==false);
+ return{bbox:fj.bbox,method:"Radar water = Lee-filtered HH below a threshold fit on the first pass",frames:fr.map(f=>{const d=f.date,m=new Date(d+"T00:00:00Z");
+  return{url:`/science/${place}/img/${d}_hh.webp`,big:m.toLocaleDateString("en-GB",{day:"numeric",month:"short",timeZone:"UTC"}),tick:m.toLocaleDateString("en-GB",{day:"numeric",month:"short",timeZone:"UTC"}),year:null,label:d,water:wr[d]??null,
+   src:`<b>NISAR L-band GCOV, HH</b> · ${d} · 12-day repeat · sees through cloud`}})}}
+
+// progressive: frames load in time order (4 at a time); play starts once the first few are in
+function preload(frames,token,onFirst){
+ S.imgs=new Array(frames.length).fill(null);let next=0,done=0,started=false;const need=Math.min(5,frames.length);
+ $("loader").classList.remove("hide");$("pct").textContent="0 %";$("loadlab").textContent=`Loading ${frames.length} frames`;
+ const status=()=>{if(token!==S.token)return;const pc=Math.round(done/frames.length*100);$("pct").textContent=pc+" %";$("loadpill").textContent=done<frames.length?`Loading ${pc} %`:"";$("loadpill").hidden=done>=frames.length};
+ const one=()=>{if(token!==S.token||next>=frames.length)return;const i=next++;const im=new Image();im.decoding="async";
+  const fin=ok=>{done++;if(ok&&token===S.token){S.imgs[i]=im;S.shownI=-1}status();
+   if(!started&&token===S.token&&done>=need&&S.imgs.some(Boolean)){started=true;onFirst()}
+   one()};
+  im.onload=()=>(im.decode?im.decode():Promise.resolve()).catch(()=>{}).then(()=>fin(true));im.onerror=()=>fin(false);im.src=frames[i].url};
+ for(let k=0;k<4;k++)one()}
+
+async function choose(place,mode){
+ const token=++S.token;pause();S.place=place;S.mode=mode;S.frames=[];S.imgs=[];
+ document.querySelectorAll("#places button").forEach(b=>b.classList.toggle("on",b.dataset.p===place));
+ const P=PLACES.find(p=>p.id===place);$("modes").hidden=!P.radar;
+ document.querySelectorAll("#modes button").forEach(b=>b.classList.toggle("on",b.dataset.mode===mode));
+ $("chartlab").textContent=mode==="radar"?"Open water from radar, km² per pass":"Open water, km² per summer";
+ let data;try{data=mode==="radar"?await loadRadar(place):await loadOptical(place)}catch(e){$("loadlab").textContent="Frames not baked yet for "+P.name;$("pct").textContent="-";$("loader").classList.remove("hide");return}
+ if(token!==S.token)return;
+ if(!data.frames.length){$("loadlab").textContent="No frames yet";$("pct").textContent="-";return}
+ S.frames=data.frames;S.bbox=data.bbox;$("method").textContent=data.method;
+ const b=data.bbox;map.fitBounds([[b[0],b[1]],[b[2],b[3]]],{padding:{top:70,bottom:innerWidth<640?230:170,left:20,right:20},duration:600});
+ S.pos=0;lastK=-1;buildTicks();buildChart();
+ history.replaceState(null,"",`?place=${place}${mode==="radar"?"&mode=radar":""}`);
+ preload(data.frames,token,()=>{setupLayers(b);render();$("loader").classList.add("hide");setTimeout(()=>{if(token===S.token)play()},400)})}
+
+// ---------- playback: hold each frame, then crossfade to the next ----------
+const HOLD=.35,TOTAL=12;let raf=0,last=0,clock=0;
+function ease(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2}
+function tick(ts){if(!S.playing)return;const dt=Math.min(.25,(ts-last)/1000);last=ts;
+ const n=S.frames.length,per=TOTAL/Math.max(1,n)/S.speed;clock+=dt/per;
+ if(clock>=n-1){if(S.loop&&clock>=n-1+3){clock=0}else if(!S.loop){clock=n-1;S.pos=n-1;render();pause();return}}
+ const i=Math.floor(clock),fr=clock-i;S.pos=Math.min(n-1,i+(fr<HOLD?0:ease((fr-HOLD)/(1-HOLD))));render();raf=requestAnimationFrame(tick)}
+function play(){if(!S.frames.length)return;if(S.pos>=S.frames.length-1)S.pos=0;clock=Math.round(S.pos);S.playing=true;last=performance.now();
+ $("playicon").innerHTML='<path d="M3 2h3.5v12H3zM9.5 2H13v12H9.5z"/>';$("play").setAttribute("aria-label","Pause");raf=requestAnimationFrame(tick)}
+function pause(){S.playing=false;cancelAnimationFrame(raf);$("playicon").innerHTML='<path d="M4 2l10 6-10 6z"/>';$("play").setAttribute("aria-label","Play")}
+$("play").onclick=()=>S.playing?pause():play();
+$("speed").onclick=()=>{S.speed=SPEEDS[(SPEEDS.indexOf(S.speed)+1)%SPEEDS.length];$("speed").textContent=S.speed+"x"};
+$("loop").onclick=()=>{S.loop=!S.loop;$("loop").classList.toggle("on",S.loop);$("loop").setAttribute("aria-pressed",S.loop)};
+
+// scrubber drag: continuous position, so dragging slowly shows the crossfade
+const track=$("track");
+function posFrom(e){const r=track.getBoundingClientRect();return Math.max(0,Math.min(1,(e.clientX-r.left)/r.width))*(S.frames.length-1)}
+track.addEventListener("pointerdown",e=>{pause();track.setPointerCapture(e.pointerId);S.pos=posFrom(e);render();
+ const mv=ev=>{S.pos=posFrom(ev);render()},up=()=>{S.pos=Math.round(S.pos);render();track.removeEventListener("pointermove",mv);track.removeEventListener("pointerup",up)};
+ track.addEventListener("pointermove",mv);track.addEventListener("pointerup",up)});
+function step(d){pause();S.pos=Math.max(0,Math.min(S.frames.length-1,Math.round(S.pos)+d));render()}
+track.addEventListener("keydown",e=>{if(e.key==="ArrowRight"){step(1);e.preventDefault()}if(e.key==="ArrowLeft"){step(-1);e.preventDefault()}});
+document.addEventListener("keydown",e=>{if(e.target===track)return;if(e.code==="Space"){S.playing?pause():play();e.preventDefault()}if(e.key==="ArrowRight")step(1);if(e.key==="ArrowLeft")step(-1)});
+addEventListener("resize",()=>{if(S.frames.length)buildChart()});
+
+$("places").innerHTML=PLACES.map(p=>`<button data-p="${p.id}" role="tab">${p.name}</button>`).join("");
+$("places").onclick=e=>{const b=e.target.closest("button");if(b&&b.dataset.p!==S.place)choose(b.dataset.p,"optical")};
+$("modes").onclick=e=>{const b=e.target.closest("button");if(b&&b.dataset.mode!==S.mode)choose(S.place,b.dataset.mode)};
+const q=new URLSearchParams(location.search);
+map.on("load",()=>choose(PLACES.some(p=>p.id===q.get("place"))?q.get("place"):"aral",q.get("mode")==="radar"?"radar":"optical"));
+</script>
+</body>
+</html>
