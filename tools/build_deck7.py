@@ -107,7 +107,7 @@ def main():
     tail = t[t.index('const stage=document.getElementById("stage");'):]
     tail = tail[: tail.index('document.getElementById("copy").onclick')]
     body = ["S.push(`" + s + "`);" for s in slides(nums())]
-    html = (head + '<main class="stage" id="stage" aria-roledescription="slide deck"></main>\n<script>\nconst S=[];\n'
+    html = ('<!doctype html>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width,initial-scale=1">\n' + head +'<main class="stage" id="stage" aria-roledescription="slide deck"></main>\n<script>\nconst S=[];\n'
             'const F=(n,t)=>`<p class="eyebrow">${n}</p><h2 style="margin-top:12px">${t}</h2>`;\n'
             + "\n".join(body) + "\n" + tail + "</script>\n<title>Falakus · 7 slides</title>\n"
             '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;800&display=swap">\n')
