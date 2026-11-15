@@ -29,17 +29,19 @@ NISAR sends its own 24 cm L-band pulse, so cloud and night do not stop it.
 | Reservoir water area | Sentinel-2 photo water (NDWI) on clear days | r = 0.83 over 8 passes; radar over-counts 8.6 km² on average in late summer (wet mud) |
 | The water rule is not tuned to the answer | cut-off learned on ONE pass, tested on 7 it never saw | map overlap IoU 0.49–0.71, median 0.58 |
 | More looks | all NISAR orbits crossing the lake (mixed viewing angles, a check only) | 42 looks in 4.5 months, r = 0.82 against 30 photo days |
+| Learned water map (gradient boosting, 10 radar features, no prior water map) | each Sentinel-2 photo day scored by a model trained only on the other 7 days | median IoU 0.63 vs 0.59 for the rule with a water map and 0.30 for the rule alone; area miss 7.6 vs 8.8 km²; shuffled-label control 0.07 |
 | Forecast | every 2026 month, never seen in training | miss 2.3 km² vs 3.3 (same month last year) and 4.3 (last month): 30 % better |
 | Crop signal | Sentinel-2 NDVI on the same cropland | r = 0.58 over 11 passes |
 | Ship detector (Explore) | ICEYE 0.5 m radar, Bosphorus | 5 of 12 dots on visible ships |
 | Where it fails, shown | Aral salt crust, Fergana canals, flood points | salt is as smooth as water; canals are narrower than a 20 m pixel; most EONET flood points show no new water |
 
 ## Data used
+Population: National Statistics Committee of Uzbekistan (Fergana, Andijan, Namangan regions: 10.9 million people, 1 Oct 2025).
 NASA (core): **NISAR L2 GCOV** (provisional and validated, ASF DAAC via CMR and Earthdata Cloud; calibrated gamma0 HH and HV read straight from the HDF5), NISAR GUNW (quake fringes), NASA EONET events, NASA ICESat-2 ATL13 (independent laser water levels, in progress).
 Other open data: ESA Sentinel-1 RTC and Sentinel-2 L2A, ESA WorldCover, JRC Global Surface Water, USGS Landsat-5 (via Microsoft Planetary Computer); CSA RADARSAT-1 open archive; ICEYE open data (CC BY 4.0); USGS earthquakes.
 
 ## Methods
-Lee speckle filter (7 × 7) · water = HH below a cut-off learned on one pass and tested on the rest · only inside the lake basin (WorldCover water + 1 km), which keeps hill shadows out · radar vegetation index RVI = 4·HV/(HH+HV) · HV change maps at 100 m · one orbit track per time series · ridge-regression forecast tested walk-forward against two baselines · tools in `tools/` reproduce every number.
+Lee speckle filter (7 × 7) · learned water map: sklearn HistGradientBoosting on Lee-filtered HH, HV, HH−HV, local texture and each pixel's season min/median/max, labelled by Sentinel-2 NDWI, tested leave-one-date-out with a shuffled-label control · water = HH below a cut-off learned on one pass and tested on the rest · only inside the lake basin (WorldCover water + 1 km), which keeps hill shadows out · radar vegetation index RVI = 4·HV/(HH+HV) · HV change maps at 100 m · one orbit track per time series · ridge-regression forecast tested walk-forward against two baselines · tools in `tools/` reproduce every number.
 
 ## Honest limits
 - NISAR data before 21 Oct 2026 is provisional (public beta); there is a permanent gap 27 Jul – 10 Aug 2026; over the valley the calibrated record starts 18 Jun 2026.
