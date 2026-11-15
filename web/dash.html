@@ -108,6 +108,15 @@ footer{font-size:11.5px;color:var(--ink3);padding:0 4px 4px}
    <p class="note" id="skillnote"></p>
   </div>
   <div class="card">
+   <p class="eyebrow">Who depends on this water</p>
+   <div class="kpis">
+    <div class="kpi"><b id="p1">–</b><span>people in the valley's 3 regions</span><small id="p1s"></small></div>
+    <div class="kpi"><b id="p2">–</b><span>of Uzbekistan</span><small>Andijan, Fergana, Namangan</small></div>
+    <div class="kpi"><b id="p3">–</b><span>people per km², Andijan</span><small>densest region in the country</small></div>
+   </div>
+   <p class="note"><b>Who acts on the number:</b> the basin water agency plans winter and spring releases from this reservoir; it gets the lake's area every 12 days, cloud or not. Farm agencies get harvest timing from the radar's plant echo (Fergana fields). Population: National Statistics Committee of Uzbekistan, 1 Oct 2025.</p>
+  </div>
+  <div class="card">
    <p class="eyebrow">Why radar: the camera loses the lake when plans are made</p>
    <div class="pair">
     <figure><img src="/waterroad/photo_andijan_cloudy.jpg" alt="Sentinel-2 photo of the reservoir on 24 Sep 2026, fully cloud covered"><figcaption><b>Photo, 24 Sep 2026:</b> 100 % cloud</figcaption></figure>
@@ -207,6 +216,9 @@ function skill(){
 async function main(){
  [WR,FC,ML,FR]=await Promise.all([J("/waterroad/andijan_res.json"),J("/forecast/andijan_res.json"),J("/ml/water_model.json"),J("/science/andijan_res/frames.json")]);
  bbox=FR.bbox;dates=WR.passes.map(p=>p.date);
+ const POP=await J("/waterroad/population.json"),R=POP&&POP.regions_2025;
+ if(R){const v=R.fergana+R.andijan+R.namangan;$("#p1").textContent=(v/1e6).toFixed(1)+" M";$("#p1s").textContent=v.toLocaleString("en")+" people";
+  $("#p2").textContent=(v/R.uzbekistan*100).toFixed(0)+" %";$("#p3").textContent=Math.round(R.density_per_km2_2026.andijan)}
  $("#slider").max=dates.length-1;
  map=new maplibregl.Map({container:"map",attributionControl:{compact:true},
   style:{version:8,sources:{sat:{type:"raster",tiles:["https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"],tileSize:256,attribution:"Esri World Imagery"},
