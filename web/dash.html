@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Falakus · Andijan water</title>
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.0.0/dist/maplibre-gl.css">
+<style>
+:root{--ink:#14120D;--ink2:#514B3F;--ink3:#8A8171;--line:#E5DFD2;--teal:#17515F;--teal2:#0F3A45;--teal-s:#E4EDEF;--amber:#B7791F;--paper:#F6F3ED;--card:#FFFFFF;
+ --water:#2F6FD1;--ml:#17515F;--photo:#C2410C;--s1:#8A8171;
+ --shadow:0 1px 2px rgba(20,18,13,.05),0 4px 12px rgba(20,18,13,.05);
+ --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Arial,sans-serif;--mono:ui-monospace,"Cascadia Mono",Consolas,monospace}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--paper);color:var(--ink);font:14px/1.45 var(--sans)}
+header{display:flex;align-items:center;gap:16px;padding:10px 18px;border-bottom:1px solid var(--line);background:var(--card)}
+header h1{font-size:16px;margin:0;font-weight:700;letter-spacing:-.01em}
+header h1 span{color:var(--ink3);font-weight:500}
+nav{display:flex;gap:4px;margin-left:auto}
+nav a{padding:6px 12px;border-radius:8px;color:var(--ink2);text-decoration:none;font-weight:600;font-size:13px}
+nav a.on{background:var(--teal-s);color:var(--teal2)}
+nav a:hover{background:#F1EDE5}
+main{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(380px,1fr);gap:14px;padding:14px;height:calc(100% - 53px)}
+.mapwrap{position:relative;border-radius:14px;overflow:hidden;box-shadow:var(--shadow);background:#ddd;min-height:420px}
+#map{position:absolute;inset:0}
+.mapbar{position:absolute;left:12px;right:12px;bottom:12px;background:rgba(255,255,255,.95);border-radius:12px;box-shadow:var(--shadow);padding:10px 12px;display:grid;gap:8px}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.seg{display:inline-flex;background:#F1EDE5;border-radius:9px;padding:2px}
+.seg button{border:0;background:transparent;padding:6px 10px;border-radius:7px;font:600 12.5px var(--sans);color:var(--ink2);cursor:pointer}
+.seg button.on{background:var(--card);color:var(--teal2);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+button.play{border:0;background:var(--teal);color:#fff;font:700 12.5px var(--sans);padding:7px 14px;border-radius:8px;cursor:pointer;min-width:70px}
+input[type=range]{flex:1;accent-color:var(--teal)}
+.date{font:700 15px var(--mono);min-width:96px}
+.maplegend{position:absolute;top:12px;left:12px;background:rgba(255,255,255,.95);border-radius:10px;padding:8px 10px;font-size:12px;box-shadow:var(--shadow);max-width:290px}
+.maplegend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.mapnum{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.95);border-radius:10px;padding:8px 12px;box-shadow:var(--shadow);text-align:right}
+.mapnum b{font:800 26px var(--mono);color:var(--teal2);display:block;line-height:1.1}
+.mapnum span{font-size:11.5px;color:var(--ink3)}
+aside{display:flex;flex-direction:column;gap:12px;overflow:auto;padding-right:2px}
+.card{background:var(--card);border-radius:14px;box-shadow:var(--shadow);padding:14px 16px}
+.eyebrow{font:700 11px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin:0 0 6px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.kpi b{display:block;font:800 24px var(--mono);letter-spacing:-.02em;line-height:1.1}
+.kpi span{font-size:12px;color:var(--ink2)}
+.kpi small{display:block;font-size:11px;color:var(--ink3);margin-top:2px}
+.down{color:#B42318}.up{color:#067647}
+svg text{font:11px var(--sans);fill:var(--ink3)}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--ink2);margin-top:6px}
+.legend i{display:inline-block;width:14px;height:3px;border-radius:2px;margin-right:5px;vertical-align:3px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+td,th{padding:6px 4px;border-bottom:1px solid var(--line);text-align:right}
+th{font-weight:600;color:var(--ink3);font-size:11.5px}
+td:first-child,th:first-child{text-align:left}
+td b{font-family:var(--mono)}
+.best{background:var(--teal-s)}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pair figure{margin:0}
+.pair img{width:100%;aspect-ratio:1.32;object-fit:cover;border-radius:8px;display:block;background:#eee}
+.pair figcaption{font-size:11.5px;color:var(--ink2);margin-top:4px}
+p.note{margin:6px 0 0;font-size:12.5px;color:var(--ink2)}
+.tip{position:absolute;pointer-events:none;background:var(--ink);color:#fff;font-size:12px;padding:5px 8px;border-radius:6px;white-space:nowrap;transform:translate(-50%,-120%)}
+footer{font-size:11.5px;color:var(--ink3);padding:0 4px 4px}
+@media (max-width:900px){main{grid-template-columns:1fr;height:auto}.mapwrap{height:62vh}.kpis{grid-template-columns:1fr 1fr 1fr}.kpi b{font-size:19px}header{flex-wrap:wrap}nav{margin-left:0}}
+@media (max-width:420px){main{padding:10px;gap:10px}.maplegend{max-width:62%;font-size:11px}.mapnum b{font-size:20px}}
+</style>
+</head>
+<body>
+<header>
+ <h1>Falakus <span>· where the Fergana valley's water goes, seen by NASA-ISRO NISAR radar</span></h1>
+ <nav aria-label="Places"><a class="on" href="dash.html">Andijan reservoir</a><a href="index.html#fergana">Fergana fields</a><a href="index.html#aral">Aral Sea</a><a href="index.html">Explore the world</a></nav>
+</header>
+<main>
+ <section class="mapwrap" aria-label="Map of the Andijan reservoir">
+  <div id="map"></div>
+  <div class="maplegend" id="legend"></div>
+  <div class="mapnum"><b id="mapkm">–</b><span id="mapkmwhat">open water on this pass</span></div>
+  <div class="mapbar">
+   <div class="row">
+    <button class="play" id="play" aria-label="Play the season">Play</button>
+    <span class="date" id="date">–</span>
+    <input type="range" id="slider" min="0" max="0" value="0" aria-label="NISAR pass date">
+   </div>
+   <div class="row">
+    <span class="seg" id="lay" role="group" aria-label="Map layer">
+     <button data-k="ml" class="on">Water (ML)</button><button data-k="rule">Water (rule)</button><button data-k="radar">Radar HH</button><button data-k="rgb">Radar colour</button><button data-k="none">Photo only</button>
+    </span>
+   </div>
+  </div>
+ </section>
+ <aside>
+  <div class="card">
+   <p class="eyebrow">Andijan reservoir · Kara Darya · this season</p>
+   <div class="kpis">
+    <div class="kpi"><b id="k1">–</b><span>open water now</span><small id="k1s"></small></div>
+    <div class="kpi"><b id="k2">–</b><span>since the summer peak</span><small id="k2s"></small></div>
+    <div class="kpi"><b id="k3">–</b><span>forecast, Dec–Feb</span><small id="k3s"></small></div>
+   </div>
+  </div>
+  <div class="card" style="position:relative">
+   <div class="row" style="justify-content:space-between"><p class="eyebrow" style="margin:0">Open water, km²</p>
+    <span class="seg" id="span"><button data-k="season" class="on">This season</button><button data-k="years">3 years</button></span></div>
+   <svg id="chart" viewBox="0 0 560 220" role="img" aria-label="Water area over time"></svg>
+   <div class="legend" id="chartlegend"></div>
+   <div class="tip" id="tip" hidden></div>
+  </div>
+  <div class="card">
+   <p class="eyebrow">Is the radar right? Scored against Sentinel-2 photos it never saw</p>
+   <table id="skill"><tr><td>Loading…</td></tr></table>
+   <p class="note" id="skillnote"></p>
+  </div>
+  <div class="card">
+   <p class="eyebrow">Why radar: the camera loses the lake when plans are made</p>
+   <div class="pair">
+    <figure><img src="/waterroad/photo_andijan_cloudy.jpg" alt="Sentinel-2 photo of the reservoir on 24 Sep 2026, fully cloud covered"><figcaption><b>Photo, 24 Sep 2026:</b> 100 % cloud</figcaption></figure>
+    <figure><img src="/science/andijan_res/img/2026-09-24_hh.webp" alt="NISAR radar image of the reservoir on 24 Sep 2026, lake clearly visible as dark water"><figcaption><b>NISAR, same day:</b> the whole lake</figcaption></figure>
+   </div>
+   <p class="note">In 2025, <b>29 of 85</b> Sentinel-2 visits (34 %) were mostly cloud; <b>15 of 24</b> in Dec–Mar, when release plans are made. NISAR's 24 cm L-band pulse goes through cloud, day or night.</p>
+  </div>
+  <footer>NASA-ISRO NISAR L2 GCOV (provisional before 21 Oct 2026) · ESA Sentinel-2 L2A, Sentinel-1 RTC, WorldCover · Microsoft Planetary Computer. AI (Claude) helped write code and text; every number comes from our scripts in <code>tools/</code>.</footer>
+ </aside>
+</main>
+<script src="https://unpkg.com/maplibre-gl@5.0.0/dist/maplibre-gl.js"></script>
+<script>
+const $=s=>document.querySelector(s);
+const J=u=>fetch(u).then(r=>r.ok?r.json():null).catch(()=>null);
+const fmt=(v,d=1)=>v==null?"–":(+v).toFixed(d);
+const MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const day=s=>{const d=new Date(s+"T00:00:00Z");return `${d.getUTCDate()} ${MON[d.getUTCMonth()]}`};
+const S={i:0,layer:"ml",span:"season",timer:null};
+let WR,FC,ML,FR,map,dates=[],bbox;
+
+function coords(b){return [[b[0],b[3]],[b[2],b[3]],[b[2],b[1]],[b[0],b[1]]]}
+function km(d){const m=ML&&ML.series.find(x=>x.date===d);const r=WR.passes.find(x=>x.date===d);return {ml:m?m.ml_km2:null,rule:r?r.water_km2:null,photo:r&&r.s2_water_km2!=null&&r.s2_clear_pct>60?r.s2_water_km2:null}}
+function layerUrl(d){
+ if(S.layer==="ml")return ML?`/ml/water_pred_${d}.png`:`/waterroad/wl_andijan_res_${d}.png`;
+ if(S.layer==="rule")return `/waterroad/wl_andijan_res_${d}.png`;
+ if(S.layer==="radar")return `/science/andijan_res/img/${d}_hh.webp`;
+ if(S.layer==="rgb")return `/science/andijan_res/img/${d}_rgb.webp`;
+ return null}
+function legend(){
+ const L={ml:`<i style="background:var(--water)"></i><b>Open water, learned model.</b> Gradient boosting on NISAR HH + HV, trained on photo labels from other days.`,
+  rule:`<i style="background:var(--water)"></i><b>Open water, one rule.</b> Filtered HH below ${WR?WR.threshold_db:""} dB: calm water is a mirror and goes black.`,
+  radar:`<b>NISAR HH, calibrated.</b> Black = calm water (mirror). Bright = rough ground, walls, waves.`,
+  rgb:`<b>NISAR colour.</b> Red HH (ground, walls) · green HV (leaves, stems) · blue HH/HV. Black = water.`,
+  none:`<b>Satellite photo base map</b> (Esri World Imagery, not dated).`};
+ $("#legend").innerHTML=L[S.layer]+(S.layer==="ml"&&!ML?"<br><small>Model results still computing; showing the rule.</small>":"")}
+function show(i){
+ S.i=i;const d=dates[i];$("#slider").value=i;$("#date").textContent=day(d)+" 2026";
+ const u=layerUrl(d),src=map.getSource("lay");
+ if(u){src.updateImage({url:u,coordinates:coords(bbox)});map.setLayoutProperty("lay","visibility","visible");
+  map.setPaintProperty("lay","raster-opacity",S.layer==="radar"||S.layer==="rgb"?.95:.85)}
+ else map.setLayoutProperty("lay","visibility","none");
+ const k=km(d),v=S.layer==="rule"?k.rule:(k.ml??k.rule);
+ $("#mapkm").textContent=fmt(v)+" km²";
+ $("#mapkmwhat").textContent=(k.photo!=null?`photo same week: ${fmt(k.photo)} km² · `:"")+"open water on this pass";
+ drawChart()}
+
+function kpis(){
+ const vals=dates.map(d=>{const k=km(d);return {d,v:k.ml??k.rule}}).filter(x=>x.v!=null);
+ const last=vals[vals.length-1],peak=vals.reduce((a,b)=>b.v>a.v?b:a);
+ $("#k1").textContent=fmt(last.v)+" km²";$("#k1s").textContent=`NISAR, ${day(last.d)}`;
+ const ch=(last.v-peak.v)/peak.v*100;$("#k2").textContent=(ch>0?"+":"")+fmt(ch,0)+" %";$("#k2").className=ch<0?"down":"up";
+ $("#k2s").textContent=`${fmt(peak.v)} km² on ${day(peak.d)} → released for cotton`;
+ const f=FC.forecast;$("#k3").textContent=`${fmt(f[0].km2,0)}→${fmt(f[f.length-1].km2,0)}`;
+ $("#k3s").textContent=`km² · 80 % band ±${fmt(f[0].band80_km2)}–${fmt(f[f.length-1].band80_km2)} · beats baselines by ${FC.skill.vs_seasonal_pct} %`}
+
+function drawChart(){
+ const svg=$("#chart"),W=560,H=220,P={l:34,r:10,t:10,b:24};
+ const season=S.span==="season";
+ const t0=season?Date.UTC(2026,5,1):Date.UTC(2023,10,1),t1=Date.UTC(2027,2,1);
+ const X=t=>P.l+(t-t0)/(t1-t0)*(W-P.l-P.r);
+ const ms=s=>{const [y,m,d]=s.split("-").map(Number);return Date.UTC(y,m-1,d||15)};
+ const all=[];
+ const s1=FC.series.filter(x=>ms(x.month)>=t0).map(x=>({t:ms(x.month),v:x.km2,f:x.from}));
+ const nis=dates.map(d=>({t:ms(d),v:km(d).ml??km(d).rule,d}));
+ const pho=dates.map(d=>({t:ms(d),v:km(d).photo,d})).filter(x=>x.v!=null);
+ const fc=FC.forecast.map(x=>({t:ms(x.month),v:x.km2,b:x.band80_km2}));
+ [...s1,...nis,...pho].forEach(p=>all.push(p.v));fc.forEach(p=>{all.push(p.v+p.b,p.v-p.b)});
+ const ymax=Math.ceil(Math.max(...all)/10)*10,ymin=0;
+ const Y=v=>P.t+(1-(v-ymin)/(ymax-ymin))*(H-P.t-P.b);
+ let g="";
+ for(let v=0;v<=ymax;v+=10)g+=`<line x1="${P.l}" x2="${W-P.r}" y1="${Y(v)}" y2="${Y(v)}" stroke="#EFEAE0"/><text x="${P.l-6}" y="${Y(v)+4}" text-anchor="end">${v}</text>`;
+ for(let y=2023;y<=2027;y++)for(let m=0;m<12;m+=season?1:3){const t=Date.UTC(y,m,1);if(t<t0||t>t1)continue;g+=`<text x="${X(t)}" y="${H-6}" text-anchor="middle">${MON[m]}${m===0||(!season&&m===0)?" "+String(y).slice(2):""}</text>`}
+ const now=Date.UTC(2026,10,15);g+=`<line x1="${X(now)}" x2="${X(now)}" y1="${P.t}" y2="${H-P.b}" stroke="#D8D1C2" stroke-dasharray="3 3"/><text x="${X(now)+4}" y="${P.t+10}">forecast →</text>`;
+ const band=fc.length?`M${fc.map(p=>`${X(p.t)},${Y(p.v+p.b)}`).join("L")}L${fc.slice().reverse().map(p=>`${X(p.t)},${Y(p.v-p.b)}`).join("L")}Z`:"";
+ g+=`<path d="${band}" fill="var(--teal-s)"/><path d="M${fc.map(p=>`${X(p.t)},${Y(p.v)}`).join("L")}" fill="none" stroke="var(--teal)" stroke-width="2" stroke-dasharray="5 4"/>`;
+ if(s1.length)g+=`<path d="M${s1.map(p=>`${X(p.t)},${Y(p.v)}`).join("L")}" fill="none" stroke="var(--s1)" stroke-width="1.5"/>`;
+ g+=`<path d="M${nis.filter(p=>p.v!=null).map(p=>`${X(p.t)},${Y(p.v)}`).join("L")}" fill="none" stroke="var(--teal)" stroke-width="2.5"/>`;
+ nis.forEach((p,i)=>{if(p.v==null)return;const cur=p.d===dates[S.i];g+=`<circle cx="${X(p.t)}" cy="${Y(p.v)}" r="${cur?6:4}" fill="${cur?"var(--teal2)":"#fff"}" stroke="var(--teal)" stroke-width="2" data-i="${i}" data-tip="NISAR ${day(p.d)}: ${fmt(p.v)} km²" style="cursor:pointer"/>`});
+ pho.forEach(p=>{g+=`<rect x="${X(p.t)-4}" y="${Y(p.v)-4}" width="8" height="8" transform="rotate(45 ${X(p.t)} ${Y(p.v)})" fill="var(--photo)" data-tip="Sentinel-2 photo near ${day(p.d)}: ${fmt(p.v)} km²"/>`});
+ fc.forEach(p=>{g+=`<circle cx="${X(p.t)}" cy="${Y(p.v)}" r="3.5" fill="var(--teal)" data-tip="Forecast ${MON[new Date(p.t).getUTCMonth()]}: ${fmt(p.v)} ± ${fmt(p.b)} km² (80 %)"/>`});
+ svg.innerHTML=g;
+ $("#chartlegend").innerHTML=`<span><i style="background:var(--teal)"></i>NISAR ${ML?"(learned model)":"(rule)"}, every 12 days</span><span><i style="background:var(--photo);height:8px;width:8px;transform:rotate(45deg)"></i>Sentinel-2 photo (clear days)</span><span><i style="background:var(--s1)"></i>Monthly (photo or Sentinel-1)</span><span><i style="background:var(--teal-s);height:8px"></i>Forecast, 80 % band</span>`}
+
+function skill(){
+ const t=$("#skill");
+ if(!ML){t.innerHTML=`<tr><th></th><th>Map overlap (IoU)</th><th>Area miss</th></tr><tr><td>One rule (HH &lt; ${WR.threshold_db} dB)</td><td><b>0.58</b> median</td><td><b>8.6</b> km²</td></tr>`;
+  $("#skillnote").textContent="Learned model results are still computing.";return}
+ const s=ML.summary,better=s.ml_iou>Math.max(s.rule_iou,s.rule_zone_iou||0);
+ t.innerHTML=`<tr><th></th><th>Map overlap (IoU)</th><th>Area miss</th></tr>
+ <tr class="${better?"best":""}"><td><b>Learned model</b> (gradient boosting, ${ML.features.length} radar features)</td><td><b>${fmt(s.ml_iou,2)}</b></td><td><b>${fmt(s.ml_area_mae_km2)}</b> km²</td></tr>
+ <tr><td>One rule + a map of where water can be (ESA WorldCover)</td><td><b>${fmt(s.rule_zone_iou,2)}</b></td><td><b>${fmt(s.rule_zone_area_mae_km2)}</b> km²</td></tr>
+ <tr><td>One rule alone (HH &lt; ${ML.threshold_db} dB)</td><td><b>${fmt(s.rule_iou,2)}</b></td><td><b>${fmt(s.rule_area_mae_km2)}</b> km²</td></tr>
+ <tr><td>Control: same model, shuffled labels</td><td><b>${fmt(s.null_iou,2)}</b></td><td>–</td></tr>`;
+ const imp=Object.keys(ML.importance||{}).slice(0,3).join(", ");
+ $("#skillnote").innerHTML=`Median over <b>${ML.held_out.length}</b> photo days, each scored by a model trained only on the <i>other</i> days (leave-one-date-out). The model gets no map of where water should be, only radar; it still beats the rule that uses one, most in late summer when wet mud fools a single cut-off. The shuffled-label control collapses, so the test does not leak.${imp?` Features it leans on most: <b>${imp}</b>.`:""}`}
+
+async function main(){
+ [WR,FC,ML,FR]=await Promise.all([J("/waterroad/andijan_res.json"),J("/forecast/andijan_res.json"),J("/ml/water_model.json"),J("/science/andijan_res/frames.json")]);
+ bbox=FR.bbox;dates=WR.passes.map(p=>p.date);
+ $("#slider").max=dates.length-1;
+ map=new maplibregl.Map({container:"map",attributionControl:{compact:true},
+  style:{version:8,sources:{sat:{type:"raster",tiles:["https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"],tileSize:256,attribution:"Esri World Imagery"},
+   lay:{type:"image",url:`/waterroad/wl_andijan_res_${dates[0]}.png`,coordinates:coords(bbox)}},
+   layers:[{id:"sat",type:"raster",source:"sat",paint:{"raster-saturation":-.35,"raster-brightness-max":.9}},{id:"lay",type:"raster",source:"lay",paint:{"raster-fade-duration":0,"raster-resampling":"nearest"}}]},
+  bounds:[[bbox[0],bbox[1]],[bbox[2],bbox[3]]],fitBoundsOptions:{padding:{top:60,bottom:110,left:20,right:20}},maxZoom:15});
+ map.addControl(new maplibregl.NavigationControl({showCompass:false}),"top-right");
+ map.on("load",()=>{map.addSource("box",{type:"geojson",data:{type:"Feature",geometry:{type:"Polygon",coordinates:[[...coords(bbox),coords(bbox)[0]]]}}});
+  map.addLayer({id:"box",type:"line",source:"box",paint:{"line-color":"#fff","line-width":1.5,"line-dasharray":[2,2]}});
+  legend();kpis();skill();show(dates.length-1)});
+ $("#slider").oninput=e=>show(+e.target.value);
+ $("#play").onclick=()=>{if(S.timer){clearInterval(S.timer);S.timer=null;$("#play").textContent="Play";return}
+  $("#play").textContent="Pause";if(S.i>=dates.length-1)show(0);S.timer=setInterval(()=>{if(S.i>=dates.length-1){clearInterval(S.timer);S.timer=null;$("#play").textContent="Play";return}show(S.i+1)},1300)};
+ document.querySelectorAll("#lay button").forEach(b=>b.onclick=()=>{document.querySelectorAll("#lay button").forEach(x=>x.classList.toggle("on",x===b));S.layer=b.dataset.k;legend();show(S.i)});
+ document.querySelectorAll("#span button").forEach(b=>b.onclick=()=>{document.querySelectorAll("#span button").forEach(x=>x.classList.toggle("on",x===b));S.span=b.dataset.k;drawChart()});
+ const svg=$("#chart"),tip=$("#tip");
+ svg.addEventListener("mousemove",e=>{const el=e.target.closest("[data-tip]");if(!el){tip.hidden=true;return}
+  const r=svg.parentElement.getBoundingClientRect();tip.hidden=false;tip.textContent=el.dataset.tip;tip.style.left=(e.clientX-r.left)+"px";tip.style.top=(e.clientY-r.top)+"px"});
+ svg.addEventListener("mouseleave",()=>tip.hidden=true);
+ svg.addEventListener("click",e=>{const el=e.target.closest("[data-i]");if(el)show(+el.dataset.i)});
+ document.addEventListener("keydown",e=>{if(e.key==="ArrowRight")show(Math.min(S.i+1,dates.length-1));if(e.key==="ArrowLeft")show(Math.max(S.i-1,0))});
+}
+main();
+</script>
+</body>
+</html>

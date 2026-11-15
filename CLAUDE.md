@@ -35,6 +35,7 @@ Judging (1-5 each): Impact · Creativity · Validity · Relevance (NASA data as 
 - `docs/deck/deck.src.html` → `docs/deck/nisar-field-guide.html` (team brief, Eye Run style). Check with `python D:\30_library\taste\templates\slides-eye-run\render.py <deck>`.
 
 ## Gotchas (learned the hard way)
+- Never sit idle on a block (15 Nov: 7 h of "still holding" at low memory while Boss slept). Low memory blocks only heavy jobs: keep doing light work (judge rounds, text and UI fixes, deck, page, video) and restart heavy jobs one at a time while watching free RAM. Boss: "do it yourself, I approved all you write".
 - After every edit to web/index.html run the parse check before reloading: `node -e "const h=require('fs').readFileSync('web/index.html','utf8');new Function(h.match(/<script>([\s\S]*)<\/script>\s*<\/body>/)[1])"`. A duplicate `const` once killed the whole page silently (14 Nov).
 - Max 2 parallel NASA read lanes; more get throttled (every read failed for 2 h) and run the laptop out of RAM.
 - Write stop texts only after the calibrated numbers exist (Aral and Andijan texts were wrong and had to be rewritten).

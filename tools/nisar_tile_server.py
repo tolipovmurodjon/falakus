@@ -760,10 +760,16 @@ class Handler(SimpleHTTPRequestHandler):
             except (KeyError, ValueError):
                 return self.send_bytes(b"{}", "application/json", code=400)
             return self.send_bytes(json.dumps(last_look(lon, lat)).encode(), "application/json", cache="no-store")
-        mw = re.match(r"^/(waterroad|floods|forecast|s1series)/([A-Za-z0-9_\-]+\.(?:png|json|jpg))$", path)
+        mw = re.match(r"^/(waterroad|floods|forecast|s1series|ml)/([A-Za-z0-9_\-]+\.(?:png|json|jpg))$", path)
         if mw:
             f = DATA / mw.group(1) / mw.group(2)
             return self.send_bytes(f.read_bytes(), "application/json" if f.suffix == ".json" else ("image/jpeg" if f.suffix == ".jpg" else "image/png"), cache="no-cache" if f.suffix == ".json" else "public, max-age=86400") if f.exists() else self.send_bytes(b"", "text/plain", code=404)
+        # baked time-lapse frames and explorer data: data/timelapse/<place>/<file>, data/explorer/<file>; no dots in names, so no "..".
+        mt = re.match(r"^/(timelapse|explorer)/([A-Za-z0-9_\-]+(?:/[A-Za-z0-9_\-]+)?)\.(jpg|png|webp|json)$", path)
+        if mt:
+            f = DATA / mt.group(1) / f"{mt.group(2)}.{mt.group(3)}"
+            ctype = {"jpg": "image/jpeg", "png": "image/png", "webp": "image/webp", "json": "application/json"}[mt.group(3)]
+            return self.send_bytes(f.read_bytes(), ctype, cache="no-cache" if mt.group(3) == "json" else "public, max-age=86400") if f.exists() else self.send_bytes(b"", "text/plain", code=404)
         mh = re.match(r"^/(history|hires)/([a-z0-9_]+)/([a-z0-9_\-]+\.(?:png|json))$", path)
         if mh:
             f = DATA / mh.group(1) / mh.group(2) / mh.group(3)
