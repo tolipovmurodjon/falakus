@@ -159,6 +159,13 @@ def main():
                  ml_km2=round(float(pr.sum() * px_km2), 2), rule_km2=round(float(rule.sum() * px_km2), 2),
                  ml_iou=round(iou(pr, wet & m), 3), rule_iou=round(iou(rule, wet & m), 3), null_iou=round(iou(pn, wet & m), 3))
         rows.append(r); print(r, flush=True)
+        # where it is wrong, scored on a day it never saw: blue = both say water, orange = radar only (extra), magenta = photo only (missed)
+        from PIL import Image
+        ph = wet & m
+        err = np.zeros(m.shape + (4,), np.uint8)
+        err[pr & ph] = (47, 111, 209, 200); err[pr & ~ph & m] = (234, 120, 20, 230); err[~pr & ph] = (200, 30, 160, 230)
+        Image.fromarray(err).save(ROOT / "data" / "ml" / f"water_err_{d}.png")
+        r["extra_km2"] = round(float((pr & ~ph & m).sum() * px_km2), 2); r["missed_km2"] = round(float((~pr & ph).sum() * px_km2), 2)
     summ = {k: round(float(np.median([r[k] for r in rows])), 3) for k in ("ml_iou", "rule_iou", "null_iou")}
     summ["ml_area_mae_km2"] = round(float(np.mean([abs(r["ml_km2"] - r["photo_water_km2"]) for r in rows])), 2)
     summ["rule_area_mae_km2"] = round(float(np.mean([abs(r["rule_km2"] - r["photo_water_km2"]) for r in rows])), 2)

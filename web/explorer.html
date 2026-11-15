@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Falakus Explorer</title>
+<meta name="description" content="NISAR radar with NASA GIBS layers and EONET events on one timeline: fires, rain, floods, snow, soil moisture.">
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.0.0/dist/maplibre-gl.css">
+<link rel="stylesheet" href="explorer.css">
+</head>
+<body>
+<div id="maps">
+ <div id="map" role="region" aria-label="Map"></div>
+ <div id="mapB" hidden aria-hidden="true"></div>
+ <div id="swipe" hidden><div class="knob" aria-label="Drag to compare" role="slider" tabindex="0"></div><span class="tagA mono" id="tagA"></span><span class="tagB mono" id="tagB"></span></div>
+</div>
+
+<header id="top">
+ <a class="brand" href="./" title="Back to the Falakus story"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><span>Falakus <b>Explorer</b></span></a>
+ <div class="search">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg>
+  <input id="q" type="search" placeholder="Search a place or lat, lon" autocomplete="off" aria-label="Search places">
+  <div id="qres" class="qres" hidden></div>
+ </div>
+</header>
+
+<aside id="panel" aria-label="Layers and events">
+ <div class="ph" id="ph">
+  <span class="grab" aria-hidden="true"></span>
+  <div class="tabs" role="tablist">
+   <button role="tab" class="tab on" data-tab="layers" aria-selected="true">Layers <span class="mono" id="nLayers">0</span></button>
+   <button role="tab" class="tab" data-tab="events" aria-selected="false">Events <span class="mono" id="nEvents">0</span></button>
+  </div>
+ </div>
+ <div class="pb" id="tab-layers">
+  <section class="order" id="orderBox">
+   <div class="sh">Shown on the map, top first</div>
+   <ol id="order"></ol>
+  </section>
+  <div id="groups"></div>
+  <p class="foot">Imagery: NASA GIBS (no login). Events: NASA EONET v3 and USGS. Radar: NASA-ISRO NISAR GCOV via ASF DAAC. NISAR is the core data; the other layers give context to explain what the radar sees.</p>
+ </div>
+ <div class="pb" id="tab-events" hidden>
+  <div class="evtools">
+   <div id="evcats" class="chips"></div>
+   <label class="win">Window
+    <select id="evwin"><option value="1">± 1 day</option><option value="3">± 3 days</option><option value="7" selected>± 7 days</option><option value="30">± 30 days</option><option value="9999">All dates</option></select>
+   </label>
+  </div>
+  <div class="sh" id="evhead"></div>
+  <div id="evlist" class="evlist"></div>
+ </div>
+</aside>
+
+<div id="card" class="card" hidden><button class="x" id="cardx" aria-label="Close" title="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button><div id="cardbody"></div></div>
+<div id="toast" class="toast" hidden></div>
+
+<footer id="tl" aria-label="Timeline">
+ <div class="tlc">
+  <button class="ib" id="prev" title="Previous step (left arrow)" aria-label="Previous step"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+  <input type="date" id="date" class="mono" aria-label="Date">
+  <select id="hhmm" class="mono" aria-label="Time UTC" title="Time (UTC), used by 30-minute layers"></select>
+  <button class="ib" id="next" title="Next step (right arrow)" aria-label="Next step"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+  <button class="ib" id="play" title="Play through time (space)" aria-label="Play"><svg viewBox="0 0 24 24" id="playico"><path d="M8 5l11 7-11 7z"/></svg></button>
+  <select id="step" aria-label="Step"><option value="d">1 day</option><option value="h">30 min</option></select>
+  <span class="sep"></span>
+  <button class="tg" id="cmp" aria-pressed="false" title="Swipe between two dates">Compare</button>
+  <input type="date" id="dateB" class="mono" aria-label="Compare date" hidden>
+ </div>
+ <div class="tls">
+  <canvas id="strip" aria-hidden="true"></canvas>
+  <input type="range" id="slider" min="0" max="100" value="100" aria-label="Day on the timeline">
+  <div class="tlab mono" id="tlab"></div>
+ </div>
+</footer>
+
+<script src="https://unpkg.com/maplibre-gl@5.0.0/dist/maplibre-gl.js"></script>
+<script src="explorer.js"></script>
+</body>
+</html>

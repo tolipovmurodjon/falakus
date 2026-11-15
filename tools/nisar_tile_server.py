@@ -760,7 +760,7 @@ class Handler(SimpleHTTPRequestHandler):
             except (KeyError, ValueError):
                 return self.send_bytes(b"{}", "application/json", code=400)
             return self.send_bytes(json.dumps(last_look(lon, lat)).encode(), "application/json", cache="no-store")
-        mw = re.match(r"^/(waterroad|floods|forecast|s1series|ml)/([A-Za-z0-9_\-]+\.(?:png|json|jpg))$", path)
+        mw = re.match(r"^/(waterroad|floods|forecast|s1series|ml|intel)/((?:[A-Za-z0-9_\-]+/)?[A-Za-z0-9_\-]+\.(?:png|json|jpg))$", path)
         if mw:
             f = DATA / mw.group(1) / mw.group(2)
             return self.send_bytes(f.read_bytes(), "application/json" if f.suffix == ".json" else ("image/jpeg" if f.suffix == ".jpg" else "image/png"), cache="no-cache" if f.suffix == ".json" else "public, max-age=86400") if f.exists() else self.send_bytes(b"", "text/plain", code=404)
