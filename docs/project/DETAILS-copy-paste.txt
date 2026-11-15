@@ -1,0 +1,50 @@
+WHAT IT DOES
+Falakus is an open web app that uses NASA-ISRO NISAR radar to show how Earth's surface changes, and explains each change in plain words. Radar sees through cloud and at night, so it catches changes that optical satellites miss.
+- Water: a map of open water on every NISAR pass (every 12 days), a change map (water still there / water gone), and a briefing: what happened, why, what comes next, for the water agency, farmers and families.
+- Crops: the HV channel shows plant growth and harvest field by field.
+- Ground: NISAR interferograms show ground motion in centimetres (shown after an earthquake in Panama).
+- World explorer: every NISAR pass, NASA EONET flood, fire and storm events, rain and fire layers from NASA GIBS, and ships seen by radar.
+- Time-lapse: the Aral Sea from 1985 to 2023 (Landsat), next to the radar view.
+- Every number is shown with how sure we are and the outside check behind it.
+
+HOW IT WORKS
+1. Data: calibrated NISAR L2 GCOV radar (HH and HV, 20 m) from NASA's ASF DAAC. We read only our area from each HDF5 file over HTTPS, not the 2 GB files.
+2. Preprocessing: speckle filter, decibels, local texture, and each pixel's season history. Ground steeper than 12 degrees is masked with the Copernicus elevation model, because radar shadow on slopes looks like water.
+3. Machine learning: a gradient-boosting classifier (scikit-learn) on 10 radar features per pixel, trained on Sentinel-2 photo water from clear days.
+4. Testing: each photo day is scored by a model trained only on the other days (leave-one-date-out), plus a shuffled-label control.
+5. Forecast: ten years of monthly Sentinel-2 water (95 clear months, 2017-2026) train a forecast of next month's lake size, tested only on months it never saw.
+6. Briefings: every number in a sentence is filled in by code from the measured files, never typed by hand.
+
+RESULTS (Andijan reservoir, Fergana valley, Uzbekistan, 2026)
+- Water map vs clear-day photos the model never saw: overlap (IoU) 0.63. Standard threshold rule: 0.59 with a water map, 0.30 without. Shuffled labels: 0.07.
+- A second NASA satellite agrees: ICESat-2 laser water level vs our lake area, rank correlation 0.95 (9 passes).
+- The lake fell from 42.1 to 21.1 km2 (23 Jun to 19 Oct) as water was released for cotton and wheat. NISAR saw it on every pass, including cloudy days; 15 of 24 winter photos in 2025 were lost to cloud.
+- Forecast: 30 days ahead it beats the best simple guess by 13 %. Beyond a month it is no better than the seasonal pattern, so we show the 10-year range instead.
+- Polarization: HH shows water (calm water is a mirror for radar). HV shows crops; 12.8 % of a Fergana field area lost its plant echo between July and October, mostly harvest. At the Aral, HH alone mistakes wet salt crust for water; requiring HH and HV to both be dark removes it.
+- L-band vs C-band, same week: Sentinel-1 C-band over-counted water by 21.9 km2, NISAR L-band by 4.8 km2.
+
+WHERE IT IS WRONG (WE SHOW IT)
+- In late summer the radar counts wet mud on the drying shore as water; error maps on screen show where.
+- The water model trained at Andijan did not transfer to mountain gorges (Rogun) or the Qosh Tepa canal; we say so and do not show those numbers as fact.
+- NISAR data before 21 Oct 2026 is provisional.
+
+BENEFITS AND IMPACT
+- Water agencies get reservoir area every 12 days, through cloud, for winter and spring release plans.
+- Farmers get a plain briefing on how full the lake is and what to expect next month.
+- 10.9 million people in the valley's three regions (Andijan, Fergana, Namangan; 29 % of Uzbekistan) can see where their water goes.
+- The same pipeline runs on any NISAR area in the world. Next: every big reservoir on the Amu Darya and Syr Darya, lake volume from area plus laser height, dam and slope motion watch with NISAR interferometry, and soil moisture.
+
+TOOLS
+Python (NumPy, SciPy, scikit-learn, h5py, earthaccess, Pillow), NASA CMR and Earthdata, Microsoft Planetary Computer STAC, JavaScript with MapLibre GL, HTML and CSS. Open source (MIT): every number can be rerun from the tools folder of our GitHub repo.
+
+WHAT MAKES IT CREATIVE
+- Two different NASA satellites, radar and laser, checking each other.
+- Radar against radar across 29 years at the Aral (RADARSAT-1 in 1997, NISAR in 2026).
+- Every number shown next to its outside check and its failure case.
+- Plain-language briefings instead of charts.
+
+FACTORS WE CONSIDERED
+- Cost: only free, open data; it runs on a laptop.
+- Access: plain language, works on a phone.
+- Honesty: provisional data is labelled and failures are shown.
+- AI use: AI tools helped write and debug code and text; all data, numbers and checks are our own measurements.
