@@ -7,12 +7,12 @@ All numbers are measured by our scripts (see `docs/state/handoff.md`). Do not ch
 ## Project Name
 Falakus
 
-## Summary (paste; 178 words, under 1,500 characters)
-Falakus is a water-intelligence web app for Uzbekistan built on NASA-ISRO NISAR radar. The Fergana valley's 10.9 million people depend on reservoirs that camera satellites often cannot see. In winter, when spring water releases are planned, 15 of 24 Sentinel-2 photos of the Andijan reservoir were mostly cloud. NISAR's L-band radar sees through cloud and at night, every 12 days.
+## Summary (paste; 186 words, about 1,150 characters, plain language)
+Uzbekistan is running short of water, and the people who manage it often cannot see it. 10.9 million people in the Fergana valley depend on reservoirs like Andijan. But in winter, when spring water is planned, satellite cameras lose the lake to cloud: 15 of 24 winter photos in 2025 were mostly cloud.
 
-We read calibrated NISAR GCOV radar (HH and HV) straight from NASA's files. A gradient-boosting model learns what open water looks like to the radar, using clear-day photos as labels. It then maps the water on every pass. Tested on days it never saw, it beats the classic single-threshold method (map overlap 0.63 vs 0.59), and a shuffled-label control collapses (0.07). A second NASA satellite, the ICESat-2 laser, independently agrees: water level and lake area rise and fall together (rank correlation 0.95).
+Falakus uses NISAR, the new NASA-ISRO radar satellite, which sees through cloud and at night, every 12 days. Calm water reflects the radar away like a mirror, so it shows up black. We trained a machine-learning model on clear-day photos to recognise water in the radar, then tested it on days it had never seen. It matched the photos better than the standard method (map overlap 0.63 vs 0.59). A second NASA satellite, ICESat-2's laser, confirms it: the lake's height and area rise and fall together (correlation 0.95).
 
-Falakus turns these numbers into plain-language briefings: what happened, why, and what comes next. There is a version for the water agency, for farmers and for families, plus a change map, a time series and a forecast.
+Our website turns this into plain words: what changed, why, and what comes next. This year the reservoir lost half its water to the cotton fields, and we forecast next month's level. Farmers, water managers and families can now see where their water goes, through any cloud.
 
 ## Project Demonstration (link)
 The 7-slide deck: `docs/deck/falakus-7.html`, built by `tools/build_deck7.py`.
