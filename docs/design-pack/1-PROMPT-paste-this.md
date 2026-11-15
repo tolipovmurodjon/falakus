@@ -34,7 +34,7 @@ Three cards:
 **Slide 3 · Solution**
 - One sentence: "Falakus turns every 12-day NISAR radar pass into a checked water map and a plain-language briefing for water agencies, farmers and families."
 - Hero image: change_map.jpg.
-- A small quote card: "Clear-day photos show the lake fell from 42.1 to 21.1 km² (23 Jun → 19 Oct) as water went to the fields. Refill to about 29 km² expected by February."
+- A small quote card: "Clear-day photos show the lake fell from 42.1 to 21.1 km² (23 Jun → 19 Oct) as water went to the fields. Forecast: about 26 km² by February, close to a typical February (25.6 km²)."
 
 **Slide 4 · How it works (pipeline diagram, 4 boxes with arrows)**
 1. **NISAR GCOV, ASF DAAC:** calibrated HH and HV radar, 20 m, every 12 days. We read only our box from NASA's files.

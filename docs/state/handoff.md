@@ -3,6 +3,37 @@
 Deadline: Sun 15 Nov 2026 23:59 local. Team guide (story, status, rules): docs/TEAM.md. Decisions: docs/state/DECISIONS.md.
 Repo: github.com/tolipovmurodjon/falakus (PUBLIC since 15 Nov 09:00, branch overnight → merged to main by PR).
 
+## LATEST 15 Nov ~13:00 (pull this; main and overnight are the same)
+**Start here:** `docs/design-pack/0-TODO-read-first.md` (files, steps to submit, what not to claim). The deck prompt for Claude Design is in `docs/design-pack/1-PROMPT-paste-this.md`. The form is in `docs/design-pack/text/submission-form.md`.
+
+### The numbers we stand behind (Andijan reservoir; all measured, all in `docs/design-pack/text/key-numbers.json`)
+| Claim | Number | Check |
+|---|---|---|
+| Learned water map vs photos on days it never saw | **IoU 0.63** (rule + map 0.59, rule alone 0.30, shuffled 0.07) | leave-one-date-out, 8 photo days |
+| Typical area miss | **7.6 km²** (mostly wet mud in late summer) | same test |
+| Laser check, second NASA satellite | **Spearman 0.95** (n = 9) | ICESat-2 ATL13 level vs area |
+| Lake fall, clear-day photos | **42.1 → 21.1 km²** (23 Jun → 19 Oct 2026) | Sentinel-2 |
+| Cloud blindness | **15 of 24** winter photos, 29 of 85 in 2025 | Sentinel-2 cloud mask |
+| People who depend on it | **10.9 M**, 29 % of Uzbekistan | stat.uz, 1 Oct 2025 |
+| C vs L band over drained mud | Sentinel-1 +21.9 km² vs NISAR +4.8 km² | same week, Oct 2026 |
+| **Forecast v2** (10 years, 95 clear months) | 30 days ahead: ML **4.1 km²** miss vs 4.7 (best simple guess) = 13 % better. 3 months: ties the seasonal pattern (5.9 vs 5.3) | walk-forward, `tools/forecast_v2.py` |
+| Forecast | Dec 2026 **19.5 km²** (13–26), typical 22.3 · Jan 24.7 (typical 27.1) · Feb 25.8 (typical 25.6) | `data/forecast/andijan_res_v2.json` |
+
+### Do NOT claim
+- Model at other places: Rogun IoU 0.02, Qosh Tepa 0.00. It does not transfer yet; those places are "next step".
+- The old "30 % better forecast" (3-year model): use the v2 numbers above. `tools/water_intel.py` still reads the old forecast; switch it to `andijan_res_v2.json`.
+
+### Status of each part
+| Part | State |
+|---|---|
+| Deck | `docs/deck/falakus-7.html` works with the 7 official slides; needs the team name + 6 member names. Murodjon is rebuilding it in Claude Design. |
+| Form text | Ready: `docs/project/submission-form.md`. |
+| Website | Not yet one site: 5 pages. Merge, then deploy to earth.instant.uz. |
+| Time-lapse | Aral baked only to 1987; play must take 10–15 s. |
+| Explorer | Loads with 0 errors; live movement and event briefings not done. |
+| Public project link | GitHub repo (public). |
+| Submit | Before **23:59** Tashkent. |
+
 ## STATE 15 Nov ~11:00: handoff for Zaynobiddin (Murodjon works on the presentation)
 Run the app: `python tools/nisar_tile_server.py --port 8765` → http://127.0.0.1:8765/
 - `intel.html`: **new front door.** Water briefings per water body: map, plain-language "what happened / why / what next", tabs for farmer / water agency / family, and how sure we are. Works, with 0 console errors (Andijan). Boss: "too much on it, make it clean". NEXT: cut to headline + 3 short sections + one chart, one style.
