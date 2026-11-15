@@ -19,3 +19,15 @@ Rule: answer in one or two sentences, number first, then where it comes from. If
 | 13 | What is new here vs existing tools? | Radar-against-radar across 29 years (Canada's RADARSAT-1 1997 next to NISAR 2026), every number paired with its outside check and its failure case, and a 3-month water forecast tested against baselines, for one river from source to sea. |
 | 14 | How did you use AI? | AI (Claude) helped write code and draft texts; the team ran, tested and fact-checked everything. No AI-generated images; the video is app screenshots. Disclosed on the project page. |
 | 15 | What would you do with 3 more months? | Volume, not just area: area × a shoreline height model, checked against NASA ICESat-2 laser water levels. First 3 laser passes already agree in direction: 10 Jan 2025 847.99 m (area 24.8 km²), 11 Apr 849.50 m (36.5 km²), 11 Jul 852.25 m (40.0 km²); only 3 points, so no correlation claimed yet; add Toktogul and Rogun upstream; add ALOS PALSAR for 2006–2011. |
+
+## Hard judge questions (15 Nov, honest answers)
+| Judge asks | Our answer |
+|---|---|
+| Does radar give NDVI? | No. NDVI needs red and near-infrared sunlight. Radar's HV echo comes from leaves and stems; a model can learn to turn it into an NDVI-like map on cloudy days (SAR gap-filling). We show the HV harvest map. |
+| Is your ML better than a simple rule? | Yes, on dates it never saw: map overlap 0.63 vs 0.59 for the threshold rule; shuffled labels fall to 0.07. |
+| How do you know the area is right? | A different NASA instrument, the ICESat-2 laser, agrees on water level vs area: rank correlation 0.95. Weak point: only 9 laser passes. |
+| Why trust the forecast? | 13 % better than the best simple guess, 30 days ahead only. Beyond that we show the 10-year range. |
+| Does it work outside Andijan? | Not everywhere: it failed in the Rogun gorge and at the Qosh Tepa canal, and we say so. Sardoba (flat ground) test in progress. |
+| Is NISAR data final? | Before 21 Oct 2026 it is provisional; the app labels it. |
+| Why NISAR and not Sentinel-1? | Same week in October: Sentinel-1 C-band over-counted water by 21.9 km2, NISAR L-band by 4.8 km2. L-band also passes through crops to the ground. |
+| What does a water manager do with it? | Reads the lake size every 12 days through cloud and next month's forecast, and plans winter and spring releases. |

@@ -6860,6 +6860,401 @@
     852,
     1024
    ]
+  },
+  {
+   "year": 2024,
+   "file": "2024.jpg",
+   "source": "Landsat C2 L2 (L8, L9)",
+   "collection": "landsat-c2-l2",
+   "dates": [
+    "2024-06-14",
+    "2024-09-03"
+   ],
+   "scenes": [
+    {
+     "id": "LC09_L2SP_160030_20240825_02_T1",
+     "date": "2024-08-25",
+     "platform": "landsat-9",
+     "cloud": 0.0,
+     "share": 7.8
+    },
+    {
+     "id": "LC09_L2SP_160029_20240825_02_T1",
+     "date": "2024-08-25",
+     "platform": "landsat-9",
+     "cloud": 0.0,
+     "share": 23.8
+    },
+    {
+     "id": "LC08_L2SP_161029_20240824_02_T1",
+     "date": "2024-08-24",
+     "platform": "landsat-8",
+     "cloud": 0.0,
+     "share": 20.0
+    },
+    {
+     "id": "LC09_L2SP_159030_20240818_02_T1",
+     "date": "2024-08-18",
+     "platform": "landsat-9",
+     "cloud": 0.0,
+     "share": 0.1
+    },
+    {
+     "id": "LC09_L2SP_161030_20240731_02_T1",
+     "date": "2024-07-31",
+     "platform": "landsat-9",
+     "cloud": 0.0,
+     "share": 2.4
+    },
+    {
+     "id": "LC09_L2SP_161028_20240731_02_T1",
+     "date": "2024-07-31",
+     "platform": "landsat-9",
+     "cloud": 0.0,
+     "share": 25.3
+    },
+    {
+     "id": "LC09_L2SP_161027_20240731_02_T1",
+     "date": "2024-07-31",
+     "platform": "landsat-9",
+     "cloud": 0.0,
+     "share": 1.4
+    },
+    {
+     "id": "LC08_L2SP_162030_20240730_02_T1",
+     "date": "2024-07-30",
+     "platform": "landsat-8",
+     "cloud": 0.0,
+     "share": 0.0
+    },
+    {
+     "id": "LC08_L2SP_162029_20240730_02_T1",
+     "date": "2024-07-30",
+     "platform": "landsat-8",
+     "cloud": 0.0,
+     "share": 3.0
+    },
+    {
+     "id": "LC08_L2SP_162028_20240730_02_T1",
+     "date": "2024-07-30",
+     "platform": "landsat-8",
+     "cloud": 0.0,
+     "share": 8.6
+    },
+    {
+     "id": "LC08_L2SP_162027_20240730_02_T1",
+     "date": "2024-07-30",
+     "platform": "landsat-8",
+     "cloud": 0.0,
+     "share": 0.1
+    },
+    {
+     "id": "LC08_L2SP_160027_20240614_02_T1",
+     "date": "2024-06-14",
+     "platform": "landsat-8",
+     "cloud": 0.0,
+     "share": 1.0
+    },
+    {
+     "id": "LC09_L2SP_159029_20240903_02_T1",
+     "date": "2024-09-03",
+     "platform": "landsat-9",
+     "cloud": 0.0,
+     "share": 0.6
+    },
+    {
+     "id": "LC09_L2SP_159028_20240903_02_T1",
+     "date": "2024-09-03",
+     "platform": "landsat-9",
+     "cloud": 0.0,
+     "share": 0.6
+    },
+    {
+     "id": "LC08_L2SP_160028_20240614_02_T1",
+     "date": "2024-06-14",
+     "platform": "landsat-8",
+     "cloud": 0.0,
+     "share": 5.4
+    }
+   ],
+   "scene_count": 15,
+   "cloud_pct": 0.0,
+   "from_other_years_pct": 0.0,
+   "other_years": [],
+   "scene_cloud_pct": 0.0,
+   "water_km2": 8111.8,
+   "size": [
+    852,
+    1024
+   ]
+  },
+  {
+   "year": 2025,
+   "file": "2025.jpg",
+   "source": "Landsat C2 L2 (L8, L9)",
+   "collection": "landsat-c2-l2",
+   "dates": [
+    "2025-06-01",
+    "2025-09-04"
+   ],
+   "scenes": [
+    {
+     "id": "LC09_L2SP_161029_20250904_02_T1",
+     "date": "2025-09-04",
+     "platform": "landsat-9",
+     "cloud": 0.0,
+     "share": 31.7
+    },
+    {
+     "id": "LC09_L2SP_163028_20250902_02_T1",
+     "date": "2025-09-02",
+     "platform": "landsat-9",
+     "cloud": 0.0,
+     "share": 1.4
+    },
+    {
+     "id": "LC08_L2SP_159030_20250829_02_T1",
+     "date": "2025-08-29",
+     "platform": "landsat-8",
+     "cloud": 0.0,
+     "share": 3.5
+    },
+    {
+     "id": "LC09_L2SP_160030_20250828_02_T1",
+     "date": "2025-08-28",
+     "platform": "landsat-9",
+     "cloud": 0.0,
+     "share": 2.5
+    },
+    {
+     "id": "LC08_L2SP_161030_20250827_02_T1",
+     "date": "2025-08-27",
+     "platform": "landsat-8",
+     "cloud": 0.0,
+     "share": 2.4
+    },
+    {
+     "id": "LC08_L2SP_161028_20250827_02_T1",
+     "date": "2025-08-27",
+     "platform": "landsat-8",
+     "cloud": 0.0,
+     "share": 27.3
+    },
+    {
+     "id": "LC09_L2SP_162030_20250826_02_T1",
+     "date": "2025-08-26",
+     "platform": "landsat-9",
+     "cloud": 0.0,
+     "share": 0.0
+    },
+    {
+     "id": "LC09_L2SP_162029_20250826_02_T1",
+     "date": "2025-08-26",
+     "platform": "landsat-9",
+     "cloud": 0.0,
+     "share": 2.9
+    },
+    {
+     "id": "LC08_L2SP_163027_20250825_02_T1",
+     "date": "2025-08-25",
+     "platform": "landsat-8",
+     "cloud": 0.0,
+     "share": 0.7
+    },
+    {
+     "id": "LC09_L2SP_159029_20250821_02_T1",
+     "date": "2025-08-21",
+     "platform": "landsat-9",
+     "cloud": 0.0,
+     "share": 5.5
+    },
+    {
+     "id": "LC09_L2SP_159028_20250821_02_T1",
+     "date": "2025-08-21",
+     "platform": "landsat-9",
+     "cloud": 0.0,
+     "share": 0.7
+    },
+    {
+     "id": "LC09_L2SP_160029_20250812_02_T1",
+     "date": "2025-08-12",
+     "platform": "landsat-9",
+     "cloud": 0.0,
+     "share": 7.2
+    },
+    {
+     "id": "LC08_L2SP_160028_20250601_02_T1",
+     "date": "2025-06-01",
+     "platform": "landsat-8",
+     "cloud": 0.0,
+     "share": 7.3
+    },
+    {
+     "id": "LC08_L2SP_162027_20250818_02_T1",
+     "date": "2025-08-18",
+     "platform": "landsat-8",
+     "cloud": 0.0,
+     "share": 1.4
+    },
+    {
+     "id": "LC09_L2SP_161027_20250819_02_T1",
+     "date": "2025-08-19",
+     "platform": "landsat-9",
+     "cloud": 0.0,
+     "share": 0.1
+    },
+    {
+     "id": "LC08_L2SP_160027_20250804_02_T1",
+     "date": "2025-08-04",
+     "platform": "landsat-8",
+     "cloud": 0.0,
+     "share": 0.0
+    },
+    {
+     "id": "LC09_L2SP_162028_20250709_02_T1",
+     "date": "2025-07-09",
+     "platform": "landsat-9",
+     "cloud": 0.1,
+     "share": 5.4
+    }
+   ],
+   "scene_count": 17,
+   "cloud_pct": 0.0,
+   "from_other_years_pct": 0.0,
+   "other_years": [],
+   "scene_cloud_pct": 0.0,
+   "water_km2": 7464.9,
+   "size": [
+    852,
+    1024
+   ]
+  },
+  {
+   "year": 2026,
+   "file": "2026.jpg",
+   "source": "Landsat C2 L2 (L8, L9)",
+   "collection": "landsat-c2-l2",
+   "dates": [
+    "2026-07-13",
+    "2026-09-17"
+   ],
+   "scenes": [
+    {
+     "id": "LC08_L2SP_159030_20260917_02_T1",
+     "date": "2026-09-17",
+     "platform": "landsat-8",
+     "cloud": 0.0,
+     "share": 3.5
+    },
+    {
+     "id": "LC09_L2SP_159029_20260824_02_T1",
+     "date": "2026-08-24",
+     "platform": "landsat-9",
+     "cloud": 0.0,
+     "share": 5.3
+    },
+    {
+     "id": "LC09_L2SP_159028_20260824_02_T1",
+     "date": "2026-08-24",
+     "platform": "landsat-9",
+     "cloud": 0.0,
+     "share": 0.6
+    },
+    {
+     "id": "LC08_L2SP_160030_20260823_02_T1",
+     "date": "2026-08-23",
+     "platform": "landsat-8",
+     "cloud": 0.0,
+     "share": 5.9
+    },
+    {
+     "id": "LC09_L2SP_160029_20260730_02_T1",
+     "date": "2026-07-30",
+     "platform": "landsat-9",
+     "cloud": 0.0,
+     "share": 17.3
+    },
+    {
+     "id": "LC09_L2SP_160028_20260730_02_T1",
+     "date": "2026-07-30",
+     "platform": "landsat-9",
+     "cloud": 0.0,
+     "share": 16.4
+    },
+    {
+     "id": "LC09_L2SP_160027_20260730_02_T1",
+     "date": "2026-07-30",
+     "platform": "landsat-9",
+     "cloud": 0.0,
+     "share": 0.0
+    },
+    {
+     "id": "LC08_L2SP_161030_20260729_02_T1",
+     "date": "2026-07-29",
+     "platform": "landsat-8",
+     "cloud": 0.0,
+     "share": 5.8
+    },
+    {
+     "id": "LC09_L2SP_162030_20260728_02_T1",
+     "date": "2026-07-28",
+     "platform": "landsat-9",
+     "cloud": 0.0,
+     "share": 0.0
+    },
+    {
+     "id": "LC09_L2SP_162029_20260728_02_T1",
+     "date": "2026-07-28",
+     "platform": "landsat-9",
+     "cloud": 0.0,
+     "share": 10.8
+    },
+    {
+     "id": "LC09_L2SP_162028_20260728_02_T1",
+     "date": "2026-07-28",
+     "platform": "landsat-9",
+     "cloud": 0.0,
+     "share": 19.1
+    },
+    {
+     "id": "LC08_L2SP_161029_20260713_02_T1",
+     "date": "2026-07-13",
+     "platform": "landsat-8",
+     "cloud": 0.0,
+     "share": 7.2
+    },
+    {
+     "id": "LC08_L2SP_161028_20260713_02_T1",
+     "date": "2026-07-13",
+     "platform": "landsat-8",
+     "cloud": 0.0,
+     "share": 7.8
+    },
+    {
+     "id": "LC08_L2SP_161027_20260713_02_T1",
+     "date": "2026-07-13",
+     "platform": "landsat-8",
+     "cloud": 0.0,
+     "share": 0.1
+    },
+    {
+     "id": "LC09_L2SP_162027_20260914_02_T1",
+     "date": "2026-09-14",
+     "platform": "landsat-9",
+     "cloud": 0.1,
+     "share": 0.1
+    }
+   ],
+   "scene_count": 15,
+   "cloud_pct": 0.0,
+   "from_other_years_pct": 0.0,
+   "other_years": [],
+   "scene_cloud_pct": 0.0,
+   "water_km2": 9018.8,
+   "size": [
+    852,
+    1024
+   ]
   }
  ]
 }

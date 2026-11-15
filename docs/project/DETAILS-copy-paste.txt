@@ -8,7 +8,7 @@ Falakus is an open web app that uses NASA-ISRO NISAR radar to show how Earth's s
 - Every number is shown with how sure we are and the outside check behind it.
 
 HOW IT WORKS
-1. Data: calibrated NISAR L2 GCOV radar (HH and HV, 20 m) from NASA's ASF DAAC. We read only our area from each HDF5 file over HTTPS, not the 2 GB files.
+1. Data: calibrated NISAR L2 GCOV radar (HH and HV, 20 m) from NASA's ASF DAAC.
 2. Preprocessing: speckle filter, decibels, local texture, and each pixel's season history. Ground steeper than 12 degrees is masked with the Copernicus elevation model, because radar shadow on slopes looks like water.
 3. Machine learning: a gradient-boosting classifier (scikit-learn) on 10 radar features per pixel, trained on Sentinel-2 photo water from clear days.
 4. Testing: each photo day is scored by a model trained only on the other days (leave-one-date-out), plus a shuffled-label control.
