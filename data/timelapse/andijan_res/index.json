@@ -1,0 +1,1342 @@
+{
+ "place": "andijan_res",
+ "name": "Andijan reservoir",
+ "bbox": [
+  73.028,
+  40.684,
+  73.242,
+  40.846
+ ],
+ "crs": "EPSG:3857 image over the lon/lat bbox",
+ "method": "Bake yearly cloud-free optical frames for the time-lapse player (web/timelapse.html).\n\nFor every place and every summer (Jun-Sep) from 1985 to 2026:\n  1. Find Landsat Collection 2 L2 scenes (Landsat 4/5/7/8/9) over the box on Microsoft Planetary Computer (no login);\n     small boxes use Sentinel-2 L2A from 2017 on (10 m instead of 30 m).\n  2. Crop each scene to the box in Web Mercator (EPSG:3857, so the picture sits 1:1 on the map), lowest cloud first,\n     and fill each pixel from the first scene where that pixel is clear (QA_PIXEL / SCL mask). Landsat 7 after\n     2003 (scan-line stripes) is only used last, to fill holes: its stripes are no-data, so other scenes cover them.\n  3. Natural colour: surface reflectance, one fixed stretch for all years so frames do not flash.\n  4. Open water: MNDWI = (green - swir16) / (green + swir16) > 0 on clear pixels, area in km2 on the ground.",
+ "frames": [
+  {
+   "year": 1993,
+   "file": "1993.jpg",
+   "source": "Landsat C2 L2 (L5)",
+   "collection": "landsat-c2-l2",
+   "dates": [
+    "1993-09-21",
+    "1993-09-30"
+   ],
+   "scenes": [
+    {
+     "id": "LT05_L2SP_152031_19930921_02_T1",
+     "date": "1993-09-21",
+     "platform": "landsat-5",
+     "cloud": 0.0,
+     "share": 15.0
+    },
+    {
+     "id": "LT05_L2SP_151032_19930930_02_T1",
+     "date": "1993-09-30",
+     "platform": "landsat-5",
+     "cloud": 1.0,
+     "share": 85.0
+    }
+   ],
+   "scene_count": 2,
+   "cloud_pct": 0.0,
+   "from_other_years_pct": 0.0,
+   "other_years": [],
+   "scene_cloud_pct": 0.8,
+   "water_km2": 19.9,
+   "size": [
+    1024,
+    1023
+   ]
+  },
+  {
+   "year": 1994,
+   "file": "1994.jpg",
+   "source": "Landsat C2 L2 (L5)",
+   "collection": "landsat-c2-l2",
+   "dates": [
+    "1994-06-29",
+    "1994-09-08"
+   ],
+   "scenes": [
+    {
+     "id": "LT05_L2SP_152031_19940908_02_T2",
+     "date": "1994-09-08",
+     "platform": "landsat-5",
+     "cloud": 1.0,
+     "share": 1.2
+    },
+    {
+     "id": "LT05_L2SP_152032_19940823_02_T1",
+     "date": "1994-08-23",
+     "platform": "landsat-5",
+     "cloud": 1.0,
+     "share": 24.5
+    },
+    {
+     "id": "LT05_L2SP_151032_19940629_02_T1",
+     "date": "1994-06-29",
+     "platform": "landsat-5",
+     "cloud": 2.0,
+     "share": 74.3
+    }
+   ],
+   "scene_count": 3,
+   "cloud_pct": 0.0,
+   "from_other_years_pct": 0.0,
+   "other_years": [],
+   "scene_cloud_pct": 1.7,
+   "water_km2": 60.2,
+   "size": [
+    1024,
+    1023
+   ]
+  },
+  {
+   "year": 1996,
+   "file": "1996.jpg",
+   "source": "Landsat C2 L2 (L5)",
+   "collection": "landsat-c2-l2",
+   "dates": [
+    "1996-09-06",
+    "1996-09-06"
+   ],
+   "scenes": [
+    {
+     "id": "LT05_L2SP_151032_19960906_02_T1",
+     "date": "1996-09-06",
+     "platform": "landsat-5",
+     "cloud": 0.0,
+     "share": 100.0
+    }
+   ],
+   "scene_count": 1,
+   "cloud_pct": 0.0,
+   "from_other_years_pct": 0.0,
+   "other_years": [],
+   "scene_cloud_pct": 0.0,
+   "water_km2": 46.8,
+   "size": [
+    1024,
+    1023
+   ]
+  },
+  {
+   "year": 1997,
+   "file": "1997.jpg",
+   "source": "Landsat C2 L2 (L5)",
+   "collection": "landsat-c2-l2",
+   "dates": [
+    "1997-09-09",
+    "1997-09-09"
+   ],
+   "scenes": [
+    {
+     "id": "LT05_L2SP_151032_19970909_02_T1",
+     "date": "1997-09-09",
+     "platform": "landsat-5",
+     "cloud": 2.0,
+     "share": 100.0
+    }
+   ],
+   "scene_count": 1,
+   "cloud_pct": 0.0,
+   "from_other_years_pct": 0.0,
+   "other_years": [],
+   "scene_cloud_pct": 2.0,
+   "water_km2": 16.8,
+   "size": [
+    1024,
+    1023
+   ]
+  },
+  {
+   "year": 1998,
+   "file": "1998.jpg",
+   "source": "Landsat C2 L2 (L5)",
+   "collection": "landsat-c2-l2",
+   "dates": [
+    "1998-08-11",
+    "1998-09-03"
+   ],
+   "scenes": [
+    {
+     "id": "LT05_L2SP_152031_19980903_02_T1",
+     "date": "1998-09-03",
+     "platform": "landsat-5",
+     "cloud": 0.0,
+     "share": 15.7
+    },
+    {
+     "id": "LT05_L2SP_152032_19980903_02_T1",
+     "date": "1998-09-03",
+     "platform": "landsat-5",
+     "cloud": 1.0,
+     "share": 57.8
+    },
+    {
+     "id": "LT05_L2SP_151032_19980811_02_T1",
+     "date": "1998-08-11",
+     "platform": "landsat-5",
+     "cloud": 2.0,
+     "share": 26.5
+    }
+   ],
+   "scene_count": 3,
+   "cloud_pct": 0.0,
+   "from_other_years_pct": 0.0,
+   "other_years": [],
+   "scene_cloud_pct": 1.1,
+   "water_km2": 48.7,
+   "size": [
+    1024,
+    1023
+   ]
+  },
+  {
+   "year": 1999,
+   "file": "1999.jpg",
+   "source": "Landsat C2 L2 (L7)",
+   "collection": "landsat-c2-l2",
+   "dates": [
+    "1999-09-23",
+    "1999-09-23"
+   ],
+   "scenes": [
+    {
+     "id": "LE07_L2SP_151032_19990923_02_T1",
+     "date": "1999-09-23",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 100.0
+    }
+   ],
+   "scene_count": 1,
+   "cloud_pct": 0.0,
+   "from_other_years_pct": 0.0,
+   "other_years": [],
+   "scene_cloud_pct": 0.0,
+   "water_km2": 35.7,
+   "size": [
+    1024,
+    1023
+   ]
+  },
+  {
+   "year": 2000,
+   "file": "2000.jpg",
+   "source": "Landsat C2 L2 (L7)",
+   "collection": "landsat-c2-l2",
+   "dates": [
+    "2000-08-24",
+    "2000-09-16"
+   ],
+   "scenes": [
+    {
+     "id": "LE07_L2SP_152032_20000916_02_T1",
+     "date": "2000-09-16",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 46.4
+    },
+    {
+     "id": "LE07_L2SP_151032_20000824_02_T1",
+     "date": "2000-08-24",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 53.6
+    }
+   ],
+   "scene_count": 2,
+   "cloud_pct": 0.0,
+   "from_other_years_pct": 0.0,
+   "other_years": [],
+   "scene_cloud_pct": 0.0,
+   "water_km2": 16.4,
+   "size": [
+    1024,
+    1023
+   ]
+  },
+  {
+   "year": 2001,
+   "file": "2001.jpg",
+   "source": "Landsat C2 L2 (L7)",
+   "collection": "landsat-c2-l2",
+   "dates": [
+    "2001-09-28",
+    "2001-09-28"
+   ],
+   "scenes": [
+    {
+     "id": "LE07_L2SP_151032_20010928_02_T1",
+     "date": "2001-09-28",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 100.0
+    }
+   ],
+   "scene_count": 1,
+   "cloud_pct": 0.0,
+   "from_other_years_pct": 0.0,
+   "other_years": [],
+   "scene_cloud_pct": 0.0,
+   "water_km2": 23.5,
+   "size": [
+    1024,
+    1023
+   ]
+  },
+  {
+   "year": 2002,
+   "file": "2002.jpg",
+   "source": "Landsat C2 L2 (L7)",
+   "collection": "landsat-c2-l2",
+   "dates": [
+    "2002-08-30",
+    "2002-09-22"
+   ],
+   "scenes": [
+    {
+     "id": "LE07_L2SP_152032_20020922_02_T1",
+     "date": "2002-09-22",
+     "platform": "landsat-7",
+     "cloud": 2.0,
+     "share": 40.9
+    },
+    {
+     "id": "LE07_L2SP_152031_20020922_02_T1",
+     "date": "2002-09-22",
+     "platform": "landsat-7",
+     "cloud": 3.0,
+     "share": 0.0
+    },
+    {
+     "id": "LE07_L2SP_151032_20020830_02_T1",
+     "date": "2002-08-30",
+     "platform": "landsat-7",
+     "cloud": 24.0,
+     "share": 59.1
+    }
+   ],
+   "scene_count": 3,
+   "cloud_pct": 0.0,
+   "from_other_years_pct": 0.0,
+   "other_years": [],
+   "scene_cloud_pct": 15.0,
+   "water_km2": 30.8,
+   "size": [
+    1024,
+    1023
+   ]
+  },
+  {
+   "year": 2003,
+   "file": "2003.jpg",
+   "source": "Landsat C2 L2 (L7)",
+   "collection": "landsat-c2-l2",
+   "dates": [
+    "2003-07-23",
+    "2003-09-18"
+   ],
+   "scenes": [
+    {
+     "id": "LE07_L2SP_151032_20030918_02_T1",
+     "date": "2003-09-18",
+     "platform": "landsat-7",
+     "cloud": 2.0,
+     "share": 78.2
+    },
+    {
+     "id": "LE07_L2SP_152032_20030824_02_T1",
+     "date": "2003-08-24",
+     "platform": "landsat-7",
+     "cloud": 2.0,
+     "share": 1.2
+    },
+    {
+     "id": "LE07_L2SP_152031_20030824_02_T1",
+     "date": "2003-08-24",
+     "platform": "landsat-7",
+     "cloud": 14.0,
+     "share": 0.1
+    },
+    {
+     "id": "LE07_L2SP_151032_20030801_02_T1",
+     "date": "2003-08-01",
+     "platform": "landsat-7",
+     "cloud": 5.0,
+     "share": 20.4
+    },
+    {
+     "id": "LE07_L2SP_152031_20030723_02_T1",
+     "date": "2003-07-23",
+     "platform": "landsat-7",
+     "cloud": 17.0,
+     "share": 0.0
+    }
+   ],
+   "scene_count": 5,
+   "cloud_pct": 0.0,
+   "from_other_years_pct": 0.0,
+   "other_years": [],
+   "scene_cloud_pct": 2.6,
+   "water_km2": 36.7,
+   "size": [
+    1024,
+    1023
+   ]
+  },
+  {
+   "year": 2004,
+   "file": "2004.jpg",
+   "source": "Landsat C2 L2 (L7)",
+   "collection": "landsat-c2-l2",
+   "dates": [
+    "2004-06-16",
+    "2004-09-27"
+   ],
+   "scenes": [
+    {
+     "id": "LE07_L2SP_152031_20040927_02_T1",
+     "date": "2004-09-27",
+     "platform": "landsat-7",
+     "cloud": 1.0,
+     "share": 7.2
+    },
+    {
+     "id": "LE07_L2SP_152032_20040927_02_T1",
+     "date": "2004-09-27",
+     "platform": "landsat-7",
+     "cloud": 2.0,
+     "share": 13.7
+    },
+    {
+     "id": "LE07_L2SP_151032_20040616_02_T1",
+     "date": "2004-06-16",
+     "platform": "landsat-7",
+     "cloud": 3.0,
+     "share": 66.0
+    },
+    {
+     "id": "LE07_L2SP_152032_20040709_02_T1",
+     "date": "2004-07-09",
+     "platform": "landsat-7",
+     "cloud": 2.0,
+     "share": 2.0
+    },
+    {
+     "id": "LE07_L2SP_151032_20040904_02_T1",
+     "date": "2004-09-04",
+     "platform": "landsat-7",
+     "cloud": 13.0,
+     "share": 1.9
+    },
+    {
+     "id": "LE07_L2SP_152031_20040725_02_T1",
+     "date": "2004-07-25",
+     "platform": "landsat-7",
+     "cloud": 10.0,
+     "share": 0.1
+    },
+    {
+     "id": "LE07_L2SP_151032_20040819_02_T1",
+     "date": "2004-08-19",
+     "platform": "landsat-7",
+     "cloud": 15.0,
+     "share": 9.1
+    }
+   ],
+   "scene_count": 7,
+   "cloud_pct": 0.0,
+   "from_other_years_pct": 0.0,
+   "other_years": [],
+   "scene_cloud_pct": 4.0,
+   "water_km2": 58.1,
+   "size": [
+    1024,
+    1023
+   ]
+  },
+  {
+   "year": 2005,
+   "file": "2005.jpg",
+   "source": "Landsat C2 L2 (L7)",
+   "collection": "landsat-c2-l2",
+   "dates": [
+    "2005-06-03",
+    "2005-09-30"
+   ],
+   "scenes": [
+    {
+     "id": "LE07_L2SP_151032_20050907_02_T1",
+     "date": "2005-09-07",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 77.3
+    },
+    {
+     "id": "LE07_L2SP_152031_20050930_02_T1",
+     "date": "2005-09-30",
+     "platform": "landsat-7",
+     "cloud": 1.0,
+     "share": 1.2
+    },
+    {
+     "id": "LE07_L2SP_152032_20050914_02_T1",
+     "date": "2005-09-14",
+     "platform": "landsat-7",
+     "cloud": 1.0,
+     "share": 6.0
+    },
+    {
+     "id": "LE07_L2SP_152031_20050914_02_T1",
+     "date": "2005-09-14",
+     "platform": "landsat-7",
+     "cloud": 1.0,
+     "share": 0.1
+    },
+    {
+     "id": "LE07_L2SP_151032_20050721_02_T1",
+     "date": "2005-07-21",
+     "platform": "landsat-7",
+     "cloud": 5.0,
+     "share": 6.6
+    },
+    {
+     "id": "LE07_L2SP_152032_20050626_02_T1",
+     "date": "2005-06-26",
+     "platform": "landsat-7",
+     "cloud": 4.0,
+     "share": 0.2
+    },
+    {
+     "id": "LE07_L2SP_151032_20050603_02_T1",
+     "date": "2005-06-03",
+     "platform": "landsat-7",
+     "cloud": 6.0,
+     "share": 8.5
+    }
+   ],
+   "scene_count": 7,
+   "cloud_pct": 0.0,
+   "from_other_years_pct": 0.0,
+   "other_years": [],
+   "scene_cloud_pct": 0.9,
+   "water_km2": 31.9,
+   "size": [
+    1024,
+    1023
+   ]
+  },
+  {
+   "year": 2006,
+   "file": "2006.jpg",
+   "source": "Landsat C2 L2 (L7)",
+   "collection": "landsat-c2-l2",
+   "dates": [
+    "2006-07-24",
+    "2006-09-26"
+   ],
+   "scenes": [
+    {
+     "id": "LE07_L2SP_152032_20060917_02_T1",
+     "date": "2006-09-17",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 20.9
+    },
+    {
+     "id": "LE07_L2SP_151032_20060926_02_T1",
+     "date": "2006-09-26",
+     "platform": "landsat-7",
+     "cloud": 1.0,
+     "share": 58.0
+    },
+    {
+     "id": "LE07_L2SP_152031_20060816_02_T1",
+     "date": "2006-08-16",
+     "platform": "landsat-7",
+     "cloud": 2.0,
+     "share": 3.6
+    },
+    {
+     "id": "LE07_L2SP_152032_20060816_02_T1",
+     "date": "2006-08-16",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 7.3
+    },
+    {
+     "id": "LE07_L2SP_151032_20060724_02_T1",
+     "date": "2006-07-24",
+     "platform": "landsat-7",
+     "cloud": 1.0,
+     "share": 10.3
+    }
+   ],
+   "scene_count": 5,
+   "cloud_pct": 0.0,
+   "from_other_years_pct": 0.0,
+   "other_years": [],
+   "scene_cloud_pct": 0.8,
+   "water_km2": 19.6,
+   "size": [
+    1024,
+    1023
+   ]
+  },
+  {
+   "year": 2007,
+   "file": "2007.jpg",
+   "source": "Landsat C2 L2 (L7)",
+   "collection": "landsat-c2-l2",
+   "dates": [
+    "2007-09-13",
+    "2007-09-29"
+   ],
+   "scenes": [
+    {
+     "id": "LE07_L2SP_151032_20070913_02_T1",
+     "date": "2007-09-13",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 78.4
+    },
+    {
+     "id": "LE07_L2SP_152032_20070920_02_T1",
+     "date": "2007-09-20",
+     "platform": "landsat-7",
+     "cloud": 1.0,
+     "share": 13.6
+    },
+    {
+     "id": "LE07_L2SP_151032_20070929_02_T1",
+     "date": "2007-09-29",
+     "platform": "landsat-7",
+     "cloud": 6.0,
+     "share": 8.0
+    }
+   ],
+   "scene_count": 3,
+   "cloud_pct": 0.0,
+   "from_other_years_pct": 0.0,
+   "other_years": [],
+   "scene_cloud_pct": 0.6,
+   "water_km2": 15.1,
+   "size": [
+    1024,
+    1023
+   ]
+  },
+  {
+   "year": 2008,
+   "file": "2008.jpg",
+   "source": "Landsat C2 L2 (L5)",
+   "collection": "landsat-c2-l2",
+   "dates": [
+    "2008-07-05",
+    "2008-08-13"
+   ],
+   "scenes": [
+    {
+     "id": "LT05_L2SP_152032_20080813_02_T1",
+     "date": "2008-08-13",
+     "platform": "landsat-5",
+     "cloud": 1.0,
+     "share": 55.4
+    },
+    {
+     "id": "LT05_L2SP_151032_20080705_02_T1",
+     "date": "2008-07-05",
+     "platform": "landsat-5",
+     "cloud": 2.0,
+     "share": 44.6
+    }
+   ],
+   "scene_count": 2,
+   "cloud_pct": 0.0,
+   "from_other_years_pct": 0.0,
+   "other_years": [],
+   "scene_cloud_pct": 1.4,
+   "water_km2": 18.2,
+   "size": [
+    1024,
+    1023
+   ]
+  },
+  {
+   "year": 2009,
+   "file": "2009.jpg",
+   "source": "Landsat C2 L2 (L5)",
+   "collection": "landsat-c2-l2",
+   "dates": [
+    "2009-09-10",
+    "2009-09-10"
+   ],
+   "scenes": [
+    {
+     "id": "LT05_L2SP_151032_20090910_02_T1",
+     "date": "2009-09-10",
+     "platform": "landsat-5",
+     "cloud": 3.0,
+     "share": 100.0
+    }
+   ],
+   "scene_count": 1,
+   "cloud_pct": 0.0,
+   "from_other_years_pct": 0.0,
+   "other_years": [],
+   "scene_cloud_pct": 3.0,
+   "water_km2": 28.2,
+   "size": [
+    1024,
+    1023
+   ]
+  },
+  {
+   "year": 2010,
+   "file": "2010.jpg",
+   "source": "Landsat C2 L2 (L5)",
+   "collection": "landsat-c2-l2",
+   "dates": [
+    "2010-08-28",
+    "2010-09-04"
+   ],
+   "scenes": [
+    {
+     "id": "LT05_L2SP_152031_20100904_02_T1",
+     "date": "2010-09-04",
+     "platform": "landsat-5",
+     "cloud": 0.0,
+     "share": 11.2
+    },
+    {
+     "id": "LT05_L2SP_152032_20100904_02_T1",
+     "date": "2010-09-04",
+     "platform": "landsat-5",
+     "cloud": 1.0,
+     "share": 51.1
+    },
+    {
+     "id": "LT05_L2SP_151032_20100828_02_T1",
+     "date": "2010-08-28",
+     "platform": "landsat-5",
+     "cloud": 1.0,
+     "share": 37.7
+    }
+   ],
+   "scene_count": 3,
+   "cloud_pct": 0.0,
+   "from_other_years_pct": 0.0,
+   "other_years": [],
+   "scene_cloud_pct": 0.9,
+   "water_km2": 43.4,
+   "size": [
+    1024,
+    1023
+   ]
+  },
+  {
+   "year": 2011,
+   "file": "2011.jpg",
+   "source": "Landsat C2 L2 (L5)",
+   "collection": "landsat-c2-l2",
+   "dates": [
+    "2011-07-14",
+    "2011-09-07"
+   ],
+   "scenes": [
+    {
+     "id": "LT05_L2SP_152032_20110907_02_T1",
+     "date": "2011-09-07",
+     "platform": "landsat-5",
+     "cloud": 0.0,
+     "share": 65.9
+    },
+    {
+     "id": "LT05_L2SP_152031_20110907_02_T1",
+     "date": "2011-09-07",
+     "platform": "landsat-5",
+     "cloud": 0.0,
+     "share": 0.1
+    },
+    {
+     "id": "LT05_L2SP_151032_20110815_02_T1",
+     "date": "2011-08-15",
+     "platform": "landsat-5",
+     "cloud": 11.0,
+     "share": 31.3
+    },
+    {
+     "id": "LT05_L2SP_152032_20110822_02_T1",
+     "date": "2011-08-22",
+     "platform": "landsat-5",
+     "cloud": 1.0,
+     "share": 0.1
+    },
+    {
+     "id": "LT05_L2SP_151032_20110714_02_T1",
+     "date": "2011-07-14",
+     "platform": "landsat-5",
+     "cloud": 32.0,
+     "share": 2.6
+    }
+   ],
+   "scene_count": 5,
+   "cloud_pct": 0.0,
+   "from_other_years_pct": 0.0,
+   "other_years": [],
+   "scene_cloud_pct": 4.3,
+   "water_km2": 22.7,
+   "size": [
+    1024,
+    1023
+   ]
+  },
+  {
+   "year": 2012,
+   "file": "2012.jpg",
+   "source": "Landsat C2 L2 (L7)",
+   "collection": "landsat-c2-l2",
+   "dates": [
+    "2012-08-09",
+    "2012-09-10"
+   ],
+   "scenes": [
+    {
+     "id": "LE07_L2SP_152032_20120901_02_T1",
+     "date": "2012-09-01",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 48.7
+    },
+    {
+     "id": "LE07_L2SP_152031_20120901_02_T1",
+     "date": "2012-09-01",
+     "platform": "landsat-7",
+     "cloud": 0.0,
+     "share": 0.4
+    },
+    {
+     "id": "LE07_L2SP_151032_20120910_02_T1",
+     "date": "2012-09-10",
+     "platform": "landsat-7",
+     "cloud": 3.0,
+     "share": 29.1
+    },
+    {
+     "id": "LE07_L2SP_152032_20120816_02_T1",
+     "date": "2012-08-16",
+     "platform": "landsat-7",
+     "cloud": 1.0,
+     "share": 4.4
+    },
+    {
+     "id": "LE07_L2SP_152031_20120816_02_T1",
+     "date": "2012-08-16",
+     "platform": "landsat-7",
+     "cloud": 2.0,
+     "share": 0.1
+    },
+    {
+     "id": "LE07_L2SP_151032_20120809_02_T1",
+     "date": "2012-08-09",
+     "platform": "landsat-7",
+     "cloud": 3.0,
+     "share": 17.3
+    }
+   ],
+   "scene_count": 6,
+   "cloud_pct": 0.0,
+   "from_other_years_pct": 0.0,
+   "other_years": [],
+   "scene_cloud_pct": 1.4,
+   "water_km2": 20.2,
+   "size": [
+    1024,
+    1023
+   ]
+  },
+  {
+   "year": 2013,
+   "file": "2013.jpg",
+   "source": "Landsat C2 L2 (L8)",
+   "collection": "landsat-c2-l2",
+   "dates": [
+    "2013-06-01",
+    "2013-08-27"
+   ],
+   "scenes": [
+    {
+     "id": "LC08_L2SP_152031_20130827_02_T1",
+     "date": "2013-08-27",
+     "platform": "landsat-8",
+     "cloud": 0.5,
+     "share": 49.2
+    },
+    {
+     "id": "LC08_L2SP_152032_20130726_02_T1",
+     "date": "2013-07-26",
+     "platform": "landsat-8",
+     "cloud": 1.4,
+     "share": 16.7
+    },
+    {
+     "id": "LC08_L2SP_151032_20130601_02_T1",
+     "date": "2013-06-01",
+     "platform": "landsat-8",
+     "cloud": 8.0,
+     "share": 34.1
+    }
+   ],
+   "scene_count": 3,
+   "cloud_pct": 0.0,
+   "from_other_years_pct": 0.0,
+   "other_years": [],
+   "scene_cloud_pct": 3.2,
+   "water_km2": 29.2,
+   "size": [
+    1024,
+    1023
+   ]
+  },
+  {
+   "year": 2014,
+   "file": "2014.jpg",
+   "source": "Landsat C2 L2 (L8)",
+   "collection": "landsat-c2-l2",
+   "dates": [
+    "2014-07-22",
+    "2014-08-30"
+   ],
+   "scenes": [
+    {
+     "id": "LC08_L2SP_152031_20140830_02_T1",
+     "date": "2014-08-30",
+     "platform": "landsat-8",
+     "cloud": 0.0,
+     "share": 60.6
+    },
+    {
+     "id": "LC08_L2SP_152032_20140830_02_T1",
+     "date": "2014-08-30",
+     "platform": "landsat-8",
+     "cloud": 0.7,
+     "share": 9.0
+    },
+    {
+     "id": "LC08_L2SP_151032_20140722_02_T1",
+     "date": "2014-07-22",
+     "platform": "landsat-8",
+     "cloud": 1.1,
+     "share": 30.4
+    }
+   ],
+   "scene_count": 3,
+   "cloud_pct": 0.0,
+   "from_other_years_pct": 0.0,
+   "other_years": [],
+   "scene_cloud_pct": 0.4,
+   "water_km2": 13.1,
+   "size": [
+    1024,
+    1023
+   ]
+  },
+  {
+   "year": 2015,
+   "file": "2015.jpg",
+   "source": "Landsat C2 L2 (L8)",
+   "collection": "landsat-c2-l2",
+   "dates": [
+    "2015-07-16",
+    "2015-09-11"
+   ],
+   "scenes": [
+    {
+     "id": "LC08_L2SP_152031_20150817_02_T1",
+     "date": "2015-08-17",
+     "platform": "landsat-8",
+     "cloud": 0.1,
+     "share": 63.1
+    },
+    {
+     "id": "LC08_L2SP_152032_20150716_02_T1",
+     "date": "2015-07-16",
+     "platform": "landsat-8",
+     "cloud": 1.9,
+     "share": 9.2
+    },
+    {
+     "id": "LC08_L2SP_151032_20150911_02_T1",
+     "date": "2015-09-11",
+     "platform": "landsat-8",
+     "cloud": 12.2,
+     "share": 27.7
+    }
+   ],
+   "scene_count": 3,
+   "cloud_pct": 0.0,
+   "from_other_years_pct": 0.0,
+   "other_years": [],
+   "scene_cloud_pct": 3.6,
+   "water_km2": 28.6,
+   "size": [
+    1024,
+    1023
+   ]
+  },
+  {
+   "year": 2016,
+   "file": "2016.jpg",
+   "source": "Landsat C2 L2 (L8)",
+   "collection": "landsat-c2-l2",
+   "dates": [
+    "2016-09-20",
+    "2016-09-29"
+   ],
+   "scenes": [
+    {
+     "id": "LC08_L2SP_152032_20160920_02_T1",
+     "date": "2016-09-20",
+     "platform": "landsat-8",
+     "cloud": 0.7,
+     "share": 73.1
+    },
+    {
+     "id": "LC08_L2SP_151032_20160929_02_T1",
+     "date": "2016-09-29",
+     "platform": "landsat-8",
+     "cloud": 1.7,
+     "share": 26.9
+    }
+   ],
+   "scene_count": 2,
+   "cloud_pct": 0.0,
+   "from_other_years_pct": 0.0,
+   "other_years": [],
+   "scene_cloud_pct": 1.0,
+   "water_km2": 22.0,
+   "size": [
+    1024,
+    1023
+   ]
+  },
+  {
+   "year": 2017,
+   "file": "2017.jpg",
+   "source": "Sentinel-2 L2A",
+   "collection": "sentinel-2-l2a",
+   "dates": [
+    "2017-06-08",
+    "2017-09-16"
+   ],
+   "scenes": [
+    {
+     "id": "S2A_MSIL2A_20170916T055631_R091_T43TCF_20210202T034608",
+     "date": "2017-09-16",
+     "platform": "Sentinel-2A",
+     "cloud": 1.2,
+     "share": 98.1
+    },
+    {
+     "id": "S2A_MSIL2A_20170608T055641_R091_T43TCF_20210209T211855",
+     "date": "2017-06-08",
+     "platform": "Sentinel-2A",
+     "cloud": 1.2,
+     "share": 1.9
+    }
+   ],
+   "scene_count": 2,
+   "cloud_pct": 0.0,
+   "from_other_years_pct": 0.0,
+   "other_years": [],
+   "scene_cloud_pct": 1.2,
+   "water_km2": 33.1,
+   "size": [
+    1024,
+    1023
+   ]
+  },
+  {
+   "year": 2018,
+   "file": "2018.jpg",
+   "source": "Sentinel-2 L2A",
+   "collection": "sentinel-2-l2a",
+   "dates": [
+    "2018-07-23",
+    "2018-09-06"
+   ],
+   "scenes": [
+    {
+     "id": "S2B_MSIL2A_20180906T055629_R091_T43TCF_20201011T092257",
+     "date": "2018-09-06",
+     "platform": "Sentinel-2B",
+     "cloud": 0.1,
+     "share": 99.7
+    },
+    {
+     "id": "S2A_MSIL2A_20180723T055641_R091_T43TCF_20201011T185912",
+     "date": "2018-07-23",
+     "platform": "Sentinel-2A",
+     "cloud": 0.6,
+     "share": 0.2
+    }
+   ],
+   "scene_count": 2,
+   "cloud_pct": 0.0,
+   "from_other_years_pct": 0.0,
+   "other_years": [],
+   "scene_cloud_pct": 0.1,
+   "water_km2": 26.3,
+   "size": [
+    1024,
+    1023
+   ]
+  },
+  {
+   "year": 2019,
+   "file": "2019.jpg",
+   "source": "Sentinel-2 L2A",
+   "collection": "sentinel-2-l2a",
+   "dates": [
+    "2019-09-21",
+    "2019-09-21"
+   ],
+   "scenes": [
+    {
+     "id": "S2B_MSIL2A_20190921T055639_R091_T43TCF_20201004T154613",
+     "date": "2019-09-21",
+     "platform": "Sentinel-2B",
+     "cloud": 0.3,
+     "share": 99.9
+    }
+   ],
+   "scene_count": 1,
+   "cloud_pct": 0.1,
+   "from_other_years_pct": 0.0,
+   "other_years": [],
+   "scene_cloud_pct": 0.3,
+   "water_km2": 19.6,
+   "size": [
+    1024,
+    1023
+   ]
+  },
+  {
+   "year": 2020,
+   "file": "2020.jpg",
+   "source": "Sentinel-2 L2A",
+   "collection": "sentinel-2-l2a",
+   "dates": [
+    "2020-09-10",
+    "2020-09-10"
+   ],
+   "scenes": [
+    {
+     "id": "S2A_MSIL2A_20200910T055641_R091_T43TCF_20200912T033517",
+     "date": "2020-09-10",
+     "platform": "Sentinel-2A",
+     "cloud": 0.2,
+     "share": 99.8
+    }
+   ],
+   "scene_count": 1,
+   "cloud_pct": 0.2,
+   "from_other_years_pct": 0.0,
+   "other_years": [],
+   "scene_cloud_pct": 0.2,
+   "water_km2": 11.7,
+   "size": [
+    1024,
+    1023
+   ]
+  },
+  {
+   "year": 2021,
+   "file": "2021.jpg",
+   "source": "Sentinel-2 L2A",
+   "collection": "sentinel-2-l2a",
+   "dates": [
+    "2021-08-11",
+    "2021-09-20"
+   ],
+   "scenes": [
+    {
+     "id": "S2A_MSIL2A_20210915T055641_R091_T43TCF_20210915T174621",
+     "date": "2021-09-15",
+     "platform": "Sentinel-2A",
+     "cloud": 0.1,
+     "share": 98.8
+    },
+    {
+     "id": "S2B_MSIL2A_20210811T055639_R091_T43TCF_20210811T195824",
+     "date": "2021-08-11",
+     "platform": "Sentinel-2B",
+     "cloud": 0.1,
+     "share": 0.7
+    },
+    {
+     "id": "S2B_MSIL2A_20210920T055629_R091_T43TCF_20210920T180644",
+     "date": "2021-09-20",
+     "platform": "Sentinel-2B",
+     "cloud": 0.3,
+     "share": 0.2
+    }
+   ],
+   "scene_count": 3,
+   "cloud_pct": 0.3,
+   "from_other_years_pct": 0.0,
+   "other_years": [],
+   "scene_cloud_pct": 0.1,
+   "water_km2": 14.9,
+   "size": [
+    1024,
+    1023
+   ]
+  },
+  {
+   "year": 2022,
+   "file": "2022.jpg",
+   "source": "Sentinel-2 L2A",
+   "collection": "sentinel-2-l2a",
+   "dates": [
+    "2022-07-22",
+    "2022-07-22"
+   ],
+   "scenes": [
+    {
+     "id": "S2A_MSIL2A_20220722T055651_R091_T43TCF_20220724T082928",
+     "date": "2022-07-22",
+     "platform": "Sentinel-2A",
+     "cloud": 0.0,
+     "share": 100.0
+    }
+   ],
+   "scene_count": 1,
+   "cloud_pct": 0.0,
+   "from_other_years_pct": 0.0,
+   "other_years": [],
+   "scene_cloud_pct": 0.0,
+   "water_km2": 42.6,
+   "size": [
+    1024,
+    1023
+   ]
+  },
+  {
+   "year": 2023,
+   "file": "2023.jpg",
+   "source": "Sentinel-2 L2A",
+   "collection": "sentinel-2-l2a",
+   "dates": [
+    "2023-07-12",
+    "2023-07-12"
+   ],
+   "scenes": [
+    {
+     "id": "S2B_MSIL2A_20230712T055639_R091_T43TCF_20230712T102327",
+     "date": "2023-07-12",
+     "platform": "Sentinel-2B",
+     "cloud": 0.0,
+     "share": 99.8
+    }
+   ],
+   "scene_count": 1,
+   "cloud_pct": 0.2,
+   "from_other_years_pct": 0.0,
+   "other_years": [],
+   "scene_cloud_pct": 0.0,
+   "water_km2": 42.1,
+   "size": [
+    1024,
+    1023
+   ]
+  },
+  {
+   "year": 2024,
+   "file": "2024.jpg",
+   "source": "Sentinel-2 L2A",
+   "collection": "sentinel-2-l2a",
+   "dates": [
+    "2024-09-04",
+    "2024-09-04"
+   ],
+   "scenes": [
+    {
+     "id": "S2B_MSIL2A_20240904T055639_R091_T43TCF_20240904T102550",
+     "date": "2024-09-04",
+     "platform": "Sentinel-2B",
+     "cloud": 0.0,
+     "share": 99.8
+    }
+   ],
+   "scene_count": 1,
+   "cloud_pct": 0.2,
+   "from_other_years_pct": 0.0,
+   "other_years": [],
+   "scene_cloud_pct": 0.0,
+   "water_km2": 30.3,
+   "size": [
+    1024,
+    1023
+   ]
+  },
+  {
+   "year": 2025,
+   "file": "2025.jpg",
+   "source": "Sentinel-2 L2A",
+   "collection": "sentinel-2-l2a",
+   "dates": [
+    "2025-08-27",
+    "2025-08-27"
+   ],
+   "scenes": [
+    {
+     "id": "S2A_MSIL2A_20250827T060301_R091_T43TCF_20250827T085317",
+     "date": "2025-08-27",
+     "platform": "Sentinel-2A",
+     "cloud": 0.0,
+     "share": 99.9
+    }
+   ],
+   "scene_count": 1,
+   "cloud_pct": 0.1,
+   "from_other_years_pct": 0.0,
+   "other_years": [],
+   "scene_cloud_pct": 0.0,
+   "water_km2": 22.9,
+   "size": [
+    1024,
+    1023
+   ]
+  },
+  {
+   "year": 2026,
+   "file": "2026.jpg",
+   "source": "Sentinel-2 L2A",
+   "collection": "sentinel-2-l2a",
+   "dates": [
+    "2026-07-31",
+    "2026-07-31"
+   ],
+   "scenes": [
+    {
+     "id": "S2C_MSIL2A_20260731T055641_R091_T43TCF_20260731T092712",
+     "date": "2026-07-31",
+     "platform": "Sentinel-2C",
+     "cloud": 0.2,
+     "share": 99.9
+    }
+   ],
+   "scene_count": 1,
+   "cloud_pct": 0.1,
+   "from_other_years_pct": 0.0,
+   "other_years": [],
+   "scene_cloud_pct": 0.2,
+   "water_km2": 28.6,
+   "size": [
+    1024,
+    1023
+   ]
+  }
+ ]
+}

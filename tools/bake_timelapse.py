@@ -78,7 +78,7 @@ def inv_mercator(y):
     return math.degrees(2 * math.atan(math.exp(y / 6378137.0)) - math.pi / 2)
 
 
-def crop(collection, item, assets, bbox, size, win=None):
+def crop(collection, item, assets, bbox, size, win=None, fmt="npy", shrink=1, extra=""):
     """Crop only the window (rows, cols) of our 3857 grid that the scene covers: a 1/3 of the bytes on a slow link."""
     H, W = grid_shape(bbox, size)
     rs, cs = win or (slice(0, H), slice(0, W))
@@ -86,9 +86,17 @@ def crop(collection, item, assets, bbox, size, win=None):
     w = bbox[0] + cs.start / W * (bbox[2] - bbox[0]); e = bbox[0] + cs.stop / W * (bbox[2] - bbox[0])
     n = inv_mercator(yt - rs.start / H * (yt - yb)); s = inv_mercator(yt - rs.stop / H * (yt - yb))
     q = "&".join(f"assets={a}" for a in assets)
-    url = (f"{PC}/data/v1/item/bbox/{w:.6f},{s:.6f},{e:.6f},{n:.6f}/{cs.stop - cs.start}x{rs.stop - rs.start}.npy"
-           f"?collection={collection}&item={item}&{q}&resampling=nearest&dst_crs=epsg:3857")
-    return np.load(io.BytesIO(fetch(url, 40)))  # bands in asset order, then the valid mask (0/255)
+    ow, oh = -(-(cs.stop - cs.start) // shrink), -(-(rs.stop - rs.start) // shrink)
+    url = (f"{PC}/data/v1/item/bbox/{w:.6f},{s:.6f},{e:.6f},{n:.6f}/{ow}x{oh}.{fmt}"
+           f"?collection={collection}&item={item}&{q}&resampling=nearest&dst_crs=epsg:3857{extra}")
+    raw = fetch(url, 40)
+    if fmt == "npy":
+        return np.load(io.BytesIO(raw))  # bands in asset order, then the valid mask (0/255)
+    return np.asarray(Image.open(io.BytesIO(raw)).convert("RGBA"))
+
+
+def up(a, k, h, w):
+    return np.repeat(np.repeat(a, k, axis=-2), k, axis=-1)[..., :h, :w]
 
 
 def mercator_y(lat):
@@ -123,22 +131,35 @@ def candidates(place, year):
 
 
 def read_scene(collection, it, bbox, size):
-    """Return reflectance (red, green, blue, swir16) as float32, clear mask, valid mask."""
+    """Return (red, green, blue reflectance, MNDWI) as float32, clear mask, valid mask, grid window."""
     win = rect(it, bbox, *grid_shape(bbox, size))
     if win[0].stop - win[0].start < 2 or win[1].stop - win[1].start < 2:
         return None
+    # Picture: server-rendered 8-bit WebP (reflectance 0..0.32, alpha = valid), about 20x fewer bytes than raw bands.
+    # Masks and water: raw green, swir16 and the QA band at 1/4 resolution, upsampled.
+    h, w = win[0].stop - win[0].start, win[1].stop - win[1].start
     if collection == "sentinel-2-l2a":
-        a = crop(collection, it["id"], ["B04", "B03", "B02", "B11", "SCL"], bbox, size, win)
         off = 1000 if str(it["properties"].get("s2:processing_baseline", "0")) >= "04.00" else 0
-        refl = (a[:4].astype(np.float32) - off) / 10000.0
-        valid = (a[-1] > 0) & (a[4] > 0)
-        clear = valid & ~np.isin(a[4], [0, 1, 3, 8, 9, 10])
+        pic = crop(collection, it["id"], ["B04", "B03", "B02"], bbox, size, win, "webp", extra=f"&rescale={off},{off + 3200}")
+        lo = crop(collection, it["id"], ["B03", "B11", "SCL"], bbox, size, win, shrink=4)
+        g, sw = (lo[0].astype(np.float32) - off) / 1e4, (lo[1].astype(np.float32) - off) / 1e4
+        lo_valid = (lo[-1] > 0) & (lo[2] > 0)
+        lo_clear = lo_valid & ~np.isin(lo[2], [0, 1, 3, 8, 9, 10])
     else:
-        a = crop(collection, it["id"], ["red", "green", "blue", "swir16", "qa_pixel"], bbox, size, win)
-        refl = a[:4].astype(np.float32) * 2.75e-5 - 0.2
-        qa = a[4].astype(np.uint16)
-        valid = (a[-1] > 0) & ((qa & 1) == 0) & (a[0] > 0)
-        clear = valid & ((qa & (0b11010)) == 0)  # bits 1 dilated cloud, 3 cloud, 4 cloud shadow
+        pic = crop(collection, it["id"], ["red", "green", "blue"], bbox, size, win, "webp", extra="&rescale=7273,18909")
+        lo = crop(collection, it["id"], ["green", "swir16", "qa_pixel"], bbox, size, win, shrink=4)
+        g, sw = lo[0].astype(np.float32) * 2.75e-5 - 0.2, lo[1].astype(np.float32) * 2.75e-5 - 0.2
+        qa = lo[2].astype(np.uint16)
+        lo_valid = (lo[-1] > 0) & ((qa & 1) == 0) & (lo[0] > 0)
+        lo_clear = lo_valid & ((qa & 0b11010) == 0)  # bits 1 dilated cloud, 3 cloud, 4 cloud shadow
+    pic = pic[:h, :w]
+    with np.errstate(all="ignore"):
+        mndwi = np.nan_to_num((g - sw) / (g + sw), nan=-1)
+    valid = (pic[..., 3] > 0) & up(lo_valid, 4, *pic.shape[:2])
+    clear = valid & up(lo_clear, 4, *pic.shape[:2])
+    rgb = pic[..., :3].astype(np.float32).transpose(2, 0, 1) / 255 * 0.32
+    refl = np.concatenate([rgb, up(mndwi, 4, *pic.shape[:2])[None].astype(np.float32)])
+    win = (slice(win[0].start, win[0].start + pic.shape[0]), slice(win[1].start, win[1].start + pic.shape[1]))
     return refl, clear, valid, win
 
 
@@ -240,14 +261,12 @@ def bake_year(place, year, index):
     clear_pct = float(filled.mean() * 100)
     hole = ~filled & any_fill
     comp[:, hole] = backup[:, hole]  # cloudy-but-valid pixels where no clear view exists
-    r, g, b, sw = comp
+    r, g, b, mndwi = comp  # 4th band is MNDWI from the 1/4-resolution green and swir16
     rgb = np.stack([r, g, b], -1)
     rgb = np.clip(rgb / 0.32, 0, 1) ** (1 / 1.5)  # one fixed stretch for every year
     img = Image.fromarray((rgb * 255).astype(np.uint8))
     d = OUT / place; d.mkdir(parents=True, exist_ok=True)
     img.save(d / f"{year}.jpg", quality=75, optimize=True)
-    with np.errstate(all="ignore"):
-        mndwi = (g - sw) / (g + sw)
     water = filled & (mndwi > 0)
     km2 = pixel_km2(bbox, *water.shape)
     water_km2 = float((water * km2[:, None]).sum())
@@ -306,7 +325,33 @@ def bake(place):
     print(f"{place}: {len(save_frame(place, None, None))} frames", flush=True)
 
 
+def finish(place):
+    """Clean-up pass on the baked JPEGs: fill black specks (Landsat 7 stripe pixels the 1/4-res mask let through)
+    from a 5x5 median of the picture, and re-encode anything over 150 KB so the player starts fast."""
+    from scipy import ndimage
+    for f in sorted((OUT / place).glob("*.jpg")):
+        a = np.asarray(Image.open(f).convert("RGB"))
+        dark = a.max(-1) < 14
+        big = f.stat().st_size > 150 * 1024
+        if not dark.any() and not big:
+            continue
+        if dark.any():
+            med = np.stack([ndimage.median_filter(a[..., c], size=5) for c in range(3)], -1)
+            a = np.where(dark[..., None], med, a)
+        q = 75
+        while True:
+            Image.fromarray(a).save(f, quality=q, optimize=True)
+            if f.stat().st_size <= 150 * 1024 or q <= 60:
+                break
+            q -= 5
+        print(f"{place} {f.stem}: {int(dark.sum())} specks filled, {f.stat().st_size // 1024} KB (q{q})", flush=True)
+
+
 if __name__ == "__main__":
+    if sys.argv[1:2] == ["--finish"]:
+        for p in sys.argv[2:]:
+            finish(p)
+        sys.exit()
     if sys.argv[1:2] == ["--one"]:
         place, year = sys.argv[2], int(sys.argv[3])
         try:

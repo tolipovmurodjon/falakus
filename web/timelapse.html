@@ -10,6 +10,7 @@
  --shadow:0 1px 2px rgba(20,18,13,.05),0 4px 12px rgba(20,18,13,.05);
  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Arial,sans-serif;--mono:ui-monospace,"Cascadia Mono",Consolas,monospace}
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html,body{margin:0;height:100%;background:var(--paper);color:var(--ink);font:14px/1.45 var(--sans);overflow:hidden}
 #map{position:absolute;inset:0}
 .panel{background:rgba(255,255,255,.95);border-radius:14px;box-shadow:var(--shadow);backdrop-filter:blur(6px)}
@@ -49,7 +50,7 @@ button.small.on{background:var(--teal-s);color:var(--teal2);border-color:transpa
 #loader.hide{display:none}
 #loadpill{position:absolute;top:12px;left:50%;transform:translateX(-50%);padding:5px 10px;font:600 11.5px var(--mono);color:var(--ink2);z-index:4}
 #src .gap{color:var(--ink3)}
-#src{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
 .maplibregl-ctrl-top-right{top:4px}
 @media (max-width:640px){
  #top{top:8px;left:8px;gap:6px}
@@ -160,7 +161,7 @@ function buildChart(){
 
 function buildTicks(){
  const n=S.frames.length,t=$("ticks");let h="";
- const step=S.mode==="radar"?2:(n>24?5:(n>12?2:1));
+ const narrow=$("track").clientWidth<320;const step=S.mode==="radar"?(narrow?3:2):(n>24?(narrow?10:5):(n>12?2:1));
  S.frames.forEach((f,i)=>{const x=n>1?i/(n-1)*100:0;const major=S.mode==="radar"?i%step===0:(f.year%step===0||i===0||i===n-1);
   h+=`<div class="tick${major?" major":""}" style="left:${x}%"></div>`;
   if(major&&(S.mode==="radar"||f.year%step===0))h+=`<div class="tlab" style="left:${x}%">${f.tick}</div>`});
@@ -170,8 +171,9 @@ function buildTicks(){
 async function loadOptical(place){
  const ix=await (await fetch(`/timelapse/${place}/index.json`)).json();
  return{bbox:ix.bbox,method:"Open water = MNDWI > 0 on clear pixels, Jun-Sep composite",frames:ix.frames.map(f=>({url:`/timelapse/${place}/${f.file}`,big:String(f.year),tick:String(f.year),year:f.year,label:String(f.year),water:f.water_km2,
-  src:`<b>${f.source.replace("Landsat C2 L2 ","Landsat ")}</b> · ${short(f.dates[0])} to ${short(f.dates[1])} · ${f.scene_count} scenes · cloud ${f.scene_cloud_pct} %${f.from_other_years_pct>0?`<br><span class="gap">${Math.round(f.from_other_years_pct)} % of area from ${f.other_years.join(", ")}</span>`:""}`}))}}
-function short(d){const m=new Date(d+"T00:00:00Z");return m.toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric",timeZone:"UTC"})}
+  src:`<b>${f.source.replace("Landsat C2 L2 (","Landsat ").replace(")","").replace(/L(\d)/g,"$1")}</b> · ${span(f)} · ${f.scene_count} scenes · cloud ${f.scene_cloud_pct} %${f.from_other_years_pct>=0.5?`<br><span class="gap">${Math.round(f.from_other_years_pct)} % of area from ${f.other_years.join(", ")}</span>`:""}`}))}}
+function span(f){const own=(f.scenes||[]).map(x=>x.date).filter(d=>d.startsWith(String(f.year))).sort();const a=own[0]||f.dates[0],b=own[own.length-1]||f.dates[1];return short(a)+" to "+short(b)}
+function short(d){const m=new Date(d+"T00:00:00Z");return m.toLocaleDateString("en-GB",{day:"numeric",month:"short",timeZone:"UTC"})}
 async function loadRadar(place){
  const fj=await (await fetch(`/science/${place}/frames.json`)).json();
  let wr={};try{const w=await (await fetch(`/waterroad/${place}.json`)).json();(w.passes||[]).forEach(p=>wr[p.date]=p.water_km2)}catch(e){}
@@ -205,16 +207,16 @@ async function choose(place,mode){
  const b=data.bbox;map.fitBounds([[b[0],b[1]],[b[2],b[3]]],{padding:{top:70,bottom:innerWidth<640?230:170,left:20,right:20},duration:600});
  S.pos=0;lastK=-1;buildTicks();buildChart();
  history.replaceState(null,"",`?place=${place}${mode==="radar"?"&mode=radar":""}`);
- preload(data.frames,token,()=>{setupLayers(b);render();$("loader").classList.add("hide");setTimeout(()=>{if(token===S.token)play()},400)})}
+ preload(data.frames,token,()=>{setupLayers(b);render();$("loader").classList.add("hide");setTimeout(()=>{if(token===S.token)play()},100)})}
 
 // ---------- playback: hold each frame, then crossfade to the next ----------
 const HOLD=.35,TOTAL=12;let raf=0,last=0,clock=0;
 function ease(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2}
-function tick(ts){if(!S.playing)return;const dt=Math.min(.25,(ts-last)/1000);last=ts;
+function tick(ts){if(!S.playing)return;const dt=Math.min(1,(ts-last)/1000);last=ts;
  const n=S.frames.length,per=TOTAL/Math.max(1,n)/S.speed;clock+=dt/per;
  if(clock>=n-1){if(S.loop&&clock>=n-1+3){clock=0}else if(!S.loop){clock=n-1;S.pos=n-1;render();pause();return}}
  const i=Math.floor(clock),fr=clock-i;S.pos=Math.min(n-1,i+(fr<HOLD?0:ease((fr-HOLD)/(1-HOLD))));render();raf=requestAnimationFrame(tick)}
-function play(){if(!S.frames.length)return;if(S.pos>=S.frames.length-1)S.pos=0;clock=Math.round(S.pos);S.playing=true;last=performance.now();
+function play(){if(!S.frames.length)return;window.__playAt=window.__playAt||performance.now();if(S.pos>=S.frames.length-1)S.pos=0;clock=Math.round(S.pos);S.playing=true;last=performance.now();
  $("playicon").innerHTML='<path d="M3 2h3.5v12H3zM9.5 2H13v12H9.5z"/>';$("play").setAttribute("aria-label","Pause");raf=requestAnimationFrame(tick)}
 function pause(){S.playing=false;cancelAnimationFrame(raf);$("playicon").innerHTML='<path d="M4 2l10 6-10 6z"/>';$("play").setAttribute("aria-label","Play")}
 $("play").onclick=()=>S.playing?pause():play();
