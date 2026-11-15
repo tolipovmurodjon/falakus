@@ -123,7 +123,7 @@ const CAT={
  "Volcanoes":{c:"#A1460B",k:"volcano",on:true,say:"Volcano",g:[["f","M3 21l6-10h6l6 10z"],["s","M12 8V3.5M8.5 6.5L7 4M15.5 6.5L17 4"]]},
  "Sea and Lake Ice":{c:"#0E8FC4",k:"ice",on:true,say:"Iceberg or sea ice",g:[["s","M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9M9.5 4.5L12 7l2.5-2.5M9.5 19.5L12 17l2.5 2.5"]]},
  "Dust and Haze":{c:"#9A6A14",k:"dust",on:true,say:"Dust or haze",g:[["s","M3 8.5h11a2.5 2.5 0 1 0-2.5-2.5M3 12.5h16M3 16.5h10a2.5 2.5 0 1 1-2.5 2.5"]]},
- "Earthquakes":{c:"#9F1D1D",k:"quake",on:false,say:"Earthquake",g:[["s","M2.5 12h4l2.2-6 3.6 12 2.4-8 1.8 2h5"]]},
+ "Earthquakes":{c:"#9F1D1D",k:"quake",on:true,say:"Earthquake",g:[["s","M2.5 12h4l2.2-6 3.6 12 2.4-8 1.8 2h5"]]},
  "Landslides":{c:"#7A5230",k:"slide",on:true,say:"Landslide",g:[["s","M3 20h18M5 20l7-11 4 5 3-2"]]},
  "Drought":{c:"#B88A0C",k:"drought",on:true,say:"Drought",g:[["s","M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0-8 0M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5"]]},
  "Snow":{c:"#5B6B7E",k:"snow",on:true,say:"Heavy snow",g:[["s","M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9"]]}
@@ -132,7 +132,7 @@ const catOf=c=>CAT[c]||{c:"#6B7280",k:"dot",on:true,say:c,g:[["f","M12 12m-4 0a4
 const glyphSVG=c=>`<svg viewBox="0 0 24 24" aria-hidden="true">${catOf(c).g.map(([m,d])=>m==="f"?`<path d="${d}" fill="currentColor" stroke="none"/>`:`<path d="${d}"/>`).join("")}</svg>`;
 
 // ---------- state + URL hash ----------
-const S={date:addDays(TODAY,-1),hhmm:"12:00",step:"d",active:["labels","nisar_mosaic","quakes_live","events","tracks","base_sat"],op:{},cmp:false,dateB:null,win:7,cats:null,view:null,swipe:.5,flat:false,terrain:false,tl:false,go:null};
+const S={date:addDays(TODAY,-1),hhmm:"12:00",step:"d",active:["labels","nisar_mosaic","heat_events","heat_quakes","quakes_live","events","tracks","base_sat"],op:{},cmp:false,dateB:null,win:7,cats:null,view:null,swipe:.5,flat:false,terrain:false,tl:false,go:null};
 function readHash(){const h=new URLSearchParams(location.hash.slice(1));
  if(h.get("d")&&/^\d{4}-\d\d-\d\d$/.test(h.get("d")))S.date=h.get("d");
  if(/^\d\d:\d\d$/.test(h.get("t")||""))S.hhmm=h.get("t");
