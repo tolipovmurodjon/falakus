@@ -1,0 +1,49 @@
+{
+ "site": "fergana_fields",
+ "provider": "iceye",
+ "licence": "CC-BY 4.0",
+ "source_url": "https://iceye-open-data-catalog.s3.amazonaws.com/data/spot-extended-area/ICEYE_TX4Y9G_20260804T091335Z_10246507_X53_SLEA/ICEYE_TX4Y9G_20260804T091335Z_10246507_X53_SLEA_GRD.tif",
+ "stac_item": "https://iceye-open-data-catalog.s3.amazonaws.com/stac-items/2026/08/ICEYE_TX4Y9G_20260804T091335Z_10246507_X53_SLEA.json",
+ "datetime_utc": "2026-08-04T09:13:41Z",
+ "resolution_m": [
+  1.08,
+  1
+ ],
+ "resolution_note": "[range, azimuth] metres",
+ "mode": "spotlight (SLEA)",
+ "pol": "VV",
+ "geometry": {
+  "orbit": "descending",
+  "incidence_deg": 27.6,
+  "pixel_spacing_m": [
+   0.500012,
+   0.500004
+  ],
+  "looks": [
+   1,
+   2
+  ],
+  "platform": "ICEYE-X53"
+ },
+ "bbox": [
+  71.3323,
+  40.4499,
+  71.5683,
+  40.6263
+ ],
+ "png": "fergana_fields_2026-08-04.png",
+ "png_px": [
+  1997,
+  1951
+ ],
+ "png_m_per_px": 10.0,
+ "overview_factor_read": 8,
+ "stretch_db": [
+  52.7,
+  61.7
+ ],
+ "attribution": "Contains ICEYE Open Data (c) ICEYE, licensed under CC BY 4.0; cropped, reprojected and stretched by falakus",
+ "by_eye": {
+  "note": "Whole scene resampled to 10 m, about NISAR's pixel size. X-band (3 cm) VV, not L-band: it shows field edges, canals, villages and fish ponds sharply, but its brightness is not comparable to NISAR dB."
+ }
+}

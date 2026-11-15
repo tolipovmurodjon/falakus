@@ -1,0 +1,49 @@
+{
+ "site": "fergana_zoom",
+ "provider": "iceye",
+ "licence": "CC-BY 4.0",
+ "source_url": "https://iceye-open-data-catalog.s3.amazonaws.com/data/spot-extended-area/ICEYE_TX4Y9G_20260804T091335Z_10246507_X53_SLEA/ICEYE_TX4Y9G_20260804T091335Z_10246507_X53_SLEA_GRD.tif",
+ "stac_item": "https://iceye-open-data-catalog.s3.amazonaws.com/stac-items/2026/08/ICEYE_TX4Y9G_20260804T091335Z_10246507_X53_SLEA.json",
+ "datetime_utc": "2026-08-04T09:13:41Z",
+ "resolution_m": [
+  1.08,
+  1
+ ],
+ "resolution_note": "[range, azimuth] metres",
+ "mode": "spotlight (SLEA)",
+ "pol": "VV",
+ "geometry": {
+  "orbit": "descending",
+  "incidence_deg": 27.6,
+  "pixel_spacing_m": [
+   0.500012,
+   0.500004
+  ],
+  "looks": [
+   1,
+   2
+  ],
+  "platform": "ICEYE-X53"
+ },
+ "bbox": [
+  71.4197,
+  40.5469,
+  71.4337,
+  40.5577
+ ],
+ "png": "fergana_zoom_2026-08-04.png",
+ "png_px": [
+  2368,
+  2388
+ ],
+ "png_m_per_px": 0.5,
+ "overview_factor_read": 1,
+ "stretch_db": [
+  50.2,
+  61.7
+ ],
+ "attribution": "Contains ICEYE Open Data (c) ICEYE, licensed under CC BY 4.0; cropped, reprojected and stretched by falakus",
+ "by_eye": {
+  "note": "0.5 m pixel spacing, ~1 m resolution (file metadata). One NISAR 20 m pixel = 40 x 40 of these pixels."
+ }
+}

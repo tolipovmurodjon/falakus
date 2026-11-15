@@ -1,0 +1,23 @@
+{
+ "place": "andijan_res",
+ "bbox": [
+  73.02399687968372,
+  40.6804663130263,
+  73.24625854410294,
+  40.849456303513286
+ ],
+ "passes": 11,
+ "first": "2026-06-20",
+ "last": "2026-10-30",
+ "pixel_km2": 0.0016,
+ "pixel_km2_from_bbox": 0.001729,
+ "km2": {
+  "every_pass": 19.1,
+  "most_passes": 5.6,
+  "few_passes": 17.8,
+  "ever": 42.4,
+  "dropped_speckle": 18.3
+ },
+ "half": 6,
+ "method": "Learned NISAR water maps (tools/ml_water.py), one per pass; count how many passes call each pixel water."
+}

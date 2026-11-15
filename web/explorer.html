@@ -4,25 +4,26 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Falakus Explorer</title>
-<meta name="description" content="NISAR radar with NASA GIBS layers and EONET events on one timeline: fires, rain, floods, snow, soil moisture.">
+<meta name="description" content="Where NISAR looked, where disasters struck: NISAR radar, NASA GIBS layers, EONET events and USGS earthquakes on one map.">
 <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.0.0/dist/maplibre-gl.css">
+<link rel="stylesheet" href="site.css">
 <link rel="stylesheet" href="explorer.css">
 </head>
 <body>
+<script src="site.js"></script>
 <div id="maps">
  <div id="map" role="region" aria-label="Map"></div>
  <div id="mapB" hidden aria-hidden="true"></div>
  <div id="swipe" hidden><div class="knob" aria-label="Drag to compare" role="slider" tabindex="0"></div><span class="tagA mono" id="tagA"></span><span class="tagB mono" id="tagB"></span></div>
 </div>
 
-<header id="top">
- <a class="brand" href="./" title="Back to the Falakus story"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><span>Falakus <b>Explorer</b></span></a>
+<div id="top">
  <div class="search">
   <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg>
   <input id="q" type="search" placeholder="Search a place or lat, lon" autocomplete="off" aria-label="Search places">
   <div id="qres" class="qres" hidden></div>
  </div>
-</header>
+</div>
 
 <aside id="panel" aria-label="Layers and events">
  <div class="ph" id="ph">
@@ -33,12 +34,9 @@
   </div>
  </div>
  <div class="pb" id="tab-layers">
-  <section class="order" id="orderBox">
-   <div class="sh">Shown on the map, top first</div>
-   <ol id="order"></ol>
-  </section>
   <div id="groups"></div>
-  <p class="foot">Imagery: NASA GIBS (no login). Events: NASA EONET v3 and USGS. Radar: NASA-ISRO NISAR GCOV via ASF DAAC. NISAR is the core data; the other layers give context to explain what the radar sees.</p>
+  <details class="order"><summary>Drawing order of image layers</summary><ol id="order"></ol></details>
+  <p class="foot">Data: NASA-ISRO NISAR (ASF DAAC), NASA GIBS, NASA EONET, USGS.</p>
  </div>
  <div class="pb" id="tab-events" hidden>
   <div class="evtools">
@@ -51,6 +49,7 @@
   <div id="evlist" class="evlist"></div>
  </div>
 </aside>
+<div id="mapleg" class="mapleg" aria-label="Map key" hidden></div>
 
 <div id="card" class="card" hidden><button class="x" id="cardx" aria-label="Close" title="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button><div id="cardbody"></div></div>
 <div id="toast" class="toast" hidden></div>
@@ -59,7 +58,7 @@
  <div class="tlc">
   <button class="ib" id="prev" title="Previous step (left arrow)" aria-label="Previous step"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
   <input type="date" id="date" class="mono" aria-label="Date">
-  <select id="hhmm" class="mono" aria-label="Time UTC" title="Time (UTC), used by 30-minute layers"></select>
+  <select id="hhmm" class="mono" aria-label="Time UTC" title="Time (UTC), used by the 30-minute rain layer"></select>
   <button class="ib" id="next" title="Next step (right arrow)" aria-label="Next step"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
   <button class="ib" id="play" title="Play through time (space)" aria-label="Play"><svg viewBox="0 0 24 24" id="playico"><path d="M8 5l11 7-11 7z"/></svg></button>
   <select id="step" aria-label="Step"><option value="d">1 day</option><option value="h">30 min</option></select>

@@ -44,7 +44,8 @@ def main():
     if DIST.exists():
         shutil.rmtree(DIST)
     paths = set()
-    pages = ["/dash.html", "/timelapse.html", "/explorer.html", "/explorer.js", "/explorer.css", "/index.html", "/stops.js"]
+    pages = ["/index.html", "/site.css", "/site.js", "/app.html", "/timelapse.html", "/explorer.html", "/explorer.js", "/explorer.css",
+             "/intel.html", "/dash.html", "/stops.js"]
     for p in pages:
         b = get(p)
         if b is None:
@@ -58,7 +59,14 @@ def main():
         d = ps["date"]
         paths |= {f"/ml/water_pred_{d}.png", f"/waterroad/wl_andijan_res_{d}.png"} | {f"/science/andijan_res/img/{d}_{k}.webp" for k in ("hh", "hv", "rgb", "change")}
     paths |= {"/waterroad/andijan_res.json", "/forecast/andijan_res.json", "/ml/water_model.json", "/science/andijan_res/frames.json",
-              "/waterroad/population.json", "/waterroad/photo_andijan_cloudy.jpg", "/api/events.json", "/api/science_boxes.json"}
+              "/waterroad/population.json", "/waterroad/photo_andijan_cloudy.jpg", "/api/events.json", "/api/science_boxes.json",
+              # one-site dashboard (web/index.html uses relative paths, so list its files here)
+              "/ml/water_freq.png", "/ml/water_freq.json", "/intel/andijan_res.json", "/intel/index.json", "/forecast/andijan_res_v2.json",
+              "/waterroad/photos.json", "/waterroad/fergana.json", "/waterroad/fergana_hvchange.png", "/waterroad/fergana_hvchange.json",
+              "/hires/fergana_fields/fergana_fields_2026-08-04.json", "/hires/fergana_fields/fergana_fields_2026-08-04.png",
+              "/hires/fergana_zoom/fergana_zoom_2026-08-04.json", "/hires/fergana_zoom/fergana_zoom_2026-08-04.png"}
+    # explorer heatmaps and any other small files the explorer reads from data/explorer/
+    paths |= {"/" + f.relative_to(ROOT / "data").as_posix() for f in (ROOT / "data" / "explorer").rglob("*") if f.is_file()}
     # time-lapse frames
     for place in ("aral", "andijan_res", "tashkent"):
         b = get(f"/timelapse/{place}/index.json")

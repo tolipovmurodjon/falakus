@@ -1,0 +1,33 @@
+/* Falakus one-site style (Falak tokens). Every page links this file; the shared header comes from site.js. */
+:root{
+ --paper:#F6F3ED;--paper2:#EFEAE0;--card:#FFFFFF;--ink:#14120D;--ink2:#514B3F;--ink3:#736A5B;--line:#E5DFD2;
+ --teal:#17515F;--teal2:#0F3A45;--teal-s:#E4EDEF;
+ --water:#2F6FD1;--photo:#C2410C;--down:#B42318;--up:#067647;--warn:#B54708;
+ --shadow:0 1px 2px rgba(20,18,13,.05),0 4px 12px rgba(20,18,13,.05);
+ --shadow2:0 2px 6px rgba(20,18,13,.06),0 12px 32px rgba(20,18,13,.10);
+ --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Arial,sans-serif;
+ --mono:ui-monospace,"SF Mono","Cascadia Mono",Consolas,monospace;
+ --hdr:56px;
+}
+.fk-hdr{position:sticky;top:0;z-index:50;height:var(--hdr);display:flex;align-items:center;gap:18px;padding:0 18px;background:var(--card);border-bottom:1px solid var(--line);font-family:var(--sans)}
+.fk-brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);white-space:nowrap}
+.fk-brand svg{flex:none}
+.fk-brand b{font:800 17px/1 var(--sans);letter-spacing:-.02em}
+.fk-brand span{font:500 12.5px/1.2 var(--sans);color:var(--ink3)}
+.fk-tabs{display:flex;gap:2px;background:var(--paper2);padding:3px;border-radius:11px;margin-left:auto}
+.fk-tabs a{display:flex;align-items:center;gap:7px;padding:7px 13px;border-radius:8px;color:var(--ink2);text-decoration:none;font:650 13px/1 var(--sans);white-space:nowrap}
+.fk-tabs a svg{opacity:.75}
+.fk-tabs a:hover{color:var(--ink)}
+.fk-tabs a.on{background:var(--card);color:var(--teal2);box-shadow:0 1px 2px rgba(20,18,13,.10)}
+.fk-tabs a.on svg{opacity:1}
+.fk-live{display:flex;align-items:center;gap:7px;font:600 12px var(--sans);color:var(--ink2);white-space:nowrap}
+.fk-live i{width:8px;height:8px;border-radius:50%;background:var(--up);box-shadow:0 0 0 3px rgba(6,118,71,.15)}
+html.embed .fk-hdr{display:none}
+@media (max-width:900px){.fk-brand span,.fk-live{display:none}}
+@media (max-width:640px){
+ .fk-hdr{gap:8px;padding:0 10px}
+ .fk-tabs{margin-left:auto;overflow-x:auto}
+ .fk-tabs a{padding:7px 9px;font-size:12.5px}
+ .fk-tabs a .fk-long,.fk-tabs a svg{display:none}
+ .fk-brand svg{width:24px;height:24px}
+}

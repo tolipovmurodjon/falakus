@@ -79,6 +79,19 @@ PRESETS = {  # ICEYE time, mode and resolution are read from the file itself; s1
                 "note": "S1 pass is 5 h before ICEYE. The 5 S1 hits sit on the Yenikapi anchorage group and one ship in the "
                         "strait mouth; the 6 misses are in the traffic lanes (ships that sailed on). The 5 hi-res vessels "
                         "with no S1 blob are small craft (< ~40 m) or the faint ones at the frame edge. Half the frame is city."}),
+    "fergana_fields": dict(  # the only ICEYE open scene over our story: Fergana valley fields, 4 Aug 2026 (inside NISAR's 27 Jul-10 Aug gap)
+        provider="iceye", when="2026-08-04T09:13:41Z", mode="", pol="",
+        url=ICEYE + "spot-extended-area/ICEYE_TX4Y9G_20260804T091335Z_10246507_X53_SLEA/ICEYE_TX4Y9G_20260804T091335Z_10246507_X53_SLEA_GRD.tif",
+        stac="https://iceye-open-data-catalog.s3.amazonaws.com/stac-items/2026/08/ICEYE_TX4Y9G_20260804T091335Z_10246507_X53_SLEA.json",
+        bbox=[71.3323, 40.4499, 71.5683, 40.6263], m_per_px=10.0, s1_bbox=None, find_ships=False,
+        by_eye={"note": "Whole scene resampled to 10 m, about NISAR's pixel size. X-band (3 cm) VV, not L-band: it shows field "
+                        "edges, canals, villages and fish ponds sharply, but its brightness is not comparable to NISAR dB."}),
+    "fergana_zoom": dict(  # 1.2 km window of the same scene at full pixel spacing: fish ponds, a canal, field edges
+        provider="iceye", when="2026-08-04T09:13:41Z", mode="", pol="",
+        url=ICEYE + "spot-extended-area/ICEYE_TX4Y9G_20260804T091335Z_10246507_X53_SLEA/ICEYE_TX4Y9G_20260804T091335Z_10246507_X53_SLEA_GRD.tif",
+        stac="https://iceye-open-data-catalog.s3.amazonaws.com/stac-items/2026/08/ICEYE_TX4Y9G_20260804T091335Z_10246507_X53_SLEA.json",
+        bbox=[71.4197, 40.5469, 71.4337, 40.5577], m_per_px=0.5, s1_bbox=None, find_ships=False,
+        by_eye={"note": "0.5 m pixel spacing, ~1 m resolution (file metadata). One NISAR 20 m pixel = 40 x 40 of these pixels."}),
     "bangkok_airport": dict(  # Suvarnabhumi east remote/cargo aprons; no Tashkent apron scene exists in any of the 3 archives
         provider="umbra", when="2025-11-16T04:33:19Z", mode="SPOTLIGHT, GEC (geocoded)", pol="VV", resolution_m=[0.25, 0.125],
         url=UMBRA + "Suvarnabhumi%20International%20Airport%2C%20Thailand/18fdf34a-2743-4eb3-9208-8085c627017b/"
