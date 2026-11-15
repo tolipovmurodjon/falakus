@@ -102,7 +102,7 @@ html.embed .tl{height:100vh;height:100dvh}
 <script>
 // Places that have baked frames. A place whose data fails to load is hidden, never shown broken.
 // (Tashkent and Andijan optical frames are not baked yet; add entries here once data/timelapse/<id>/index.json exists.)
-const PLACES=[{id:"aral",name:"Aral Sea",mode:"optical"},{id:"andijan_res",name:"Andijan reservoir",mode:"radar"}];
+const PLACES=[{id:"aral",name:"Aral Sea",mode:"optical"},{id:"andijan",src:"andijan_res",name:"Andijan",mode:"optical"},{id:"andijan_res",name:"Andijan NISAR",mode:"radar"},{id:"tashkent",name:"Tashkent",mode:"optical"}];
 const $=id=>document.getElementById(id);
 const TOTAL=12,HOLD=.45,SPEEDS=[1,.5,2];          // one full loop = TOTAL seconds at 1×; last frame holds 2 slots
 const REDUCED=matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -114,15 +114,16 @@ const MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","De
 const dshort=d=>{const[y,m,dd]=d.split("-");return +dd+" "+MON[m-1]};
 const dlong=d=>dshort(d)+" "+d.slice(0,4);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const sat=s=>{const m=/\(([^)]*)\)/.exec(s||"");return m?"Landsat "+m[1].replace(/L/g,"").replace(/, /g," + "):(s||"")};
+const sat=s=>{if(/^Sentinel/.test(s||""))return "Sentinel-2";const m=/\(([^)]*)\)/.exec(s||"");return m?"Landsat "+m[1].replace(/L/g,"").replace(/, /g," + "):(s||"")};
 
 // ---------- data (relative URLs, so the site works under any path) ----------
 async function getJSON(u){const r=await fetch(u);if(!r.ok)throw new Error(u+" "+r.status);return r.json()}
 async function loadOptical(id){
  const ix=await getJSON(`timelapse/${id}/index.json`);const f=ix.frames||[];
- return{mode:"optical",chip:"Landsat · natural colour",
-  sub:f.length?`Landsat · ${f[0].year}–${f[f.length-1].year}`:"",range:f.length?`${f[0].year} → ${f[f.length-1].year}`:"",
-  method:ix.method||"",attrib:"USGS Landsat Collection 2 Level-2 surface reflectance, via Microsoft Planetary Computer.",
+ const sats=[...new Set(f.map(x=>/^Sentinel/.test(x.source||"")?"Sentinel-2":"Landsat"))].join(" + ")||"Landsat";
+ return{mode:"optical",chip:`${sats} · natural colour`,
+  sub:f.length?`${f[0].year}–${f[f.length-1].year}`:"",range:f.length?`${f[0].year} → ${f[f.length-1].year}`:"",
+  method:ix.method||"",attrib:sats.includes("Sentinel")?"USGS Landsat Collection 2 Level-2 and ESA Copernicus Sentinel-2 L2A, via Microsoft Planetary Computer.":"USGS Landsat Collection 2 Level-2 surface reflectance, via Microsoft Planetary Computer.",
   frames:f.map(x=>({url:`timelapse/${id}/${x.file}`,big:String(x.year),tick:String(x.year),year:x.year,kick:"summer",water:x.water_km2??null,
    foot:`${sat(x.source)} · ${x.scene_count} scenes`+(x.from_other_years_pct>0?` · ${x.from_other_years_pct} % of area from ${(x.other_years||[]).join(", ")}`:""),
    detail:`<b>${x.year}</b>: ${esc(x.source)}, ${x.scene_count} scenes, ${dlong(x.dates[0])} to ${dlong(x.dates[1])}, scene cloud ${x.scene_cloud_pct} %`+(x.from_other_years_pct>0?`, ${x.from_other_years_pct} % of area from ${(x.other_years||[]).join(", ")}`:"")}))}}
@@ -131,12 +132,12 @@ async function loadRadar(id){
  try{const w=await getJSON("ml/water_model.json");(w.series||[]).forEach(p=>wr[p.date]=p.ml_km2);wm=(w.method||"").split("\n")[0]}catch(e){}  // learned map: the same numbers as the dashboard
  const f=(fj.frames||[]).filter(x=>x.sci!==false);
  return{mode:"radar",chip:"NISAR L-band radar · HH",
-  sub:f.length?`NISAR radar · ${f[0].date.slice(0,4)}`:"",range:f.length?`${dlong(f[0].date)} → ${dlong(f[f.length-1].date)}`:"",
+  sub:f.length?`radar · ${f[0].date.slice(0,4)}`:"",range:f.length?`${dlong(f[0].date)} → ${dlong(f[f.length-1].date)}`:"",
   method:wm,attrib:"NASA-ISRO NISAR L-band GCOV, HH polarisation.",
   frames:f.map(x=>({url:`science/${id}/img/${x.date}_hh.webp`,big:dshort(x.date),tick:dshort(x.date),year:null,kick:x.date.slice(0,4)+" · radar pass",water:wr[x.date]??null,
    foot:`NISAR L-band · HH · ${dlong(x.date)}`,detail:`<b>${dlong(x.date)}</b>: NISAR GCOV HH`+(wr[x.date]!=null?`, open water ${wr[x.date]} km²`:"")}))}}
 const DATA={};
-PLACES.forEach(p=>{DATA[p.id]=(p.mode==="radar"?loadRadar(p.id):loadOptical(p.id)).then(d=>{if(!d.frames.length)throw new Error("no frames");return d})});
+PLACES.forEach(p=>{DATA[p.id]=(p.mode==="radar"?loadRadar(p.src||p.id):loadOptical(p.src||p.id)).then(d=>{if(!d.frames.length)throw new Error("no frames");return d})});
 
 // ---------- place picker: only places whose data loaded ----------
 const ok={};
