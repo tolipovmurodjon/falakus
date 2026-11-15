@@ -1,0 +1,95 @@
+{
+ "place": "sardoba",
+ "trained_on": "andijan_res (8 photo days)",
+ "test": "leave-one-place-out: this place never used in training",
+ "bbox": [
+  68.34461658322635,
+  40.25948749018161,
+  68.58107134223073,
+  40.4403951601683
+ ],
+ "passes": [
+  {
+   "date": "2026-06-22",
+   "ml_km2": 68.25,
+   "photo": "2026-06-22",
+   "photo_water_km2": 28.36,
+   "ml_in_clear_km2": 68.25,
+   "iou": 0.33
+  },
+  {
+   "date": "2026-07-04",
+   "ml_km2": 61.91,
+   "photo": "2026-07-07",
+   "photo_water_km2": 25.82,
+   "ml_in_clear_km2": 61.91,
+   "iou": 0.346
+  },
+  {
+   "date": "2026-07-16",
+   "ml_km2": 67.16,
+   "photo": "2026-07-19",
+   "photo_water_km2": 24.56,
+   "ml_in_clear_km2": 67.14,
+   "iou": 0.319
+  },
+  {
+   "date": "2026-08-21",
+   "ml_km2": 58.38,
+   "photo": "2026-08-21",
+   "photo_water_km2": 25.49,
+   "ml_in_clear_km2": 58.32,
+   "iou": 0.389
+  },
+  {
+   "date": "2026-09-02",
+   "ml_km2": 57.6,
+   "photo": "2026-09-05",
+   "photo_water_km2": 26.64,
+   "ml_in_clear_km2": 57.51,
+   "iou": 0.408
+  },
+  {
+   "date": "2026-09-14",
+   "ml_km2": 61.25,
+   "photo": "2026-09-15",
+   "photo_water_km2": 26.02,
+   "ml_in_clear_km2": 61.2,
+   "iou": 0.384
+  },
+  {
+   "date": "2026-09-26",
+   "ml_km2": 59.82,
+   "photo": "2026-09-25",
+   "photo_water_km2": 27.89,
+   "ml_in_clear_km2": 59.17,
+   "iou": 0.416
+  },
+  {
+   "date": "2026-10-08",
+   "ml_km2": 60.81,
+   "photo": "2026-10-07",
+   "photo_water_km2": 13.79,
+   "ml_in_clear_km2": 34.92,
+   "iou": 0.347
+  },
+  {
+   "date": "2026-10-20",
+   "ml_km2": 54.65,
+   "photo": "2026-10-20",
+   "photo_water_km2": 31.12,
+   "ml_in_clear_km2": 54.38,
+   "iou": 0.5
+  },
+  {
+   "date": "2026-11-01",
+   "ml_km2": 50.84,
+   "photo": "2026-10-30",
+   "photo_water_km2": 30.52,
+   "ml_in_clear_km2": 49.97,
+   "iou": 0.542
+  }
+ ],
+ "median_iou": 0.387,
+ "n_photo_days": 10
+}
