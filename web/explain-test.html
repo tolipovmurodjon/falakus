@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Explain test</title>
+<link rel="stylesheet" href="vendor/maplibre-gl.css">
+<style>html,body{margin:0;height:100%;background:#0D1B2E}#map{position:absolute;inset:0}</style>
+</head><body><div id="map"></div>
+<script src="vendor/maplibre-gl.js"></script>
+<script>
+/* Andijan reservoir test. NISAR dates from NASA CMR (C2854338529-ASF + C3622241360-ASF, 15 Nov 2026), granule start dates. */
+const T055 = ["2026-06-18","2026-06-30","2026-07-12","2026-07-24","2026-08-17","2026-08-29","2026-09-10","2026-09-22","2026-10-04","2026-10-16","2026-10-28"];
+const T156 = ["2026-06-25","2026-07-07","2026-07-19"];
+window.FALAKUS_STUDIO = {
+  bbox: [72.98, 40.68, 73.25, 40.86], sensor: "NISAR",
+  frames: [...T055.map(d => ({ date: d, sensor: "NISAR", track: "055", dir: "A", layerId: "nisar-" + d })),
+           ...T156.map(d => ({ date: d, sensor: "NISAR", track: "156", dir: "A", layerId: "nisar-" + d }))]
+};
+const q = new URLSearchParams(location.search);
+if (q.get("studio")) window.FALAKUS_STUDIO = JSON.parse(q.get("studio"));
+const B = window.FALAKUS_STUDIO.bbox;
+window.map = new maplibregl.Map({ container: "map", center: [(B[0] + B[2]) / 2, (B[1] + B[3]) / 2], zoom: 9, attributionControl: false,
+  style: { version: 8, sources: {
+    esri: { type: "raster", tileSize: 256, tiles: ["https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"] } },
+    layers: [{ id: "bg", type: "background", paint: { "background-color": "#0D1B2E" } }, { id: "esri", type: "raster", source: "esri", paint: { "raster-saturation": -0.6, "raster-brightness-max": 0.6 } }] } });
+map.on("load", () => { map.fitBounds([[B[0], B[1]], [B[2], B[3]]], { padding: { top: 40, bottom: 40, left: 40, right: innerWidth > 720 ? 460 : 40 }, duration: 0 }); });
+if (!q.get("studio")) map.on("load", () => document.dispatchEvent(new CustomEvent("falakus:studio", { detail: window.FALAKUS_STUDIO })));
+</script>
+<script src="explain.js"></script>
+</body></html>

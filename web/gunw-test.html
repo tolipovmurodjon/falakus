@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GUNW test</title><link rel="icon" href="data:,">
+<link rel="stylesheet" href="vendor/maplibre-gl.css">
+<style>
+html,body{margin:0;height:100%;background:#07111f;color:#e8eef6;font:13px/1.4 system-ui,sans-serif}
+#map{position:absolute;inset:0}
+#ui{position:absolute;left:12px;top:12px;z-index:2;background:rgba(13,27,46,.94);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:10px 12px;width:330px}
+#ui select{width:100%;margin:6px 0;background:#0d1b2e;color:#e8eef6;border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:4px}
+#leg{position:absolute;right:12px;bottom:28px;z-index:2}
+#st{opacity:.8;margin-top:4px;font-size:12px}
+</style></head><body>
+<div id="map"></div>
+<div id="ui"><b>NISAR ground motion (GUNW) — Panama M7.7</b>
+<div id="st">querying NASA CMR…</div>
+<select id="sel"></select>
+<label>opacity <input id="op" type="range" min="0" max="1" step="0.05" value="0.85"></label>
+</div>
+<div id="leg"></div>
+<script src="vendor/maplibre-gl.js"></script>
+<script src="gunw.js"></script>
+<script>
+const EQ = { lon: -80.7566, lat: 7.6069, time: "2026-10-09T17:56:05Z" };
+const map = new maplibregl.Map({ container: "map", center: [EQ.lon, EQ.lat], zoom: 7.4, attributionControl: false,
+  style: { version: 8, sources: { esri: { type: "raster", tileSize: 256, tiles: ["https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"] } },
+    layers: [{ id: "bg", type: "background", paint: { "background-color": "#07111f" } }, { id: "esri", type: "raster", source: "esri" }] } });
+const st = document.getElementById("st"), sel = document.getElementById("sel");
+let pairs = [];
+async function draw() {
+  const p = pairs[+sel.value]; if (!p) return;
+  const info = await FalakusGUNW.show(map, p, { opacity: +document.getElementById("op").value });
+  document.getElementById("leg").innerHTML = info.legend;
+  const say = () => st.textContent = `${pairs.length} pairs span the quake · ${info.stage} · georef: ${info.method}${info.residualDeg != null ? " (±" + info.residualDeg + "°)" : ""}`;
+  say(); window.__gunwInfo = info;
+  info.ready.then(say);
+}
+map.on("load", async () => {
+  new maplibregl.Marker({ color: "#ffd400" }).setLngLat([EQ.lon, EQ.lat]).addTo(map);
+  try {
+    pairs = await FalakusGUNW.eventPairs(EQ.lon, EQ.lat, EQ.time);
+    pairs.sort((a, b) => (b.track === "141") - (a.track === "141"));
+    pairs.forEach((p, i) => sel.add(new Option(`${p.label} · frame ${p.frame}${p.fullFrame ? "" : " (partial)"} · ${p.name.split("_")[9]}`, i)));
+    await draw();
+    const listed = await FalakusGUNW.listFor([-81.4, 7.2, -80.2, 7.9], "2026-09-01", "2026-10-31");
+    window.__gunwCounts = { event: pairs.length, listed: listed.length };
+  } catch (e) { st.textContent = "CMR error: " + e.message; console.warn(e) }
+});
+sel.onchange = draw;
+document.getElementById("op").oninput = e => FalakusGUNW.setOpacity(map, e.target.value);
+</script>
+</body></html>

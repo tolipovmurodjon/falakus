@@ -1,0 +1,277 @@
+{
+ "generated": "2026-11-15",
+ "rule": "Every number the app or pitch uses. value + unit + label + source + script.",
+ "numbers": {
+  "nested_iou": {
+   "value": 0.796,
+   "unit": "IoU",
+   "label": "Learned water map vs Sentinel-2 photos on 8 unseen days, speckle cut-off chosen without the scored day (nested)",
+   "source": "data/ml/water_clean.json summary.nested_iou",
+   "script": "tools/ml_water_clean.py",
+   "ci_low": 0.745,
+   "ci_high": 0.853,
+   "ci_method": "percentile bootstrap of the median over the 8 held-out days, 10,000 resamples, seed 0 (per-day scores fixed)",
+   "cutoffs_chosen": {
+    "2026-06-20": 2.0,
+    "2026-07-14": 2.0,
+    "2026-07-26": 2.0,
+    "2026-08-19": 1.0,
+    "2026-08-31": 2.0,
+    "2026-09-12": 2.0,
+    "2026-10-06": 2.0,
+    "2026-10-18": 2.0
+   }
+  },
+  "raw_iou": {
+   "value": 0.627,
+   "unit": "IoU",
+   "label": "Same map with no speckle clean-up (8 unseen days)",
+   "source": "data/ml/water_clean.json summary.raw_iou",
+   "script": "tools/ml_water_clean.py",
+   "ci_low": 0.59,
+   "ci_high": 0.763
+  },
+  "old_iou_0_2": {
+   "value": 0.78,
+   "unit": "IoU",
+   "label": "Old figure: 0.2 km2 cut-off picked after seeing these test days (leaky; do not quote as the score)",
+   "source": "data/ml/water_clean.json summary.sensitivity_median_iou['0.2']",
+   "script": "tools/ml_water_clean.py"
+  },
+  "speckle_sensitivity": {
+   "value": {
+    "0.0": 0.627,
+    "0.02": 0.704,
+    "0.05": 0.736,
+    "0.1": 0.758,
+    "0.2": 0.78,
+    "0.5": 0.79,
+    "1.0": 0.796,
+    "2.0": 0.796
+   },
+   "unit": "IoU by cut-off km2",
+   "label": "Median IoU on the 8 days for every cut-off (full sensitivity table)",
+   "source": "data/ml/water_clean.json summary.sensitivity_median_iou",
+   "script": "tools/ml_water_clean.py"
+  },
+  "baseline_rule_iou": {
+   "value": 0.299,
+   "unit": "IoU",
+   "label": "Baseline: single HH threshold (-16.75 dB) on the same 8 days",
+   "source": "data/ml/water_model.json summary.rule_iou",
+   "script": "tools/ml_water.py"
+  },
+  "baseline_rule_zone_iou": {
+   "value": 0.591,
+   "unit": "IoU",
+   "label": "Baseline: HH threshold inside a 1 km water zone, same 8 days",
+   "source": "data/ml/water_model.json summary.rule_zone_iou",
+   "script": "tools/ml_water.py"
+  },
+  "baseline_otsu_iou": {
+   "value": null,
+   "unit": "IoU",
+   "label": "Baseline: Otsu threshold on HH: NOT computed (calibrated HH npz for Andijan is not in the repo; needs re-download)",
+   "source": "n/a",
+   "script": "n/a"
+  },
+  "recall": {
+   "value": 0.936,
+   "unit": "fraction",
+   "label": "Share of photo water the radar map finds (median, 8 unseen days)",
+   "source": "data/ml/water_clean.json summary.recall",
+   "script": "tools/ml_water_clean.py"
+  },
+  "shuffled_control_iou": {
+   "value": 0.067,
+   "unit": "IoU",
+   "label": "Same model trained on shuffled labels (must collapse)",
+   "source": "data/ml/water_model.json summary.null_iou",
+   "script": "tools/ml_water.py"
+  },
+  "icesat2_spearman": {
+   "value": 0.946,
+   "unit": "rho",
+   "label": "ICESat-2 ATL13 water level vs lake area, rank correlation",
+   "source": "data/waterroad/andijan_res_icesat2.json spearman_r",
+   "script": "tools/icesat2_levels.py",
+   "n": 9
+  },
+  "icesat2_n": {
+   "value": 9,
+   "unit": "dates",
+   "label": "ICESat-2 dates paired with an area",
+   "source": "data/waterroad/andijan_res_icesat2.json n",
+   "script": "tools/icesat2_levels.py"
+  },
+  "area_error_nested": {
+   "value": 2.48,
+   "unit": "km2",
+   "label": "Mean absolute area miss on the 8 unseen days (nested cut-off)",
+   "source": "data/ml/water_clean.json summary.nested_area_mae_km2",
+   "script": "tools/ml_water_clean.py"
+  },
+  "area_error_raw": {
+   "value": 7.6,
+   "unit": "km2",
+   "label": "Mean absolute area miss, no clean-up",
+   "source": "data/ml/water_model.json summary.ml_area_mae_km2",
+   "script": "tools/ml_water.py"
+  },
+  "wet_mud_bias": {
+   "value": 2.56,
+   "unit": "km2",
+   "label": "Over-count on the drying-shore days 26 Jul-12 Sep (radar minus photo, nested cut-off; error maps put it on the wet-mud shore)",
+   "source": "data/ml/water_clean.json held_out[].nested_area_err_km2 for 2026-07-26, 2026-08-19, 2026-08-31, 2026-09-12",
+   "script": "tools/ml_water_clean.py",
+   "raw_model_extra_km2_median": 12.094999999999999
+  },
+  "lake_photo_23jun": {
+   "value": 42.11,
+   "unit": "km2",
+   "label": "Lake open water, Sentinel-2 photo 23 Jun 2026",
+   "source": "data/ml/water_model.json held_out[2026-06-20].photo_water_km2",
+   "script": "tools/ml_water.py"
+  },
+  "lake_photo_19oct": {
+   "value": 21.12,
+   "unit": "km2",
+   "label": "Lake open water, Sentinel-2 photo 19 Oct 2026",
+   "source": "data/ml/water_model.json held_out[2026-10-18].photo_water_km2",
+   "script": "tools/ml_water.py"
+  },
+  "always_wet_km2": {
+   "value": 19.1,
+   "unit": "km2",
+   "label": "Water on every one of 11 NISAR passes",
+   "source": "data/ml/water_freq.json km2.every_pass",
+   "script": "tools/water_frequency.py"
+  },
+  "dried_once_km2": {
+   "value": 23.3,
+   "unit": "km2",
+   "label": "Water on at least one pass but not all (ever minus every pass)",
+   "source": "data/ml/water_freq.json km2.ever - km2.every_pass",
+   "script": "tools/water_frequency.py"
+  },
+  "forecast_dec": {
+   "value": 19.49,
+   "unit": "km2",
+   "label": "Dec 2026 lake area forecast",
+   "source": "data/forecast/andijan_res_v2.json forecast[2026-12].km2",
+   "script": "tools/forecast_v2.py",
+   "band_low": 13.1,
+   "band_high": 25.7,
+   "band": "8 in 10 (10th-90th percentile of its own walk-forward misses)"
+  },
+  "typical_dec": {
+   "value": 22.25,
+   "unit": "km2",
+   "label": "Typical December: mean of the 3 clear Decembers in the 2017-2025 photo record",
+   "source": "data/forecast/andijan_res_v2.json forecast[2026-12].typical",
+   "script": "tools/forecast_v2.py",
+   "n_years": 3,
+   "min": 16.66,
+   "max": 26.39
+  },
+  "dec_anomaly": {
+   "value": -2.76,
+   "unit": "km2",
+   "label": "Dec forecast minus typical December (typical lies inside the 8-in-10 band: below normal, not a significant anomaly)",
+   "source": "derived: forecast_dec - typical_dec",
+   "script": "tools/case_build.py"
+  },
+  "forecast_mae_30d": {
+   "value": 4.08,
+   "unit": "km2",
+   "label": "Forecast miss 30 days ahead (walk-forward)",
+   "source": "data/forecast/andijan_res_v2.json skill.h1.mae_km2.ridge",
+   "script": "tools/forecast_v2.py",
+   "n_test": 32
+  },
+  "persistence_mae_30d": {
+   "value": 4.68,
+   "unit": "km2",
+   "label": "Persistence (same as last month) miss, 30 days ahead",
+   "source": "data/forecast/andijan_res_v2.json skill.h1.mae_km2.persistence",
+   "script": "tools/forecast_v2.py"
+  },
+  "population_valley": {
+   "value": 10.9,
+   "unit": "million people",
+   "label": "Andijan + Fergana + Namangan regions (stat.uz, 1 Oct 2025)",
+   "source": "data/waterroad/population.json regions_2025",
+   "script": "stat.uz press release"
+  },
+  "population_share": {
+   "value": 28.6,
+   "unit": "%",
+   "label": "Share of Uzbekistan's population",
+   "source": "data/waterroad/population.json regions_2025",
+   "script": "stat.uz press release"
+  },
+  "winter_cloud": {
+   "value": "15 of 24",
+   "unit": "photos",
+   "label": "Sentinel-2 winter (Dec-Mar 2025) photos of the reservoir lost to cloud [unverified: no data file in repo; quoted from docs/state/handoff.md]",
+   "source": "docs/state/handoff.md (measured 15 Nov; output not saved)",
+   "script": "none in repo"
+  },
+  "aral_1985_km2": {
+   "value": 46371.1,
+   "unit": "km2",
+   "label": "Aral box open water, Landsat summer 1985 (44.7 % of pixels filled from 1986)",
+   "source": "data/timelapse/aral/index.json frames[1985].water_km2",
+   "script": "tools/bake_timelapse.py"
+  },
+  "aral_2026_km2": {
+   "value": 9018.8,
+   "unit": "km2",
+   "label": "Aral box open water, Landsat/Sentinel summer 2026",
+   "source": "data/timelapse/aral/index.json frames[2026].water_km2",
+   "script": "tools/bake_timelapse.py"
+  },
+  "aral_loss_pct": {
+   "value": 80.6,
+   "unit": "%",
+   "label": "Open water lost in the Aral box, 1985 to 2026",
+   "source": "derived from the two numbers above",
+   "script": "tools/case_build.py"
+  },
+  "nisar_start_andijan": {
+   "value": "2026-06-18",
+   "unit": "date",
+   "label": "First public NISAR GCOV pass over Andijan (bbox 72.9,40.6,73.3,40.9)",
+   "source": "NASA CMR: https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C3622241360-ASF&page_size=1&sort_key=start_date&bounding_box=72.9%2C40.6%2C73.3%2C40.9 | https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C2854338529-ASF&page_size=1&sort_key=start_date&bounding_box=72.9%2C40.6%2C73.3%2C40.9",
+   "script": "tools/case_build.py",
+   "granule": "NISAR_L2_PR_GCOV_023_055_A_022_2005_DHDH_A_20260618T000742_20260618T000817_P05023_N_F_J_001",
+   "granules": {
+    "C3622241360-ASF": 5,
+    "C2854338529-ASF": 40
+   }
+  },
+  "nisar_start_global": {
+   "value": "2025-10-29",
+   "unit": "date",
+   "label": "First provisional NISAR GCOV granule anywhere",
+   "source": "NASA CMR: https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C2854338529-ASF&page_size=1&sort_key=start_date",
+   "script": "tools/case_build.py",
+   "granule": "NISAR_L2_PR_GCOV_004_004_A_018_4005_DHDH_A_20251029T111130_20251029T111153_P05023_N_P_J_001"
+  },
+  "nisar_granules_provisional": {
+   "value": 163672,
+   "unit": "granules",
+   "label": "NISAR GCOV provisional granules in CMR on 2026-11-15",
+   "source": "NASA CMR CMR-Hits header: https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C2854338529-ASF&page_size=1&sort_key=start_date",
+   "script": "tools/case_build.py"
+  },
+  "nisar_granules_validated": {
+   "value": 18582,
+   "unit": "granules",
+   "label": "NISAR GCOV validated (V1) granules in CMR on 2026-11-15",
+   "source": "NASA CMR CMR-Hits header: https://cmr.earthdata.nasa.gov/search/granules.json?collection_concept_id=C3622241360-ASF&page_size=1&sort_key=start_date",
+   "script": "tools/case_build.py",
+   "first": "2026-10-21"
+  }
+ }
+}

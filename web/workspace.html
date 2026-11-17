@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Falakus · What changed, seen by NISAR radar</title>
+<meta name="description" content="Falakus shows what changed on Earth's surface using NASA-ISRO NISAR L-band radar: any place, every pass, through cloud, smoke and night.">
+<meta name="theme-color" content="#07111F">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%2715%27 fill=%27%2307111F%27 stroke=%27%233B74F0%27 stroke-width=%272%27/%3E%3Cpath d=%27M6 18c3.5-4 7-4 10-.8s6.5 3.2 10-.8%27 fill=%27none%27 stroke=%27%23F2F5FA%27 stroke-width=%272%27/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600&family=Overpass:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="vendor/maplibre-gl.css">
+<style>
+:root{
+ --bg:#07111F;--panel:#0D1B2E;--panel2:#12233A;--line:rgba(255,255,255,.10);--line2:rgba(255,255,255,.18);
+ --ink:#F2F5FA;--ink2:#C5D0E0;--mute:#8A9BB4;--pri:#1C5BD9;--pri2:#3B74F0;
+ --quake:#D93025;--fire:#E8590C;--flood:#3B82F6;--storm:#8B6CF0;--volcano:#C2410C;--ice:#14B8A6;
+ --r:12px;--sh:0 8px 28px rgba(0,0,0,.45);
+ --head:"Overpass",system-ui,sans-serif;--ui:"Fira Sans",system-ui,-apple-system,"Segoe UI",sans-serif;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+ --side:360px;--hdr:56px;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:14px/1.45 var(--ui);-webkit-font-smoothing:antialiased;overflow:hidden}
+button,select,input{font:inherit;color:inherit}
+a{color:#8FB2FF}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+svg.i{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+:focus-visible{outline:2px solid var(--pri2);outline-offset:2px}
+#app{display:grid;grid-template-columns:var(--side) 1fr;grid-template-rows:var(--hdr) 1fr;height:100%;height:100dvh}
+/* header */
+header{grid-column:1/-1;display:flex;align-items:center;gap:14px;padding:0 16px;background:var(--bg);border-bottom:1px solid var(--line);z-index:6;min-width:0}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);flex:none}
+.brand b{font:800 19px/1 var(--head);letter-spacing:-.01em}
+.north{color:var(--mute);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.grow{flex:1}
+.live{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink2);white-space:nowrap}
+.live i{width:8px;height:8px;border-radius:50%;background:#2FBF71;box-shadow:0 0 0 0 rgba(47,191,113,.5);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 7px rgba(47,191,113,0)}100%{box-shadow:0 0 0 0 rgba(47,191,113,0)}}
+/* sidebar */
+aside{background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:0;z-index:5}
+.grab{display:none}
+.tabs{display:flex;padding:8px 10px 0;gap:2px;border-bottom:1px solid var(--line)}
+.tabs button{flex:1;border:0;background:none;color:var(--mute);font-weight:600;font-size:13.5px;padding:10px 4px 11px;cursor:pointer;border-bottom:2px solid transparent;display:flex;align-items:center;justify-content:center;gap:6px;min-height:44px}
+.tabs button:hover{color:var(--ink)}
+.tabs button.on{color:var(--ink);border-bottom-color:var(--pri2)}
+.pane{flex:1;overflow:auto;padding:14px 14px 28px;display:none;scrollbar-width:thin;scrollbar-color:#2a3b55 transparent}
+.pane.on{display:block}
+#p-learn.on{display:flex;flex-direction:column;padding:0}
+#p-learn iframe{flex:1;border:0;width:100%;background:var(--panel)}
+h2{font:700 18px/1.2 var(--head);margin:4px 0 6px;letter-spacing:-.01em}
+h3{font:600 11.5px/1 var(--ui);letter-spacing:.09em;text-transform:uppercase;color:var(--mute);margin:20px 0 8px}
+p{margin:6px 0;color:var(--ink2)}
+.small{font-size:12.5px;color:var(--mute)}
+.card{background:var(--panel2);border:1px solid var(--line);border-radius:var(--r);padding:12px;margin:8px 0}
+.card.click{cursor:pointer;transition:border-color .15s,background .15s}
+.card.click:hover{border-color:var(--line2);background:#16294300;background:#152842}
+.place{display:flex;gap:12px;align-items:center;min-height:56px;width:100%;text-align:left;font:inherit;color:inherit}
+.place .ic{width:40px;height:40px;border-radius:10px;display:grid;place-items:center;background:#0A1626;border:1px solid var(--line);flex:none}
+.place b{font-size:14px;font-weight:600;display:block}
+.place small{display:block;color:var(--mute);font-size:12.5px;line-height:1.35}
+.place .cnt{margin-left:auto;font:500 11px var(--mono);color:var(--mute);white-space:nowrap;align-self:flex-start}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:1px solid var(--line2);background:#0F2036;color:var(--ink);border-radius:10px;padding:8px 12px;min-height:38px;cursor:pointer;font-weight:500;font-size:13px;white-space:nowrap;transition:background .15s,border-color .15s}
+.btn:hover{border-color:#4d6a96;background:#14294A}
+.btn.pri{background:var(--pri);border-color:var(--pri)}
+.btn.pri:hover{background:var(--pri2);border-color:var(--pri2)}
+.btn.on{background:var(--pri);border-color:var(--pri2)}
+.btn:disabled{opacity:.45;cursor:default}
+.tools{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tools .btn{min-height:44px;justify-content:flex-start}
+.badge{display:inline-flex;align-items:center;gap:4px;font:500 11px/1 var(--mono);padding:4px 7px;border-radius:6px;background:#0A1626;border:1px solid var(--line);color:var(--ink2);white-space:nowrap}
+.badge.val{color:#7DDBA3;border-color:rgba(125,219,163,.3)}
+.badge.prov{color:#F2C46B;border-color:rgba(242,196,107,.3)}
+.lg{display:grid;grid-template-columns:18px 1fr;gap:8px 10px;align-items:start;font-size:13px;color:var(--ink2)}
+.lg i{width:16px;height:16px;border-radius:4px;display:block;margin-top:2px;border:1px solid rgba(255,255,255,.15)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:3px 12px;font-size:12.5px}
+.kv dt{color:var(--mute)}.kv dd{margin:0;font-family:var(--mono);font-size:12px;color:var(--ink)}
+/* map */
+main{position:relative;min-height:0;min-width:0;overflow:hidden}
+#map,#mapB{position:absolute;inset:0;background:var(--bg)}
+#mapB{pointer-events:none;z-index:1}
+.fl{position:absolute;z-index:3;background:rgba(13,27,46,.94);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+#search{top:12px;left:12px;width:320px;display:flex;align-items:center;gap:8px;padding:0 12px;height:44px;color:var(--mute)}
+#search input{flex:1;border:0;outline:0;background:transparent;color:var(--ink);font-size:14px;min-width:0}
+#search input::placeholder{color:var(--mute)}
+#results{top:62px;left:12px;width:320px;padding:4px;max-height:300px;overflow:auto}
+#results button{display:block;width:100%;text-align:left;border:0;background:none;padding:10px;border-radius:8px;cursor:pointer;font-size:13px;color:var(--ink2);min-height:44px}
+#results button:hover{background:#17304f;color:var(--ink)}
+#ctl{position:absolute;z-index:3;top:12px;right:12px;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.seg{display:inline-flex;background:rgba(13,27,46,.94);border:1px solid var(--line);border-radius:10px;padding:3px;gap:2px;box-shadow:var(--sh)}
+.seg button{border:0;background:none;color:var(--ink2);padding:0 11px;min-height:36px;border-radius:7px;cursor:pointer;font-weight:500;font-size:13px;display:flex;align-items:center;gap:6px}
+.seg button.on{background:var(--pri);color:#fff}
+.seg button:hover:not(.on){color:var(--ink);background:#14294A}
+#status{top:64px;right:12px;width:290px;padding:12px 14px}
+#status .k{font:600 10.5px/1 var(--ui);letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+#status .v{font:700 20px/1.15 var(--head);margin:6px 0 8px;letter-spacing:-.01em}
+#status .note{font-size:12px;color:var(--mute);margin-top:8px;line-height:1.4}
+#status .x{position:absolute;top:8px;right:8px;border:0;background:none;color:var(--mute);cursor:pointer;width:32px;height:32px;display:grid;place-items:center;border-radius:8px}
+#legend{left:12px;bottom:var(--tlh,128px);padding:7px 11px;font-size:12px;color:var(--ink2);display:flex;align-items:center;gap:10px;max-width:calc(100% - 24px)}
+#legend .sw{display:inline-flex;gap:3px}
+#gm{left:12px;top:64px;width:300px;padding:12px 14px;max-height:calc(100% - 300px);overflow:auto}
+#gm .k{font:600 10.5px/1 var(--ui);letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+#gm .v{font:700 16px/1.2 var(--head);margin:6px 0 8px}
+#gm select,#gm input[type=range]{width:100%}
+#gm select{background:#0D1B2E;color:var(--ink);border:1px solid var(--line);border-radius:8px;min-height:34px;padding:0 8px;font:500 12px var(--ui)}
+#gm .row{display:flex;gap:8px;align-items:center;margin:8px 0;font-size:12px;color:var(--ink2)}
+#gm .x{position:absolute;top:8px;right:8px;border:0;background:none;color:var(--mute);cursor:pointer;width:32px;height:32px;display:grid;place-items:center;border-radius:8px}
+#gm .fg-legend{max-width:none!important;margin-top:8px}
+#gm .small{font-size:11.5px;color:var(--mute);line-height:1.4}
+#lyr{left:12px;bottom:calc(var(--tlh,128px) + 44px);padding:4px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;max-width:calc(100% - 24px)}
+#lyr .seg{box-shadow:none;border:0;padding:0;background:none}
+#lyr .seg button{min-height:30px;font-size:12px;padding:0 9px}
+#lyr .ob{border:1px solid var(--line);background:none;color:var(--ink2);border-radius:7px;min-height:30px;padding:0 9px;font:500 12px var(--ui);cursor:pointer;display:flex;align-items:center;gap:6px}
+#lyr .ob.on{background:var(--pri);color:#fff;border-color:var(--pri)}
+#lyr .cap{font:500 11px var(--mono);color:var(--mute);padding:0 6px}
+#legend .sw i{width:12px;height:12px;border-radius:3px;display:block;border:1px solid rgba(255,255,255,.15)}
+#timeline{left:12px;right:12px;bottom:12px;padding:10px 12px 10px}
+.thead{display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--ink2);flex-wrap:wrap;row-gap:6px}
+#newest{display:flex;align-items:center;gap:8px;min-width:0}
+#newest b{color:var(--ink);font-weight:600}
+#hint{color:var(--mute)}
+.spin{width:13px;height:13px;border:2px solid #2a3b55;border-top-color:var(--pri2);border-radius:50%;animation:sp .8s linear infinite;flex:none}
+@keyframes sp{to{transform:rotate(360deg)}}
+#strip{display:flex;gap:6px;overflow-x:auto;padding:9px 0 2px;scrollbar-width:thin;scrollbar-color:#2a3b55 transparent;min-height:56px}
+.chip{flex:none;border:1px solid var(--line2);background:#0A1626;border-radius:10px;padding:6px 10px;cursor:pointer;text-align:left;min-height:44px;transition:border-color .15s}
+.chip:hover{border-color:#4d6a96}
+.chip b{display:block;font:500 12.5px/1.2 var(--mono);color:var(--ink)}
+.chip small{display:block;font:400 10.5px/1.3 var(--mono);color:var(--mute);margin-top:2px}
+.chip.on{background:var(--pri);border-color:var(--pri2)}.chip.on small{color:#D6E2FF}
+.chip.na{opacity:.55}
+.chip.bef{border-color:#F2C46B;box-shadow:inset 0 0 0 1px #F2C46B}
+.chip .pv{color:#F2C46B}.chip.on .pv{color:#FFE0A0}
+.empty{color:var(--mute);font-size:12.5px;padding:12px 2px}
+.tool{border-top:1px solid var(--line);margin-top:8px;padding-top:10px;display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;font-size:12.5px}
+.tool label{display:flex;flex-direction:column;gap:3px;font-size:11px;color:var(--mute);font-weight:500}
+.tool select{background:#0A1626;border:1px solid var(--line2);border-radius:8px;padding:0 8px;min-height:36px;color:var(--ink);font-size:12.5px;max-width:230px}
+.tool input[type=range]{flex:1;min-width:140px;accent-color:var(--pri2);height:28px}
+.warn{color:#F2C46B;font-size:12px;display:flex;gap:6px;align-items:center}
+.bar{height:5px;background:#1a2c45;border-radius:4px;overflow:hidden;flex:1;min-width:120px}
+.bar i{display:block;height:100%;width:0;background:var(--pri2);transition:width .3s}
+.tag{font:500 11px var(--mono);padding:4px 8px;border-radius:6px;background:rgba(7,17,31,.85);border:1px solid var(--line2)}
+#cmpLabels{position:absolute;z-index:2;top:64px;left:50%;transform:translateX(-50%);display:flex;gap:8px;pointer-events:none}
+#handle{position:absolute;z-index:2;top:0;bottom:0;width:44px;margin-left:-22px;cursor:ew-resize;touch-action:none;display:flex;justify-content:center}
+#handle::before{content:"";width:2px;height:100%;background:#fff;box-shadow:0 0 8px rgba(0,0,0,.6)}
+#handle .knob{position:absolute;top:50%;width:36px;height:36px;margin-top:-18px;border-radius:50%;background:var(--pri);border:2px solid #fff;display:grid;place-items:center;color:#fff;box-shadow:var(--sh)}
+#stamp{position:absolute;z-index:2;left:50%;top:64px;transform:translateX(-50%);padding:8px 18px;text-align:center;pointer-events:none}
+#stampD{font:800 30px/1.1 var(--head);letter-spacing:-.01em}
+#stampS{font:500 11.5px var(--mono);color:var(--mute);margin-top:2px}
+#toast{position:absolute;z-index:4;left:50%;top:12px;transform:translate(-50%,-8px);opacity:0;padding:10px 14px;font-size:13px;pointer-events:none;transition:all .2s;max-width:min(520px,90%);text-align:center}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+#debug{left:12px;top:64px;padding:10px 12px;font:11px/1.6 var(--mono);color:var(--ink2);min-width:220px}
+.maplibregl-ctrl-group{background:rgba(13,27,46,.94)!important;border:1px solid var(--line);box-shadow:var(--sh)!important}
+.maplibregl-ctrl-group button{width:36px;height:36px}
+.maplibregl-ctrl-group button+button{border-top:1px solid var(--line)!important}
+.maplibregl-ctrl button .maplibregl-ctrl-icon{filter:invert(1) brightness(1.4)}
+.maplibregl-ctrl-bottom-right{bottom:var(--tlh,128px)}
+.maplibregl-ctrl-scale{background:rgba(13,27,46,.8);color:var(--ink2);border-color:var(--ink2)}
+.maplibregl-ctrl-attrib{background:rgba(7,17,31,.75)!important;color:var(--mute)}.maplibregl-ctrl-attrib a{color:var(--ink2)}
+.maplibregl-ctrl-attrib-button{filter:invert(1)}
+.maplibregl-popup-content{background:var(--panel);color:var(--ink);border:1px solid var(--line2);border-radius:12px;box-shadow:var(--sh);padding:12px 14px;font:13px/1.45 var(--ui)}
+.maplibregl-popup-tip{border-top-color:var(--panel)!important;border-bottom-color:var(--panel)!important}
+.maplibregl-popup-close-button{color:var(--mute);font-size:18px;width:30px;height:30px}
+/* cases */
+.case h4{font:700 16px/1.25 var(--head);margin:0 0 4px}
+.case .meta{font:500 11.5px var(--mono);color:var(--mute)}
+.case .find{color:var(--ink);margin:8px 0}
+.case details{border-top:1px solid var(--line);padding:8px 0 2px}
+.case summary{cursor:pointer;font-weight:600;font-size:13px;color:var(--ink2);min-height:32px;display:flex;align-items:center}
+.case details p{font-size:13px}
+.nums{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:8px 0}
+.nums div{background:#0A1626;border:1px solid var(--line);border-radius:10px;padding:8px}
+.nums b{display:block;font:500 16px/1.2 var(--mono)}
+.nums span{font-size:11.5px;color:var(--mute);display:block}
+.nums em{font-style:normal;font-size:10.5px;color:var(--mute);display:block;margin-top:3px}
+.hot b{font-size:13.5px}
+.pg summary{cursor:pointer;font:600 11.5px/1 var(--ui);letter-spacing:.09em;text-transform:uppercase;color:var(--mute);padding:12px 0 6px;min-height:36px;display:flex;align-items:center}
+.newsl{display:block;padding:8px 0;border-top:1px solid var(--line);text-decoration:none;color:var(--ink2);font-size:13px}
+.newsl:hover{color:var(--ink)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* phone: sidebar becomes a bottom sheet */
+@media (max-width:820px){
+ :root{--hdr:52px}
+ #app{grid-template-columns:1fr;grid-template-rows:var(--hdr) 1fr}
+ header{gap:10px;padding:0 12px}
+ .live,.north{display:none}
+ main{grid-row:2;grid-column:1}
+ aside{position:fixed;left:0;right:0;bottom:0;height:62vh;height:62dvh;border-right:0;border-top:1px solid var(--line2);border-radius:16px 16px 0 0;transform:translateY(calc(100% - 104px));transition:transform .25s ease-out;box-shadow:0 -10px 30px rgba(0,0,0,.5);padding-bottom:env(safe-area-inset-bottom)}
+ aside.open{transform:none}
+ .grab{display:flex;justify-content:center;align-items:center;height:28px;border:0;background:none;width:100%;cursor:pointer;flex:none}
+ .grab i{width:40px;height:4px;border-radius:2px;background:#3a4d6b}
+ .tabs{padding-top:0}
+ #search{right:12px;width:auto;top:10px}
+ #results{left:12px;right:12px;width:auto;top:60px}
+ #ctl{top:62px;left:12px;right:12px;justify-content:space-between}
+ #ctl .seg button{padding:0 9px;min-height:40px}
+ #status{top:112px;left:12px;right:12px;width:auto;padding:9px 12px}
+ #status .v{font-size:16px;margin:4px 0 4px}
+ #status .note{display:none}
+ #timeline{bottom:112px;left:8px;right:8px;padding:8px 10px}
+ #legend{bottom:calc(var(--tlh,128px) + 100px);left:8px;font-size:11px;padding:5px 9px}
+ #lyr{bottom:calc(var(--tlh,128px) + 152px);left:8px}
+ #gm{top:112px;left:8px;right:8px;width:auto;max-height:42%}
+ #lyr .cap{display:none}
+ .maplibregl-ctrl-bottom-right{display:none}
+ #cmpLabels,#stamp{top:150px}
+ #stampD{font-size:22px}
+ .tool select{max-width:160px}
+}
+</style>
+<link rel="stylesheet" href="nasa-theme.css">
+</head>
+<body>
+<div id="app">
+<header>
+ <a class="brand" href="index.html" aria-label="Falakus home">
+  <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14.5" fill="none" stroke="#3B74F0" stroke-width="1.5"/><path d="M6 18c3.5-4 7-4 10-.8s6.5 3.2 10-.8" fill="none" stroke="#F2F5FA" stroke-width="1.5" stroke-linecap="round"/><path d="M8 22.5c2.7-2.6 5.3-2.6 8-.6s5.3 2 8-.6" fill="none" stroke="#8A9BB4" stroke-width="1.5" stroke-linecap="round"/><circle cx="22.5" cy="9.5" r="2" fill="#3B74F0"/></svg>
+  <b>Falakus</b>
+ </a>
+ <span class="north">What changed — through cloud, smoke and night</span>
+ <span class="grow"></span>
+ <span class="live" title="NASA-ISRO NISAR L-band radar, newest pass in NASA's catalogue"><i></i><span id="liveTxt">Connecting to NASA CMR…</span></span>
+</header>
+
+<aside id="side">
+ <button class="grab" id="grab" aria-label="Expand or collapse panel"><i></i></button>
+ <nav class="tabs" id="tabs" role="tablist">
+  <button data-t="explore" class="on" role="tab"><span data-ic="globe"></span>Explore</button>
+  <button data-t="hotspots" role="tab"><span data-ic="pulse"></span>Hotspots</button>
+  <button data-t="cases" role="tab"><span data-ic="book"></span>Cases</button>
+  <button data-t="learn" role="tab"><span data-ic="learn"></span>Learn</button>
+ </nav>
+
+ <section class="pane on" id="p-explore">
+  <h2>See what changed, anywhere NISAR flies</h2>
+  <p>NISAR's 24 cm radar measures the ground day and night, through cloud and smoke, every 12 days. Move the map: we list every pass over your view from NASA's catalogue.</p>
+  <div class="tools">
+   <button class="btn" id="bCmp"><span data-ic="compare"></span>Before / after</button>
+   <button class="btn" id="bTl"><span data-ic="timelapse"></span>Time-lapse</button>
+   <button class="btn" id="bVs"><span data-ic="camera"></span>Camera vs radar</button>
+   <button class="btn" id="bDraw"><span data-ic="draw"></span>Draw area</button>
+  </div>
+  <div class="card" id="placeInfo" hidden></div>
+  <h3>Start here</h3>
+  <div id="places"></div>
+  <h3>How to read the radar</h3>
+  <div class="card lg">
+   <i style="background:#05070a"></i><span><b>Black</b>: calm water. It acts as a mirror, so no echo returns.</span>
+   <i style="background:#4caf2a"></i><span><b>Green</b>: plants. Leaves and branches scramble the wave (strong HV).</span>
+   <i style="background:#d8d040"></i><span><b>Yellow</b>: rough bare ground, rock, rubble, and towns (strong HH).</span>
+   <i style="background:#f4f2d8"></i><span><b>Brightest</b>: buildings. Walls and ground make a corner reflector.</span>
+  </div>
+  <p class="small">Colours are NASA GIBS's false-colour rendering of NISAR L2 GCOV (HH and HV polarisations). This is backscatter (brightness), not ground motion: centimetre motion needs the interferometry product (GUNW).</p>
+ </section>
+
+ <section class="pane" id="p-hotspots">
+  <h2>What is happening now</h2>
+  <p>Live from USGS (earthquakes M5.5+, 30 days) and NASA EONET (open events). Tap one: we fly there and find NISAR passes before and after on the same orbit track.</p>
+  <div id="hotList"><p class="small">Loading live events…</p></div>
+ </section>
+
+ <section class="pane" id="p-cases">
+  <h2>Case studies</h2>
+  <p>Deep, validated stories. Every number carries its source.</p>
+  <div id="caseList"><div class="card"><div style="display:flex;gap:10px;align-items:center"><span class="spin"></span><span class="small">Loading case studies…</span></div></div></div>
+ </section>
+
+ <section class="pane" id="p-learn"></section>
+</aside>
+
+<main id="main">
+ <div id="map"></div>
+ <div id="search" class="fl"><span data-ic="search"></span><input id="q" placeholder="Search a place (e.g. Manaus, Fergana)" autocomplete="off" aria-label="Search a place"><span class="spin" id="qspin" hidden></span></div>
+ <div id="results" class="fl" hidden></div>
+ <div id="ctl">
+  <div class="seg" id="proj"><button data-p="globe" class="on"><span data-ic="globe"></span>Globe</button><button data-p="mercator"><span data-ic="map"></span>Map</button></div>
+  <div class="seg" id="base"><button data-b="dark" class="on">Dark</button><button data-b="sat">Satellite</button></div>
+ </div>
+ <div id="status" class="fl" hidden><button class="x" id="stX" aria-label="Hide card"><span data-ic="close"></span></button><div class="k" id="stK">Showing</div><div class="v" id="stV"></div><dl class="kv" id="stKV"></dl><div class="note" id="stN"></div></div>
+ <div id="legend" class="fl"><span class="sw"><i style="background:#05070a"></i><i style="background:#4caf2a"></i><i style="background:#d8d040"></i><i style="background:#f4f2d8"></i></span><span>NISAR false colour (HH, HV) — black = calm water · green = plants · yellow / bright = towns, rough bare ground</span></div>
+ <div id="lyr" class="fl"><div class="seg" id="cycSeg" role="group" aria-label="NISAR layer"><button data-c="cycle" class="on">Latest 12-day cycle</button><button data-c="single">Single pass</button></div><button class="ob" id="orbBtn" aria-pressed="false"><span data-ic="radar"></span>Where NISAR flies today</button><span class="cap" id="cycCap">NISAR, 12-day cycle · NASA GIBS</span></div>
+ <div id="gm" class="fl" hidden><button class="x" id="gmX" aria-label="Close ground motion"><span data-ic="close"></span></button><div class="k">Ground motion · NISAR interferogram</div><div class="v" id="gmV">Loading pairs…</div>
+  <select id="gmSel" aria-label="Interferogram pair"></select>
+  <div class="row"><span>Opacity</span><input type="range" id="gmOp" min="0" max="100" value="85" aria-label="Interferogram opacity"></div>
+  <div class="row"><button class="btn" id="gmCtl" style="width:100%">Compare with before-quake pair</button></div>
+  <div id="gmLeg"></div><div class="small" id="gmN"></div></div>
+ <div id="sciTag" class="tag" hidden style="position:absolute;z-index:2;left:12px;top:64px"></div>
+ <div id="cmpLabels" hidden><span class="tag" id="lblA"></span><span class="tag" id="lblB"></span></div>
+ <div id="handle" hidden><span class="knob"><span data-ic="swipe"></span></span></div>
+ <div id="stamp" class="fl" hidden><div id="stampD"></div><div id="stampS"></div></div>
+ <div id="toast" class="fl" role="status"></div>
+ <div id="debug" class="fl" hidden></div>
+
+ <div id="timeline" class="fl">
+  <div class="thead">
+   <span id="newest"><span data-ic="radar"></span><span id="newestTxt">Newest NISAR pass: asking NASA CMR…</span></span>
+   <span class="spin" id="tspin" hidden></span>
+   <span id="hint"></span>
+   <span class="grow"></span>
+   <span id="areaTag" hidden></span>
+  </div>
+  <div id="strip"></div>
+  <div class="tool" id="t-cmp" hidden>
+   <label>Before<select id="cA"></select></label>
+   <label>After<select id="cB"></select></label>
+   <div class="seg" id="cMode" style="box-shadow:none"><button data-m="fade" class="on">Fade</button><button data-m="swipe">Swipe</button></div>
+   <input type="range" id="cFade" min="0" max="100" value="100" aria-label="Fade before to after">
+   <span class="warn" id="cWarn" hidden></span>
+   <button class="btn" id="cX">Done</button>
+  </div>
+  <div class="tool" id="t-tl" hidden>
+   <label>Sensor<select id="tlSrc"><option value="nisar">NISAR L-band radar · from 29 Oct 2025 (gap 27 Jul–10 Aug 2026)</option><option value="s1">Sentinel-1 C-band radar · OPERA RTC, GIBS from 10 Jan 2025</option><option value="modis">Camera reference · MODIS Terra, on NISAR pass days</option></select></label>
+   <label>Period<select id="tlRange"><option value="3">Last 3 months</option><option value="6" selected>Last 6 months</option><option value="0">Since Oct 2025</option><option value="c">Custom</option></select></label>
+   <label id="tlCustom" hidden>From / to<span style="display:flex;gap:4px"><input type="date" id="tlFrom" min="2025-01-10" style="background:#0A1626;border:1px solid var(--line2);border-radius:8px;color:var(--ink);min-height:36px"><input type="date" id="tlTo" style="background:#0A1626;border:1px solid var(--line2);border-radius:8px;color:var(--ink);min-height:36px"></span></label>
+   <label>Orbit<select id="tlTrack"><option value="best">Most frequent track</option><option value="all">All tracks</option></select></label>
+   <label>Speed<select id="tlSpeed"><option value="1500">Slow</option><option value="900" selected>Normal</option><option value="450">Fast</option></select></label>
+   <button class="btn pri" id="tlBuild">Build for this view</button>
+   <button class="btn" id="tlPlay" disabled><span data-ic="play"></span>Play</button>
+   <input type="range" id="tlScrub" min="0" max="0" value="0" aria-label="Time-lapse frame">
+   <button class="btn" id="tlRec" disabled><span data-ic="record"></span>Record video</button>
+   <a class="btn" id="tlDl" hidden>Download video</a>
+   <div style="display:flex;align-items:center;gap:10px;flex-basis:100%"><div class="bar"><i id="tlBar"></i></div><span id="tlLoad" class="mono small"></span></div>
+   <span id="tlMsg" class="small" style="flex-basis:100%"></span>
+   <div id="tlBands" style="display:flex;flex-basis:100%;height:18px;border-radius:5px;overflow:hidden;font:500 10.5px/18px var(--mono)" hidden></div>
+   <button class="btn" id="tlExplain">Explain what changed</button>
+   <button class="btn" id="tlX">Done</button>
+  </div>
+  <div class="tool" id="t-vs" hidden>
+   <div class="seg" id="vsSrc" style="box-shadow:none"><button data-s="modis" class="on">MODIS Terra</button><button data-s="viirs">VIIRS NOAA-20</button></div>
+   <span class="tag" id="vsA"></span>
+   <input type="range" id="vsFade" min="0" max="100" value="0" aria-label="Camera to radar">
+   <span class="tag" id="vsB"></span>
+   <button class="btn" id="vsX">Done</button>
+  </div>
+ </div>
+</main>
+</div>
+<script src="vendor/maplibre-gl.js"></script>
+<script src="mvt.js"></script>
+<script src="home.js"></script>
+<script src="gunw.js"></script>
+<script src="explain.js" defer></script>
+</body>
+</html>
